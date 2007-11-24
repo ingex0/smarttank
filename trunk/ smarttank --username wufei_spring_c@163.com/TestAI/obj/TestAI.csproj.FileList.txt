@@ -1,7 +1,0 @@
-bin\x86\Debug\TestAI.dll
-bin\x86\Debug\TestAI.pdb
-bin\x86\Debug\Platform.dll
-bin\x86\Debug\Platform.pdb
-obj\x86\Debug\ResolveAssemblyReference.cache
-obj\x86\Debug\TestAI.dll
-obj\x86\Debug\TestAI.pdb
