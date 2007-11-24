@@ -1,5 +1,0 @@
-..\Debug\GameBase.dll
-..\Debug\GameBase.pdb
-obj\x86\Debug\ResolveAssemblyReference.cache
-obj\x86\Debug\GameBase.dll
-obj\x86\Debug\GameBase.pdb
