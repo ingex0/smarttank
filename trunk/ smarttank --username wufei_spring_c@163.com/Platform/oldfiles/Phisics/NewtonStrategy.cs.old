@@ -1,0 +1,108 @@
+using System;
+using System.Collections.Generic;
+using System.Text;
+using Microsoft.Xna.Framework;
+namespace Platform.Logic.Phisics
+{
+    public class NewtonStrategy : IPhisicalStrategy
+    {
+
+        //public NewtonNewtonPhisicalStatus calculateCollision ( NewtonNewtonPhisicalStatus self, NewtonNewtonPhisicalStatus other )
+        //{
+        //    return new NewtonNewtonPhisicalStatus( self );
+        //}
+
+        public NewtonPhisicalStatus getNextStatus ( NewtonPhisicalStatus current, float second )
+        {
+
+            NewtonPhisicalStatus newStatus = new NewtonPhisicalStatus( current );
+            if (newStatus.Weight == 0 || newStatus.Inertia == 0)
+            {
+                newStatus.Rota += current.AngVel * second / 1000f;
+                newStatus.Pos += newStatus.Vel * second / 1000f;
+                return newStatus;
+            }
+            Vector2 acceleration = new Vector2();
+            acceleration.X = 0;
+            acceleration.Y = 0;
+            //if (current.Velocity.Length() != 0)         
+            //    acceleration += current.Velocity / current.Velocity.Length() * (-1) * current.FrictionFactor * 9.8f;
+            //acceleration += current.Force * current.DirectionVector / current.Weight;
+            /**             
+             * 阻力分两部分
+             * 一是垂直轴线的动摩擦力
+             * 二是速度造成的阻力，用风阻的计算公式得出:
+             *  Fw=1/16·A·Cw·v2(kg)  其中：v为行车速度，单位：m／s；A为汽车横截面面积，单位：m2：Cw为风阻系数。
+             * 如果没有动力，则动摩擦力方向仅与速度方向有关
+             * 为了简化，角动量部分仍然这样处理
+             */
+            /**关于动力：
+             * 认为动力不大于动摩擦力
+             */
+            Vector2 Friction, WindResistance;
+            Vector2 VeloTemp = current.Vel;
+            if (Math.Abs( current.Force ) > current.FrictionFactor * current.Weight * 9.8f)
+            {
+                current.Force = current.Force / (current.Force) * current.FrictionFactor * current.Weight * 9.8f;
+
+            }
+
+            if (VeloTemp.Length() != 0)
+            {
+                if (current.Force != 0)
+                {
+                    VeloTemp -= Vector2.Dot( current.Vel, current.DirectionVector ) * current.DirectionVector;
+                }
+                //VeloTemp.Normalize();
+                if (VeloTemp.Length() != 0 && VeloTemp.Length() != 1) VeloTemp /= VeloTemp.Length();
+                Friction = (-1) * VeloTemp * current.FrictionFactor * 9.8f * current.Weight;
+
+                VeloTemp = current.Vel;
+                // Fw=1/16·A·Cw·v2(kg)  其中：v为速度，单位：m／s；A为横截面面积，单位：m2：Cw为风阻系数。
+                //这里取A为10，CW为0.6
+                WindResistance = VeloTemp * (-1) * VeloTemp.Length() * 8 * 0.6f / 16;
+            }
+            else
+            {
+                Friction.X = Friction.Y = 0;
+                WindResistance.X = WindResistance.Y = 0;
+            }
+
+            acceleration = (current.Force * current.DirectionVector + Friction + WindResistance) / current.Weight;
+
+
+            float AngulaAcceleration = 0;
+            float Resistance = 0;
+
+            if (Math.Abs( current.Moment ) > current.Inertia * current.FrictionFactor * 9.8f)
+                current.Moment = current.Moment / Math.Abs( current.Moment ) * current.FrictionFactor * 9.8f * current.Inertia;
+            if (current.AngVel != 0)
+            {
+                Resistance = current.AngVel * current.AngVel * current.AngVel / Math.Abs( current.AngVel ) * 20 * 0.6f / 16 * (-1);
+                if (current.Moment == 0) Resistance -= current.Inertia * current.FrictionFactor * 9.8f * current.AngVel / Math.Abs( current.AngVel );
+
+                AngulaAcceleration = (current.Moment + Resistance) / current.Inertia;
+            }
+            else
+            {
+                AngulaAcceleration = current.Moment / current.Inertia;
+            }
+
+
+            newStatus.Pos += newStatus.Vel * second / 1000f;
+            newStatus.Vel += acceleration * second / 1000f;
+            if (Vector2.Dot( newStatus.Vel, current.Vel ) < 0) newStatus.Vel = new Vector2( 0, 0 );
+
+            newStatus.Rota += current.AngVel * second / 1000f;
+            newStatus.AngVel += AngulaAcceleration;
+            if (newStatus.AngVel * current.AngVel < 0) newStatus.AngVel = 0;
+
+            return newStatus;
+
+
+        }
+
+
+        
+    }
+}

@@ -1,0 +1,23 @@
+using System;
+using System.Collections.Generic;
+using System.Text;
+using Platform.GameDraw;
+using GameBase.Graphics;
+using Microsoft.Xna.Framework;
+using Platform.Update;
+
+namespace Platform.GameObjects.Tank.TankSkins
+{
+    public interface ITankSkinSinTur : IDrawableObj, IUpdater
+    {
+        Sprite[] Sprites { get; }
+
+        void Initial ( Vector2 pos, float baseRota, float turretRota );
+        void ResetSprites ( Vector2 pos, float baseRota, float turretRota );
+
+        Vector2 GetTurretEndPos ( Vector2 tankPos, float tankAz, float turretAzi );
+        void BeginRecoil ();
+
+        float TurretLength { get;}
+    }
+}

@@ -1,0 +1,55 @@
+using System;
+using System.Collections.Generic;
+using System.Text;
+using Platform.Scene;
+using GameBase.Input;
+using Platform.GameObjects.Tank.Tanks;
+using Microsoft.Xna.Framework;
+using Platform.GameObjects.Tank.TankAIs;
+using Platform.GameObjects.Tank;
+using GameBase;
+using GameBase.Graphics;
+using Microsoft.Xna.Framework.Graphics;
+using Platform.GameRules.ShootTheBall;
+using Platform.GameDraw;
+
+namespace Platform.GameScreens
+{
+	
+	/*
+     * 已经使游戏规则类继承于IGameScreen，故该文件作废。
+     * 
+     * */
+	
+	
+
+
+    class DemoScreen : IGameScreen
+    {
+        DemoRule rule;
+
+        public DemoScreen ()
+        {
+            rule = new DemoRule();
+        }
+
+        #region IGameScreen 成员
+
+        public bool Update ( float second )
+        {
+            rule.Update( second );
+
+            if (InputHandler.IsKeyDown( Microsoft.Xna.Framework.Input.Keys.Escape ))
+                return true;
+
+            return false;
+        }
+
+        public void Render ()
+        {
+            rule.Draw();
+        }
+
+        #endregion
+    }
+}

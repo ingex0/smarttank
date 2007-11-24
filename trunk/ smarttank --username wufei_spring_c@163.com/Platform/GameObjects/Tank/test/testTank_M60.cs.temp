@@ -1,0 +1,70 @@
+using System;
+using System.Collections.Generic;
+using System.Text;
+using Platform.GameObjects.Tank.Tanks;
+using Microsoft.Xna.Framework;
+using GameBase.Input;
+using Microsoft.Xna.Framework.Input;
+
+namespace Platform.GameObjects.Tank.test
+{
+    class testTank_M60 : GameManager
+    {
+        Tank_M60 tank;
+
+        protected override void Initialize ()
+        {
+            base.Initialize();
+            border = new Platform.PhisicalCollision.Border( 0, 300, 0, 200 );
+
+            tank = new Tank_M60( new Vector2( 150, 100 ), 0f, 0f );
+
+            ObjManager.RegistPhisicalObj( tank );
+        }
+
+        protected override void Update ( GameTime gameTime )
+        {
+            base.Update( gameTime );
+
+            if (InputHandler.IsKeyDown( Keys.W ))
+            {
+                tank.AIOrderServer.ForwardSpeed = 1000;
+            }
+            else if (InputHandler.IsKeyDown( Keys.S ))
+            {
+                tank.AIOrderServer.ForwardSpeed = -1000;
+            }
+            else
+            {
+                tank.AIOrderServer.ForwardSpeed = 0;
+            }
+
+            if (InputHandler.IsKeyDown( Keys.D ))
+            {
+                tank.AIOrderServer.TurnRightSpeed = 20;
+            }
+            else if (InputHandler.IsKeyDown( Keys.A ))
+            {
+                tank.AIOrderServer.TurnRightSpeed = -20;
+            }
+            else
+            {
+                tank.AIOrderServer.TurnRightSpeed = 0;
+            }
+
+            if (InputHandler.IsKeyDown( Keys.K ))
+            {
+                tank.AIOrderServer.TurnTurretWiseSpeed = 20;
+            }
+            else if (InputHandler.IsKeyDown( Keys.J ))
+            {
+                tank.AIOrderServer.TurnTurretWiseSpeed = -20;
+            }
+            else
+            {
+                tank.AIOrderServer.TurnTurretWiseSpeed = 0;
+            }
+
+        }
+    }
+}

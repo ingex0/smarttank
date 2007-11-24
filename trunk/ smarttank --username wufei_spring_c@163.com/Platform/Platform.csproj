@@ -1,0 +1,572 @@
+﻿<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <ProjectGuid>{B574928C-7E7A-49BE-B783-5F29EF02A802}</ProjectGuid>
+    <ProjectTypeGuids>{9F340DF3-2AED-4330-AC16-78AC2D9B4738};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">x86</Platform>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Platform</RootNamespace>
+    <AssemblyName>Platform</AssemblyName>
+    <XnaFrameworkVersion>v1.0</XnaFrameworkVersion>
+    <XnaPlatform>Windows</XnaPlatform>
+    <ApplicationIcon>
+    </ApplicationIcon>
+    <XNAGlobalContentPipelineAssemblies>Microsoft.Xna.Framework.Content.Pipeline.EffectImporter.dll;Microsoft.Xna.Framework.Content.Pipeline.FBXImporter.dll;Microsoft.Xna.Framework.Content.Pipeline.TextureImporter.dll;Microsoft.Xna.Framework.Content.Pipeline.XImporter.dll</XNAGlobalContentPipelineAssemblies>
+    <XNAProjectContentPipelineAssemblies>
+    </XNAProjectContentPipelineAssemblies>
+    <StartupObject>
+    </StartupObject>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x86' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>..\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <NoStdLib>true</NoStdLib>
+    <UseVSHostingProcess>false</UseVSHostingProcess>
+    <PlatformTarget>x86</PlatformTarget>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x86' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\x86\Release</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <NoStdLib>true</NoStdLib>
+    <UseVSHostingProcess>false</UseVSHostingProcess>
+    <PlatformTarget>x86</PlatformTarget>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="GameBase, Version=1.0.0.0, Culture=neutral, processorArchitecture=x86" />
+    <Reference Include="Microsoft.VisualStudio.DebuggerVisualizers, Version=8.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL" />
+    <Reference Include="Microsoft.Xna.Framework">
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="Microsoft.Xna.Framework.Game">
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="mscorlib">
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="System">
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="System.Data" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="DependInject\AILoader.cs">
+      <XNAUseContentPipeline>false</XNAUseContentPipeline>
+      <Name>AILoader</Name>
+    </Compile>
+    <Compile Include="DependInject\AssetList.cs">
+      <XNAUseContentPipeline>false</XNAUseContentPipeline>
+      <Name>AssetList</Name>
+    </Compile>
+    <Compile Include="DependInject\DIHelper.cs">
+      <XNAUseContentPipeline>false</XNAUseContentPipeline>
+      <Name>DIHelper</Name>
+    </Compile>
+    <Compile Include="DependInject\RuleLoader.cs">
+      <XNAUseContentPipeline>false</XNAUseContentPipeline>
+      <Name>RuleLoader</Name>
+    </Compile>
+    <Compile Include="GameDraw\Camera.cs">
+      <XNAUseContentPipeline>false</XNAUseContentPipeline>
+      <Name>Camera</Name>
+    </Compile>
+    <Compile Include="GameDraw\SceneEffects\BaseEffects\ScaleUp.cs">
+      <XNAUseContentPipeline>false</XNAUseContentPipeline>
+      <Name>ScaleUp</Name>
+    </Compile>
+    <Compile Include="GameDraw\SceneEffects\EffectsManager.cs">
+      <XNAUseContentPipeline>false</XNAUseContentPipeline>
+      <Name>EffectsManager</Name>
+    </Compile>
+    <Compile Include="GameDraw\SceneEffects\Explode.cs">
+      <XNAUseContentPipeline>false</XNAUseContentPipeline>
+      <Name>Explode</Name>
+    </Compile>
+    <Compile Include="GameDraw\SceneEffects\IManagedEffect.cs">
+      <XNAUseContentPipeline>false</XNAUseContentPipeline>
+      <Name>IManagedEffect</Name>
+    </Compile>
+    <Compile Include="GameDraw\SceneEffects\Particles\Particle.cs">
+      <XNAUseContentPipeline>false</XNAUseContentPipeline>
+      <Name>Particle</Name>
+    </Compile>
+    <Compile Include="GameDraw\SceneEffects\Particles\ParticleSystem.cs">
+      <XNAUseContentPipeline>false</XNAUseContentPipeline>
+      <Name>ParticleSystem</Name>
+    </Compile>
+    <Compile Include="GameDraw\SceneEffects\ShellExplode.cs">
+      <XNAUseContentPipeline>false</XNAUseContentPipeline>
+      <Name>ShellExplode</Name>
+    </Compile>
+    <Compile Include="GameDraw\SceneEffects\ShellExplodeBeta.cs">
+      <XNAUseContentPipeline>false</XNAUseContentPipeline>
+      <Name>ShellExplodeBeta</Name>
+    </Compile>
+    <Compile Include="GameDraw\SceneEffects\SmokeGenerater.cs">
+      <XNAUseContentPipeline>false</XNAUseContentPipeline>
+      <Name>SmokeGenerater</Name>
+    </Compile>
+    <Compile Include="AIHelper\ConsiderCenter.cs">
+      <XNAUseContentPipeline>false</XNAUseContentPipeline>
+      <Name>ConsiderCenter</Name>
+    </Compile>
+    <Compile Include="GameObjects\IGameObjSceneInfo.cs">
+      <XNAUseContentPipeline>false</XNAUseContentPipeline>
+      <Name>IGameObjSceneInfo</Name>
+    </Compile>
+    <Compile Include="GameObjects\Item\ObstacleCommon.cs">
+      <XNAUseContentPipeline>false</XNAUseContentPipeline>
+      <Name>ObstacleCommon</Name>
+    </Compile>
+    <Compile Include="GameObjects\Item\ItemCommon.cs">
+      <XNAUseContentPipeline>false</XNAUseContentPipeline>
+      <Name>ItemCommon</Name>
+    </Compile>
+    <Compile Include="GameObjects\LayerDepth.cs">
+      <XNAUseContentPipeline>false</XNAUseContentPipeline>
+      <Name>LayerDepth</Name>
+    </Compile>
+    <Compile Include="GameObjects\Shell\ShellNormal.cs">
+      <XNAUseContentPipeline>false</XNAUseContentPipeline>
+      <Name>ShellNormal</Name>
+    </Compile>
+    <Compile Include="GameObjects\Tank\TankAIs\AIAttribute.cs">
+      <XNAUseContentPipeline>false</XNAUseContentPipeline>
+      <Name>AIAttribute</Name>
+    </Compile>
+    <Compile Include="GameObjects\Tank\TankAIs\AICommonServer.cs">
+      <XNAUseContentPipeline>false</XNAUseContentPipeline>
+      <Name>AICommonServer</Name>
+    </Compile>
+    <Compile Include="GameObjects\Tank\TankAIs\IAICommonServer.cs">
+      <XNAUseContentPipeline>false</XNAUseContentPipeline>
+      <Name>IAICommonServer</Name>
+    </Compile>
+    <Compile Include="GameObjects\Tank\TankAIs\IAI.cs">
+      <XNAUseContentPipeline>false</XNAUseContentPipeline>
+      <Name>IAI</Name>
+    </Compile>
+    <Compile Include="GameObjects\Tank\TankAIs\IAIAttribute.cs">
+      <XNAUseContentPipeline>false</XNAUseContentPipeline>
+      <Name>IAIAttribute</Name>
+    </Compile>
+    <Compile Include="GameObjects\Tank\TankAIs\IAISinTur.cs">
+      <XNAUseContentPipeline>false</XNAUseContentPipeline>
+      <Name>IAISinTur</Name>
+    </Compile>
+    <Compile Include="AIHelper\AIActionHelper.cs">
+      <XNAUseContentPipeline>false</XNAUseContentPipeline>
+      <Name>AIActionHelper</Name>
+    </Compile>
+    <Compile Include="GameObjects\Tank\TankAIs\ManualControl.cs">
+      <XNAUseContentPipeline>false</XNAUseContentPipeline>
+      <Name>ManualControl</Name>
+    </Compile>
+    <Compile Include="GameObjects\Tank\TankAIs\testAIs\TestActionHelperAI.cs">
+      <XNAUseContentPipeline>false</XNAUseContentPipeline>
+      <Name>TestActionHelperAI</Name>
+    </Compile>
+    <Compile Include="GameObjects\Tank\TankSkins\TankSkinSinTurData.cs">
+      <XNAUseContentPipeline>false</XNAUseContentPipeline>
+      <Name>TankSkinSinTurData</Name>
+    </Compile>
+    <Compile Include="GameObjects\Tank\TankSkins\TankSkinSinTur.cs">
+      <XNAUseContentPipeline>false</XNAUseContentPipeline>
+      <Name>TankSkinSinTur</Name>
+    </Compile>
+    <Compile Include="GameRules\RuleAttribute.cs">
+      <XNAUseContentPipeline>false</XNAUseContentPipeline>
+      <Name>RuleAttribute</Name>
+    </Compile>
+    <Compile Include="GameRules\IGameRule.cs">
+      <XNAUseContentPipeline>false</XNAUseContentPipeline>
+      <Name>IGameRule</Name>
+    </Compile>
+    <None Include="Senses\Vision\EyeableSet.cs.old">
+      <XNAUseContentPipeline>false</XNAUseContentPipeline>
+      <Name>EyeableSet.cs</Name>
+    </None>
+    <Compile Include="GameScreens\RuleSelectScreen.cs">
+      <XNAUseContentPipeline>false</XNAUseContentPipeline>
+      <Name>RuleSelectScreen</Name>
+    </Compile>
+    <Compile Include="PhisicalCollision\IHasBorderObj.cs">
+      <XNAUseContentPipeline>false</XNAUseContentPipeline>
+      <Name>IHasBorderObj</Name>
+    </Compile>
+    <Compile Include="Scene\SceneCommonObjInfo.cs">
+      <XNAUseContentPipeline>false</XNAUseContentPipeline>
+      <Name>SceneCommonObjInfo</Name>
+    </Compile>
+    <Compile Include="Senses\Memory\ConvexHall.cs">
+      <XNAUseContentPipeline>false</XNAUseContentPipeline>
+      <Name>ConvexHall</Name>
+    </Compile>
+    <Compile Include="Senses\Memory\EyeableBorderObjInfo.cs">
+      <XNAUseContentPipeline>false</XNAUseContentPipeline>
+      <Name>EyeableBorderObjInfo</Name>
+    </Compile>
+    <Compile Include="Senses\Memory\NavigateMap.cs">
+      <XNAUseContentPipeline>false</XNAUseContentPipeline>
+      <Name>NavigateMap</Name>
+    </Compile>
+    <Compile Include="Senses\Memory\ObjMemoryKeeper.cs">
+      <XNAUseContentPipeline>false</XNAUseContentPipeline>
+      <Name>ObjMemoryKeeper</Name>
+    </Compile>
+    <Compile Include="Senses\Memory\ObjMemoryManager.cs">
+      <XNAUseContentPipeline>false</XNAUseContentPipeline>
+      <Name>ObjMemoryManager</Name>
+    </Compile>
+    <Compile Include="Senses\Memory\test\testConvexHall.cs">
+      <XNAUseContentPipeline>false</XNAUseContentPipeline>
+      <Name>testConvexHall</Name>
+    </Compile>
+    <Compile Include="Senses\Vision\IEyeableObj.cs">
+      <XNAUseContentPipeline>false</XNAUseContentPipeline>
+      <Name>IEyeableObj</Name>
+    </Compile>
+    <Compile Include="Senses\Vision\VisionManager.cs">
+      <XNAUseContentPipeline>false</XNAUseContentPipeline>
+      <Name>VisionManager</Name>
+    </Compile>
+    <Compile Include="Senses\Memory\ObjVisiBorder.cs">
+      <XNAUseContentPipeline>false</XNAUseContentPipeline>
+      <Name>ObjVisiBorder</Name>
+    </Compile>
+    <Compile Include="Sounds\Sound.cs">
+      <XNAUseContentPipeline>false</XNAUseContentPipeline>
+      <Name>Sound</Name>
+    </Compile>
+    <Compile Include="UpdateManage\IUpdater.cs">
+      <XNAUseContentPipeline>false</XNAUseContentPipeline>
+      <Name>IUpdater</Name>
+    </Compile>
+    <Compile Include="GameDraw\DrawManager.cs">
+      <XNAUseContentPipeline>false</XNAUseContentPipeline>
+      <Name>DrawManager</Name>
+    </Compile>
+    <Compile Include="GameDraw\IDrawableObj.cs">
+      <XNAUseContentPipeline>false</XNAUseContentPipeline>
+      <Name>IDrawableObj</Name>
+    </Compile>
+    <None Include="oldfiles\GameManager.cs.old">
+      <XNAUseContentPipeline>false</XNAUseContentPipeline>
+      <Name>GameManager.cs</Name>
+    </None>
+    <Compile Include="GameManager.cs">
+      <XNAUseContentPipeline>false</XNAUseContentPipeline>
+      <Name>GameManager</Name>
+    </Compile>
+    <Compile Include="GameObjects\GameObjInfo.cs">
+      <XNAUseContentPipeline>false</XNAUseContentPipeline>
+      <Name>GameObjInfo</Name>
+    </Compile>
+    <Compile Include="GameObjects\IGameObj.cs">
+      <XNAUseContentPipeline>false</XNAUseContentPipeline>
+      <Name>IGameObj</Name>
+    </Compile>
+    <Compile Include="GameObjects\Tank\TankAIs\IAIOrderServer.cs">
+      <XNAUseContentPipeline>false</XNAUseContentPipeline>
+      <Name>IAIOrderServer</Name>
+    </Compile>
+    <Compile Include="GameObjects\Tank\TankControls\ITankController.cs">
+      <XNAUseContentPipeline>false</XNAUseContentPipeline>
+      <Name>ITankController</Name>
+    </Compile>
+    <None Include="GameObjects\Tank\TankSkins\ITankSkinSinTur.cs.old">
+      <XNAUseContentPipeline>false</XNAUseContentPipeline>
+      <Name>ITankSkinSinTur.cs</Name>
+    </None>
+    <Compile Include="GameObjects\Tank\TankAIs\IAIOrderServerSinTur.cs">
+      <XNAUseContentPipeline>false</XNAUseContentPipeline>
+      <Name>IAIOrderServerSinTur</Name>
+    </Compile>
+    <Compile Include="GameObjects\Tank\TankControls\TankControlSinTur.cs">
+      <XNAUseContentPipeline>false</XNAUseContentPipeline>
+      <Name>TankControlSinTur</Name>
+    </Compile>
+    <None Include="oldfiles\TankEngine.cs.old">
+      <XNAUseContentPipeline>false</XNAUseContentPipeline>
+      <Name>TankEngine.cs</Name>
+    </None>
+    <None Include="oldfiles\FirstTank.cs.old">
+      <XNAUseContentPipeline>false</XNAUseContentPipeline>
+      <Name>FirstTank.cs</Name>
+    </None>
+    <None Include="oldfiles\ITankController_Origin.cs.old">
+      <XNAUseContentPipeline>false</XNAUseContentPipeline>
+      <Name>ITankController_Origin.cs</Name>
+    </None>
+    <Compile Include="GameObjects\Tank\TankControls\TankLimitSinTur.cs">
+      <XNAUseContentPipeline>false</XNAUseContentPipeline>
+      <Name>TankLimitSinTur</Name>
+    </Compile>
+    <None Include="oldfiles\TankStatus.cs.old">
+      <XNAUseContentPipeline>false</XNAUseContentPipeline>
+      <Name>TankStatus.cs</Name>
+    </None>
+    <Compile Include="GameObjects\Tank\Tanks\TankSinTur.cs">
+      <XNAUseContentPipeline>false</XNAUseContentPipeline>
+      <Name>TankSinTur</Name>
+    </Compile>
+    <Compile Include="GameObjects\Tank\Tank.cs">
+      <XNAUseContentPipeline>false</XNAUseContentPipeline>
+      <Name>Tank</Name>
+    </Compile>
+    <None Include="oldfiles\TankActionStatus.cs.old">
+      <XNAUseContentPipeline>false</XNAUseContentPipeline>
+      <Name>TankActionStatus.cs</Name>
+    </None>
+    <None Include="oldfiles\TankManualController.cs.old">
+      <XNAUseContentPipeline>false</XNAUseContentPipeline>
+      <Name>TankManualController.cs</Name>
+    </None>
+    <None Include="oldfiles\TankLimits.cs.old">
+      <XNAUseContentPipeline>false</XNAUseContentPipeline>
+      <Name>TankLimits.cs</Name>
+    </None>
+    <None Include="oldfiles\TestFirstTank.cs.old">
+      <XNAUseContentPipeline>false</XNAUseContentPipeline>
+      <Name>TestFirstTank.cs</Name>
+    </None>
+    <None Include="GameObjects\Tank\test\testTank_M60.cs.temp">
+      <XNAUseContentPipeline>false</XNAUseContentPipeline>
+      <Name>testTank_M60.cs</Name>
+    </None>
+    <Compile Include="GameObjects\Tank\TankSkins\TurretLinker.cs">
+      <XNAUseContentPipeline>false</XNAUseContentPipeline>
+      <Name>TurretLinker</Name>
+    </Compile>
+    <None Include="oldfiles\Collision\ICollidable.cs.old">
+      <XNAUseContentPipeline>false</XNAUseContentPipeline>
+      <Name>ICollidable.cs</Name>
+    </None>
+    <None Include="oldfiles\Collision\ICollisionStrategy.cs.old">
+      <XNAUseContentPipeline>false</XNAUseContentPipeline>
+      <Name>ICollisionStrategy.cs</Name>
+    </None>
+    <None Include="oldfiles\Collision\PixCollisionStrategy.cs.old">
+      <XNAUseContentPipeline>false</XNAUseContentPipeline>
+      <Name>PixCollisionStrategy.cs</Name>
+    </None>
+    <None Include="oldfiles\GameBackground\GameDataBase.cs.old">
+      <XNAUseContentPipeline>false</XNAUseContentPipeline>
+      <Name>GameDataBase.cs</Name>
+    </None>
+    <None Include="oldfiles\Phisics\PhisicsUpdater.cs.old">
+      <XNAUseContentPipeline>false</XNAUseContentPipeline>
+      <Name>PhisicsUpdater.cs</Name>
+    </None>
+    <None Include="oldfiles\Phisics\VPStrategy.cs.old">
+      <XNAUseContentPipeline>false</XNAUseContentPipeline>
+      <Name>VPStrategy.cs</Name>
+    </None>
+    <None Include="oldfiles\Registers\Tests\ObjectRegister.cs.old">
+      <XNAUseContentPipeline>false</XNAUseContentPipeline>
+      <Name>ObjectRegister.cs</Name>
+    </None>
+    <None Include="oldfiles\TestGameObjects\TestCollider.cs.old">
+      <XNAUseContentPipeline>false</XNAUseContentPipeline>
+      <Name>TestCollider.cs</Name>
+    </None>
+    <None Include="oldfiles\TestGameObjects\TestPhisicalObject.cs.old">
+      <XNAUseContentPipeline>false</XNAUseContentPipeline>
+      <Name>TestPhisicalObject.cs</Name>
+    </None>
+    <None Include="oldfiles\Phisics\IPhisical.cs.old">
+      <XNAUseContentPipeline>false</XNAUseContentPipeline>
+      <Name>IPhisical.cs</Name>
+    </None>
+    <None Include="oldfiles\Phisics\IPhisicalStrategy.cs.old">
+      <XNAUseContentPipeline>false</XNAUseContentPipeline>
+      <Name>IPhisicalStrategy.cs</Name>
+    </None>
+    <None Include="oldfiles\Phisics\NewtonStrategy.cs.old">
+      <XNAUseContentPipeline>false</XNAUseContentPipeline>
+      <Name>NewtonStrategy.cs</Name>
+    </None>
+    <None Include="oldfiles\Phisics\NewtonPhisicalStatus.cs.old">
+      <XNAUseContentPipeline>false</XNAUseContentPipeline>
+      <Name>NewtonPhisicalStatus.cs</Name>
+    </None>
+    <None Include="oldfiles\Phisics\TestCases\StatusTest.cs.old">
+      <XNAUseContentPipeline>false</XNAUseContentPipeline>
+      <Name>StatusTest.cs</Name>
+    </None>
+    <None Include="oldfiles\Phisics\TestCases\TestNewtonStrategy.cs.old">
+      <XNAUseContentPipeline>false</XNAUseContentPipeline>
+      <Name>TestNewtonStrategy.cs</Name>
+    </None>
+    <None Include="oldfiles\ObjManage\IPhisicalObj.cs.old">
+      <XNAUseContentPipeline>false</XNAUseContentPipeline>
+      <Name>IPhisicalObj.cs</Name>
+    </None>
+    <None Include="oldfiles\ObjManage\ObjManager.cs.old">
+      <XNAUseContentPipeline>false</XNAUseContentPipeline>
+      <Name>ObjManager.cs</Name>
+    </None>
+    <None Include="GameScreens\DemoScreen.cs.old">
+      <XNAUseContentPipeline>false</XNAUseContentPipeline>
+      <Name>DemoScreen.cs</Name>
+    </None>
+    <Compile Include="GameScreens\IGameScreen.cs">
+      <XNAUseContentPipeline>false</XNAUseContentPipeline>
+      <Name>IGameScreen</Name>
+    </Compile>
+    <Compile Include="PhisicalCollision\Border.cs">
+      <XNAUseContentPipeline>false</XNAUseContentPipeline>
+      <Name>Border</Name>
+    </Compile>
+    <None Include="oldfiles\CollisionChecker_1.cs.old">
+      <XNAUseContentPipeline>false</XNAUseContentPipeline>
+      <Name>CollisionChecker_1.cs</Name>
+    </None>
+    <Compile Include="PhisicalCollision\ICollider.cs">
+      <XNAUseContentPipeline>false</XNAUseContentPipeline>
+      <Name>ICollider</Name>
+    </Compile>
+    <Compile Include="PhisicalCollision\IPhisicalUpdater.cs">
+      <XNAUseContentPipeline>false</XNAUseContentPipeline>
+      <Name>IPhisicalUpdater</Name>
+    </Compile>
+    <Compile Include="PhisicalCollision\PhiColManager.cs">
+      <XNAUseContentPipeline>false</XNAUseContentPipeline>
+      <Name>PhiColManager</Name>
+    </Compile>
+    <None Include="oldfiles\PhisicalManager_1.cs.old">
+      <XNAUseContentPipeline>false</XNAUseContentPipeline>
+      <Name>PhisicalManager_1.cs</Name>
+    </None>
+    <Compile Include="PhisicalCollision\SpriteColMethod.cs">
+      <XNAUseContentPipeline>false</XNAUseContentPipeline>
+      <Name>SpriteColMethod</Name>
+    </Compile>
+    <Compile Include="PhisicalCollision\test\TestCollider.cs">
+      <XNAUseContentPipeline>false</XNAUseContentPipeline>
+      <Name>TestCollider</Name>
+    </Compile>
+    <Compile Include="PhisicalCollision\test\testPhiColManager.cs">
+      <XNAUseContentPipeline>false</XNAUseContentPipeline>
+      <Name>testPhiColManager</Name>
+    </Compile>
+    <None Include="PhisicalCollision\test\TestPhisicalUpdater.cs.old">
+      <XNAUseContentPipeline>false</XNAUseContentPipeline>
+      <Name>TestPhisicalUpdater.cs</Name>
+    </None>
+    <Compile Include="PhisicalCollision\NonInertiasColUpdater.cs">
+      <XNAUseContentPipeline>false</XNAUseContentPipeline>
+      <Name>NonInertiasColUpdater</Name>
+    </Compile>
+    <Compile Include="PhisicalCollision\NonInertiasPhiUpdater.cs">
+      <XNAUseContentPipeline>false</XNAUseContentPipeline>
+      <Name>NonInertiasPhiUpdater</Name>
+    </Compile>
+    <None Include="oldfiles\Registers\Register.cs.old">
+      <XNAUseContentPipeline>false</XNAUseContentPipeline>
+      <Name>Register.cs</Name>
+    </None>
+    <None Include="oldfiles\Registers\Tests\IRegister.cs.old">
+      <XNAUseContentPipeline>false</XNAUseContentPipeline>
+      <Name>IRegister.cs</Name>
+    </None>
+    <None Include="oldfiles\Registers\Tests\ObjectRegisterTest.cs.old">
+      <XNAUseContentPipeline>false</XNAUseContentPipeline>
+      <Name>ObjectRegisterTest.cs</Name>
+    </None>
+    <Compile Include="Properties\AssemblyInfo.cs">
+      <XNAUseContentPipeline>false</XNAUseContentPipeline>
+      <Name>AssemblyInfo</Name>
+    </Compile>
+    <None Include="Scene\Scene.cs.old">
+      <XNAUseContentPipeline>false</XNAUseContentPipeline>
+      <Name>Scene.cs</Name>
+    </None>
+    <Compile Include="Scene\ISceneKeeper.cs">
+      <XNAUseContentPipeline>false</XNAUseContentPipeline>
+      <Name>ISceneKeeper</Name>
+    </Compile>
+    <Compile Include="Scene\SceneKeeperCommon.cs">
+      <XNAUseContentPipeline>false</XNAUseContentPipeline>
+      <Name>SceneKeeperCommon</Name>
+    </Compile>
+    <None Include="Scene\test\testScene.cs.old">
+      <XNAUseContentPipeline>false</XNAUseContentPipeline>
+      <Name>testScene.cs</Name>
+    </None>
+    <Compile Include="UpdateManage\GameTimer.cs">
+      <XNAUseContentPipeline>false</XNAUseContentPipeline>
+      <Name>GameTimer</Name>
+    </Compile>
+    <Compile Include="UpdateManage\UpdateManager.cs">
+      <XNAUseContentPipeline>false</XNAUseContentPipeline>
+      <Name>UpdateManager</Name>
+    </Compile>
+    <Compile Include="Shelter\IRaderOwner.cs">
+      <XNAUseContentPipeline>false</XNAUseContentPipeline>
+      <Name>IRaderOwner</Name>
+    </Compile>
+    <Compile Include="Shelter\IShelterObj.cs">
+      <XNAUseContentPipeline>false</XNAUseContentPipeline>
+      <Name>IShelterObj</Name>
+    </Compile>
+    <Compile Include="Shelter\Rader.cs">
+      <XNAUseContentPipeline>false</XNAUseContentPipeline>
+      <Name>Rader</Name>
+    </Compile>
+    <Compile Include="Shelter\RaderDepthMap.cs">
+      <XNAUseContentPipeline>false</XNAUseContentPipeline>
+      <Name>RaderDepthMap</Name>
+    </Compile>
+    <Compile Include="Shelter\RaderDrawer.cs">
+      <XNAUseContentPipeline>false</XNAUseContentPipeline>
+      <Name>RaderDrawer</Name>
+    </Compile>
+    <Compile Include="Shelter\ShelterManager.cs">
+      <XNAUseContentPipeline>false</XNAUseContentPipeline>
+      <Name>ShelterManager</Name>
+    </Compile>
+    <None Include="Shelter\test\testRaderDrawer.cs.old">
+      <XNAUseContentPipeline>false</XNAUseContentPipeline>
+      <Name>testRaderDrawer.cs</Name>
+    </None>
+    <Compile Include="Shelter\test\testRaderSpaceTransform.cs">
+      <XNAUseContentPipeline>false</XNAUseContentPipeline>
+      <Name>testRaderSpaceTransform</Name>
+    </Compile>
+    <None Include="Shelter\test\testShelterMananger.cs.old">
+      <XNAUseContentPipeline>false</XNAUseContentPipeline>
+      <Name>testShelterMananger.cs</Name>
+    </None>
+    <None Include="Shelter\test\TestSpriteTransfromToRaderSpace.cs.old">
+      <XNAUseContentPipeline>false</XNAUseContentPipeline>
+      <Name>TestSpriteTransfromToRaderSpace.cs</Name>
+    </None>
+  </ItemGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <Import Project="$(MSBuildExtensionsPath)\Microsoft\XNA\Game Studio Express\v1.0\Microsoft.Xna.ContentPipeline.targets" />
+  <Import Project="$(MSBuildExtensionsPath)\Microsoft\XNA\Game Studio Express\v1.0\Microsoft.Xna.Common.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+  <ProjectExtensions>
+    <VisualStudio>
+    </VisualStudio>
+  </ProjectExtensions>
+</Project>

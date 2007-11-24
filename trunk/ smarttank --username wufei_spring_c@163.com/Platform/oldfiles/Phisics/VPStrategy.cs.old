@@ -1,0 +1,24 @@
+using System;
+using System.Collections.Generic;
+using System.Text;
+
+namespace Platform.Logic.Phisics
+{
+    class VPStrategy:IPhisicalStrategy
+    {
+        #region IPhisicalStrategy ≥…‘±
+
+        public NewtonPhisicalStatus getNextStatus ( NewtonPhisicalStatus current, float second )
+        {
+            NewtonPhisicalStatus result = new NewtonPhisicalStatus();
+            result.Pos = current.Pos + current.Vel * second;
+            result.Rota = current.Rota + current.AngVel * second;
+            result.AngVel = current.AngVel;
+            result.Vel = current.Vel;
+            return result;
+        }
+
+        #endregion
+
+    }
+}

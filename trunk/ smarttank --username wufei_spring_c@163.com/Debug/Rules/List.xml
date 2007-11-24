@@ -1,0 +1,22 @@
+<?xml version="1.0"?>
+<AssetList xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <list>
+    <AssetItem>
+      <DLLName>InterRules, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null</DLLName>
+      <names>
+        <NameAndTypeName>
+          <name>Duel</name>
+          <typeNames>InterRules.Duel.DuelRule</typeNames>
+        </NameAndTypeName>
+        <NameAndTypeName>
+          <name>ShootTheBall</name>
+          <typeNames>InterRules.ShootTheBall.ShootTheBallRule</typeNames>
+        </NameAndTypeName>
+        <NameAndTypeName>
+          <name>FindPath</name>
+          <typeNames>InterRules.FindPath.FindPathRule</typeNames>
+        </NameAndTypeName>
+      </names>
+    </AssetItem>
+  </list>
+</AssetList>

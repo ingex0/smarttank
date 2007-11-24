@@ -1,0 +1,54 @@
+using System;
+using System.Collections.Generic;
+using System.Text;
+using NUnit.Framework;
+using Microsoft.Xna.Framework;
+namespace Platform.Logic.Phisics.TestCases {
+    [TestFixture]
+    public class StatusTest {
+        private NewtonPhisicalStatus status;
+        [TestFixtureSetUp]
+        public void testInit() {
+            status = null;
+        }
+        [Test]
+        public void radiusToDegree() { 
+            
+            status.Rota = 0.5f * (float)Math.PI;
+            float degree=status.DirectionDegree;
+            Assert.AreEqual(90,degree,1);
+            status.Rota = 1f * (float)Math.PI;
+            degree = status.DirectionDegree;
+            Assert.AreEqual(180, degree, 1);
+        }
+        [Test]
+        public void degreeToRadius() {
+            status.DirectionDegree = 90f;
+            float radius = status.Rota;
+            Assert.AreEqual(0.5f * (float)Math.PI, radius, 0.01);
+            status.DirectionDegree = 0;
+            radius = status.DirectionDegree;
+            Assert.AreEqual(0, radius, 0.01);
+            status.DirectionDegree = 180f;
+            radius = status.Rota;
+            Assert.AreEqual(Math.PI, radius, 0.01);
+            status.DirectionDegree = 270f;
+            radius=status.Rota;
+            Assert.AreEqual((float)Math.PI * (1.5f), radius, 0.01);
+           
+        }
+        [Test]
+        public void radiusToVector() {
+            status.Rota = 0;
+            Vector2 vector = status.DirectionVector;
+            Assert.AreEqual(1, vector.X, 0.01,"0 Radius Vector X");
+            Assert.AreEqual(0, vector.Y, 0.01,"0 Radius Vector Y");
+            status.Rota = (0.25f) *(float) Math.PI;
+            vector = status.DirectionVector;
+            Assert.AreEqual(vector.X, vector.Y, 0.01, "PI/4 radius vector x=y");
+            Assert.AreEqual(Math.Sqrt(2)/2,vector.X,0.01,"PI/4 RADIUS VECTOR X=SQRT(1/2)");
+        }
+
+
+    }
+}

@@ -1,0 +1,18 @@
+using System;
+using System.Collections.Generic;
+using System.Text;
+using Microsoft.Xna.Framework;
+
+namespace Platform.GameObjects.Tank
+{
+    public class TankStatus : NewtonPhisicalStatus
+    {
+        public float TurretRota;
+
+        public TankStatus ( Vector2 pos, float rota, Vector2 vel, float angVel, float turretRota )
+            : base( pos, rota, vel, angVel )
+        {
+            this.TurretRota = turretRota;
+        }
+    }
+}

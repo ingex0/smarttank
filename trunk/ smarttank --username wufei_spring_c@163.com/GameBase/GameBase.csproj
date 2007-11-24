@@ -1,0 +1,301 @@
+﻿<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <ProjectGuid>{7298431B-2D85-4984-AD89-A0AACABD3217}</ProjectGuid>
+    <ProjectTypeGuids>{9F340DF3-2AED-4330-AC16-78AC2D9B4738};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">x86</Platform>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>GameBase</RootNamespace>
+    <AssemblyName>GameBase</AssemblyName>
+    <XnaFrameworkVersion>v1.0</XnaFrameworkVersion>
+    <XnaPlatform>Windows</XnaPlatform>
+    <XNAGlobalContentPipelineAssemblies>Microsoft.Xna.Framework.Content.Pipeline.EffectImporter.dll;Microsoft.Xna.Framework.Content.Pipeline.FBXImporter.dll;Microsoft.Xna.Framework.Content.Pipeline.TextureImporter.dll;Microsoft.Xna.Framework.Content.Pipeline.XImporter.dll</XNAGlobalContentPipelineAssemblies>
+    <XNAProjectContentPipelineAssemblies>
+    </XNAProjectContentPipelineAssemblies>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x86' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>..\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <NoStdLib>true</NoStdLib>
+    <UseVSHostingProcess>false</UseVSHostingProcess>
+    <PlatformTarget>x86</PlatformTarget>
+    <DocumentationFile>..\Debug\GameBase.XML</DocumentationFile>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x86' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\x86\Release</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <NoStdLib>true</NoStdLib>
+    <UseVSHostingProcess>false</UseVSHostingProcess>
+    <PlatformTarget>x86</PlatformTarget>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Microsoft.Xna.Framework">
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="Microsoft.Xna.Framework.Game">
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="mscorlib">
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="System">
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="BaseGame.cs">
+      <XNAUseContentPipeline>false</XNAUseContentPipeline>
+      <Name>BaseGame</Name>
+    </Compile>
+    <Compile Include="DataStructure\CircleList.cs">
+      <XNAUseContentPipeline>false</XNAUseContentPipeline>
+      <Name>CircleList</Name>
+    </Compile>
+    <Compile Include="DataStructure\FastLinkedList.cs">
+      <XNAUseContentPipeline>false</XNAUseContentPipeline>
+      <Name>FastLinkedList</Name>
+    </Compile>
+    <Compile Include="DataStructure\Graph.cs">
+      <XNAUseContentPipeline>false</XNAUseContentPipeline>
+      <Name>Graph</Name>
+    </Compile>
+    <Compile Include="DataStructure\Line.cs">
+      <XNAUseContentPipeline>false</XNAUseContentPipeline>
+      <Name>Line</Name>
+    </Compile>
+    <Compile Include="DataStructure\MultiLinkedList.cs">
+      <XNAUseContentPipeline>false</XNAUseContentPipeline>
+      <Name>MultiLinkedList</Name>
+    </Compile>
+    <Compile Include="DataStructure\Rectanglef.cs">
+      <XNAUseContentPipeline>false</XNAUseContentPipeline>
+      <Name>Rectanglef</Name>
+    </Compile>
+    <Compile Include="DataStructure\Segment.cs">
+      <XNAUseContentPipeline>false</XNAUseContentPipeline>
+      <Name>Segment</Name>
+    </Compile>
+    <Compile Include="DataStructure\test\CircleListTest.cs">
+      <XNAUseContentPipeline>false</XNAUseContentPipeline>
+      <Name>CircleListTest</Name>
+    </Compile>
+    <Compile Include="DataStructure\test\MultiListTest.cs">
+      <XNAUseContentPipeline>false</XNAUseContentPipeline>
+      <Name>MultiListTest</Name>
+    </Compile>
+    <Compile Include="DataStructure\test\TestFastLinkedList.cs">
+      <XNAUseContentPipeline>false</XNAUseContentPipeline>
+      <Name>TestFastLinkedList</Name>
+    </Compile>
+    <Compile Include="DataStructure\test\testRectanglef.cs">
+      <XNAUseContentPipeline>false</XNAUseContentPipeline>
+      <Name>testRectanglef</Name>
+    </Compile>
+    <Compile Include="Effects\Quake.cs">
+      <XNAUseContentPipeline>false</XNAUseContentPipeline>
+      <Name>Quake</Name>
+    </Compile>
+    <Compile Include="Graphics\AnimatedManager.cs">
+      <XNAUseContentPipeline>false</XNAUseContentPipeline>
+      <Name>AnimatedManager</Name>
+    </Compile>
+    <Compile Include="Graphics\AnimatedSprite.cs">
+      <XNAUseContentPipeline>false</XNAUseContentPipeline>
+      <Name>AnimatedSprite</Name>
+    </Compile>
+    <Compile Include="Graphics\AnimatedSpriteSeries.cs">
+      <XNAUseContentPipeline>false</XNAUseContentPipeline>
+      <Name>AnimatedSpriteSeries</Name>
+    </Compile>
+    <Compile Include="Graphics\AnimatedSpriteSingle.cs">
+      <XNAUseContentPipeline>false</XNAUseContentPipeline>
+      <Name>AnimatedSpriteSingle</Name>
+    </Compile>
+    <Compile Include="Graphics\BackGround\IBackGround.cs">
+      <XNAUseContentPipeline>false</XNAUseContentPipeline>
+      <Name>IBackGround</Name>
+    </Compile>
+    <None Include="Graphics\BackGround\SimpleTile\test\TestDataSerialize.cs.old">
+      <XNAUseContentPipeline>false</XNAUseContentPipeline>
+      <Name>TestDataSerialize.cs</Name>
+    </None>
+    <None Include="Graphics\BackGround\SimpleTile\test\TestRenderTile.cs.old">
+      <XNAUseContentPipeline>false</XNAUseContentPipeline>
+      <Name>TestRenderTile.cs</Name>
+    </None>
+    <None Include="Graphics\BackGround\SimpleTile\SimpleTileGround.cs.old">
+      <XNAUseContentPipeline>false</XNAUseContentPipeline>
+      <Name>SimpleTileGround.cs</Name>
+    </None>
+    <None Include="Graphics\BackGround\SimpleTile\SimpleTileData.cs.old">
+      <XNAUseContentPipeline>false</XNAUseContentPipeline>
+      <Name>SimpleTileData.cs</Name>
+    </None>
+    <Compile Include="Graphics\BackGround\VergeTile\test\TestVergeTileGround.cs">
+      <XNAUseContentPipeline>false</XNAUseContentPipeline>
+      <Name>TestVergeTileGround</Name>
+    </Compile>
+    <Compile Include="Graphics\BackGround\VergeTile\VergeTileData.cs">
+      <XNAUseContentPipeline>false</XNAUseContentPipeline>
+      <Name>VergeTileData</Name>
+    </Compile>
+    <None Include="Graphics\BackGround\VergeTile\VergeTileGround.cs.old">
+      <XNAUseContentPipeline>false</XNAUseContentPipeline>
+      <Name>VergeTileGround.cs</Name>
+    </None>
+    <Compile Include="Graphics\BackGround\VergeTile\VergeTileGround.cs">
+      <XNAUseContentPipeline>false</XNAUseContentPipeline>
+      <Name>VergeTileGround</Name>
+    </Compile>
+    <Compile Include="Graphics\BasicGraphics.cs">
+      <XNAUseContentPipeline>false</XNAUseContentPipeline>
+      <Name>BasicGraphics</Name>
+    </Compile>
+    <Compile Include="Graphics\IAnimated.cs">
+      <XNAUseContentPipeline>false</XNAUseContentPipeline>
+      <Name>IAnimated</Name>
+    </Compile>
+    <Compile Include="Graphics\SpriteBorder.cs">
+      <XNAUseContentPipeline>false</XNAUseContentPipeline>
+      <Name>SpriteBorder</Name>
+    </Compile>
+    <Compile Include="Graphics\Test\SpriteBorderTest.cs">
+      <XNAUseContentPipeline>false</XNAUseContentPipeline>
+      <Name>SpriteBorderTest</Name>
+    </Compile>
+    <Compile Include="Graphics\TextEffert.cs">
+      <XNAUseContentPipeline>false</XNAUseContentPipeline>
+      <Name>TextEffert</Name>
+    </Compile>
+    <Compile Include="Helpers\ColorHelper.cs">
+      <XNAUseContentPipeline>false</XNAUseContentPipeline>
+      <Name>ColorHelper</Name>
+    </Compile>
+    <Compile Include="Helpers\ConvertHelper.cs">
+      <XNAUseContentPipeline>false</XNAUseContentPipeline>
+      <Name>ConvertHelper</Name>
+    </Compile>
+    <Compile Include="Helpers\Coordin.cs">
+      <XNAUseContentPipeline>false</XNAUseContentPipeline>
+      <Name>Coordin</Name>
+    </Compile>
+    <Compile Include="Helpers\Directories.cs">
+      <XNAUseContentPipeline>false</XNAUseContentPipeline>
+      <Name>Directories</Name>
+    </Compile>
+    <Compile Include="Helpers\FileHelper.cs">
+      <XNAUseContentPipeline>false</XNAUseContentPipeline>
+      <Name>FileHelper</Name>
+    </Compile>
+    <Compile Include="Graphics\FontManager.cs">
+      <XNAUseContentPipeline>false</XNAUseContentPipeline>
+      <Name>FontManager</Name>
+    </Compile>
+    <Compile Include="Helpers\Log.cs">
+      <XNAUseContentPipeline>false</XNAUseContentPipeline>
+      <Name>Log</Name>
+    </Compile>
+    <Compile Include="Helpers\MathTools.cs">
+      <XNAUseContentPipeline>false</XNAUseContentPipeline>
+      <Name>MathTools</Name>
+    </Compile>
+    <Compile Include="Helpers\RandomHelper.cs">
+      <XNAUseContentPipeline>false</XNAUseContentPipeline>
+      <Name>RandomHelper</Name>
+    </Compile>
+    <Compile Include="Helpers\test\testMathTools.cs">
+      <XNAUseContentPipeline>false</XNAUseContentPipeline>
+      <Name>testMathTools</Name>
+    </Compile>
+    <Compile Include="Input\InputHandler.cs">
+      <XNAUseContentPipeline>false</XNAUseContentPipeline>
+      <Name>InputHandler</Name>
+    </Compile>
+    <Compile Include="Graphics\CollisionResult.cs">
+      <XNAUseContentPipeline>false</XNAUseContentPipeline>
+      <Name>CollisionResult</Name>
+    </Compile>
+    <Compile Include="Properties\AssemblyInfo.cs">
+      <XNAUseContentPipeline>false</XNAUseContentPipeline>
+      <Name>AssemblyInfo</Name>
+    </Compile>
+    <Compile Include="Graphics\Sprite.cs">
+      <XNAUseContentPipeline>false</XNAUseContentPipeline>
+      <Name>Sprite</Name>
+    </Compile>
+    <Compile Include="UI\Button.cs">
+      <XNAUseContentPipeline>false</XNAUseContentPipeline>
+      <Name>Button</Name>
+    </Compile>
+    <Compile Include="UI\Checkbox.cs">
+      <XNAUseContentPipeline>false</XNAUseContentPipeline>
+      <Name>Checkbox</Name>
+    </Compile>
+    <Compile Include="UI\Combo.cs">
+      <XNAUseContentPipeline>false</XNAUseContentPipeline>
+      <Name>Combo</Name>
+    </Compile>
+    <Compile Include="UI\Control.cs">
+      <XNAUseContentPipeline>false</XNAUseContentPipeline>
+      <Name>Control</Name>
+    </Compile>
+    <Compile Include="UI\ControlCollection.cs">
+      <XNAUseContentPipeline>false</XNAUseContentPipeline>
+      <Name>ControlCollection</Name>
+    </Compile>
+    <Compile Include="UI\Label.cs">
+      <XNAUseContentPipeline>false</XNAUseContentPipeline>
+      <Name>Label</Name>
+    </Compile>
+    <Compile Include="UI\Listbox.cs">
+      <XNAUseContentPipeline>false</XNAUseContentPipeline>
+      <Name>Listbox</Name>
+    </Compile>
+    <Compile Include="UI\NumericUpDown.cs">
+      <XNAUseContentPipeline>false</XNAUseContentPipeline>
+      <Name>NumericUpDown</Name>
+    </Compile>
+    <Compile Include="UI\Progressbar.cs">
+      <XNAUseContentPipeline>false</XNAUseContentPipeline>
+      <Name>Progressbar</Name>
+    </Compile>
+    <Compile Include="UI\RadioButton.cs">
+      <XNAUseContentPipeline>false</XNAUseContentPipeline>
+      <Name>RadioButton</Name>
+    </Compile>
+    <Compile Include="UI\Scrollbar.cs">
+      <XNAUseContentPipeline>false</XNAUseContentPipeline>
+      <Name>Scrollbar</Name>
+    </Compile>
+    <Compile Include="UI\Textbox.cs">
+      <XNAUseContentPipeline>false</XNAUseContentPipeline>
+      <Name>Textbox</Name>
+    </Compile>
+    <Compile Include="UI\TextButton.cs">
+      <XNAUseContentPipeline>false</XNAUseContentPipeline>
+      <Name>TextButton</Name>
+    </Compile>
+  </ItemGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <Import Project="$(MSBuildExtensionsPath)\Microsoft\XNA\Game Studio Express\v1.0\Microsoft.Xna.ContentPipeline.targets" />
+  <Import Project="$(MSBuildExtensionsPath)\Microsoft\XNA\Game Studio Express\v1.0\Microsoft.Xna.Common.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

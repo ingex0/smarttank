@@ -1,0 +1,14 @@
+using System;
+using System.Collections.Generic;
+using System.Text;
+using Platform.Logic.Registers;
+using GameBase.Interfaces;
+
+namespace Platform.Logic.Collision
+{
+    public interface ICollisionStrategy
+    {
+        CollisionResult isColliding ( ICollidable objA, ICollidable objB );
+        void checkCollision (Register<ICollidable> register );
+    }
+}

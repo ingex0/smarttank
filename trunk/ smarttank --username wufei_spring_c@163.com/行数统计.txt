@@ -1,0 +1,10 @@
+2007年11月21日统计：
+
+GameBase	8539
+Platform	9355
+InterRules	2785
+AssetRegister	661
+SmartTank	595
+
+total		21935
+

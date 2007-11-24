@@ -1,0 +1,88 @@
+using System;
+using System.Collections.Generic;
+using System.Text;
+using Platform.Logic.Phisics;
+using Microsoft.Xna.Framework;
+using GameBase;
+using Microsoft.Xna.Framework.Graphics;
+using Microsoft.Xna.Framework.Input;
+
+namespace Platform.Logic.GameObjects
+{
+    public class TestPhisicalObject : IPhisical
+    {
+        public TestPhisicalObject ()
+        {
+            phisics = new NewtonStrategy();
+            current = new NewtonPhisicalStatus();
+            incoming = new NewtonPhisicalStatus();
+            current.Pos.X = 20;
+            current.Pos.Y = 20;
+            current.FrictionFactor = 0.5f;
+            current.Weight = 20;
+            current.Rota = 0;
+            current.AngVel = 0;
+            current.Inertia = 10;
+            current.Moment = 0.1f;
+            current.Force = MaxForce;
+
+
+
+
+
+        }
+
+        public NewtonPhisicalStatus NewtonPhisicalStatus
+        {
+            get { return current; }
+        }
+
+        public void prepareNextStatus ( float milliseconds )
+        {
+            NewtonPhisicalStatus stat = new NewtonPhisicalStatus( current );
+            //if (current.Velocity.Length() == 0) current.Force = MaxForce;
+            //else current.Force = MaxPower / current.Velocity.Length();
+            //if (current.Force > MaxForce) current.Force = MaxForce;
+
+            //float image = Vector2.Dot(incoming.Velocity, incoming.DirectionVector);
+            //if (Math.Abs(image) > MaxVelocity) {
+            //    incoming.Velocity -= incoming.DirectionVector * image;
+            //    incoming.Velocity += incoming.DirectionVector * MaxVelocity;
+            //}
+            if (current.Vel.Length() == 0 && current.Force != 0) stat.Force = MaxForce;
+            else if (current.Vel.Length() != 0) stat.Force = MaxPower / current.Vel.Length();
+            if (stat.Force > MaxForce) stat.Force = MaxForce;
+
+            float image = Vector2.Dot( stat.Vel, stat.DirectionVector );
+            if (Math.Abs( image ) > MaxVelocity)
+            {
+                //stat.Velocity -= stat.DirectionVector * image;
+                //stat.Velocity += stat.DirectionVector * MaxVelocity;
+                stat.Force = 0;
+            }
+
+            incoming = phisics.getNextStatus( stat, milliseconds ) as NewtonPhisicalStatus;
+            incoming.Force = current.Force;
+
+
+
+
+
+
+        }
+        public void validate ()
+        {
+            //current = incoming;
+            current = incoming;
+            //incoming = null;
+
+        }
+
+
+        private NewtonPhisicalStatus current, incoming;
+        private IPhisicalStrategy phisics;
+        private const float MaxPower = 1000f;
+        private const float MaxForce = 1000f;
+        private const float MaxVelocity = 20f;
+    }
+}

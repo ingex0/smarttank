@@ -1,0 +1,189 @@
+using System;
+using System.Collections.Generic;
+using System.Text;
+using GameBase;
+using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
+using GameBase.Graphics;
+using GameBase.DataStructure;
+
+namespace Platform.Visibility.test
+{
+    /*
+     * 基本功能已经实现。
+     * 
+     * 仍需要在绘制雷达之前手动的更新物体和雷达的包围盒和转换矩阵等。
+     * 
+     * 下一个步骤是将此与场景管理整合。
+     * 
+     * 由于RaderDepthMap/RaderDrawer 现改为ShelterManager的内部类，故本测试不在有效。
+     * 
+     * */
+
+
+    public class TestShelterMananger : BaseGame
+    {
+        ShelterManager shelterManager;
+
+        EasyRader rader1;
+        EasyRader rader2;
+        EasyRader rader3;
+        EasyRader rader4;
+
+        easyShelter shelter1;
+        easyShelter shelter2;
+        easyShelter shelter3;
+        easyShelter shelter4;
+
+        Sprite sprite1;
+        Sprite sprite2;
+        Sprite sprite3;
+        Sprite sprite4;
+
+        MultiLinkedList<EasyRader> raders1;
+        //MultiLinkedList<EasyRader> raders2;
+        MultiLinkedList<easyShelter> shelters1;
+        MultiLinkedList<easyShelter> shelters2;
+
+
+        protected override void Initialize ()
+        {
+            base.Initialize();
+            Coordin.SetScreenViewRect( new Rectangle( 0, 0, ClientRec.Width, ClientRec.Height ) );
+            Coordin.SetLogicScaleAndPos( 2, new Vector2( 200, 150 ) );
+
+
+
+            sprite1 = new Sprite( true, "Test\\hucSmart", true );
+            sprite1.SetParameters( new Vector2( 30, 30 ), new Vector2( 200, 150 ), 1f, 0f, Color.White, 0.5f, SpriteBlendMode.AlphaBlend );
+
+            shelter1 = new easyShelter( sprite1 );
+
+            sprite2 = new Sprite( true, "Test\\hucSmart", true );
+            sprite2.SetParameters( new Vector2( 30, 30 ), new Vector2( 100, 110 ), 1.5f, -2.34f, Color.White, 0.5f, SpriteBlendMode.AlphaBlend );
+
+            shelter2 = new easyShelter( sprite2 );
+
+            sprite3 = new Sprite( true, "Test\\hucSmart", true );
+            sprite3.SetParameters( new Vector2( 30, 30 ), new Vector2( 150, 160 ), 0.7f, 1.23f, Color.Red, 0.5f, SpriteBlendMode.AlphaBlend );
+
+            shelter3 = new easyShelter( sprite3 );
+
+            sprite4 = new Sprite( true, "Test\\hucSmart", true );
+            sprite4.SetParameters( new Vector2( 30, 30 ), new Vector2( 200, 60 ), 1.2f, 4.23f, Color.White, 0.5f, SpriteBlendMode.AlphaBlend );
+
+            shelter4 = new easyShelter( sprite4 );
+
+            rader1 = new EasyRader( new Rader( MathHelper.Pi / 6, 100, new Vector2( 150, 100 ), MathHelper.Pi, Color.Red ) );
+
+            rader2 = new EasyRader( new Rader( MathHelper.Pi / 8, 190, new Vector2( 50, 170 ), MathHelper.PiOver2, Color.Yellow ) );
+
+            rader3 = new EasyRader( new Rader( MathHelper.PiOver4, 180, new Vector2( 150, 10 ), MathHelper.Pi, Color.Pink ) );
+
+            // 这里发现一个BUG，当rota为4.5f的时候！（已经更正。）
+            rader4 = new EasyRader( new Rader( MathHelper.Pi / 6, 190, new Vector2( 270, 60 ), /*4.5f*/4.2f , Color.White ) );
+
+
+
+
+            raders1 = new MultiLinkedList<EasyRader>();
+            //raders2 = new MultiLinkedList<EasyRader>();
+
+            raders1.AddLast( rader1 );
+            raders1.AddLast( rader2 );
+            raders1.AddLast( rader3 );
+            raders1.AddLast( rader4 );
+
+            //raders2.AddLast( rader2 );
+            //raders2.AddLast( rader4 );
+
+            shelters1 = new MultiLinkedList<easyShelter>();
+            shelters1.AddLast( shelter1 );
+            shelters1.AddLast( shelter2 );
+            //shelters1.AddLast( shelter3 );
+            //shelters1.AddLast( shelter4 );
+
+
+            shelters2 = new MultiLinkedList<easyShelter>();
+            shelters2.AddLast( shelter3 );
+            shelters2.AddLast( shelter4 );
+
+            shelterManager = new ShelterManager();
+
+            //shelterManager.AddTankRaderGroup( raders1.GetConvertList<IRaderOwner>() );
+            //shelterManager.AddShelterGroupForTankRader( shelters1.GetConvertList<IShelterObj>() );
+            IEnumerable<IShelterObj>[] shelterGroups = new IEnumerable<IShelterObj>[]
+            {
+                shelters1.GetConvertList<IShelterObj>(),
+                shelters2.GetConvertList<IShelterObj>()
+            };
+
+            shelterManager.AddRaderShelterGroup( raders1.GetConvertList<IRaderOwner>(), shelterGroups );
+
+
+        }
+
+        protected override void Update ( GameTime gameTime )
+        {
+            base.Update( gameTime );
+
+            sprite1.UpdateTransformBounding();
+            sprite2.UpdateTransformBounding();
+            sprite3.UpdateTransformBounding();
+            sprite4.UpdateTransformBounding();
+
+            shelterManager.Update();
+        }
+
+        protected override void GameDraw ( GameTime gameTime )
+        {
+            Device.Clear( Color.Black );
+
+            rader1.Rader.Draw();
+            rader2.Rader.Draw();
+            rader3.Rader.Draw();
+            rader4.Rader.Draw();
+
+            sprite1.Draw();
+            sprite2.Draw();
+            sprite3.Draw();
+            sprite4.Draw();
+
+            //BasicGraphics.DrawRectangle( rader1.Rader.BoundBox, 3, Color.White, 0f );
+            //BasicGraphics.DrawRectangle( rader2.Rader.BoundBox, 3, Color.White, 0f );
+            //BasicGraphics.DrawRectangle( rader3.Rader.BoundBox, 3, Color.White, 0f );
+
+
+            //BasicGraphics.DrawPoint( rader4.Rader.Pos, 1f, Color.White, 0f );
+            //BasicGraphics.DrawPoint( rader4.Rader.LeftP, 1f, Color.Green, 0f );
+            //BasicGraphics.DrawPoint( rader4.Rader.RightP, 1f, Color.Gray, 0f );
+            
+            //BasicGraphics.DrawLine( rader4.Rader.Pos, rader4.Rader.Pos + rader4.Rader.N * rader4.Rader.R, 3, Color.Red, 0f );
+            //BasicGraphics.DrawRectangle( rader4.Rader.BoundBox, 3, Color.White, 0f );
+
+            //BasicGraphics.DrawRectangle( sprite3.BoundRect, 3, Color.Green, 0f );
+            BasicGraphics.DrawRectangle( new Rectangle( 0, 0, 400, 300 ), 3, Color.White, 0f );
+        }
+    }
+
+    class EasyRader : IRaderOwner
+    {
+        Rader rader;
+
+        #region IRaderOwner 成员
+
+        public Rader Rader
+        {
+            get { return rader; }
+        }
+
+        #endregion
+
+        public EasyRader ( Rader rader )
+        {
+            this.rader = rader;
+        }
+    }
+
+
+}

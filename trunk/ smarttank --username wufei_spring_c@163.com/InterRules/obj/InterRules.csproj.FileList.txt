@@ -1,0 +1,13 @@
+obj\x86\Debug\ResolveAssemblyReference.cache
+bin\x86\Debug\InterRules.dll
+bin\x86\Debug\InterRules.pdb
+bin\x86\Debug\GameBase.dll
+bin\x86\Debug\Platform.dll
+bin\x86\Debug\Platform.pdb
+bin\x86\Debug\GameBase.pdb
+bin\x86\Debug\GameBase.xml
+obj\x86\Debug\InterRules.dll
+obj\x86\Debug\InterRules.pdb
+..\Debug\Rules\InterRules.dll
+..\Debug\Rules\InterRules.pdb
+D:\myProgram\AI_Tank\AI_Tank2.0\SmartTank\SmartTank\Debug\Rules\InterRules.tlb

@@ -1,0 +1,16 @@
+using System;
+using System.Collections.Generic;
+using System.Text;
+using GameBase.Graphics;
+using GameBase.Interfaces;
+
+namespace Platform.Logic.Collision
+{
+    public interface ICollidable
+    {
+
+        void HandleCollideWith ( CollisionResult result, ICollidable objB );
+
+        Sprite CollideSprite { get;}
+    }
+}

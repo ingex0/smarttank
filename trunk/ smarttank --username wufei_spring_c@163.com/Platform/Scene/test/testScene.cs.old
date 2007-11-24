@@ -1,0 +1,17 @@
+using System;
+using System.Collections.Generic;
+using System.Text;
+
+namespace Platform.Scene.test
+{
+    public class testScene
+    {
+        public static void Run ()
+        {
+            Scene scene = new Scene();
+            Scene.SaveToFile( "testScene.test", scene );
+
+            Scene scene2 = Scene.LoadFromFile( "testScene.test" );
+        }
+    }
+}

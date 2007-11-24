@@ -1,0 +1,5 @@
+..\Debug\Platform.dll
+..\Debug\Platform.pdb
+obj\x86\Debug\ResolveAssemblyReference.cache
+obj\x86\Debug\Platform.dll
+obj\x86\Debug\Platform.pdb

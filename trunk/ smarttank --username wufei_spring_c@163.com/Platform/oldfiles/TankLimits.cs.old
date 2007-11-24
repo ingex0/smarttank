@@ -1,0 +1,54 @@
+using System;
+using System.Collections.Generic;
+using System.Text;
+using Platform.Logic.Phisics;
+using Microsoft.Xna.Framework;
+
+namespace Platform.GameObjects.Tank
+{
+    public class TankLimits
+    {
+        public float MaxPower;
+        public float MaxVelocity;
+        public float MaxForce;
+        public float MaxAngulaVelocity;
+        public float MaxMoment;
+        public virtual NewtonPhisicalStatus HandleLimits ( NewtonPhisicalStatus status, TankActionStatus action )
+        {
+            NewtonPhisicalStatus stat = new NewtonPhisicalStatus( status );
+            if (action.EngineStatus != TankEngineStatus.Stop)
+            {
+                float max = MaxPower;
+                if (action.RotatorStatus != TankRotatorStatus.Stop) max /= 2;
+                if (Math.Abs( stat.Force ) * status.Velocity.Length() > max) stat.Force = max / status.Velocity.Length() * stat.Force / Math.Abs( stat.Force );
+                if (action.RotatorStatus == TankRotatorStatus.Stop) stat.Force /= 2;
+                if (status.Velocity.Length() > MaxVelocity) stat.Force = 0;
+            }
+            else
+            {
+
+            }
+            if (action.RotatorStatus != TankRotatorStatus.Stop)
+            {
+                float max = MaxPower;
+                if (action.EngineStatus != TankEngineStatus.Stop) max /= 2;
+                if (Math.Abs( stat.AngulaVelocity * stat.Moment ) > max)
+                {
+                    stat.Moment = stat.Moment / Math.Abs( stat.Moment ) * max / Math.Abs( stat.AngulaVelocity );
+                }
+
+                if (Math.Abs( stat.AngulaVelocity ) > MaxAngulaVelocity)
+                {
+                    stat.Moment = 0;
+                }
+
+            }
+            else
+            {
+            }
+            return stat;
+
+        }
+
+    }
+}

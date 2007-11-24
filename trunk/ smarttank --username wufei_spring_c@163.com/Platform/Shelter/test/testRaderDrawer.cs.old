@@ -1,0 +1,50 @@
+using System;
+using System.Collections.Generic;
+using System.Text;
+using GameBase;
+using Microsoft.Xna.Framework;
+using GameBase.Graphics;
+using Microsoft.Xna.Framework.Graphics;
+using GameBase.DataStructure;
+
+namespace Platform.Visibility.test
+{
+    /*
+     * 由于RaderDepthMap/RaderDrawer 现改为ShelterManager的内部类，故本测试不在有效。
+     * */
+
+    class testRaderDrawer : BaseGame
+    {
+        Rader rader;
+        RaderDrawer drawer;
+        RaderDepthMap depthMap;
+
+        protected override void Initialize ()
+        {
+            base.Initialize();
+            Coordin.SetScreenViewRect( new Rectangle( 0, 0, ClientRec.Width, ClientRec.Height ) );
+            Coordin.SetLogicViewRect( new Rectanglef( 0, 0, 300, 200 ) );
+
+            rader = new Rader( MathHelper.Pi / 6, 100, new Vector2( 150, 100 ), MathHelper.PiOver4, Color.Yellow );
+
+            drawer = new RaderDrawer();
+
+            depthMap = new RaderDepthMap( 100 );
+            for (int i = 0; i < (int)depthMap.Size / 2; i++)
+            {
+                depthMap[i] = 0.3f;
+            }
+            depthMap[80] = 0.5f;
+            depthMap[81] = 0.5f;
+            depthMap[82] = 0.5f;
+
+        }
+
+        protected override void GameDraw ( GameTime gameTime )
+        {
+            rader.Update();
+            Texture2D tex = drawer.DrawRader( rader, depthMap )[0];
+            Sprite.alphaSprite.Draw( tex, new Vector2( 150, 100 ), Color.White );
+        }
+    }
+}

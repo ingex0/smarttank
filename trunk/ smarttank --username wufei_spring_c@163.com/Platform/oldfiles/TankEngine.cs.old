@@ -1,0 +1,54 @@
+using System;
+using System.Collections.Generic;
+using System.Text;
+
+namespace Platform.GameObjects.Tank
+{
+    class TankEngine
+    {
+        #region EngineParameter
+
+        private readonly float maxPower;
+
+        #endregion
+
+        #region EngineStatue
+
+        private float curPower;
+        public float CurPower
+        {
+            get { return curPower; }
+        }
+
+        #endregion
+
+        #region Consturction
+
+        public TankEngine ( float maxPower )
+        {
+            this.maxPower = maxPower;
+        }
+
+        #endregion
+
+        #region Engine Operations
+
+        public void SetPower ( float power )
+        {
+            this.curPower = Math.Min( maxPower, power );
+        }
+
+        public void DeltaPower ( float deltaPower )
+        {
+            this.curPower = Math.Max( 0, Math.Min( maxPower, this.curPower + deltaPower ) );
+        }
+
+        public void ShutDown ()
+        {
+            this.curPower = 0;
+        } 
+
+        #endregion
+
+    }
+}

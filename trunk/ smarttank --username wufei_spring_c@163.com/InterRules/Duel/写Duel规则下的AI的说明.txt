@@ -1,0 +1,6 @@
+
+DuelAIModel是一个Duel规则下的AI的编写示例
+
+请在InterRules项目的Duel文件夹下编写你的AI类
+
+仿造该示例写好自己的AI类后，可以通过改写DuelRule.cs文件中的AIInitial函数来测试你的AI。

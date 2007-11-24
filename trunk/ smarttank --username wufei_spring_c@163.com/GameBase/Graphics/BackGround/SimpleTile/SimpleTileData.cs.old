@@ -1,0 +1,102 @@
+using System;
+using System.Collections.Generic;
+using System.Text;
+using System.Xml.Serialization;
+using System.IO;
+using GameBase.Helpers;
+
+namespace GameBase.BackGround.SimpleTile
+{
+
+    [Obsolete( "请使用VergeTileGround类以达到更好效果" )]
+    public class SimpleTileData
+    {
+        #region statics
+
+        static XmlSerializer serializer;
+
+        public static void Save ( Stream stream, SimpleTileData data )
+        {
+            if (serializer == null)
+                serializer = new XmlSerializer( typeof( SimpleTileData ) );
+
+            try
+            {
+                serializer.Serialize( stream, data );
+            }
+            catch (Exception)
+            {
+                Log.Write( "Save SimpleTileData error!" );
+            }
+            finally
+            {
+                stream.Close();
+            }
+        }
+
+        public static SimpleTileData Load ( Stream stream )
+        {
+            if (serializer == null)
+                serializer = new XmlSerializer( typeof( SimpleTileData ) );
+
+            SimpleTileData result = null;
+            try
+            {
+                result = (SimpleTileData)serializer.Deserialize( stream );
+            }
+            catch (Exception)
+            {
+                Log.Write( "Load SimpleTileData error!" );
+            }
+            finally
+            {
+                stream.Close();
+            }
+            return result;
+        }
+
+        #endregion
+
+        #region Variables
+
+        public int width;
+
+        public int height;
+
+        /// <summary>
+        /// ( x, y )对应的index为：x + width * y
+        /// </summary>
+        public int[] texIndexs;
+
+        public string[] texPaths;
+
+        #endregion
+
+        public SimpleTileData ()
+        {
+
+        }
+
+        /// <summary>
+        /// 只用来测试
+        /// </summary>
+        /// <param name="width"></param>
+        /// <param name="height"></param>
+        /// <param name="texSum"></param>
+        [Obsolete( "this methods is only for test" )]
+        public SimpleTileData ( int width, int height, int texSum )
+        {
+            texIndexs = new int[width * height];
+            for (int i = 0; i < width; i++)
+            {
+
+                for (int j = 0; j < height; j++)
+                {
+                    texIndexs[i + width * j] = j;
+                }
+            }
+
+            texPaths = new string[texSum];
+        }
+    }
+}

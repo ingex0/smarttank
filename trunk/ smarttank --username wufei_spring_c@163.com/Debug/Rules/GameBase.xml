@@ -1,0 +1,529 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>GameBase</name>
+    </assembly>
+    <members>
+        <member name="F:GameBase.DataStructure.MultiLinkedList`1.ValueNodeTable">
+            <summary>
+            为了使移除元素更高效而添加这个Hash表
+            </summary>
+        </member>
+        <member name="F:GameBase.DataStructure.FastLinkedList`1.ValueNodeTable">
+            <summary>
+            为了使移除元素更高效而添加这个Hash表
+            </summary>
+        </member>
+        <member name="T:GameBase.Helpers.Log">
+             <summary>
+             Log will create automatically a log file and write
+             log/error/debug info for simple runtime error checking, very useful
+             for minor errors, such as finding not files.
+             The application can still continue working, but this log provides
+             an easy support to find out what files are missing (in this example).
+            
+             Note: I don't use this class anymore for big projects, but its small
+             and handy for smaller projects and nice to log non-debugable stuff.
+             </summary>
+        </member>
+        <member name="F:GameBase.Helpers.Log.LogFilename">
+            <summary>
+            Log filename
+            </summary>
+        </member>
+        <member name="F:GameBase.Helpers.Log.writer">
+            <summary>
+            Writer
+            </summary>
+        </member>
+        <member name="M:GameBase.Helpers.Log.Initialize">
+            <summary>
+            Static constructor
+            </summary>
+        </member>
+        <member name="M:GameBase.Helpers.Log.Write(System.String)">
+            <summary>
+            Writes a LogType and info/error message string to the Log file
+            </summary>
+        </member>
+        <member name="M:GameBase.Graphics.AnimatedSprite.Start(System.Int32,System.Int32,System.Boolean)">
+            <summary>
+            Start to Show the Cartoon on Screen,
+            it will start at the startFrame index,
+            and after passing sumShowFrame's number of frames, it will a stop automatically, and call OnStop Event.
+            </summary>
+            <param name="startFrame"></param>
+            <param name="sumShowFrame"></param>
+        </member>
+        <member name="M:GameBase.Graphics.AnimatedSpriteSingle.SetParameters(Microsoft.Xna.Framework.Vector2,Microsoft.Xna.Framework.Vector2,System.Single,System.Single,Microsoft.Xna.Framework.Graphics.Color,System.Single,Microsoft.Xna.Framework.Graphics.SpriteBlendMode)">
+            <summary>
+            设置参数
+            </summary>
+            <param name="origin"></param>
+            <param name="pos"></param>
+            <param name="scale">逻辑大小/原图大小</param>
+            <param name="rata"></param>
+            <param name="color"></param>
+            <param name="layerDepth"></param>
+            <param name="blendMode"></param>
+        </member>
+        <member name="M:GameBase.Helpers.MathTools.AngTransInPI(System.Single)">
+            <summary>
+            将弧度值换算到PI和-PI之间
+            </summary>
+            <param name="ang"></param>
+            <returns></returns>
+        </member>
+        <member name="M:GameBase.Helpers.MathTools.NormalVectorFromAzi(System.Single)">
+            <summary>
+            由方向角计算出该方向的单位向量，包含三角函数。
+            </summary>
+            <param name="azi"></param>
+            <returns></returns>
+        </member>
+        <member name="M:GameBase.Helpers.MathTools.Round(System.Single)">
+            <summary>
+            转化为最靠近的整数
+            </summary>
+            <param name="f"></param>
+            <returns></returns>
+        </member>
+        <member name="M:GameBase.Helpers.MathTools.FloatEqual(System.Single,System.Single,System.Single)">
+            <summary>
+            比较两浮点值是否相等
+            </summary>
+            <param name="a"></param>
+            <param name="b"></param>
+            <returns></returns>
+        </member>
+        <member name="M:GameBase.Helpers.MathTools.FloatEqualZero(System.Single,System.Single)">
+            <summary>
+            检查浮点值是否为零
+            </summary>
+            <param name="a"></param>
+            <returns></returns>
+        </member>
+        <member name="M:GameBase.Helpers.MathTools.AziFromRefPos(Microsoft.Xna.Framework.Vector2)">
+            <summary>
+            计算相对向量的方位
+            </summary>
+            <param name="refPos"></param>
+            <returns></returns>
+        </member>
+        <member name="M:GameBase.Helpers.MathTools.MidVerLine(Microsoft.Xna.Framework.Vector2,Microsoft.Xna.Framework.Vector2)">
+            <summary>
+            计算两点的中垂线
+            </summary>
+            <param name="point1"></param>
+            <param name="point2"></param>
+            <returns></returns>
+        </member>
+        <member name="M:GameBase.Helpers.MathTools.VerticeLine(GameBase.DataStructure.Line,Microsoft.Xna.Framework.Vector2)">
+            <summary>
+            计算通过定点并与指定直线垂直的直线
+            </summary>
+            <param name="line"></param>
+            <param name="point"></param>
+            <returns></returns>
+        </member>
+        <member name="M:GameBase.Helpers.MathTools.InterPoint(GameBase.DataStructure.Line,GameBase.DataStructure.Line,Microsoft.Xna.Framework.Vector2@)">
+            <summary>
+            计算两直线的交点
+            </summary>
+            <param name="line1"></param>
+            <param name="line2"></param>
+            <param name="result"></param>
+            <returns></returns>
+        </member>
+        <member name="M:GameBase.Helpers.MathTools.AngBetweenVectors(Microsoft.Xna.Framework.Vector2,Microsoft.Xna.Framework.Vector2)">
+            <summary>
+            计算两向量间的夹角，以弧度为单位
+            </summary>
+            <param name="vec1"></param>
+            <param name="vec2"></param>
+            <returns></returns>
+        </member>
+        <member name="M:GameBase.Helpers.MathTools.Vector2Cross(Microsoft.Xna.Framework.Vector2,Microsoft.Xna.Framework.Vector2)">
+            <summary>
+            两二维向量的叉积，大于零表示两向量呈顺时针弯折
+            </summary>
+            <param name="vec1"></param>
+            <param name="vec2"></param>
+            <returns></returns>
+        </member>
+        <member name="M:GameBase.Helpers.MathTools.ReflectVector(Microsoft.Xna.Framework.Vector2,Microsoft.Xna.Framework.Vector2)">
+            <summary>
+            获得入射向量经镜面反射后的反射向量
+            </summary>
+            <param name="incident">入射向量</param>
+            <param name="mirrorNormal">镜面法向量</param>
+            <returns></returns>
+        </member>
+        <member name="F:GameBase.Graphics.SpriteBorder.SurroundPoint">
+            <summary>
+            用于获得边界的辅助对象，参见InitialSurroundPoint函数、
+            SetPrePointFirstTime函数、SurroundQueue函数以及BuildCircle函数。
+            </summary>
+        </member>
+        <member name="M:GameBase.Graphics.SpriteBorder.BuildCircle(GameBase.Graphics.Border)">
+            <summary>
+            按逆时针方向获得边界圈
+            </summary>
+            <param name="first"></param>
+            <returns></returns>
+        </member>
+        <member name="F:GameBase.Graphics.BackGround.VergeTile.VergeTileData.vertexTexIndexs">
+            <summary>
+            每个顶点处的纹理图索引
+            sum = (gridWidth + 1) * (gridHeight + 1);
+            index = x + (gridWidth + 1) * y;
+            </summary>
+        </member>
+        <member name="F:GameBase.Graphics.BackGround.VergeTile.VergeTileData.gridTexIndexs">
+            <summary>
+            每个格子中的纹理图索引
+            </summary>
+        </member>
+        <member name="F:GameBase.Graphics.BackGround.VergeTile.VergeTileData.texPaths">
+            <summary>
+            纹理图地址
+            </summary>
+        </member>
+        <member name="T:GameBase.Helpers.FileHelper">
+            <summary>
+            File helper class to get text lines, number of text lines, etc.
+            Update: Now also supports the XNA Storage classes :)
+            </summary>
+        </member>
+        <member name="M:GameBase.Helpers.FileHelper.CreateGameContentFile(System.String,System.Boolean)">
+            <summary>
+            Create game content file, will create file if it does not exist.
+            Else the existing file is just loaded.
+            </summary>
+            <param name="relativeFilename">Relative filename</param>
+            <returns>File stream</returns>
+        </member>
+        <member name="M:GameBase.Helpers.FileHelper.LoadGameContentFile(System.String)">
+            <summary>
+            Load game content file, returns null if file was not found.
+            </summary>
+            <param name="relativeFilename">Relative filename</param>
+            <returns>File stream</returns>
+        </member>
+        <member name="F:GameBase.Helpers.FileHelper.xnaUserDevice">
+            <summary>
+            XNA user device, asks for the saving location on the Xbox360,
+            theirfore remember this device for the time we run the game.
+            </summary>
+        </member>
+        <member name="M:GameBase.Helpers.FileHelper.OpenFileForCurrentPlayer(System.String,System.IO.FileMode,System.IO.FileAccess)">
+            <summary>
+            Open or create file for current player. Basically just creates a
+            FileStream using the specified FileMode flag, but on the Xbox360
+            we have to ask the user first where he wants to.
+            Basically used for the GameSettings and the Log class.
+            </summary>
+            <param name="filename">Filename</param>
+            <param name="mode">Mode</param>
+            <param name="access">Access</param>
+            <returns>File stream</returns>
+        </member>
+        <member name="M:GameBase.Helpers.FileHelper.GetLines(System.String)">
+            <summary>
+            Returns the number of text lines we got in a file.
+            </summary>
+        </member>
+        <member name="M:GameBase.Helpers.FileHelper.WriteVector3(System.IO.BinaryWriter,Microsoft.Xna.Framework.Vector3)">
+            <summary>
+            Write vector3 to stream
+            </summary>
+            <param name="writer">Writer</param>
+            <param name="vec">Vector3</param>
+        </member>
+        <member name="M:GameBase.Helpers.FileHelper.WriteVector4(System.IO.BinaryWriter,Microsoft.Xna.Framework.Vector4)">
+            <summary>
+            Write vector4 to stream
+            </summary>
+            <param name="writer">Writer</param>
+            <param name="vec">Vector4</param>
+        </member>
+        <member name="M:GameBase.Helpers.FileHelper.WriteMatrix(System.IO.BinaryWriter,Microsoft.Xna.Framework.Matrix)">
+            <summary>
+            Write matrix to stream
+            </summary>
+            <param name="writer">Writer</param>
+            <param name="matrix">Matrix</param>
+        </member>
+        <member name="M:GameBase.Helpers.FileHelper.ReadVector3(System.IO.BinaryReader)">
+            <summary>
+            Read vector3 from stream
+            </summary>
+            <param name="reader">Reader</param>
+            <returns>Vector3</returns>
+        </member>
+        <member name="M:GameBase.Helpers.FileHelper.ReadVector4(System.IO.BinaryReader)">
+            <summary>
+            Read vector4 from stream
+            </summary>
+            <param name="reader">Reader</param>
+            <returns>Vector4</returns>
+        </member>
+        <member name="M:GameBase.Helpers.FileHelper.ReadMatrix(System.IO.BinaryReader)">
+            <summary>
+            Read matrix from stream
+            </summary>
+            <param name="reader">Reader</param>
+            <returns>Matrix</returns>
+        </member>
+        <member name="P:GameBase.Helpers.FileHelper.XnaUserDevice">
+            <summary>
+            Xna user device
+            </summary>
+            <returns>Storage device</returns>
+        </member>
+        <member name="T:GameBase.Helpers.ColorHelper">
+            <summary>
+            Color helper, just to convert colors to different formats and providing
+            more helper methods missing in the Color class.
+            </summary>
+        </member>
+        <member name="F:GameBase.Helpers.ColorHelper.Empty">
+            <summary>
+            Empty color, used to mark unused color values.
+            </summary>
+        </member>
+        <member name="F:GameBase.Helpers.ColorHelper.HalfAlpha">
+            <summary>
+            Half alpha color helper. Just white with 50% alpha.
+            </summary>
+        </member>
+        <member name="M:GameBase.Helpers.ColorHelper.StayInRange(System.Single,System.Single,System.Single)">
+            <summary>
+            Stay in range, val will be set to min if less or to max when bigger.
+            </summary>
+        </member>
+        <member name="M:GameBase.Helpers.ColorHelper.MultiplyColors(Microsoft.Xna.Framework.Graphics.Color,Microsoft.Xna.Framework.Graphics.Color)">
+            <summary>
+            Multiply colors
+            </summary>
+            <param name="color1">Color 1</param>
+            <param name="color2">Color 2</param>
+            <returns>Return color</returns>
+        </member>
+        <member name="M:GameBase.Helpers.ColorHelper.SameColor(Microsoft.Xna.Framework.Graphics.Color,Microsoft.Xna.Framework.Graphics.Color)">
+            <summary>
+            Same color. Helper method for LoadLevel because for some reason
+            the color compare does not work and causes a lot of errors.
+            </summary>
+            <param name="color">Color</param>
+            <param name="checkColor">Check color</param>
+            <returns>Bool</returns>
+        </member>
+        <member name="M:GameBase.Helpers.ColorHelper.InterpolateColor(Microsoft.Xna.Framework.Graphics.Color,Microsoft.Xna.Framework.Graphics.Color,System.Single)">
+            <summary>
+            Interpolate color. Used to fade the hud colors from green to red.
+            </summary>
+        </member>
+        <member name="M:GameBase.Helpers.ColorHelper.ApplyAlphaToColor(Microsoft.Xna.Framework.Graphics.Color,System.Single)">
+            <summary>
+            Apply alpha to color
+            </summary>
+            <param name="col">Color</param>
+            <param name="newAlpha">New alpha</param>
+            <returns>Color</returns>
+        </member>
+        <member name="M:GameBase.Helpers.ColorHelper.MixAlphaToColor(Microsoft.Xna.Framework.Graphics.Color,System.Single)">
+            <summary>
+            Mix alpha to color
+            </summary>
+            <param name="col">Color</param>
+            <param name="newAlpha">New alpha</param>
+            <returns>Color</returns>
+        </member>
+        <member name="T:GameBase.Graphics.Sprite">
+            <summary>
+            this is the class which manages all the sprite items in the gameScene.
+            it can draw itself according to the position, rotation, scale, ect as you like.
+            it's also able to detect collision between two sprite using pix-detection method.
+            Notice: sourceRectangle is't supported, so you cann't load a picture with several items in it.
+            </summary>
+        </member>
+        <member name="M:GameBase.Graphics.Sprite.SpriteBatchBegin">
+            <summary>
+            alphaSprite.Begin( SpriteBlendMode.AlphaBlend, SpriteSortMode.BackToFront, SaveStateMode.None );
+            additiveSprite.Begin( SpriteBlendMode.Additive, SpriteSortMode.BackToFront, SaveStateMode.None );
+            </summary>
+        </member>
+        <member name="M:GameBase.Graphics.Sprite.SpriteBatchEnd">
+            <summary>
+            Sprite.alphaSprite.End();
+            Sprite.additiveSprite.End();
+            </summary>
+        </member>
+        <member name="M:GameBase.Graphics.Sprite.LoadTextureFromFile(System.String,System.Boolean)">
+            <summary>
+            Load Texture From File
+            </summary>
+            <param name="texturePath">the texture Directory and File Name, without GameBaseDirectory Path.</param>
+            <param name="SupportIntersectDect">true to add intersect dectection support.</param>
+        </member>
+        <member name="M:GameBase.Graphics.Sprite.LoadTextureFromContent(System.String,System.Boolean)">
+            <summary>
+            Load Texture From Content
+            </summary>
+            <param name="assetName">the assetName.</param>
+            <param name="SupportIntersectDect">true to add intersect Dectection support.</param>
+        </member>
+        <member name="M:GameBase.Graphics.Sprite.LoadTextureFromFile(System.String,System.Int32)">
+            <summary>
+            Load Texture From File, support Intersect dectect,
+            the AverageSum is use to modify the default averageSum,
+            which is used in calulate the Normal vector,
+            biger the number is, more border points will be added to the result of Normal Vector. 
+            </summary>
+            <param name="texturePath"></param>
+            <param name="AverageSum"></param>
+        </member>
+        <member name="M:GameBase.Graphics.Sprite.LoadTextureFromContent(System.String,System.Int32)">
+            <summary>
+            Load Texture From Content, support Intersect dectect,
+            the AverageSum is use to modify the default averageSum,
+            which is used in calulate the Normal vector,
+            biger the number is, more border points will be added to the result of Normal Vector. 
+            </summary>
+            <param name="assetName"></param>
+            <param name="AverageSum"></param>
+        </member>
+        <member name="M:GameBase.Graphics.Sprite.SetParameters(Microsoft.Xna.Framework.Vector2,Microsoft.Xna.Framework.Vector2,System.Single,System.Single,Microsoft.Xna.Framework.Graphics.Color,System.Single,Microsoft.Xna.Framework.Graphics.SpriteBlendMode)">
+            <summary>
+            设置参数
+            </summary>
+            <param name="origin"></param>
+            <param name="pos"></param>
+            <param name="scale">逻辑大小/原图大小</param>
+            <param name="rata"></param>
+            <param name="color"></param>
+            <param name="layerDepth"></param>
+            <param name="blendMode"></param>
+        </member>
+        <member name="M:GameBase.Graphics.Sprite.IntersectPixels(GameBase.Graphics.Sprite,GameBase.Graphics.Sprite)">
+            <summary>
+            Determines if there is overlap of the non-transparent pixels between two
+            sprites.
+            </summary>
+            <returns>True if non-transparent pixels overlap; false otherwise</returns>
+        </member>
+        <member name="M:GameBase.Graphics.Sprite.CheckOutBorder(GameBase.DataStructure.Rectanglef)">
+            <summary>
+            检测是否在矩形外
+            </summary>
+            <param name="BorderRect"></param>
+            <returns></returns>
+        </member>
+        <member name="M:GameBase.Graphics.Sprite.CalculateBoundingRectangle(Microsoft.Xna.Framework.Rectangle,Microsoft.Xna.Framework.Matrix)">
+            <summary>
+            Calculates an axis aligned rectangle which fully contains an arbitrarily
+            transformed axis aligned rectangle.
+            </summary>
+            <param name="rectangle">Original bounding rectangle.</param>
+            <param name="transform">World transform of the rectangle.</param>
+            <returns>A new rectangle which contains the trasnformed rectangle.</returns>
+        </member>
+        <member name="P:GameBase.Graphics.Sprite.BoundRect">
+            <summary>
+            获得包围盒，以逻辑坐标。
+            该属性中进行了除法运算。
+            </summary>
+        </member>
+        <member name="P:GameBase.Graphics.Sprite.Transform">
+            <summary>
+            世界转换矩阵
+            每一帧需要先调用UpdateTransformBounding函数。
+            </summary>
+        </member>
+        <member name="P:GameBase.Graphics.Sprite.BorderData">
+            <summary>
+            计算遮挡所需原数据
+            </summary>
+        </member>
+        <member name="M:GameBase.Graphics.FontManager.SpriteBatchBegin">
+            <summary>
+            textSpriteBatch.Begin( SpriteBlendMode.AlphaBlend, SpriteSortMode.BackToFront, SaveStateMode.None ); 
+            </summary>
+        </member>
+        <member name="M:GameBase.Graphics.FontManager.SpriteBatchEnd">
+            <summary>
+            textSpriteBatch.End();
+            </summary>
+        </member>
+        <member name="T:GameBase.Helpers.RandomHelper">
+            <summary>
+            Random helper
+            </summary>
+        </member>
+        <member name="F:GameBase.Helpers.RandomHelper.globalRandomGenerator">
+            <summary>
+            Global random generator
+            </summary>
+        </member>
+        <member name="M:GameBase.Helpers.RandomHelper.GenerateNewRandomGenerator">
+            <summary>
+            Generate a new random generator with help of
+            WindowsHelper.GetPerformanceCounter.
+            Also used for all GetRandom methods here.
+            </summary>
+            <returns>Random</returns>
+        </member>
+        <member name="M:GameBase.Helpers.RandomHelper.GetRandomInt(System.Int32)">
+            <summary>
+            Get random int
+            </summary>
+            <param name="max">Maximum</param>
+            <returns>Int</returns>
+        </member>
+        <member name="M:GameBase.Helpers.RandomHelper.GetRandomFloat(System.Single,System.Single)">
+            <summary>
+            Get random float between min and max
+            </summary>
+            <param name="min">Min</param>
+            <param name="max">Max</param>
+            <returns>Float</returns>
+        </member>
+        <member name="M:GameBase.Helpers.RandomHelper.GetRandomByte(System.Byte,System.Byte)">
+            <summary>
+            Get random byte between min and max
+            </summary>
+            <param name="min">Min</param>
+            <param name="max">Max</param>
+            <returns>Byte</returns>
+        </member>
+        <member name="M:GameBase.Helpers.RandomHelper.GetRandomVector2(System.Single,System.Single)">
+            <summary>
+            Get random Vector2
+            </summary>
+            <param name="min">Minimum for each component</param>
+            <param name="max">Maximum for each component</param>
+            <returns>Vector2</returns>
+        </member>
+        <member name="M:GameBase.Helpers.RandomHelper.GetRandomVector3(System.Single,System.Single)">
+            <summary>
+            Get random Vector3
+            </summary>
+            <param name="min">Minimum for each component</param>
+            <param name="max">Maximum for each component</param>
+            <returns>Vector3</returns>
+        </member>
+        <member name="P:GameBase.Helpers.RandomHelper.RandomColor">
+            <summary>
+            Get random color
+            </summary>
+            <returns>Color</returns>
+        </member>
+        <member name="P:GameBase.Helpers.RandomHelper.RandomNormalVector3">
+            <summary>
+            Get random normal Vector3
+            </summary>
+            <returns>Vector3</returns>
+        </member>
+    </members>
+</doc>

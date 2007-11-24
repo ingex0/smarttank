@@ -1,0 +1,147 @@
+物理更新和碰撞检测的关系问题：
+
+		现有的解决思路的过程如下（每帧）：
+		
+1:		按照物理更新方法计算出新状态。
+		
+		检查全体新状态集中是否有碰撞。
+			如果没有{生效新状态；返回。}
+			如果存在碰撞
+			{
+				获得所有碰撞物体的列表。										(a)
+				
+2:				对每一个列表中的物体调用碰撞处理代码。	
+				
+				<接下来有三种选择>
+				
+				<其一>
+				按照物理更新算法计算出列表中所有物体的新状态。
+				
+				检查这些物体与其他物体是否存在碰撞。
+					如果没有{生效新状态；返回。}
+					如果存在碰撞
+					{
+						重复(a)(b)之间的迭代过程。
+					}															(b)
+				<这样做的弱点之一在于当碰撞处理的方法不恰当时，算法存在无限循环的危险。>
+				<其一结束>
+
+				
+				<其二>
+				检查列表中的物体的原状态是否与列表外物体的新状态是否存在碰撞。	(c)
+					如果没有{返回}
+					如果有
+					{
+						将列表外发生碰撞的物体添加到列表中。
+						重复(c)(d）之间的迭代过程。					
+					}															(d)
+				<其二结束>
+				<结果是此帧中只是调用了已碰撞物体的碰撞处理代码，而并没有更新物体的物理位置。损失了时间。如果碰撞处理不恰当时，会造成两物体的死锁。>
+				
+				<其三>
+				<混合以上两种处理方式，对方法一中的过程只进行有限次的迭代。但迭代深度到达一定深度时，不再迭代，改用方法二的处理方式。>
+			}
+		
+		返回。
+		
+		
+
+由以上的1，2两点可见物理状态更新和碰撞检测存在一定的耦合性：
+	碰撞物体一定是能够被物理更新的。
+	但并不一定所有的能被物理更新的物体就是能碰撞的物体。	
+	
+同时物理更新的方式多样。
+
+
+我们可以采用第三种算法。
+
+故定义如下接口：
+
+IUpdater
+{
+	void Update(float seconds);
+}
+
+IPhisicalUpdater
+{
+	void CalNextStatus(float seconds);
+	void Validated();
+}
+
+ICollidePhisicalUpdater : IPhisicalUpdater
+{
+	// 不一定需要这个接口
+	Sprite CurCollideSprite{get;}
+	
+	Sprite NextCollideSprite{get;}
+	
+	void HandleCollision(CollisionResult result, GameObjInfo objB);
+	
+	// 第三种算法的要求。当迭代次数超过一定程度时停止迭代,
+	// 并调用这个函数将NextStatus的值设为CurStatus
+	void ClearNextStatus();
+}
+
+定义物理更新管理类：
+
+
+class PhisicalUpdater : IUpdater
+{
+	// 这两个实例由谁保管还未确定,效率上还存在着优化的空间
+	
+	Register<IPhisical> phisicalRegister;
+	
+	Register<ICollidable> collidableRegister;
+
+	public void Update(float seconds)
+	{
+		phisicalRegister.ForEach( delegate (IPhisical phisical)
+			{
+				phisical.CalNextStatus(seconds);
+			});
+			
+		CollisionCheckResult[] collidedResults = CollisionChecker.DetectCollision(collidableRegister.ToArray());
+		
+		if ( !collidedResults.Empty)
+		{
+			处理碰撞，保证所有碰撞物的NextStatus不会发生任何碰撞。
+		}
+		
+		phisicalRegister.ForEach( delegate (IPhisical phisical)
+			{
+				phisical.Validated();
+			});
+	}
+}
+
+
+定义碰撞检测类：
+
+static class CollisionChecker
+{
+	static public CollisionCheckResult[] DetectCollision( ICollidable[] cols )
+	{
+		
+	}
+
+	// 检测碰撞物A是否与cols中的碰撞物发生碰撞
+	static public CollisionCheckResult[] DetectCollision( ICollidable colA, ICollidable[] cols )
+	{
+	
+	}
+
+}
+
+public struct CollisionCheckResult
+{
+	public ICollidable ColA;
+	public ICollidable ColB;
+	public Vector2 Pos;
+	public Vector2 Normal;
+}
+
+
+
+还有另一个不得不注意的问题是物体与边界的碰撞的处理方式。
+但实际上只需要修改CollilsionChecker中的函数便可。还需要建立一个Border类来作为objB传入物体的碰撞处理函数中。
+

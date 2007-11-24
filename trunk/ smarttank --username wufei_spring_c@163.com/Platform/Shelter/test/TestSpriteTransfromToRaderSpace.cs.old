@@ -1,0 +1,215 @@
+using System;
+using System.Collections.Generic;
+using System.Text;
+using GameBase;
+using GameBase.Graphics;
+using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
+using GameBase.Input;
+using GameBase.DataStructure;
+using Microsoft.Xna.Framework.Input;
+
+namespace Platform.Visibility.test
+{
+    /*
+     * 基本功能已经实现。
+     * 
+     * 但有以下两个缺陷：
+     * 
+     * 物体离雷达过近时会取样不足。可以通过修改深度图填充过程改善。(已经改善）
+     * 
+     * 雷达边沿与物体有一定间隙。这是由于物体的边界数据本身超出物体边界的原因。
+     * 可以通过修改Sprite类中的转换矩阵来改善。
+     * 
+     * 由于RaderDepthMap/RaderDrawer 现改为ShelterManager的内部类，故本测试不在有效。
+     * 
+     * */
+
+    class TestSpriteTransfromToRaderSpace : BaseGame
+    {
+        Rader rader;
+        RaderDepthMap depthMap;
+        RaderDrawer raderDrawer;
+
+        Sprite sprite1;
+        easyShelter shelter1;
+
+        Sprite sprite2;
+        easyShelter shelter2;
+
+        Sprite sprite3;
+        easyShelter shelter3;
+
+
+        Texture2D raderTex;
+
+        protected override void Initialize ()
+        {
+            base.Initialize();
+            Coordin.SetScreenViewRect( new Rectangle( 0, 0, ClientRec.Width, ClientRec.Height ) );
+            Coordin.SetLogicScaleAndPos( 2, new Vector2( 150, 100 ) );
+
+            rader = new Rader( MathHelper.Pi / 6, 100, new Vector2( 150, 100 ), MathHelper.PiOver4, Color.Red );
+
+            depthMap = new RaderDepthMap( 30 );
+            raderDrawer = new RaderDrawer();
+
+            sprite1 = new Sprite( true, "Test\\hucSmart", true );
+            sprite1.SetParameters( new Vector2( 30, 30 ), new Vector2( 200, 150 ), 1f, 0f, Color.Black, 0.5f, SpriteBlendMode.AlphaBlend );
+
+            shelter1 = new easyShelter( sprite1 );
+
+            sprite2 = new Sprite( true, "Test\\hucSmart", true );
+            sprite2.SetParameters( new Vector2( 30, 30 ), new Vector2( 100, 110 ), 1.5f, -2.34f, Color.Black, 0.5f, SpriteBlendMode.AlphaBlend );
+
+            shelter2 = new easyShelter( sprite2 );
+
+            sprite3 = new Sprite( true, "Test\\hucSmart", true );
+            sprite3.SetParameters( new Vector2( 30, 30 ), new Vector2( 150, 160 ), 0.7f, 1.23f, Color.Black, 0.5f, SpriteBlendMode.AlphaBlend );
+
+            shelter3 = new easyShelter( sprite3 );
+        }
+
+        protected override void Update ( GameTime gameTime )
+        {
+            base.Update( gameTime );
+
+            #region Handler Input
+            if (InputHandler.IsKeyDown( Keys.Left ))
+            {
+                rader.Azi -= 0.04f;
+            }
+            if (InputHandler.IsKeyDown( Keys.Right ))
+            {
+                rader.Azi += 0.04f;
+            }
+            if (InputHandler.IsKeyDown( Keys.Up ))
+            {
+                rader.R += 1f;
+            }
+            if (InputHandler.IsKeyDown( Keys.Down ))
+            {
+                rader.R -= 1f;
+            }
+            if (InputHandler.IsKeyDown( Keys.W ))
+            {
+                rader.Y -= 1f;
+            }
+            if (InputHandler.IsKeyDown( Keys.S ))
+            {
+                rader.Y += 1f;
+            }
+            if (InputHandler.IsKeyDown( Keys.A ))
+            {
+                rader.X -= 1f;
+            }
+            if (InputHandler.IsKeyDown( Keys.D ))
+            {
+                rader.X += 1f;
+            }
+            if (InputHandler.IsKeyDown( Keys.Z ))
+            {
+                rader.Ang += 0.02f;
+            }
+            if (InputHandler.IsKeyDown( Keys.X ))
+            {
+                rader.Ang -= 0.02f;
+            }
+
+            #endregion
+
+            #region RenderRader
+
+            depthMap.ClearMap( 1 );
+            sprite1.UpdateTransformBounding();
+            sprite2.UpdateTransformBounding();
+            sprite3.UpdateTransformBounding();
+            rader.Update();
+
+            #region Old Code
+            //foreach (Vector2[] border in sprite.BorderData)
+            //{
+            //    Vector2[] pInWorld = new Vector2[border.Length];
+            //    int i = 0;
+            //    foreach (Vector2 p in border)
+            //    {
+            //        pInWorld[i] = Vector2.Transform( p, sprite.Transform );
+            //        i++;
+            //    }
+            //    Vector2[] pInLogic = new Vector2[border.Length];
+            //    i = 0;
+            //    foreach (Vector2 p in pInWorld)
+            //    {
+            //        pInLogic[i] = Coordin.LogicPos( pInWorld[i] );
+            //        i++;
+            //    }
+            //    Vector2[] pInR = new Vector2[border.Length];
+            //    i = 0;
+            //    foreach (Vector2 p in pInLogic)
+            //    {
+            //        pInR[i] = rader.TranslateToRaderSpace( pInLogic[i] );
+            //        i++;
+            //    }
+            //    foreach (Vector2 p in pInR)
+            //    {
+            //        depthMap[p.X] = MathHelper.Min( depthMap[p.X], p.Y );
+            //    }
+
+            //} 
+            #endregion
+            depthMap.CalShelterObj( rader, shelter1 );
+            depthMap.CalShelterObj( rader, shelter2 );
+            depthMap.CalShelterObj( rader, shelter3 );
+
+
+            raderTex = raderDrawer.DrawRader( rader, depthMap )[0];
+            #endregion
+        }
+
+        protected override void GameDraw ( GameTime gameTime )
+        {
+            if (raderTex != null)
+            {
+                Vector2 pos = new Vector2( 150, 100 );
+                //Sprite.alphaSprite.Draw( raderTex, Coordin.ScreenPos( new Vector2( 150, 100 ) ) - new Vector2( Coordin.ScrnWidth( rader.R ), Coordin.ScrnWidth( rader.R ) ), Color.White );
+                Sprite.alphaSprite.Draw( raderTex, Coordin.ScreenPos( rader.Pos - new Vector2( rader.R, rader.R ) ), Color.White );
+
+            }
+            sprite1.Draw();
+            sprite2.Draw();
+            sprite3.Draw();
+
+            //BasicGraphics.DrawPoint( new Vector2( 150, 100 ), 1f, Color.Yellow, 0f );
+
+        }
+    }
+
+    class easyShelter : IShelterObj
+    {
+        Sprite sprite;
+
+        #region IShelterObj 成员
+
+        public CircleList<Border>[] BorderData
+        {
+            get { return sprite.BorderData; }
+        }
+
+        public Matrix WorldTrans
+        {
+            get { return sprite.Transform; }
+        }
+
+        public Rectanglef BoundingBox
+        {
+            get { return sprite.BoundRect; }
+        }
+
+        #endregion
+
+        public easyShelter ( Sprite sprite )
+        {
+            this.sprite = sprite;
+        }
+    }
+}
