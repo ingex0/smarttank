@@ -1,0 +1,15 @@
+#summary 编程环境说明（保持更新）
+
+=本文对SmartTank2.0的项目编写环境进行说明=
+
+_2007-11-25：_
+
+当前的编译环境是C# Express + XNA 1.0 refresh。所需软件的下载和安装过程见：http://www.xnadev.cn/Article/ShowArticle.asp?ArticleID=13
+
+UML图使用JUDE Community 5.11绘制。可以从以下地址下载（需要注册）：
+http://jude.change-vision.com/jude-web/product/community.html
+
+推荐TortoiseSVN作为SVN可视工具。可以从以下地址下载：
+http://nchc.dl.sourceforge.net/sourceforge/tortoisesvn/TortoiseSVN-1.4.5.10425-win32-svn-1.4.5.msi
+
+*注：将要将项目转换到XNA2.0环境中，这样就可以在VS2005等版本上集成XNA，不再需要C# Express环境。所以如果你没有安装XNA1.0环境，可以等到项目转换到XNA2.0环境之后再进行代码的修改工作。*
