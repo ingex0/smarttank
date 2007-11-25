@@ -1,4 +1,5 @@
 #summary 编程环境说明（保持更新）
+#labels Featured
 
 =本文对SmartTank2.0的项目编写环境进行说明=
 
