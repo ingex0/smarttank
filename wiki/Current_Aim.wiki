@@ -1,4 +1,5 @@
 #summary 当前的更新目标（保持更新）
+#labels Phase-Design,Featured
 
 =将SmartTank2.0项目需要实现的目标写在该文档中。如有人对其中的一个或多个部分感兴趣，并希望加入到编写之中来，可以联系我（wufei_spring_c@163.com QQ:298210841）。需要讨论之处可在GoogleCode中该项目的Wiki中新建页面，或者在SmartTank的QQ群21597580中讨论。=
 
