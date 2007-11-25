@@ -1,4 +1,5 @@
 #summary 项目简介和编写历程
+#labels Featured
 
 = 项目简介 =
 
