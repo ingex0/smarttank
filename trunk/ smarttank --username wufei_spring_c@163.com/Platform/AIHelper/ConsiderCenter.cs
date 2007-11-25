@@ -5,6 +5,7 @@ using Platform.Update;
 using Platform.GameObjects.Tank.TankAIs;
 using Microsoft.Xna.Framework;
 using GameBase.Helpers;
+using GameBase.DataStructure;
 
 namespace Platform.AIHelper
 {
@@ -261,7 +262,7 @@ namespace Platform.AIHelper
 
         ConsiderPriority curPriority;
 
-        Vector2 mapSize;
+        Rectanglef mapSize;
 
         Area lastArea;
 
@@ -281,13 +282,13 @@ namespace Platform.AIHelper
 
         #region Construction
 
-        public ConsiderAwayFromBorder ( Vector2 mapSize )
+        public ConsiderAwayFromBorder ( Rectanglef mapSize )
         {
             this.mapSize = mapSize;
             curPriority = ConsiderPriority.Vacancy;
         }
 
-        public ConsiderAwayFromBorder ( Vector2 mapSize, float guardDestance, float spaceForTankWidth )
+        public ConsiderAwayFromBorder ( Rectanglef mapSize, float guardDestance, float spaceForTankWidth )
         {
             this.mapSize = mapSize;
             this.guardDestance = guardDestance;
@@ -321,8 +322,8 @@ namespace Platform.AIHelper
         public void Observe ()
         {
             Vector2 curPos = orderServer.Pos;
-            if (curPos.X < guardDestance || curPos.X > mapSize.X - guardDestance ||
-                curPos.Y < guardDestance || curPos.Y > mapSize.Y - guardDestance)
+            if (curPos.X < mapSize.X + guardDestance || curPos.X > mapSize.X + mapSize.Width - guardDestance ||
+                curPos.Y < mapSize.Y + guardDestance || curPos.Y > mapSize.Y + mapSize.Height - guardDestance)
             {
                 curPriority = ConsiderPriority.Urgency;
             }
@@ -411,13 +412,13 @@ namespace Platform.AIHelper
         {
             int sum = 0;
             Vector2 pos = orderServer.Pos;
-            if (pos.X < guardDestance)
+            if (pos.X < mapSize.X + guardDestance)
                 sum += 1;
-            if (pos.X > mapSize.X - guardDestance)
+            if (pos.X > mapSize.X + mapSize.Width - guardDestance)
                 sum += 2;
-            if (pos.Y < guardDestance)
+            if (pos.Y < mapSize.Y + guardDestance)
                 sum += 4;
-            if (pos.Y > mapSize.Y - guardDestance)
+            if (pos.Y > mapSize.Y + mapSize.Height - guardDestance)
                 sum += 8;
 
             return (Area)sum;
@@ -434,13 +435,13 @@ namespace Platform.AIHelper
             else if (area == Area.Dowm)
                 return new Vector2( 0, -1 );
             else if (area == Area.UpLeft)
-                return Vector2.Normalize( mapSize );
+                return Vector2.Normalize( new Vector2( mapSize.Width, mapSize.Height ) );
             else if (area == Area.UpRight)
-                return Vector2.Normalize( new Vector2( -mapSize.X, mapSize.Y ) );
+                return Vector2.Normalize( new Vector2( -mapSize.Width, mapSize.Height ) );
             else if (area == Area.DownLeft)
-                return Vector2.Normalize( new Vector2( mapSize.X, -mapSize.Y ) );
+                return Vector2.Normalize( new Vector2( mapSize.Width, -mapSize.Height ) );
             else if (area == Area.DownRight)
-                return Vector2.Normalize( new Vector2( -mapSize.X, -mapSize.Y ) );
+                return Vector2.Normalize( new Vector2( -mapSize.Width, -mapSize.Height ) );
             else
                 return Vector2.Zero;
         }
@@ -457,8 +458,8 @@ namespace Platform.AIHelper
             for (; r > 0; r--)
             {
                 Vector2 center = curPos + vertiDir * r;
-                if (center.X > r + spaceForTankWidth && mapSize.X - center.X > r + spaceForTankWidth &&
-                    center.Y > r + spaceForTankWidth && mapSize.Y - center.Y > r + spaceForTankWidth)
+                if (center.X > r + mapSize.X + spaceForTankWidth && mapSize.X + mapSize.Width - center.X > r + spaceForTankWidth &&
+                    center.Y > r + mapSize.Y + spaceForTankWidth && mapSize.Y + mapSize.Height - center.Y > r + spaceForTankWidth)
                     break;
             }
 

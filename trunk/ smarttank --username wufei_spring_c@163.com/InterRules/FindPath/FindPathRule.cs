@@ -110,7 +110,7 @@ namespace InterRules.FindPath
 
     class FindPathGameScreen : IGameScreen
     {
-        static readonly Vector2 mapSize = new Vector2( 1000, 1000 );
+        static readonly Rectanglef mapSize = new Rectanglef( 0, 0, 1000, 1000 );
         static readonly Rectangle scrnRect = new Rectangle( 0, 0, BaseGame.ClientRect.Width, BaseGame.ClientRect.Height );
 
         static readonly Vector2 cameraStartPos = new Vector2( 50, 50 );
@@ -200,7 +200,7 @@ namespace InterRules.FindPath
             sceneKeeper.AddGameObj( wall3, false, true, false, SceneKeeperCommon.GameObjLayer.HighBulge, EyeableInfo.GetEyeableInfoHandler );
 
             sceneKeeper.AddGameObj( item, true, false, false, SceneKeeperCommon.GameObjLayer.HighBulge, EyeableInfo.GetEyeableInfoHandler );
-            sceneKeeper.SetBorder( 0, mapSize.X, 0, mapSize.Y );
+            sceneKeeper.SetBorder( mapSize );
             GameManager.LoadScene( sceneKeeper );
         }
 
@@ -232,7 +232,7 @@ namespace InterRules.FindPath
 
             //BasicGraphics.DrawRectangle( wall.BoundingBox, 3f, Color.Red, 0f );
 
-            BasicGraphics.DrawRectangle( new Rectangle( 0, 0, (int)mapSize.X, (int)mapSize.Y ), 3f, Color.Red, 0f );
+            //BasicGraphics.DrawRectangle( mapSize, 3f, Color.Red, 0f );
 
             BasicGraphics.DrawPoint( Vector2.Transform( item.KeyPoints[0], item.TransMatrix ), 1f, Color.Black, 0f );
             BasicGraphics.DrawPoint( Vector2.Transform( wall1.KeyPoints[0], wall1.TransMatrix ), 1f, Color.Black, 0f );

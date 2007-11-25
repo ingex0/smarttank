@@ -28,6 +28,26 @@ namespace GameBase.DataStructure
             get { return X + Width; }
         }
 
+        public Vector2 UpLeft
+        {
+            get { return new Vector2( X, Y ); }
+        }
+
+        public Vector2 UpRight
+        {
+            get { return new Vector2( X + Width, Y ); }
+        }
+
+        public Vector2 DownLeft
+        {
+            get { return new Vector2( X, Y + Height ); }
+        }
+
+        public Vector2 DownRight
+        {
+            get { return new Vector2( X + Width, Y + Height ); }
+        }
+
         public Rectanglef ( float x, float y, float width, float height )
         {
             this.X = x;
@@ -49,7 +69,7 @@ namespace GameBase.DataStructure
             if (rectB.X < this.X + this.Width && rectB.X + rectB.Width > this.X &&
                 rectB.Y + rectB.Height > this.Y && rectB.Y < this.Y + this.Height ||
                 rectB.X + rectB.Width > this.X && rectB.X < this.X + this.Width &&
-                rectB.Y + rectB.Height > this.Y && rectB.Y < this.Y + this.Height )
+                rectB.Y + rectB.Height > this.Y && rectB.Y < this.Y + this.Height)
                 return true;
             else
                 return false;

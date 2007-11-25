@@ -144,7 +144,7 @@ namespace InterRules.Duel
     {
         #region Constants
         readonly Rectangle scrnViewRect = new Rectangle( 30, 30, 740, 540 );
-        readonly Vector2 mapSize = new Vector2( 300, 220 );
+        readonly Rectanglef mapSize = new Rectanglef( 0, 0, 300, 220 );
         readonly float tankRaderLength = 90;
         readonly float tankMaxForwardSpd = 60;
         readonly float tankMaxBackwardSpd = 50;
@@ -263,12 +263,12 @@ namespace InterRules.Duel
 
         private void SceneInitial ()
         {
-            tank1 = new DuelTank( TankSkinSinTurData.M60, new Vector2( 150 + RandomHelper.GetRandomFloat( -40, 40 ),
-                60 + RandomHelper.GetRandomFloat( -10, 10 ) ),
+            tank1 = new DuelTank( TankSkinSinTurData.M60, new Vector2( mapSize.X + 150 + RandomHelper.GetRandomFloat( -40, 40 ),
+                mapSize.Y + 60 + RandomHelper.GetRandomFloat( -10, 10 ) ),
                 MathHelper.Pi + RandomHelper.GetRandomFloat( -MathHelper.PiOver4, MathHelper.PiOver4 ),
                 "Tank1", tankRaderLength, tankMaxForwardSpd, tankMaxBackwardSpd, 10 );
-            tank2 = new DuelTank( TankSkinSinTurData.M1A2, new Vector2( 150 + RandomHelper.GetRandomFloat( -40, 40 ),
-                160 + RandomHelper.GetRandomFloat( -10, 10 ) ),
+            tank2 = new DuelTank( TankSkinSinTurData.M1A2, new Vector2( mapSize.X + 150 + RandomHelper.GetRandomFloat( -40, 40 ),
+                mapSize.Y + 160 + RandomHelper.GetRandomFloat( -10, 10 ) ),
                 RandomHelper.GetRandomFloat( -MathHelper.PiOver4, MathHelper.PiOver4 ),
                 "Tank2", tankRaderLength, tankMaxForwardSpd, tankMaxBackwardSpd, 10 );
 
@@ -280,7 +280,7 @@ namespace InterRules.Duel
 
             scene.AddGameObj( tank1, true, false, true, SceneKeeperCommon.GameObjLayer.HighBulge, new Platform.Senses.Vision.GetEyeableInfoHandler( TankSinTur.GetCommonEyeInfoFun ) );
             scene.AddGameObj( tank2, true, false, true, SceneKeeperCommon.GameObjLayer.HighBulge, new Platform.Senses.Vision.GetEyeableInfoHandler( TankSinTur.GetCommonEyeInfoFun ) );
-            scene.SetBorder( 0, mapSize.X, 0, mapSize.Y );
+            scene.SetBorder( mapSize );
         }
 
         private void InitialStartTimer ()
@@ -449,7 +449,7 @@ namespace InterRules.Duel
 
             GameManager.DrawManager.Draw();
 
-            BasicGraphics.DrawRectangle( new Rectanglef( 0, 0, mapSize.X, mapSize.Y ), 3, Color.Red, 0f );
+            BasicGraphics.DrawRectangle( mapSize, 3, Color.Red, 0f );
             BasicGraphics.DrawRectangleInScrn( scrnViewRect, 3, Color.Green, 0f );
         }
 

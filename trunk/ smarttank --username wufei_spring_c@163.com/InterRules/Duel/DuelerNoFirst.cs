@@ -4,6 +4,7 @@ using System.Text;
 using Microsoft.Xna.Framework;
 using Platform.GameObjects.Tank.TankAIs;
 using Platform.AIHelper;
+using GameBase.DataStructure;
 
 namespace InterRules.Duel
 {
@@ -15,7 +16,7 @@ namespace InterRules.Duel
 
         AIActionHelper action;
 
-        Vector2 mapSize;
+        Rectanglef mapBorder;
 
         ConsiderCenter considerCenter;
 
@@ -31,7 +32,7 @@ namespace InterRules.Duel
             set
             {
                 commonServer = (AICommonServer)value;
-                mapSize = commonServer.MapSize;
+                mapBorder = commonServer.MapBorder; ;
 
             }
         }
@@ -45,10 +46,10 @@ namespace InterRules.Duel
                 action = new AIActionHelper( orderServer );
 
                 considerCenter = new ConsiderCenter( orderServer );
-                considerCenter.AddConsider( new ConsiderAwayFromBorder( mapSize, 30, 10 ), 5 );
-                considerCenter.AddConsider( new ConsiderSearchEnemy( mapSize, orderServer.RaderRadius ), 3 );
-                considerCenter.AddConsider( new ConsiderRaderScan( mapSize ), 3 );
-                considerCenter.AddConsider( new ConsiderAwayFromEnemyTurret( mapSize ), 4 );
+                considerCenter.AddConsider( new ConsiderAwayFromBorder( mapBorder, 30, 10 ), 5 );
+                considerCenter.AddConsider( new ConsiderSearchEnemy( mapBorder, orderServer.RaderRadius ), 3 );
+                considerCenter.AddConsider( new ConsiderRaderScan( mapBorder ), 3 );
+                considerCenter.AddConsider( new ConsiderAwayFromEnemyTurret( mapBorder ), 4 );
                 considerCenter.AddConsider( new ConsiderRaderLockEnemy(), 4 );
                 considerCenter.AddConsider( new ConsiderKeepDistanceFromEnemy(), 4 );
                 considerCenter.AddConsider( new ConsiderShootEnemy(), 5 );

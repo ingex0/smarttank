@@ -40,7 +40,7 @@ namespace GameBase.Graphics.BackGround.VergeTile
 
         Rectangle screenViewRect;
 
-        Vector2 mapSize;
+        Rectanglef mapSize;
 
         int gridWidthSum;
 
@@ -62,7 +62,7 @@ namespace GameBase.Graphics.BackGround.VergeTile
 
         #region Construction
 
-        public VergeTileGround ( VergeTileData data, Rectangle screenViewRect, Vector2 mapSize )
+        public VergeTileGround ( VergeTileData data, Rectangle screenViewRect, Rectanglef mapSize )
         {
             gridWidthSum = data.gridWidth;
             gridHeightSum = data.gridHeight;
@@ -70,8 +70,8 @@ namespace GameBase.Graphics.BackGround.VergeTile
             this.screenViewRect = screenViewRect;
             this.mapSize = mapSize;
 
-            float gridScaleInWidth = mapSize.X / (float)gridWidthSum;
-            float gridScaleInHeight = mapSize.Y / (float)gridHeightSum;
+            float gridScaleInWidth = mapSize.Width / (float)gridWidthSum;
+            float gridScaleInHeight = mapSize.Height / (float)gridHeightSum;
 
             gridScale = Math.Max( gridScaleInWidth, gridScaleInHeight );
 
@@ -212,11 +212,11 @@ namespace GameBase.Graphics.BackGround.VergeTile
 
                 int minX, minY, maxX, maxY;
 
-                minX = Math.Max( 0, (int)(logicViewRect.X / gridScale) - 1 );
-                minY = Math.Max( 0, (int)(logicViewRect.Y / gridScale) - 1 );
+                minX = Math.Max( 0, (int)((logicViewRect.X - mapSize.X) / gridScale) - 1 );
+                minY = Math.Max( 0, (int)((logicViewRect.Y - mapSize.Y) / gridScale) - 1 );
 
-                maxX = (int)((logicViewRect.X + logicViewRect.Width) / gridScale) + 1;
-                maxY = (int)((logicViewRect.Y + logicViewRect.Height) / gridScale) + 1;
+                maxX = (int)((logicViewRect.X + logicViewRect.Width - mapSize.X) / gridScale) + 1;
+                maxY = (int)((logicViewRect.Y + logicViewRect.Height - mapSize.Y) / gridScale) + 1;
 
                 foreach (SpriteBatch batch in batches)
                 {
@@ -226,7 +226,7 @@ namespace GameBase.Graphics.BackGround.VergeTile
                 float gridWidthInScrn = Coordin.ScrnLengthf( gridScale );
                 float gridHeightInScrn = Coordin.ScrnLengthf( gridScale );
 
-                Vector2 startPosInScrn = Coordin.ScreenPos( new Vector2( minX * gridScale, minY * gridScale ) );
+                Vector2 startPosInScrn = Coordin.ScreenPos( new Vector2( minX * gridScale + mapSize.X, minY * gridScale + mapSize.Y ) );
 
                 Vector2 UnitX = Vector2.Transform( new Vector2( gridWidthInScrn, 0 ), Coordin.RotaMatrixFromLogicToScrn );
                 Vector2 UnitY = Vector2.Transform( new Vector2( 0, gridHeightInScrn ), Coordin.RotaMatrixFromLogicToScrn );

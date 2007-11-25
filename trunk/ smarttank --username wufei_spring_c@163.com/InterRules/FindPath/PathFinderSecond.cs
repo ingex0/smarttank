@@ -11,6 +11,7 @@ using GameBase.Graphics;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework;
 using Platform.Senses.Vision;
+using Platform.Scene;
 
 namespace InterRules.FindPath
 {
@@ -94,8 +95,15 @@ namespace InterRules.FindPath
 
             //if (InputHandler.JustPressKey( Keys.N ))
             //{
-            orderServer.UpdateNavigateMap( 5 );
-            naviMap = orderServer.NavigateMap;
+
+            naviMap = orderServer.CalNavigateMap(
+                delegate( EyeableBorderObjInfo obj )
+                {
+                    if (((SceneCommonObjInfo)(obj.EyeableInfo.ObjInfo.SceneInfo)).isTankObstacle)
+                        return true;
+                    else
+                        return false;
+                }, commonServer.MapBorder, 5 );
             //}
 
             action.Update( seconds );
@@ -142,7 +150,7 @@ namespace InterRules.FindPath
 
                 foreach (Segment guardLine in naviMap.GuardLines)
                 {
-                    BasicGraphics.DrawLine( guardLine.startPoint, guardLine.endPoint, 3f, Color.Red, 0f );
+                    BasicGraphics.DrawLine( guardLine.startPoint, guardLine.endPoint, 3f, Color.Red, 0f, SpriteBlendMode.AlphaBlend );
                 }
             }
 

@@ -4,14 +4,22 @@ using System.Text;
 using Platform.Shelter;
 using Platform.PhisicalCollision;
 using Platform.Senses.Vision;
+using GameBase.DataStructure;
 
 namespace Platform.Senses.Memory
 {
+    /// <summary>
+    /// 如果要在生成导航图的时候考虑该物体，返回true，否则返回false。
+    /// </summary>
+    /// <param name="obj"></param>
+    /// <returns></returns>
+    public delegate bool NaviMapConsiderObj ( EyeableBorderObjInfo obj );
+
     public class ObjMemoryKeeper
     {
         Dictionary<IHasBorderObj, EyeableBorderObjInfo> memoryObjs;
 
-        NavigateMap naviMap;
+        //NavigateMap naviMap;
 
         public ObjMemoryKeeper ()
         {
@@ -25,20 +33,25 @@ namespace Platform.Senses.Memory
             return result;
         }
 
-        public void UpdateNavigationMap ( float spaceForTank )
+        public NavigateMap CalNavigationMap ( NaviMapConsiderObj selectFun, Rectanglef mapBorder, float spaceForTank )
         {
-            EyeableBorderObjInfo[] eyeableInfos = GetEyeableBorderObjInfos();
+            List<EyeableBorderObjInfo> eyeableInfos = new List<EyeableBorderObjInfo>();
 
-            if (naviMap == null)
-                naviMap = new NavigateMap( eyeableInfos, spaceForTank );
-            else
-                naviMap.BuildMap( eyeableInfos, spaceForTank );
+            foreach (KeyValuePair<IHasBorderObj, EyeableBorderObjInfo> pair in memoryObjs)
+            {
+                if (selectFun( pair.Value ))
+                {
+                    eyeableInfos.Add( pair.Value );
+                }
+            }
+
+            return new NavigateMap( eyeableInfos.ToArray(), mapBorder, spaceForTank );
         }
 
-        public NavigateMap NavigateMap
-        {
-            get { return naviMap; }
-        }
+        //public NavigateMap NavigateMap
+        //{
+        //    get { return naviMap; }
+        //}
 
         internal void ApplyEyeableBorderObjInfo ( EyeableBorderObjInfo objInfo )
         {

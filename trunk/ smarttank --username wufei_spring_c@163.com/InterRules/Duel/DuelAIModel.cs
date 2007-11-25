@@ -6,6 +6,7 @@ using Microsoft.Xna.Framework;
 using Platform.Senses.Vision;
 using Platform.GameObjects.Tank.Tanks;
 using Platform.AIHelper;
+using GameBase.DataStructure;
 
 namespace InterRules.Duel
 {
@@ -18,7 +19,7 @@ namespace InterRules.Duel
         // 可以使用该类提供的高层接口
         AIActionHelper action;
 
-        Vector2 mapSize;
+        Rectanglef mapBorder;
 
         public DuelAIModel ()
         {
@@ -34,7 +35,7 @@ namespace InterRules.Duel
                 commonServer = (AICommonServer)value;
 
                 // 可以从CommonServer中获得游戏中与当前坦克无关的一些参数。如：
-                mapSize = commonServer.MapSize;
+                mapBorder = commonServer.MapBorder;
             }
         }
 

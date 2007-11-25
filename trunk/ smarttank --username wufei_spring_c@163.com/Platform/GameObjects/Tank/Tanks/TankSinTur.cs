@@ -13,6 +13,8 @@ using Platform.Senses.Vision;
 using GameBase.Helpers;
 using Platform.GameObjects.Tank.TankAIs;
 using Platform.PhisicalCollision;
+using Platform.Senses.Memory;
+using GameBase.DataStructure;
 
 namespace Platform.GameObjects.Tank.Tanks
 {
@@ -361,14 +363,9 @@ namespace Platform.GameObjects.Tank.Tanks
             get { return rader.ObjMemoryKeeper.GetEyeableBorderObjInfos(); }
         }
 
-        public void UpdateNavigateMap ( float spaceForTank )
+        public NavigateMap CalNavigateMap ( NaviMapConsiderObj selectFun, Rectanglef mapBorder, float spaceForTank )
         {
-            rader.ObjMemoryKeeper.UpdateNavigationMap( spaceForTank );
-        }
-
-        public Platform.Senses.Memory.NavigateMap NavigateMap
-        {
-            get { return rader.ObjMemoryKeeper.NavigateMap; }
+            return rader.ObjMemoryKeeper.CalNavigationMap( selectFun, mapBorder, spaceForTank );
         }
 
         #endregion

@@ -288,9 +288,14 @@ namespace Platform.Scene
 
         #region SetBorder
 
-        public void SetBorder ( float minX, float maxX, float minY, float maxY )
+        public void SetBorder ( float minX, float minY, float maxX, float maxY )
         {
             border = new Border( minX, maxX, minY, maxY );
+        }
+
+        public void SetBorder ( Rectanglef mapBorder )
+        {
+            border = new Border( mapBorder.X, mapBorder.X + mapBorder.Width, mapBorder.Y, mapBorder.Y + mapBorder.Height );
         }
 
         #endregion

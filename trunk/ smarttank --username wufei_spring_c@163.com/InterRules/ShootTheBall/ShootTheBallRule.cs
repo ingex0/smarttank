@@ -71,7 +71,7 @@ namespace InterRules.ShootTheBall
 
         readonly Rectangle scrnViewRect = new Rectangle( 30, 30, 750, 550 );
 
-        readonly Vector2 mapSize = new Vector2( 200, 150 );
+        readonly Rectanglef mapSize = new Rectanglef( 0, 0, 200, 150 );
 
         SceneKeeperCommon scene;
 
@@ -207,7 +207,7 @@ namespace InterRules.ShootTheBall
 
             scene.AddGameObj( tank, true, false, true, SceneKeeperCommon.GameObjLayer.HighBulge );
             scene.AddGameObj( item, true, false, false, SceneKeeperCommon.GameObjLayer.HighBulge, new GetEyeableInfoHandler( GetItemInfo ) );
-            scene.SetBorder( 0, mapSize.X, 0, mapSize.Y );
+            scene.SetBorder( mapSize );
 
             //camera.Focus( tank );
         }
@@ -256,7 +256,7 @@ namespace InterRules.ShootTheBall
 
             GameManager.DrawManager.Draw();
 
-            BasicGraphics.DrawRectangle( new Rectanglef( 0, 0, mapSize.X, mapSize.Y ), 3, Color.Red, 0f );
+            BasicGraphics.DrawRectangle( mapSize, 3, Color.Red, 0f );
             BasicGraphics.DrawRectangleInScrn( scrnViewRect, 3, Color.Green, 0f );
 
             BasicGraphics.DrawPoint( Coordin.LogicPos( ConvertHelper.PointToVector2( InputHandler.CurMousePos ) ), 3f, Color.Red, LayerDepth.Mouse );

@@ -2,23 +2,24 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using Microsoft.Xna.Framework;
+using GameBase.DataStructure;
 
 namespace Platform.GameObjects.Tank.TankAIs
 {
-    public class AICommonServer:IAICommonServer
+    public class AICommonServer : IAICommonServer
     {
-        Vector2 mapSize;
+        Rectanglef mapBorder;
 
-        public AICommonServer ( Vector2 mapSize )
+        public AICommonServer ( Rectanglef mapBorder )
         {
-            this.mapSize = mapSize;
+            this.mapBorder = mapBorder;
         }
 
         #region IAICommonServer ≥…‘±
 
-        public Vector2 MapSize
+        public Rectanglef MapBorder
         {
-            get { return mapSize; }
+            get { return mapBorder; }
         }
 
         #endregion

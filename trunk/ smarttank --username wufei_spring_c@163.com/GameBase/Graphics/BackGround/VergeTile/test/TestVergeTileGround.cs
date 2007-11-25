@@ -50,7 +50,7 @@ namespace GameBase.Graphics.BackGround.VergeTile.test
                 
             };
 
-            backGround = new VergeTileGround( data, new Rectangle( 0, 0, 800, 600 ), new Vector2( 80, 60 ) );
+            backGround = new VergeTileGround( data, new Rectangle( 0, 0, 800, 600 ), new Rectanglef( 0, 0, 80, 60 ) );
         }
 
         protected override void GameDraw ( Microsoft.Xna.Framework.GameTime gameTime )

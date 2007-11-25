@@ -10,6 +10,7 @@ using GameBase.Graphics;
 using Microsoft.Xna.Framework.Graphics;
 using Platform.GameObjects;
 using Platform.GameObjects.Tank.Tanks;
+using GameBase.DataStructure;
 
 namespace InterRules.Duel
 {
@@ -29,7 +30,7 @@ namespace InterRules.Duel
 
         ConsiderPriority curPriority;
 
-        Vector2 mapSize;
+        Rectanglef mapSize;
 
         float[,] grids;
 
@@ -54,13 +55,13 @@ namespace InterRules.Duel
 
         #region Constructions
 
-        public ConsiderSearchEnemy ( Vector2 mapSize, float raderRadius )
+        public ConsiderSearchEnemy ( Rectanglef mapSize, float raderRadius )
         {
             this.mapSize = mapSize;
             curPriority = ConsiderPriority.Vacancy;
 
-            int gridMaxX = (int)(mapSize.X / raderRadius) + 1;
-            int gridMaxY = (int)(mapSize.Y / raderRadius) + 1;
+            int gridMaxX = (int)(mapSize.Width / raderRadius) + 1;
+            int gridMaxY = (int)(mapSize.Height / raderRadius) + 1;
 
             grids = new float[gridMaxX, gridMaxY];
             for (int i = 0; i < gridMaxX; i++)
@@ -71,20 +72,20 @@ namespace InterRules.Duel
                 }
             }
 
-            gridWidth = mapSize.X / gridMaxX;
-            gridHeight = mapSize.Y / gridMaxY;
+            gridWidth = mapSize.Width / gridMaxX;
+            gridHeight = mapSize.Height / gridMaxY;
 
 
             curTime = 0;
         }
 
-        public ConsiderSearchEnemy ( Vector2 mapSize, float raderRadius, float dirWeight )
+        public ConsiderSearchEnemy ( Rectanglef mapSize, float raderRadius, float dirWeight )
         {
             this.mapSize = mapSize;
             curPriority = ConsiderPriority.Vacancy;
 
-            int gridMaxX = (int)(mapSize.X / raderRadius) + 1;
-            int gridMaxY = (int)(mapSize.Y / raderRadius) + 1;
+            int gridMaxX = (int)(mapSize.Width / raderRadius) + 1;
+            int gridMaxY = (int)(mapSize.Height / raderRadius) + 1;
 
             grids = new float[gridMaxX, gridMaxY];
             for (int i = 0; i < gridMaxX; i++)
@@ -114,7 +115,7 @@ namespace InterRules.Duel
 
             Vector2 curDir = orderServer.Direction;
             Vector2 curPos = orderServer.Pos;
-            float mapDistance = mapSize.LengthSquared();
+            float mapDistance = new Vector2( mapSize.Width, mapSize.Height ).LengthSquared();
 
             Vector2 aimGrid = Vector2.Zero;
             float maxWeight = 0;
@@ -125,7 +126,7 @@ namespace InterRules.Duel
                     if (LastGrid.X == x && LastGrid.Y == y)
                         continue;
 
-                    Vector2 gridPos = new Vector2( (x + 0.5f) * gridWidth, (y + 0.5f) * gridHeight );
+                    Vector2 gridPos = new Vector2( (x + 0.5f) * gridWidth + mapSize.X, (y + 0.5f) * gridHeight + mapSize.Y );
                     Vector2 gridDir = gridPos - curPos;
                     float timeSpan = curTime - grids[x, y];
                     float dirWeight = Vector2.Dot( curDir, Vector2.Normalize( gridDir ) ) + 1;
@@ -237,7 +238,7 @@ namespace InterRules.Duel
         private Point FindCurGrid ()
         {
             Vector2 pos = orderServer.Pos;
-            return new Point( (int)(pos.X / gridWidth), (int)(pos.Y / gridHeight) );
+            return new Point( (int)((pos.X - mapSize.X) / gridWidth), (int)((pos.Y - mapSize.Y) / gridHeight) );
         }
 
         #endregion
@@ -286,7 +287,7 @@ namespace InterRules.Duel
 
         ConsiderPriority curPriority;
 
-        Vector2 mapSize;
+        Rectanglef mapSize;
 
         float guardDestance = defaultGuardDestance;
 
@@ -300,7 +301,7 @@ namespace InterRules.Duel
 
         #region Constructions
 
-        public ConsiderRaderScan ( Vector2 mapSize )
+        public ConsiderRaderScan ( Rectanglef mapSize )
         {
             this.mapSize = mapSize;
             curPriority = ConsiderPriority.Vacancy;
@@ -417,8 +418,8 @@ namespace InterRules.Duel
 
             Vector2 curPos = orderServer.Pos;
 
-            if (curPos.X < guardDestance || curPos.X > mapSize.X - guardDestance ||
-                curPos.Y < guardDestance || curPos.Y > mapSize.Y - guardDestance)
+            if (curPos.X < mapSize.X + guardDestance || curPos.X > mapSize.X + mapSize.Width - guardDestance ||
+                curPos.Y < mapSize.Y + guardDestance || curPos.Y > mapSize.Y + mapSize.Height - guardDestance)
                 return State.Border;
 
             float curSpeed = orderServer.ForwardSpeed;
@@ -434,13 +435,13 @@ namespace InterRules.Duel
         {
             int sum = 0;
             Vector2 pos = orderServer.Pos;
-            if (pos.X < guardDestance)
+            if (pos.X < mapSize.X + guardDestance)
                 sum += 1;
-            if (pos.X > mapSize.X - guardDestance)
+            if (pos.X > mapSize.X + mapSize.Width - guardDestance)
                 sum += 2;
-            if (pos.Y < guardDestance)
+            if (pos.Y < mapSize.Y + guardDestance)
                 sum += 4;
-            if (pos.Y > mapSize.Y - guardDestance)
+            if (pos.Y > mapSize.Y + mapSize.Height - guardDestance)
                 sum += 8;
 
             Area curArea = (Area)sum;
@@ -526,12 +527,12 @@ namespace InterRules.Duel
 
         bool lastDeltaAngWise;
 
-        Vector2 mapSize;
+        Rectanglef mapSize;
 
         #endregion
 
         #region Constrution
-        public ConsiderAwayFromEnemyTurret ( Vector2 mapSize )
+        public ConsiderAwayFromEnemyTurret ( Rectanglef mapSize )
         {
             curPriority = ConsiderPriority.Vacancy;
             this.mapSize = mapSize;
@@ -651,13 +652,13 @@ namespace InterRules.Duel
         {
             int sum = 0;
             Vector2 pos = orderServer.Pos;
-            if (pos.X < guardDestance)
+            if (pos.X < mapSize.X + guardDestance)
                 sum += 1;
-            if (pos.X > mapSize.X - guardDestance)
+            if (pos.X > mapSize.X + mapSize.Width - guardDestance)
                 sum += 2;
-            if (pos.Y < guardDestance)
+            if (pos.Y < mapSize.Y + guardDestance)
                 sum += 4;
-            if (pos.Y > mapSize.Y - guardDestance)
+            if (pos.Y > mapSize.Y + mapSize.Height - guardDestance)
                 sum += 8;
 
             return (Area)sum;
@@ -674,13 +675,13 @@ namespace InterRules.Duel
             else if (area == Area.Dowm)
                 return new Vector2( 0, -1 );
             else if (area == Area.UpLeft)
-                return Vector2.Normalize( mapSize );
+                return Vector2.Normalize( new Vector2( mapSize.Width, mapSize.Height ) );
             else if (area == Area.UpRight)
-                return Vector2.Normalize( new Vector2( -mapSize.X, mapSize.Y ) );
+                return Vector2.Normalize( new Vector2( -mapSize.Width, mapSize.Height ) );
             else if (area == Area.DownLeft)
-                return Vector2.Normalize( new Vector2( mapSize.X, -mapSize.Y ) );
+                return Vector2.Normalize( new Vector2( mapSize.Width, -mapSize.Height ) );
             else if (area == Area.DownRight)
-                return Vector2.Normalize( new Vector2( -mapSize.X, -mapSize.Y ) );
+                return Vector2.Normalize( new Vector2( -mapSize.Width, -mapSize.Height ) );
             else
                 return Vector2.Zero;
         }

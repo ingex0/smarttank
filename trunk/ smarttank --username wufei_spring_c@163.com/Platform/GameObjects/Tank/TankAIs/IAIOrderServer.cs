@@ -6,6 +6,7 @@ using Microsoft.Xna.Framework;
 using Platform.PhisicalCollision;
 using GameBase.Graphics;
 using Platform.Senses.Memory;
+using GameBase.DataStructure;
 
 namespace Platform.GameObjects.Tank.TankAIs
 {
@@ -47,9 +48,7 @@ namespace Platform.GameObjects.Tank.TankAIs
 
         EyeableBorderObjInfo[] EyeableBorderObjInfos { get;}
 
-        void UpdateNavigateMap ( float spaceForTank );
-
-        NavigateMap NavigateMap { get;}
+        NavigateMap CalNavigateMap ( NaviMapConsiderObj selectFun, Rectanglef mapBorder, float spaceForTank );
 
         event OnCollidedEventHandlerAI OnCollide;
 

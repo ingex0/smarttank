@@ -262,10 +262,6 @@
       <XNAUseContentPipeline>false</XNAUseContentPipeline>
       <Name>IDrawableObj</Name>
     </Compile>
-    <None Include="oldfiles\GameManager.cs.old">
-      <XNAUseContentPipeline>false</XNAUseContentPipeline>
-      <Name>GameManager.cs</Name>
-    </None>
     <Compile Include="GameManager.cs">
       <XNAUseContentPipeline>false</XNAUseContentPipeline>
       <Name>GameManager</Name>
@@ -298,26 +294,10 @@
       <XNAUseContentPipeline>false</XNAUseContentPipeline>
       <Name>TankControlSinTur</Name>
     </Compile>
-    <None Include="oldfiles\TankEngine.cs.old">
-      <XNAUseContentPipeline>false</XNAUseContentPipeline>
-      <Name>TankEngine.cs</Name>
-    </None>
-    <None Include="oldfiles\FirstTank.cs.old">
-      <XNAUseContentPipeline>false</XNAUseContentPipeline>
-      <Name>FirstTank.cs</Name>
-    </None>
-    <None Include="oldfiles\ITankController_Origin.cs.old">
-      <XNAUseContentPipeline>false</XNAUseContentPipeline>
-      <Name>ITankController_Origin.cs</Name>
-    </None>
     <Compile Include="GameObjects\Tank\TankControls\TankLimitSinTur.cs">
       <XNAUseContentPipeline>false</XNAUseContentPipeline>
       <Name>TankLimitSinTur</Name>
     </Compile>
-    <None Include="oldfiles\TankStatus.cs.old">
-      <XNAUseContentPipeline>false</XNAUseContentPipeline>
-      <Name>TankStatus.cs</Name>
-    </None>
     <Compile Include="GameObjects\Tank\Tanks\TankSinTur.cs">
       <XNAUseContentPipeline>false</XNAUseContentPipeline>
       <Name>TankSinTur</Name>
@@ -326,22 +306,6 @@
       <XNAUseContentPipeline>false</XNAUseContentPipeline>
       <Name>Tank</Name>
     </Compile>
-    <None Include="oldfiles\TankActionStatus.cs.old">
-      <XNAUseContentPipeline>false</XNAUseContentPipeline>
-      <Name>TankActionStatus.cs</Name>
-    </None>
-    <None Include="oldfiles\TankManualController.cs.old">
-      <XNAUseContentPipeline>false</XNAUseContentPipeline>
-      <Name>TankManualController.cs</Name>
-    </None>
-    <None Include="oldfiles\TankLimits.cs.old">
-      <XNAUseContentPipeline>false</XNAUseContentPipeline>
-      <Name>TankLimits.cs</Name>
-    </None>
-    <None Include="oldfiles\TestFirstTank.cs.old">
-      <XNAUseContentPipeline>false</XNAUseContentPipeline>
-      <Name>TestFirstTank.cs</Name>
-    </None>
     <None Include="GameObjects\Tank\test\testTank_M60.cs.temp">
       <XNAUseContentPipeline>false</XNAUseContentPipeline>
       <Name>testTank_M60.cs</Name>
@@ -350,74 +314,6 @@
       <XNAUseContentPipeline>false</XNAUseContentPipeline>
       <Name>TurretLinker</Name>
     </Compile>
-    <None Include="oldfiles\Collision\ICollidable.cs.old">
-      <XNAUseContentPipeline>false</XNAUseContentPipeline>
-      <Name>ICollidable.cs</Name>
-    </None>
-    <None Include="oldfiles\Collision\ICollisionStrategy.cs.old">
-      <XNAUseContentPipeline>false</XNAUseContentPipeline>
-      <Name>ICollisionStrategy.cs</Name>
-    </None>
-    <None Include="oldfiles\Collision\PixCollisionStrategy.cs.old">
-      <XNAUseContentPipeline>false</XNAUseContentPipeline>
-      <Name>PixCollisionStrategy.cs</Name>
-    </None>
-    <None Include="oldfiles\GameBackground\GameDataBase.cs.old">
-      <XNAUseContentPipeline>false</XNAUseContentPipeline>
-      <Name>GameDataBase.cs</Name>
-    </None>
-    <None Include="oldfiles\Phisics\PhisicsUpdater.cs.old">
-      <XNAUseContentPipeline>false</XNAUseContentPipeline>
-      <Name>PhisicsUpdater.cs</Name>
-    </None>
-    <None Include="oldfiles\Phisics\VPStrategy.cs.old">
-      <XNAUseContentPipeline>false</XNAUseContentPipeline>
-      <Name>VPStrategy.cs</Name>
-    </None>
-    <None Include="oldfiles\Registers\Tests\ObjectRegister.cs.old">
-      <XNAUseContentPipeline>false</XNAUseContentPipeline>
-      <Name>ObjectRegister.cs</Name>
-    </None>
-    <None Include="oldfiles\TestGameObjects\TestCollider.cs.old">
-      <XNAUseContentPipeline>false</XNAUseContentPipeline>
-      <Name>TestCollider.cs</Name>
-    </None>
-    <None Include="oldfiles\TestGameObjects\TestPhisicalObject.cs.old">
-      <XNAUseContentPipeline>false</XNAUseContentPipeline>
-      <Name>TestPhisicalObject.cs</Name>
-    </None>
-    <None Include="oldfiles\Phisics\IPhisical.cs.old">
-      <XNAUseContentPipeline>false</XNAUseContentPipeline>
-      <Name>IPhisical.cs</Name>
-    </None>
-    <None Include="oldfiles\Phisics\IPhisicalStrategy.cs.old">
-      <XNAUseContentPipeline>false</XNAUseContentPipeline>
-      <Name>IPhisicalStrategy.cs</Name>
-    </None>
-    <None Include="oldfiles\Phisics\NewtonStrategy.cs.old">
-      <XNAUseContentPipeline>false</XNAUseContentPipeline>
-      <Name>NewtonStrategy.cs</Name>
-    </None>
-    <None Include="oldfiles\Phisics\NewtonPhisicalStatus.cs.old">
-      <XNAUseContentPipeline>false</XNAUseContentPipeline>
-      <Name>NewtonPhisicalStatus.cs</Name>
-    </None>
-    <None Include="oldfiles\Phisics\TestCases\StatusTest.cs.old">
-      <XNAUseContentPipeline>false</XNAUseContentPipeline>
-      <Name>StatusTest.cs</Name>
-    </None>
-    <None Include="oldfiles\Phisics\TestCases\TestNewtonStrategy.cs.old">
-      <XNAUseContentPipeline>false</XNAUseContentPipeline>
-      <Name>TestNewtonStrategy.cs</Name>
-    </None>
-    <None Include="oldfiles\ObjManage\IPhisicalObj.cs.old">
-      <XNAUseContentPipeline>false</XNAUseContentPipeline>
-      <Name>IPhisicalObj.cs</Name>
-    </None>
-    <None Include="oldfiles\ObjManage\ObjManager.cs.old">
-      <XNAUseContentPipeline>false</XNAUseContentPipeline>
-      <Name>ObjManager.cs</Name>
-    </None>
     <None Include="GameScreens\DemoScreen.cs.old">
       <XNAUseContentPipeline>false</XNAUseContentPipeline>
       <Name>DemoScreen.cs</Name>
@@ -430,10 +326,6 @@
       <XNAUseContentPipeline>false</XNAUseContentPipeline>
       <Name>Border</Name>
     </Compile>
-    <None Include="oldfiles\CollisionChecker_1.cs.old">
-      <XNAUseContentPipeline>false</XNAUseContentPipeline>
-      <Name>CollisionChecker_1.cs</Name>
-    </None>
     <Compile Include="PhisicalCollision\ICollider.cs">
       <XNAUseContentPipeline>false</XNAUseContentPipeline>
       <Name>ICollider</Name>
@@ -446,10 +338,6 @@
       <XNAUseContentPipeline>false</XNAUseContentPipeline>
       <Name>PhiColManager</Name>
     </Compile>
-    <None Include="oldfiles\PhisicalManager_1.cs.old">
-      <XNAUseContentPipeline>false</XNAUseContentPipeline>
-      <Name>PhisicalManager_1.cs</Name>
-    </None>
     <Compile Include="PhisicalCollision\SpriteColMethod.cs">
       <XNAUseContentPipeline>false</XNAUseContentPipeline>
       <Name>SpriteColMethod</Name>
@@ -474,18 +362,6 @@
       <XNAUseContentPipeline>false</XNAUseContentPipeline>
       <Name>NonInertiasPhiUpdater</Name>
     </Compile>
-    <None Include="oldfiles\Registers\Register.cs.old">
-      <XNAUseContentPipeline>false</XNAUseContentPipeline>
-      <Name>Register.cs</Name>
-    </None>
-    <None Include="oldfiles\Registers\Tests\IRegister.cs.old">
-      <XNAUseContentPipeline>false</XNAUseContentPipeline>
-      <Name>IRegister.cs</Name>
-    </None>
-    <None Include="oldfiles\Registers\Tests\ObjectRegisterTest.cs.old">
-      <XNAUseContentPipeline>false</XNAUseContentPipeline>
-      <Name>ObjectRegisterTest.cs</Name>
-    </None>
     <Compile Include="Properties\AssemblyInfo.cs">
       <XNAUseContentPipeline>false</XNAUseContentPipeline>
       <Name>AssemblyInfo</Name>

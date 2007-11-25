@@ -53,12 +53,12 @@ namespace Platform.Senses.Memory
             get { return guardLines; }
         }
 
-        public NavigateMap ( EyeableBorderObjInfo[] objInfos, float spaceForTank )
+        public NavigateMap ( EyeableBorderObjInfo[] objInfos, Rectanglef mapBorder, float spaceForTank )
         {
-            BuildMap( objInfos, spaceForTank );
+            BuildMap( objInfos, mapBorder, spaceForTank );
         }
 
-        public void BuildMap ( EyeableBorderObjInfo[] objInfos, float spaceForTank )
+        public void BuildMap ( EyeableBorderObjInfo[] objInfos, Rectanglef mapBorder, float spaceForTank )
         {
 
             #region 对每一个BorderObj生成逻辑坐标上的凸包点集，并向外扩展
@@ -156,6 +156,14 @@ namespace Platform.Senses.Memory
                 }
             }
 
+            mapBorder = new Rectanglef( mapBorder.X + spaceForTank, mapBorder.Y + spaceForTank,
+                mapBorder.Width - 2 * spaceForTank, mapBorder.Height - 2 * spaceForTank );
+
+            guardLines.Add( new Segment( mapBorder.UpLeft, mapBorder.UpRight ) );
+            guardLines.Add( new Segment( mapBorder.UpRight, mapBorder.DownRight ) );
+            guardLines.Add( new Segment( mapBorder.DownRight, mapBorder.DownLeft ) );
+            guardLines.Add( new Segment( mapBorder.DownLeft, mapBorder.UpLeft ) );
+
             #endregion
 
             #region 检查凸包内部连线是否和警戒线相交,如不相交则连接该连线并计算权值
@@ -164,6 +172,10 @@ namespace Platform.Senses.Memory
             {
                 for (int i = 0; i < convex.Length; i++)
                 {
+                    // 检查连线是否超出边界
+                    if (!mapBorder.Contains( convex[i].value.Pos ))
+                        continue;
+
                     Segment link = new Segment( convex[i].value.Pos, convex[(i + 1) % convex.Length].value.Pos );
 
 
@@ -202,6 +214,10 @@ namespace Platform.Senses.Memory
                 {
                     foreach (GraphPoint<NaviPoint> p1 in convexs[i])
                     {
+                        // 检查连线是否超出边界
+                        if (!mapBorder.Contains( p1.value.Pos ))
+                            continue;
+
                         foreach (GraphPoint<NaviPoint> p2 in convexs[j])
                         {
                             Segment link = new Segment( p1.value.Pos, p2.value.Pos );

@@ -11,6 +11,9 @@ using Platform.Scene;
 
 namespace InterRules.FindPath
 {
+    /// <summary>
+    /// 拥有一个很简陋的寻路逻辑的AI。
+    /// </summary>
     [AIAttribute( "PathFinder No.1", "SmartTank编写组", "测试AI的寻路能力", 2007, 11, 21 )]
     class PathFinderFirst : IAISinTur
     {
@@ -51,9 +54,6 @@ namespace InterRules.FindPath
         public void Update ( float seconds )
         {
             Vector2 curPos = orderServer.Pos;
-
-            if (InputHandler.JustPressKey( Microsoft.Xna.Framework.Input.Keys.N ))
-                orderServer.UpdateNavigateMap( 10 );
 
             if (InputHandler.CurMouseRightBtnPressed)
             {
