@@ -122,6 +122,10 @@
       <XNAUseContentPipeline>false</XNAUseContentPipeline>
       <Name>ConsiderCenter</Name>
     </Compile>
+    <Compile Include="GameDraw\UIElement\Compass.cs">
+      <XNAUseContentPipeline>false</XNAUseContentPipeline>
+      <Name>Compass</Name>
+    </Compile>
     <Compile Include="GameObjects\IGameObjSceneInfo.cs">
       <XNAUseContentPipeline>false</XNAUseContentPipeline>
       <Name>IGameObjSceneInfo</Name>

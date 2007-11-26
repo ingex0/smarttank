@@ -21,6 +21,14 @@ namespace Platform.GameDraw
         static Camera curCamera;
         static public event EventHandler onCameraScaled;
 
+        static public Camera CurCamera
+        {
+            get
+            {
+                return curCamera;
+            }
+        }
+
         const float defaultMinScale = 0.8f;
         const float defaultMaxScale = 6f;
 
