@@ -7,8 +7,15 @@ using GameBase.Helpers;
 
 namespace GameBase.Graphics
 {
+    /// <summary>
+    /// 从一副包含多个子图的图片中建立动画
+    /// </summary>
     public class AnimatedSpriteSingle : AnimatedSprite, IDisposable
     {
+        /// <summary>
+        ///  提前将贴图文件导入到Content当中，以避免读取造成游戏的停滞。
+        /// </summary>
+        /// <param name="assetName">资源的名称</param>
         public static void LoadResources ( string assetName )
         {
             try
@@ -28,13 +35,37 @@ namespace GameBase.Graphics
 
         bool alreadyLoad = false;
 
+        /// <summary>
+        /// 贴图的中心，以贴图坐标表示
+        /// </summary>
         public Vector2 Origin;
+        /// <summary>
+        /// 逻辑位置
+        /// </summary>
         public Vector2 Pos;
+        /// <summary>
+        /// 逻辑宽度
+        /// </summary>
         public float Width;
+        /// <summary>
+        /// 逻辑高度
+        /// </summary>
         public float Height;
+        /// <summary>
+        /// 方位角
+        /// </summary>
         public float Rata;
+        /// <summary>
+        /// 颜色
+        /// </summary>
         public Color Color;
+        /// <summary>
+        /// 绘制深度
+        /// </summary>
         public float LayerDepth;
+        /// <summary>
+        /// 混合模式
+        /// </summary>
         public SpriteBlendMode BlendMode;
 
         Rectangle mDestiRect;
@@ -42,7 +73,13 @@ namespace GameBase.Graphics
         int cellWidth;
         int cellHeight;
 
-
+        /// <summary>
+        /// 通过素材管道导入图片资源
+        /// </summary>
+        /// <param name="assetName">素材名称</param>
+        /// <param name="cellWidth">一个子图的宽度</param>
+        /// <param name="cellHeight">一个子图的高度</param>
+        /// <param name="cellInterval">值使用放能被cellInterval整除的索引的子图</param>
         public void LoadFromContent ( string assetName, int cellWidth, int cellHeight, int cellInterval )
         {
             if (alreadyLoad)
@@ -101,6 +138,17 @@ namespace GameBase.Graphics
             mSumFrame = result.Count;
         }
 
+        /// <summary>
+        /// 设置绘制参数
+        /// </summary>
+        /// <param name="origin">贴图的中心，以贴图坐标表示</param>
+        /// <param name="pos">逻辑位置</param>
+        /// <param name="width">逻辑宽度</param>
+        /// <param name="height">逻辑高度</param>
+        /// <param name="rata">方位角</param>
+        /// <param name="color">绘制颜色</param>
+        /// <param name="layerDepth">绘制深度</param>
+        /// <param name="blendMode">混合模式</param>
         public void SetParameters ( Vector2 origin, Vector2 pos, float width, float height, float rata, Color color, float layerDepth, SpriteBlendMode blendMode )
         {
             Origin = origin;
@@ -114,20 +162,23 @@ namespace GameBase.Graphics
         }
 
         /// <summary>
-        /// 设置参数
+        /// 设置绘制参数
         /// </summary>
-        /// <param name="origin"></param>
-        /// <param name="pos"></param>
+        /// <param name="origin">贴图的中心，以贴图坐标表示</param>
+        /// <param name="pos">逻辑位置</param>
         /// <param name="scale">逻辑大小/原图大小</param>
-        /// <param name="rata"></param>
-        /// <param name="color"></param>
-        /// <param name="layerDepth"></param>
-        /// <param name="blendMode"></param>
+        /// <param name="rata">方位角</param>
+        /// <param name="color">绘制颜色</param>
+        /// <param name="layerDepth">绘制深度</param>
+        /// <param name="blendMode">混合模式</param>
         public void SetParameters ( Vector2 origin, Vector2 pos, float scale, float rata, Color color, float layerDepth, SpriteBlendMode blendMode )
         {
             SetParameters( origin, pos, (float)(tex.Width) * scale, (float)(tex.Height) * scale, rata, color, layerDepth, blendMode );
         }
 
+        /// <summary>
+        /// 绘制当前帧
+        /// </summary>
         protected override void Draw ()
         {
 
@@ -148,12 +199,15 @@ namespace GameBase.Graphics
             Vector2 scrnPos = Coordin.ScreenPos( new Vector2( Pos.X, Pos.Y ) );
             mDestiRect.X = (int)scrnPos.X;
             mDestiRect.Y = (int)scrnPos.Y;
-            mDestiRect.Width = Coordin.ScrnLength( cellWidth );
-            mDestiRect.Height = Coordin.ScrnLength( cellHeight );
+            mDestiRect.Width = Coordin.ScrnLength( Width );
+            mDestiRect.Height = Coordin.ScrnLength( Height );
         }
 
         #region IDisposable 成员
 
+        /// <summary>
+        /// 释放图片资源
+        /// </summary>
         public void Dispose ()
         {
             tex.Dispose();

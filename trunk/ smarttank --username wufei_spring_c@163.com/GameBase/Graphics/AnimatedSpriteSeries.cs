@@ -8,8 +8,18 @@ using Microsoft.Xna.Framework.Graphics;
 
 namespace GameBase.Graphics
 {
+    /// <summary>
+    /// 从多幅图中建立动画的动画类
+    /// </summary>
     public class AnimatedSpriteSeries : AnimatedSprite, IDisposable
     {
+        /// <summary>
+        /// 提前将贴图文件导入到Content当中，以避免读取造成游戏的停滞。
+        /// 资源名由固定的头名字和名字后的阿拉伯数字索引组成
+        /// </summary>
+        /// <param name="assetHead">资源的路径以及头名字</param>
+        /// <param name="firstNo">索引开始的数字</param>
+        /// <param name="sumFrame">系列贴图文件的数量</param>
         static public void LoadResource ( string assetHead, int firstNo, int sumFrame )
         {
             try
@@ -31,11 +41,17 @@ namespace GameBase.Graphics
 
         bool alreadyLoad = false;
 
+        /// <summary>
+        /// 获取当前帧的Sprite对象
+        /// </summary>
         public Sprite CurSprite
         {
             get { return mSprites[mCurFrameIndex]; }
         }
 
+        /// <summary>
+        /// 获取动画每一帧的Sprite对象
+        /// </summary>
         public Sprite[] Sprites
         {
             get { return mSprites; }
@@ -45,6 +61,17 @@ namespace GameBase.Graphics
 
         #region Load Textures
 
+        /// <summary>
+        /// 从文件中导入系列贴图资源。
+        /// 资源名由固定的头名字和名字后的阿拉伯数字索引组成。
+        /// 建议从素材管道中导入，因为该方法容易引起游戏帧的停滞。
+        /// </summary>
+        /// <param name="path">贴图资源的路径</param>
+        /// <param name="fileHeadName">头名字</param>
+        /// <param name="extension">扩展名</param>
+        /// <param name="firstNo">第一个数字索引</param>
+        /// <param name="sumFrame">索引总数</param>
+        /// <param name="supportInterDect">是否添加冲突检测的支持</param>
         public void LoadSeriesFromFiles ( string path, string fileHeadName, string extension, int firstNo, int sumFrame, bool supportInterDect )
         {
             if (alreadyLoad)
@@ -74,6 +101,14 @@ namespace GameBase.Graphics
             AnimatedManager.Add( this );
         }
 
+        /// <summary>
+        /// 使用素材管道导入贴图文件。
+        /// 资源名由固定的头名字和名字后的阿拉伯数字索引组成
+        /// </summary>
+        /// <param name="assetHead">资源的路径以及头名字</param>
+        /// <param name="firstNo">索引开始的数字</param>
+        /// <param name="sumFrame">系列贴图文件的数量</param>
+        /// <param name="supportInterDect">是否提供冲突检测的支持</param>
         public void LoadSeriesFormContent ( string assetHead, int firstNo, int sumFrame, bool supportInterDect )
         {
             if (alreadyLoad)
@@ -120,6 +155,17 @@ namespace GameBase.Graphics
 
         #region Set Sprites Parameters
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="origin"></param>
+        /// <param name="pos"></param>
+        /// <param name="width"></param>
+        /// <param name="height"></param>
+        /// <param name="rata"></param>
+        /// <param name="color"></param>
+        /// <param name="layerDepth"></param>
+        /// <param name="blendMode"></param>
         public void SetSpritesParameters ( Vector2 origin, Vector2 pos, float width, float height, float rata, Color color, float layerDepth, SpriteBlendMode blendMode )
         {
             foreach (Sprite sprite in mSprites)
@@ -128,6 +174,16 @@ namespace GameBase.Graphics
             }
         }
 
+        /// <summary>
+        /// 设置所有Sprite的参数
+        /// </summary>
+        /// <param name="origin">贴图的中心，以贴图坐标表示</param>
+        /// <param name="pos">逻辑位置</param>
+        /// <param name="scale">贴图的缩放比（= 逻辑长度/贴图长度）</param>
+        /// <param name="rata">逻辑方位角</param>
+        /// <param name="color">绘制颜色</param>
+        /// <param name="layerDepth">深度，1为最低层，0为最表层</param>
+        /// <param name="blendMode">采用的混合模式</param>
         public void SetSpritesParameters ( Vector2 origin, Vector2 pos, float scale, float rata, Color color, float layerDepth, SpriteBlendMode blendMode )
         {
             foreach (Sprite sprite in mSprites)
@@ -140,6 +196,9 @@ namespace GameBase.Graphics
 
         #region Draw Current Frame
 
+        /// <summary>
+        /// 绘制当前的贴图
+        /// </summary>
         protected override void Draw ()
         {
             CurSprite.Draw();

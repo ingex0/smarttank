@@ -4,17 +4,32 @@ using System.Text;
 
 namespace GameBase.Graphics
 {
+    /// <summary>
+    /// 可切帧对象的基类
+    /// </summary>
     public class AnimatedSprite : IAnimated
     {
 
         #region Variables
 
+        /// <summary>
+        /// 当动画结束时引发这个事件
+        /// </summary>
         public event EventHandler OnStop;
 
+        /// <summary>
+        /// 两次切帧之间相隔游戏绘制循环的个数
+        /// </summary>
         public int Interval = 1;
 
+        /// <summary>
+        /// 动画的帧总数
+        /// </summary>
         protected int mSumFrame;
 
+        /// <summary>
+        /// 当前的帧索引，从0开始
+        /// </summary>
         protected int mCurFrameIndex;
 
         int timeTick = 0;
@@ -31,11 +46,17 @@ namespace GameBase.Graphics
 
         #endregion
 
+        /// <summary>
+        /// 动画是否已经开始显示
+        /// </summary>
         public bool IsStart
         {
             get { return started; }
         }
 
+        /// <summary>
+        /// 动画是否已经结束
+        /// </summary>
         public bool IsEnd
         {
             get { return end; }
@@ -43,11 +64,18 @@ namespace GameBase.Graphics
 
         #region Start
 
+        /// <summary>
+        /// 从索引0开始连续播放动画。
+        /// </summary>
         public void Start ()
         {
             Start( 0 );
         }
 
+        /// <summary>
+        /// 开始连续播放动画，制定开始的帧索引
+        /// </summary>
+        /// <param name="startFrame"></param>
         public void Start ( int startFrame )
         {
             Start( startFrame, 0, false );
@@ -57,6 +85,7 @@ namespace GameBase.Graphics
         /// Start to Show the Cartoon on Screen,
         /// it will start at the startFrame index,
         /// and after passing sumShowFrame's number of frames, it will a stop automatically, and call OnStop Event.
+        /// 开始播放动画，制定播放开始的索引和一共显示多少帧，并制定是否只播放一次
         /// </summary>
         /// <param name="startFrame"></param>
         /// <param name="sumShowFrame"></param>
@@ -72,6 +101,10 @@ namespace GameBase.Graphics
         #endregion
 
         #region Next Frame
+
+        /// <summary>
+        /// 切换到下一帧
+        /// </summary>
         public void NextFrame ()
         {
             if (mSumShowFrame != 0)
@@ -102,6 +135,10 @@ namespace GameBase.Graphics
         #endregion
 
         #region Draw Current Frame
+
+        /// <summary>
+        /// 绘制当前帧
+        /// </summary>
         public void DrawCurFrame ()
         {
             Draw();
@@ -112,6 +149,9 @@ namespace GameBase.Graphics
             }
         }
 
+        /// <summary>
+        /// 绘制当前帧，由继承类重载后实现
+        /// </summary>
         protected virtual void Draw ()
         {
 
@@ -120,6 +160,7 @@ namespace GameBase.Graphics
         #endregion
 
         #region StopShow
+
         private void Stop ()
         {
             mShowedFrame = 0;
@@ -128,6 +169,7 @@ namespace GameBase.Graphics
             if (OnStop != null)
                 OnStop( this, null );
         }
+
         #endregion
     }
 }
