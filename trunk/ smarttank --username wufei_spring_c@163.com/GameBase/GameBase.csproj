@@ -63,10 +63,6 @@
       <XNAUseContentPipeline>false</XNAUseContentPipeline>
       <Name>CircleList</Name>
     </Compile>
-    <Compile Include="DataStructure\FastLinkedList.cs">
-      <XNAUseContentPipeline>false</XNAUseContentPipeline>
-      <Name>FastLinkedList</Name>
-    </Compile>
     <Compile Include="DataStructure\Graph.cs">
       <XNAUseContentPipeline>false</XNAUseContentPipeline>
       <Name>Graph</Name>
@@ -94,10 +90,6 @@
     <Compile Include="DataStructure\test\MultiListTest.cs">
       <XNAUseContentPipeline>false</XNAUseContentPipeline>
       <Name>MultiListTest</Name>
-    </Compile>
-    <Compile Include="DataStructure\test\TestFastLinkedList.cs">
-      <XNAUseContentPipeline>false</XNAUseContentPipeline>
-      <Name>TestFastLinkedList</Name>
     </Compile>
     <Compile Include="DataStructure\test\testRectanglef.cs">
       <XNAUseContentPipeline>false</XNAUseContentPipeline>
@@ -127,6 +119,14 @@
       <XNAUseContentPipeline>false</XNAUseContentPipeline>
       <Name>IBackGround</Name>
     </Compile>
+    <None Include="DataStructure\FastLinkedList.cs.old">
+      <XNAUseContentPipeline>false</XNAUseContentPipeline>
+      <Name>FastLinkedList.cs</Name>
+    </None>
+    <None Include="DataStructure\test\TestFastLinkedList.cs.old">
+      <XNAUseContentPipeline>false</XNAUseContentPipeline>
+      <Name>TestFastLinkedList.cs</Name>
+    </None>
     <None Include="Graphics\BackGround\SimpleTile\test\TestDataSerialize.cs.old">
       <XNAUseContentPipeline>false</XNAUseContentPipeline>
       <Name>TestDataSerialize.cs</Name>

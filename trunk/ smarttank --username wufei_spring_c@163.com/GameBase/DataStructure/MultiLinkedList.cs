@@ -6,24 +6,62 @@ using GameBase.Helpers;
 
 namespace GameBase.DataStructure
 {
+    /*
+     * 一个能够具有多重身份的链式容器。
+     * 
+     * 如果其中的元素继承于某个接口（或父类），就能获取该链表的一个可以以该接口（或父类）进行迭代的副本。
+     * 
+     * 当原链表中元素有所改动时，副本和原链表始终保持一致。
+     * 
+     * */
+
+    /// <summary>
+    /// 多重身份链表的节点
+    /// </summary>
+    /// <typeparam name="T"></typeparam>
     [Serializable]
     public class MultiLinkedListNode<T> where T : class
     {
         static readonly public MultiLinkedListNode<T> empty = new MultiLinkedListNode<T>();
 
+        /// <summary>
+        /// 空构造函数
+        /// </summary>
         public MultiLinkedListNode ()
         {
         }
+        /// <summary>
+        /// 设置节点中的值
+        /// </summary>
+        /// <param name="value"></param>
         public MultiLinkedListNode ( T value )
         {
             this.value = value;
         }
 
+        /// <summary>
+        /// 节点的值
+        /// </summary>
         public T value;
+
+        /// <summary>
+        /// 该节点的前一个节点
+        /// </summary>
         public MultiLinkedListNode<T> pre;
+
+        /// <summary>
+        /// 该节点的后一个节点
+        /// </summary>
         public MultiLinkedListNode<T> next;
     }
 
+    /// <summary>
+    /// 一个能够具有多重身份的链式容器。
+    /// 如果其中的元素继承于某个接口（或父类），就能获取该链表的一个可以以该接口（或父类）进行迭代的副本。
+    /// 当原链表中元素有所改动时，副本和原链表始终保持一致。
+    /// 该容器同时保管一个Hash表。以使查找效率更高，但也使容器中不能有节点值相同的节点。
+    /// </summary>
+    /// <typeparam name="T"></typeparam>
     [Serializable]
     public class MultiLinkedList<T> : IEnumerable<T> where T : class
     {
@@ -122,6 +160,9 @@ namespace GameBase.DataStructure
 
         #region Construction
 
+        /// <summary>
+        /// 构建一个空链表
+        /// </summary>
         public MultiLinkedList ()
         {
             head = new MultiLinkedListNode<T>();
@@ -133,6 +174,11 @@ namespace GameBase.DataStructure
 
         #region Methods
 
+        /// <summary>
+        /// 在链表的末尾加入一个新的节点
+        /// </summary>
+        /// <param name="node"></param>
+        /// <returns></returns>
         public bool AddLast ( MultiLinkedListNode<T> node )
         {
             try
@@ -152,6 +198,11 @@ namespace GameBase.DataStructure
             return true;
         }
 
+        /// <summary>
+        /// 在链表的末尾加入一个新的节点
+        /// </summary>
+        /// <param name="value"></param>
+        /// <returns></returns>
         public bool AddLast ( T value )
         {
 
@@ -159,6 +210,11 @@ namespace GameBase.DataStructure
             return AddLast( node );
         }
 
+        /// <summary>
+        /// 移除链表中的节点
+        /// </summary>
+        /// <param name="node"></param>
+        /// <returns></returns>
         public bool Remove ( MultiLinkedListNode<T> node )
         {
             if (node != null && node.pre != null)
@@ -176,6 +232,12 @@ namespace GameBase.DataStructure
                 return false;
         }
 
+        /// <summary>
+        /// 查找链表中是否含有值为value的节点，如果有，则删除该节点。若没有，在日志上记录。
+        /// 查找过程使用Hash表。
+        /// </summary>
+        /// <param name="value"></param>
+        /// <returns></returns>
         public bool Remove ( T value )
         {
             try
@@ -193,6 +255,10 @@ namespace GameBase.DataStructure
             return false;
         }
 
+        /// <summary>
+        /// 对每个元素执行一次操作
+        /// </summary>
+        /// <param name="func"></param>
         public void ForEach ( ForEachFunc<T> func )
         {
             MultiLinkedListEnumerator iter = new MultiLinkedListEnumerator( this );
@@ -202,34 +268,12 @@ namespace GameBase.DataStructure
             }
         }
 
-        public MultiLinkedListNode<T> FindFirst ( FindFunc<T> func )
-        {
-            MultiLinkedListEnumerator iter = new MultiLinkedListEnumerator( this );
-            while (iter.MoveNext())
-            {
-                if (func( iter.curNode.value ))
-                {
-                    return iter.curNode;
-                }
-            }
-            return null;
-        }
-
-        public MultiLinkedListNode<T>[] FindAll ( FindFunc<T> func )
-        {
-            List<MultiLinkedListNode<T>> result = new List<MultiLinkedListNode<T>>();
-
-            MultiLinkedListEnumerator iter = new MultiLinkedListEnumerator( this );
-            while (iter.MoveNext())
-            {
-                if (func( iter.curNode.value ))
-                {
-                    result.Add( iter.curNode );
-                }
-            }
-            return result.ToArray();
-        }
-
+        /// <summary>
+        /// 用遍历的方法获得节点在链表中的位置。
+        /// 如果节点不在链表中，返回-1
+        /// </summary>
+        /// <param name="node"></param>
+        /// <returns></returns>
         public int IndexOf ( MultiLinkedListNode<T> node )
         {
             MultiLinkedListEnumerator iter = new MultiLinkedListEnumerator( this );
@@ -244,6 +288,10 @@ namespace GameBase.DataStructure
             return -1;
         }
 
+        /// <summary>
+        /// 将链表中的值转换到一个数组中。
+        /// </summary>
+        /// <returns></returns>
         public T[] ToArray ()
         {
             T[] result = new T[this.length];
@@ -258,6 +306,11 @@ namespace GameBase.DataStructure
             return result;
         }
 
+        /// <summary>
+        /// 获得该链表的一个副本，该副本是一个链表值的接口（或父类）的可迭代对象，并始终与原链表保持一致。
+        /// </summary>
+        /// <typeparam name="CopyType">副本迭代的类型，必须是链表中值的接口或父类</typeparam>
+        /// <returns></returns>
         public IEnumerable<CopyType> GetConvertList<CopyType> () where CopyType : class
         {
             Type copyType = typeof( CopyType );
@@ -282,6 +335,10 @@ namespace GameBase.DataStructure
 
         #region IEnumerable<T> 成员
 
+        /// <summary>
+        /// 获得链表的迭代器
+        /// </summary>
+        /// <returns></returns>
         public IEnumerator<T> GetEnumerator ()
         {
             return new MultiLinkedListEnumerator( this );
@@ -299,6 +356,11 @@ namespace GameBase.DataStructure
         #endregion
     }
 
+    /// <summary>
+    /// 多重身份链表的副本
+    /// </summary>
+    /// <typeparam name="CopyType"></typeparam>
+    /// <typeparam name="T"></typeparam>
     [Serializable]
     public class MultiListCopy<CopyType, T> : IEnumerable<CopyType>
         where T : class
@@ -306,6 +368,10 @@ namespace GameBase.DataStructure
     {
         MultiLinkedList<T> list;
 
+        /// <summary>
+        /// 用原链表来创造该副本
+        /// </summary>
+        /// <param name="list"></param>
         public MultiListCopy ( MultiLinkedList<T> list )
         {
             this.list = list;
@@ -313,6 +379,10 @@ namespace GameBase.DataStructure
 
         #region IEnumerable<CopyType> 成员
 
+        /// <summary>
+        /// 获得迭代器
+        /// </summary>
+        /// <returns></returns>
         public IEnumerator<CopyType> GetEnumerator ()
         {
             foreach (T obj in list)

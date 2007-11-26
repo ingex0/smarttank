@@ -7,29 +7,70 @@ namespace GameBase.DataStructure
 {
     #region Delegates
 
+    /// <summary>
+    /// 对数据容器中的每个对象进行一次处理。
+    /// </summary>
+    /// <typeparam name="T"></typeparam>
+    /// <param name="type"></param>
     public delegate void ForEachFunc<T> ( ref T type );
+
+    /// <summary>
+    /// 在容器中寻找想要找的对象。
+    /// 当该对象是你需要的对象时，代理函数应返回true
+    /// </summary>
+    /// <typeparam name="T"></typeparam>
+    /// <param name="type"></param>
+    /// <returns></returns>
     public delegate bool FindFunc<T> ( T type );
 
     #endregion
 
     #region CircleListNode
 
+    /// <summary>
+    /// 环链表节点
+    /// </summary>
+    /// <typeparam name="T"></typeparam>
     public class CircleListNode<T>
     {
         static readonly public CircleListNode<T> empty = new CircleListNode<T>();
 
+        /// <summary>
+        /// 空构造函数
+        /// </summary>
         public CircleListNode ()
         {
         }
+
+        /// <summary>
+        /// 将value作为该节点中储存的值
+        /// </summary>
+        /// <param name="value"></param>
         public CircleListNode ( T value )
         {
             this.value = value;
         }
 
+        /// <summary>
+        /// 节点中储存的值
+        /// </summary>
         public T value;
+
+        /// <summary>
+        /// 该节点的前一个节点
+        /// </summary>
         public CircleListNode<T> pre;
+
+        /// <summary>
+        /// 该节点的后一个节点
+        /// </summary>
         public CircleListNode<T> next;
 
+        /// <summary>
+        /// 对节点进行深度复制。
+        /// 节点中储存的值必须是ICloneable或是ValueType才可调用该函数，否则会出现异常。
+        /// </summary>
+        /// <returns></returns>
         public CircleListNode<T> Clone ()
         {
             if (this.value is ICloneable)
@@ -45,10 +86,22 @@ namespace GameBase.DataStructure
                 throw new Exception( "the T should be a ICloneable or a ValueType!" );
             }
         }
-    } 
+    }
     #endregion
 
     #region CircleList
+
+    /*
+     * 对平台而言意义非同小可。
+     * 它是储存贴图边界点的数据结构，使精灵之间精确的冲突检测成为可能。
+     * 
+     * */
+
+
+    /// <summary>
+    /// 环形链表。
+    /// </summary>
+    /// <typeparam name="T"></typeparam>
     public class CircleList<T> : IEnumerable<T>
     {
         #region Emunerator
@@ -114,37 +167,55 @@ namespace GameBase.DataStructure
             }
 
             #endregion
-        } 
+        }
         #endregion
 
         #region Variable & Properties
 
         CircleListNode<T> first;
+        /// <summary>
+        /// 获取链表中的第一个元素，当链表为空时返回null
+        /// </summary>
         public CircleListNode<T> First
         {
             get { return first; }
         }
         CircleListNode<T> last;
+        /// <summary>
+        /// 获取链表中的最后一个元素，当链表为空时返回null
+        /// </summary>
         public CircleListNode<T> Last
         {
             get { return last; }
         }
 
         bool linked = false;
+        /// <summary>
+        /// 获取一个值，表示该链表是否已经首尾相连。
+        /// </summary>
         public bool isLinked
         {
             get { return linked; }
         }
 
         int length;
+
+        /// <summary>
+        /// 链表中元素的数量
+        /// </summary>
         public int Length
         {
             get { return length; }
-        } 
+        }
         #endregion
 
         #region Methods
 
+        /// <summary>
+        /// 在链表的第一个元素前插入一个元素。
+        /// </summary>
+        /// <param name="node"></param>
+        /// <returns></returns>
         public bool AddFirst ( CircleListNode<T> node )
         {
             if (first == null)
@@ -168,11 +239,21 @@ namespace GameBase.DataStructure
             return true;
         }
 
+        /// <summary>
+        /// 在链表的第一个元素前插入一个元素。
+        /// </summary>
+        /// <param name="value"></param>
+        /// <returns></returns>
         public bool AddFirst ( T value )
         {
             return AddFirst( new CircleListNode<T>( value ) );
         }
 
+        /// <summary>
+        /// 在未首尾相连的条件下在链表的末尾加入一个元素。
+        /// </summary>
+        /// <param name="node"></param>
+        /// <returns></returns>
         public bool AddLast ( CircleListNode<T> node )
         {
             if (linked) return false;
@@ -192,6 +273,11 @@ namespace GameBase.DataStructure
             return true;
         }
 
+        /// <summary>
+        /// 在未首尾相连的条件下在链表的末尾加入一个元素。
+        /// </summary>
+        /// <param name="value"></param>
+        /// <returns></returns>
         public bool AddLast ( T value )
         {
             if (linked) return false;
@@ -200,6 +286,12 @@ namespace GameBase.DataStructure
             return AddLast( node );
         }
 
+        /// <summary>
+        /// 在链表中某一节点后插入一个新的节点。
+        /// </summary>
+        /// <param name="value"></param>
+        /// <param name="node">必须是该链表中包含的节点</param>
+        /// <returns></returns>
         public bool InsertAfter ( T value, CircleListNode<T> node )
         {
             CircleListNode<T> newNode = new CircleListNode<T>( value );
@@ -211,7 +303,8 @@ namespace GameBase.DataStructure
             if (node == last)
                 last = newNode;
 
-            node.next.pre = newNode;
+            if (node.next != null)
+                node.next.pre = newNode;
             node.next = newNode;
             newNode.pre = node;
 
@@ -220,7 +313,9 @@ namespace GameBase.DataStructure
             return true;
         }
 
-
+        /// <summary>
+        /// 链接第一个和最后一个节点，使链表成为一个环链表。
+        /// </summary>
         public void LinkLastAndFirst ()
         {
             linked = true;
@@ -229,6 +324,10 @@ namespace GameBase.DataStructure
             first.pre = last;
         }
 
+        /// <summary>
+        /// 对链表中的每个元素执行一次操作
+        /// </summary>
+        /// <param name="func"></param>
         public void ForEach ( ForEachFunc<T> func )
         {
             CircleListEnumerator iter = new CircleListEnumerator( this );
@@ -238,6 +337,11 @@ namespace GameBase.DataStructure
             }
         }
 
+        /// <summary>
+        /// 用遍历的方式查找链表，返回符合要求的第一个节点
+        /// </summary>
+        /// <param name="func"></param>
+        /// <returns></returns>
         public CircleListNode<T> FindFirst ( FindFunc<T> func )
         {
             CircleListEnumerator iter = new CircleListEnumerator( this );
@@ -251,6 +355,11 @@ namespace GameBase.DataStructure
             return null;
         }
 
+        /// <summary>
+        /// 用遍历的方式查找链表，返回所以符合要求的节点
+        /// </summary>
+        /// <param name="func"></param>
+        /// <returns></returns>
         public CircleListNode<T>[] FindAll ( FindFunc<T> func )
         {
             List<CircleListNode<T>> result = new List<CircleListNode<T>>();
@@ -266,6 +375,12 @@ namespace GameBase.DataStructure
             return result.ToArray();
         }
 
+        /// <summary>
+        /// 用遍历的方式获得该节点在链表中的位置。
+        /// 如果节点不在链表中，返回-1
+        /// </summary>
+        /// <param name="node"></param>
+        /// <returns></returns>
         public int IndexOf ( CircleListNode<T> node )
         {
             CircleListEnumerator iter = new CircleListEnumerator( this );
@@ -279,7 +394,13 @@ namespace GameBase.DataStructure
             }
             return -1;
         }
-        
+
+        /// <summary>
+        /// 将链表从起始节点开始，向前或向后的顺序转换到一个数组中。
+        /// </summary>
+        /// <param name="startNode">起始节点，必须是链表中的节点</param>
+        /// <param name="forward"></param>
+        /// <returns></returns>
         public T[] ToArray ( CircleListNode<T> startNode, bool forward )
         {
             if (startNode == null)
@@ -314,6 +435,10 @@ namespace GameBase.DataStructure
             return result;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
         public CircleList<T> Clone ()
         {
             CircleList<T> result = new CircleList<T>();
@@ -325,12 +450,16 @@ namespace GameBase.DataStructure
             if (this.isLinked)
                 result.LinkLastAndFirst();
             return result;
-        } 
+        }
 
         #endregion
 
         #region IEnumerable<T> 成员
 
+        /// <summary>
+        /// 获得该链表的迭代器
+        /// </summary>
+        /// <returns></returns>
         public IEnumerator<T> GetEnumerator ()
         {
             return new CircleListEnumerator( this );
@@ -346,6 +475,6 @@ namespace GameBase.DataStructure
         }
 
         #endregion
-    } 
+    }
     #endregion
 }
