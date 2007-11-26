@@ -15,19 +15,36 @@ namespace GameBase.Graphics
     using BorderCircleList = CircleList<Border>;
     using GameBase.Helpers;
 
+    /// <summary>
+    /// 表示精灵边界上的点
+    /// </summary>
     public class Border
     {
+        /// <summary>
+        /// 设置该点的贴图坐标
+        /// </summary>
+        /// <param name="setp"></param>
         public Border ( Point setp )
         {
             p = setp;
         }
 
+        /// <summary>
+        /// 该点的贴图坐标
+        /// </summary>
         public Point p;
 
+        /// <summary>
+        /// 获得该点的贴图坐标
+        /// </summary>
         public Point Point
         {
             get { return p; }
         }
+
+        /// <summary>
+        /// 获得该点的相邻点
+        /// </summary>
         public Point[] NeiborNodes
         {
             get
@@ -47,10 +64,16 @@ namespace GameBase.Graphics
         }
     }
 
+    /// <summary>
+    /// 表示精灵的边界
+    /// </summary>
     public class SpriteBorder
     {
         #region DataStruct Definition
 
+        /// <summary>
+        /// 绑定原图中一个像素处是否是物体部分的Alpha通道阀值
+        /// </summary>
         public const int minBlockAlpha = 10;
 
         private class BorderMap
@@ -173,6 +196,10 @@ namespace GameBase.Graphics
 
         #region Construction
 
+        /// <summary>
+        /// 构造制定贴图的边界。
+        /// </summary>
+        /// <param name="tex"></param>
         public SpriteBorder ( Texture2D tex )
         {
             InitialSurroundPoint();
@@ -398,6 +425,12 @@ namespace GameBase.Graphics
 
         #region Public Functions
 
+        /// <summary>
+        /// 获得一个边界点处的法向量
+        /// </summary>
+        /// <param name="node"></param>
+        /// <param name="sumAverage"></param>
+        /// <returns></returns>
         public Vector2 GetNormalVector ( BorderNode node, int sumAverage )
         {
             if (sumAverage < 1)
@@ -435,6 +468,10 @@ namespace GameBase.Graphics
         #endregion
 
         #region Fuctions for test
+
+        /// <summary>
+        /// 将当前的链表信息输出到控制台中。
+        /// </summary>
         public void ShowDataToConsole ()
         {
             Console.WriteLine( "SpriteBorder class:" );

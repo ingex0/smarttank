@@ -7,6 +7,9 @@ using GameBase.Helpers;
 
 namespace GameBase.Effects
 {
+    /// <summary>
+    /// 实现了振动特效
+    /// </summary>
     public static class Quake
     {
         #region Variables
@@ -34,6 +37,12 @@ namespace GameBase.Effects
         #endregion
 
         #region Begin Quake
+
+        /// <summary>
+        /// 开始振动
+        /// </summary>
+        /// <param name="strengh">振动强度</param>
+        /// <param name="sumFrame">振动持续的帧数</param>
         static public void BeginQuake ( float strengh, int sumFrame )
         {
             if (sumFrame <= 0)
@@ -69,6 +78,10 @@ namespace GameBase.Effects
         #endregion
 
         #region Stop Quake
+
+        /// <summary>
+        /// 停止振动
+        /// </summary>
         static public void StopQuake ()
         {
             sStarted = false;
@@ -77,7 +90,11 @@ namespace GameBase.Effects
         #endregion
 
         #region Update
-        static public void Update ()
+
+        /// <summary>
+        /// 更新，已经由BaseGame类管理。
+        /// </summary>
+        static internal void Update ()
         {
             if (sStarted)
             {

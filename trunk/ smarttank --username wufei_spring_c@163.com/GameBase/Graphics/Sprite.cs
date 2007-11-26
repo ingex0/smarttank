@@ -14,6 +14,10 @@ namespace GameBase.Graphics
     /// it can draw itself according to the position, rotation, scale, ect as you like.
     /// it's also able to detect collision between two sprite using pix-detection method.
     /// Notice: sourceRectangle is't supported, so you cann't load a picture with several items in it.
+    /// 这个类管理游戏画面中的所有精灵。
+    /// 它保存绘制的地点，旋转角，缩放比等参数，并能够按照这些参数绘制自身。
+    /// 并且它具有判断两精灵是否重叠，以及该精灵是否出界的方法。使用的是像素检测的方法。
+    /// 注意，该类并不支持sourceRectangle。所以不能用它导入一个拥有多个子图的图片。
     /// </summary>
     public class Sprite : IDisposable
     {
@@ -21,13 +25,13 @@ namespace GameBase.Graphics
         public static SpriteBatch alphaSprite;
         public static SpriteBatch additiveSprite;
 
-        public static void Intial ()
+        internal static void Intial ()
         {
             alphaSprite = new SpriteBatch( BaseGame.Device );
             additiveSprite = new SpriteBatch( BaseGame.Device );
         }
 
-        public static void HandleDeviceReset ()
+        internal static void HandleDeviceReset ()
         {
             Intial();
         }
@@ -36,7 +40,7 @@ namespace GameBase.Graphics
         /// alphaSprite.Begin( SpriteBlendMode.AlphaBlend, SpriteSortMode.BackToFront, SaveStateMode.None );
         /// additiveSprite.Begin( SpriteBlendMode.Additive, SpriteSortMode.BackToFront, SaveStateMode.None );
         /// </summary>
-        public static void SpriteBatchBegin ()
+        internal static void SpriteBatchBegin ()
         {
             alphaSprite.Begin( SpriteBlendMode.AlphaBlend, SpriteSortMode.BackToFront, SaveStateMode.None );
             additiveSprite.Begin( SpriteBlendMode.Additive, SpriteSortMode.BackToFront, SaveStateMode.None );
@@ -46,13 +50,17 @@ namespace GameBase.Graphics
         /// Sprite.alphaSprite.End();
         /// Sprite.additiveSprite.End();
         /// </summary>
-        public static void SpriteBatchEnd ()
+        internal static void SpriteBatchEnd ()
         {
             Sprite.alphaSprite.End();
             Sprite.additiveSprite.End();
         }
 
+        /// <summary>
+        /// 一个计算碰撞法向量时用到的参数，表示计算法向量时将取碰撞处附近的多少点进行效果的平均
+        /// </summary>
         public static readonly int DefaultAverageSum = 5;
+
         #endregion
 
         #region Variables
@@ -62,16 +70,45 @@ namespace GameBase.Graphics
         /*
          * 逻辑上的位置和大小
          * */
-
+        /// <summary>
+        /// 贴图的中心，以贴图坐标表示
+        /// </summary>
         public Vector2 Origin;
+
+        /// <summary>
+        /// 逻辑位置
+        /// </summary>
         public Vector2 Pos;
+
+        /// <summary>
+        /// 逻辑宽度
+        /// </summary>
         public float Width;
+
+        /// <summary>
+        /// 逻辑高度
+        /// </summary>
         public float Height;
         //public float Scale;
 
+        /// <summary>
+        /// 逻辑方位角
+        /// </summary>
         public float Rata;
+
+        /// <summary>
+        /// 绘制颜色
+        /// </summary>
         public Color Color;
+
+        /// <summary>
+        /// 深度，1为最低层，0为最表层。
+        /// </summary>
         public float LayerDepth;
+
+        /// <summary>
+        /// 采用的混合模式
+        /// </summary>
         public SpriteBlendMode BlendMode;
 
         Rectanglef mBounding;
@@ -119,6 +156,9 @@ namespace GameBase.Graphics
 
         int mAverageSum = DefaultAverageSum;
 
+        /// <summary>
+        /// 获得或设置贴图的缩放比（= 逻辑长度/贴图长度）
+        /// </summary>
         public float Scale
         {
             get
@@ -136,6 +176,10 @@ namespace GameBase.Graphics
         #endregion
 
         #region Constructions
+
+        /// <summary>
+        /// 构造未导入贴图的Sprite对象
+        /// </summary>
         public Sprite ()
         {
             Rata = 0f;
@@ -143,6 +187,12 @@ namespace GameBase.Graphics
             LayerDepth = 0f;
         }
 
+        /// <summary>
+        /// 构造Sprite对象并导入贴图
+        /// </summary>
+        /// <param name="fromContent"></param>
+        /// <param name="texturePath"></param>
+        /// <param name="SupportIntersectDect"></param>
         public Sprite ( bool fromContent, string texturePath, bool SupportIntersectDect )
         {
             Rata = 0f;
@@ -163,9 +213,13 @@ namespace GameBase.Graphics
 
         /// <summary>
         /// Load Texture From File
+        /// 从文件中导入贴图。
+        /// 由于导入过程可能会导致游戏的停顿，尽量从素材管道中导入贴图
         /// </summary>
-        /// <param name="texturePath">the texture Directory and File Name, without GameBaseDirectory Path.</param>
-        /// <param name="SupportIntersectDect">true to add intersect dectection support.</param>
+        /// <param name="texturePath">the texture Directory and File Name, without GameBaseDirectory Path.
+        /// 贴图文件的相对于游戏运行文件的路径</param>
+        /// <param name="SupportIntersectDect">true to add intersect dectection support.
+        /// 为true时，为贴图添加冲突检测的支持</param>
         public void LoadTextureFromFile ( string texturePath, bool SupportIntersectDect )
         {
             mloaded = true;
@@ -189,9 +243,11 @@ namespace GameBase.Graphics
 
         /// <summary>
         /// Load Texture From Content
+        /// 从素材管道中导入贴图
         /// </summary>
-        /// <param name="assetName">the assetName.</param>
-        /// <param name="SupportIntersectDect">true to add intersect Dectection support.</param>
+        /// <param name="assetName">the assetName.素材路径</param>
+        /// <param name="SupportIntersectDect">true to add intersect Dectection support.
+        /// 为true时为贴图添加冲突检测的支持</param>
         public void LoadTextureFromContent ( string assetName, bool SupportIntersectDect )
         {
             mloaded = true;
@@ -218,9 +274,12 @@ namespace GameBase.Graphics
         /// the AverageSum is use to modify the default averageSum,
         /// which is used in calulate the Normal vector,
         /// biger the number is, more border points will be added to the result of Normal Vector. 
+        /// 从文件中导入贴图，并添加冲突检测的支持
+        /// 由于导入过程可能会导致游戏的停顿，尽量从素材管道中导入贴图
         /// </summary>
-        /// <param name="texturePath"></param>
-        /// <param name="AverageSum"></param>
+        /// <param name="texturePath">贴图文件的相对于游戏运行文件的路径</param>
+        /// <param name="AverageSum">使用该传入值作为AverageSum。
+        /// 这是一个计算碰撞法向量时用到的参数，表示计算法向量时将取碰撞处附近的多少点进行效果的平均</param>
         public void LoadTextureFromFile ( string texturePath, int AverageSum )
         {
             mAverageSum = AverageSum;
@@ -232,15 +291,20 @@ namespace GameBase.Graphics
         /// the AverageSum is use to modify the default averageSum,
         /// which is used in calulate the Normal vector,
         /// biger the number is, more border points will be added to the result of Normal Vector. 
+        /// 从素材管道中导入贴图，并添加冲突检测的支持
         /// </summary>
-        /// <param name="assetName"></param>
-        /// <param name="AverageSum"></param>
+        /// <param name="assetName">素材路径</param>
+        /// <param name="AverageSum">使用该传入值作为AverageSum。
+        /// 这是一个计算碰撞法向量时用到的参数，表示计算法向量时将取碰撞处附近的多少点进行效果的平均</param>
         public void LoadTextureFromContent ( string assetName, int AverageSum )
         {
             mAverageSum = AverageSum;
             LoadTextureFromContent( assetName, true );
         }
 
+        /// <summary>
+        /// 为Sprite对象添加冲突检测的支持
+        /// </summary>
         public void AddIntersectSupport ()
         {
             mSupportIntersectDect = true;
@@ -260,6 +324,17 @@ namespace GameBase.Graphics
         #endregion
 
         #region Set Parameters
+        /// <summary>
+        /// 设置该精灵的绘制参数
+        /// </summary>
+        /// <param name="origin">贴图的中心，以贴图坐标表示</param>
+        /// <param name="pos">逻辑位置</param>
+        /// <param name="width">逻辑宽度</param>
+        /// <param name="height">逻辑高度</param>
+        /// <param name="rata">逻辑方位角</param>
+        /// <param name="color">绘制颜色</param>
+        /// <param name="layerDepth">深度，1为最低层，0为最表层</param>
+        /// <param name="blendMode">采用的混合模式</param>
         public void SetParameters ( Vector2 origin, Vector2 pos, float width, float height, float rata, Color color, float layerDepth, SpriteBlendMode blendMode )
         {
             Origin = origin;
@@ -272,15 +347,15 @@ namespace GameBase.Graphics
             BlendMode = blendMode;
         }
         /// <summary>
-        /// 设置参数
+        /// 设置该精灵的绘制参数
         /// </summary>
-        /// <param name="origin"></param>
-        /// <param name="pos"></param>
-        /// <param name="scale">逻辑大小/原图大小</param>
-        /// <param name="rata"></param>
-        /// <param name="color"></param>
-        /// <param name="layerDepth"></param>
-        /// <param name="blendMode"></param>
+        /// <param name="origin">贴图的中心，以贴图坐标表示</param>
+        /// <param name="pos">逻辑位置</param>
+        /// <param name="scale">贴图的缩放比（= 逻辑长度/贴图长度）</param>
+        /// <param name="rata">逻辑方位角</param>
+        /// <param name="color">绘制颜色</param>
+        /// <param name="layerDepth">深度，1为最低层，0为最表层</param>
+        /// <param name="blendMode">采用的混合模式</param>
         public void SetParameters ( Vector2 origin, Vector2 pos, float scale, float rata, Color color, float layerDepth, SpriteBlendMode blendMode )
         {
             SetParameters( origin, pos, (float)(mTexture.Width) * scale, (float)(mTexture.Height) * scale, rata, color, layerDepth, blendMode );
@@ -288,6 +363,10 @@ namespace GameBase.Graphics
         #endregion
 
         #region Update Transform Matrix and Bounding Rectangle
+
+        /// <summary>
+        /// 更新精灵的转换矩阵和包围盒
+        /// </summary>
         public void UpdateTransformBounding ()
         {
             CalDestinRect();
@@ -316,6 +395,10 @@ namespace GameBase.Graphics
         #endregion
 
         #region Draw Functions
+
+        /// <summary>
+        /// 绘制该精灵
+        /// </summary>
         public void Draw ()
         {
             if (!mloaded) return;
@@ -338,6 +421,7 @@ namespace GameBase.Graphics
         /// <summary>
         /// Determines if there is overlap of the non-transparent pixels between two
         /// sprites.
+        /// 检查两个精灵是否发生碰撞
         /// </summary>
         /// <returns>True if non-transparent pixels overlap; false otherwise</returns>
         public static CollisionResult IntersectPixels ( Sprite spriteA, Sprite spriteB )
@@ -456,7 +540,7 @@ namespace GameBase.Graphics
         }
 
         /// <summary>
-        /// 检测是否在矩形外
+        /// 检测是否在边界矩形外
         /// </summary>
         /// <param name="BorderRect"></param>
         /// <returns></returns>
@@ -605,7 +689,7 @@ namespace GameBase.Graphics
         /// <param name="rectangle">Original bounding rectangle.</param>
         /// <param name="transform">World transform of the rectangle.</param>
         /// <returns>A new rectangle which contains the trasnformed rectangle.</returns>
-        public static Rectanglef CalculateBoundingRectangle ( Rectangle rectangle, Matrix transform )
+        private static Rectanglef CalculateBoundingRectangle ( Rectangle rectangle, Matrix transform )
         {
             // Get all four corners in local space
             Vector2 leftTop = new Vector2( rectangle.Left, rectangle.Top );
@@ -633,6 +717,9 @@ namespace GameBase.Graphics
 
         #region Dispose
 
+        /// <summary>
+        /// 清理资源
+        /// </summary>
         public void Dispose ()
         {
             if (mTexture != null)

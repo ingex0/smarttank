@@ -71,10 +71,6 @@
       <XNAUseContentPipeline>false</XNAUseContentPipeline>
       <Name>BasicGraphicsTest</Name>
     </Compile>
-    <Compile Include="Test\CartoonTest.cs">
-      <XNAUseContentPipeline>false</XNAUseContentPipeline>
-      <Name>CartoonTest</Name>
-    </Compile>
     <Compile Include="Test\FontTest.cs">
       <XNAUseContentPipeline>false</XNAUseContentPipeline>
       <Name>FontTest</Name>
@@ -699,6 +695,10 @@
       <Processor>SpriteTextureProcessor</Processor>
       <Name>CloudSingle</Name>
     </Content>
+    <None Include="Test\CartoonTest.cs.old">
+      <XNAUseContentPipeline>false</XNAUseContentPipeline>
+      <Name>CartoonTest.cs</Name>
+    </None>
     <None Include="文档\整体逻辑结构示意图.png">
       <XNAUseContentPipeline>false</XNAUseContentPipeline>
       <Importer>TextureImporter</Importer>
