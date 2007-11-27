@@ -126,6 +126,10 @@
       <XNAUseContentPipeline>false</XNAUseContentPipeline>
       <Name>Compass</Name>
     </Compile>
+    <Compile Include="GameObjects\GameObjData.cs">
+      <XNAUseContentPipeline>false</XNAUseContentPipeline>
+      <Name>GameObjData</Name>
+    </Compile>
     <Compile Include="GameObjects\IGameObjSceneInfo.cs">
       <XNAUseContentPipeline>false</XNAUseContentPipeline>
       <Name>IGameObjSceneInfo</Name>

@@ -28,7 +28,7 @@ namespace GameBase.UI
         public bool bMouseOver = false;
 
         public event EventHandler OnPress;
-        public void checkbox_onPress ( Object obj, EventArgs e ) { bPressed = true; bChecked = !bChecked; } 
+        public void checkbox_onPress ( Object obj, EventArgs e ) { bPressed = true; bChecked = !bChecked; }
         #endregion
 
         #region Consturtion
@@ -47,7 +47,7 @@ namespace GameBase.UI
             texture[1] = BaseGame.Content.Load<Texture2D>( Path.Combine( Directories.UIContent, "radio_button_checked" ) );
 
             OnPress += new EventHandler( checkbox_onPress );
-        } 
+        }
         #endregion
 
         #region Update
@@ -99,7 +99,7 @@ namespace GameBase.UI
                     return false;
             else
                 return false;
-        } 
+        }
         #endregion
 
         #region Draw
@@ -114,8 +114,8 @@ namespace GameBase.UI
                 spriteBatch.Draw( texture[0], position, dynamicColor );
 
             //font.Draw( text, position + new Vector2( texture[0].Width + 5f, 0f ), 1f, dynamicTextColor, spriteBatch );
-            FontManager.DrawLucidaInScrnCoord( text, position + new Vector2( texture[0].Width + 5f, 0f ), 0.7f, dynamicTextColor, 0f );
-        } 
+            FontManager.DrawInScrnCoord( text, position + new Vector2( texture[0].Width + 5f, 0f ), Control.fontScale, dynamicTextColor, 0f, FontType.Lucida );
+        }
         #endregion
     }
 }

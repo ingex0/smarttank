@@ -49,7 +49,7 @@ namespace GameBase.UI
         {
             Color dynamicColor = new Color( new Vector4( color.ToVector3(), alpha ) );
             //font.Draw(text, position, scale, dynamicColor, spriteBatch);
-            FontManager.DrawLucidaInScrnCoord( text, position, scale, dynamicColor, 0f );
+            FontManager.DrawInScrnCoord( text, position, scale, dynamicColor, 0f, FontType.Lucida );
         }
     }
 }

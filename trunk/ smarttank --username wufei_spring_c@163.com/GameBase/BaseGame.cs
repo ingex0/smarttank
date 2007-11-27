@@ -120,6 +120,7 @@ namespace GameBase
             content = new ContentManager( Services );
             Sprite.Intial();
             FontManager.Initial();
+            ChineseWriter.Intitial();
             BasicGraphics.Initial();
             RandomHelper.GenerateNewRandomGenerator();
             Log.Initialize();
@@ -165,7 +166,7 @@ namespace GameBase
                 GameDraw( gameTime );
 
                 if (showFps)
-                    FontManager.DrawComicInScrnCoord( "FPS = " + Fps.ToString(), new Vector2( 30, 15 ), 0.5f, Color.White, 0f );
+                    FontManager.DrawInScrnCoord( "FPS = " + Fps.ToString(), new Vector2( 30, 15 ), 0.5f, Color.White, 0f, FontType.Comic );
 
                 TextEffect.Draw();
 

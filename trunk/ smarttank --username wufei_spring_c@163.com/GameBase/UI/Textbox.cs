@@ -430,11 +430,11 @@ namespace GameBase.UI
             }
 
             string visibleText = text.Substring( startIndex, endIndex );
-            if (FontManager.LengthOfString( visibleText, 0.7f, FontType.Lucida ) > width)
+            if (FontManager.LengthOfString( visibleText, Control.fontScale, FontType.Lucida ) > width)
                 visibleText = text.Substring( startIndex, endIndex - 1 );
 
             //font.Draw( text.Substring( startIndex, endIndex ), position + new Vector2( 5f, 4f ), 1f, dynamicTextColor, spriteBatch );
-            FontManager.DrawLucidaInScrnCoord( text.Substring( startIndex, endIndex ), position + new Vector2( 5f, 4f ), 0.7f, dynamicTextColor, 0f );
+            FontManager.DrawInScrnCoord( text.Substring( startIndex, endIndex ), position + new Vector2( 5f, 4f ), Control.fontScale, dynamicTextColor, 0f, FontType.Lucida );
 
             if (bHasFocus)
             {
@@ -442,15 +442,15 @@ namespace GameBase.UI
                 {
                     if (cursorPos - startIndex >= 0 && cursorPos - startIndex <= text.Length)
                         //    font.Draw( "|", position + new Vector2( font.Measure( text.Substring( startIndex, cursorPos - startIndex ), 1f ), 3f ), 1f, dynamicTextColor, spriteBatch );
-                        FontManager.DrawLucidaInScrnCoord( "|", position + new Vector2( FontManager.LengthOfString( text.Substring( startIndex, cursorPos - startIndex ), 0.7f, FontType.Lucida ) + 5f, 3f ), 0.7f, dynamicTextColor, 0f );
+                        FontManager.DrawInScrnCoord( "|", position + new Vector2( FontManager.LengthOfString( text.Substring( startIndex, cursorPos - startIndex ), Control.fontScale, FontType.Lucida ) + 5f, 3f ), 0.7f, dynamicTextColor, 0f, FontType.Lucida );
                     else
                         //    font.Draw( "|", position + new Vector2( 0f, 3f ), 1f, dynamicTextColor, spriteBatch );
-                        FontManager.DrawLucidaInScrnCoord( "|", position + new Vector2( 0f, 3f ), 0.7f, dynamicTextColor, 0f );
+                        FontManager.DrawInScrnCoord( "|", position + new Vector2( 0f, 3f ), Control.fontScale, dynamicTextColor, 0f, FontType.Lucida );
                 }
             }
 
         }
- 
+
         #endregion
     }
 }

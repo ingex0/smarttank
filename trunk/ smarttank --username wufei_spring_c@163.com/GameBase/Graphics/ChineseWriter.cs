@@ -19,7 +19,19 @@ namespace GameBase.Graphics
 
         static System.Drawing.Font fontHanDinJianShu;
 
-        static Dictionary<string, Texture2D> cache = new Dictionary<string, Texture2D>();
+        struct TextKey
+        {
+            public string text;
+            public FontType fontType;
+
+            public TextKey ( string text, FontType fontType )
+            {
+                this.text = text;
+                this.fontType = fontType;
+            }
+        }
+
+        static Dictionary<TextKey, Texture2D> cache = new Dictionary<TextKey, Texture2D>();
 
         /// <summary>
         /// 初始化
@@ -33,6 +45,9 @@ namespace GameBase.Graphics
 
             fontHanDinJianShu = new System.Drawing.Font( fontFamilys[0], fontDrawEmSize );
 
+
+            System.Drawing.Bitmap tempBitMap = new System.Drawing.Bitmap( 1, 1 );
+            lastGraphics = System.Drawing.Graphics.FromImage( tempBitMap );
         }
 
         /// <summary>
@@ -44,17 +59,19 @@ namespace GameBase.Graphics
         /// <param name="scale"></param>
         /// <param name="color"></param>
         /// <param name="layerDepth"></param>
-        public static void WriteText ( string text, Vector2 scrnPos, float rota, float scale, Color color, float layerDepth )
+        public static void WriteText ( string text, Vector2 scrnPos, float rota, float scale, Color color, float layerDepth, FontType type )
         {
             Texture2D texture;
 
-            if (cache.ContainsKey( text ))
+            TextKey key = new TextKey( text, type );
+
+            if (cache.ContainsKey( key ))
             {
-                texture = cache[text];
+                texture = cache[key];
             }
             else
             {
-                texture = BuildTexture( text, fontHanDinJianShu );
+                texture = BuildTexture( text, type );
             }
 
             FontManager.textSpriteBatch.Draw( texture, scrnPos, null, color, rota, new Vector2( 0, 0 ), scale, SpriteEffects.None, layerDepth );
@@ -65,15 +82,25 @@ namespace GameBase.Graphics
         /// 建立贴图并添加到缓冲中。
         /// 尽量在第一次绘制之前调用该函数，这样可以避免建立贴图的过程造成游戏的停滞
         /// </summary>
-        /// <param name="text"></param>
-        /// <param name="font"></param>
+        /// <param name="text">要创建的字符传</param>
+        /// <param name="fontType">字体</param>
         /// <returns></returns>
-        public static Texture2D BuildTexture ( string text, System.Drawing.Font font )
+        public static Texture2D BuildTexture ( string text, FontType fontType )
         {
-            if (lastGraphics == null)
+            TextKey key = new TextKey( text, fontType );
+
+            if (cache.ContainsKey( key ))
+                return null;
+
+            System.Drawing.Font font = fontHanDinJianShu;
+
+            switch (fontType)
             {
-                System.Drawing.Bitmap tempBitMap = new System.Drawing.Bitmap( 1, 1 );
-                lastGraphics = System.Drawing.Graphics.FromImage( tempBitMap );
+                case FontType.HanDinJianShu:
+                    font = fontHanDinJianShu;
+                    break;
+                default:
+                    return null;
             }
 
             System.Drawing.SizeF size = lastGraphics.MeasureString( text, font );
@@ -96,11 +123,33 @@ namespace GameBase.Graphics
 
             texture.SetData<Microsoft.Xna.Framework.Graphics.Color>( data );
 
-            cache.Add( text, texture );
+            cache.Add( key, texture );
 
             curGraphics.Dispose();
 
             return texture;
+        }
+
+        public static float MeasureString ( string text, float scale, FontType type )
+        {
+            switch (type)
+            {
+                case FontType.HanDinJianShu:
+                    return lastGraphics.MeasureString( text, fontHanDinJianShu ).Width;
+                default:
+                    return -1;
+            }
+        }
+
+
+        public static void ClearCache ()
+        {
+            foreach (KeyValuePair<TextKey, Texture2D> pair in cache)
+            {
+                pair.Value.Dispose();
+            }
+
+            cache.Clear();
         }
     }
 }

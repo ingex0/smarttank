@@ -135,8 +135,8 @@ namespace SmartTank.Test
             progressBar.Draw( Sprite.alphaSprite, 1f );
             radioBth.Draw( Sprite.alphaSprite, 1f );
             scrollBar.Draw( Sprite.alphaSprite, 1f );
-            FontManager.DrawLucidaInScrnCoord( "The Color and Textures of the Controls can be changed as you like!", new Vector2( 60, 60 ), 1f, Color.Yellow, 0f );
-            FontManager.DrawLucidaInScrnCoord( "The ScollBar's Value is " + scrollValue, new Vector2( 550, 380 ), 0.7f, Color.Green, 0f );
+            FontManager.DrawInScrnCoord( "The Color and Textures of the Controls can be changed as you like!", new Vector2( 60, 60 ), 1f, Color.Yellow, 0f, FontType.Lucida );
+            FontManager.DrawInScrnCoord( "The ScollBar's Value is " + scrollValue, new Vector2( 550, 380 ), 0.7f, Color.Green, 0f, FontType.Comic );
         }
     }
 }

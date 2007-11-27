@@ -281,7 +281,7 @@ namespace GameBase.UI
 
             //Text
             Color dynamicTextColor = new Color( new Vector4( textColor.ToVector3(), alpha ) );
-            FontManager.DrawLucidaInScrnCoord( selectedItem, position + new Vector2( 5f, 2f ), 0.7f, dynamicTextColor, 0f );
+            FontManager.DrawInScrnCoord( selectedItem, position + new Vector2( 5f, 2f ), Control.fontScale, dynamicTextColor, 0f, FontType.Lucida );
 
             //Listbox
             if (state == State.Opened)
@@ -295,7 +295,7 @@ namespace GameBase.UI
                 //Items
                 for (int i = 0; i < Items.Count; i++)
                 {
-                    FontManager.DrawLucidaInScrnCoord( Items[i], listPosition + new Vector2( 4f, 4f ) + new Vector2( 0f, charHeight * i ), 0.7f, dynamicTextColor, 0f );
+                    FontManager.DrawInScrnCoord( Items[i], listPosition + new Vector2( 4f, 4f ) + new Vector2( 0f, charHeight * i ), Control.fontScale, dynamicTextColor, 0f, FontType.Lucida );
 
                     //Selection Area
                     if (ms.LeftButton == ButtonState.Released)

@@ -15,6 +15,18 @@ namespace GameBase.Graphics
     using BorderCircleList = CircleList<Border>;
     using GameBase.Helpers;
 
+    public class BorderBulidException : Exception
+    {
+        public Point curPoint;
+        public Point prePoint;
+
+        public BorderBulidException ( Point curPoint, Point prePoint )
+        {
+            this.curPoint = curPoint;
+            this.prePoint = prePoint;
+        }
+    }
+
     /// <summary>
     /// 表示精灵边界上的点
     /// </summary>
@@ -345,7 +357,7 @@ namespace GameBase.Graphics
                         ShowDataToConsole();
                         ShowCurListResult( result );
 #endif
-                        throw new Exception();
+                        throw new BorderBulidException( curPoint, prePoint );
                     }
                 }
 
@@ -353,13 +365,14 @@ namespace GameBase.Graphics
             // 如果此处出现异常，往往是导入的图片不能满足要求。
             // 将在输出中打印出图片上具体出错的位置。
             // 需要重新修改图片以正常使用。
-            catch (Exception)
+            catch (BorderBulidException e)
             {
 #if SHOWERROR
-                ShowDataToConsole();
-                ShowCurListResult( result );
+                //ShowDataToConsole();
+                //ShowCurListResult( result );
 #endif
-                return result;
+                throw e;
+                //return result;
             }
             return result;
         }

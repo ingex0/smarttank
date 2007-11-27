@@ -156,7 +156,7 @@ namespace GameBase.UI
             Color dynamicTextColor = new Color( new Vector4( 0f, 0f, 0f, alpha ) );
 
             int spacing = (destRect[1].Width - text.Length * fontSize.X) / 2;
-            FontManager.DrawLucidaInScrnCoord( text, new Vector2( destRect[0].X + destRect[0].Width + spacing, destRect[0].Y + 3f ), Control.fontScale, dynamicTextColor, 0f );
+            FontManager.DrawInScrnCoord( text, new Vector2( destRect[0].X + destRect[0].Width + spacing, destRect[0].Y + 3f ), Control.fontScale, dynamicTextColor, 0f, FontType.Lucida );
         }
         #endregion
     }

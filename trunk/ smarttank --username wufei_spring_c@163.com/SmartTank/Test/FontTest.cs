@@ -31,8 +31,8 @@ namespace SmartTank.Test
 
         protected override void GameDraw ( Microsoft.Xna.Framework.GameTime gameTime )
         {
-            FontManager.DrawComic( "the quick brown fox jumps over the lazy dog.1234567890", new Vector2( 0, 0 ), 1f, Color.Gold, 0 );
-            FontManager.DrawLucida( "the quick brown fox jumps over the lazy dog.1234567890", new Vector2( 0, 50 ), 1f, Color.WhiteSmoke, 0 );
+            FontManager.Draw( "the quick brown fox jumps over the lazy dog.1234567890", new Vector2( 0, 0 ), 1f, Color.Gold, 0, FontType.Comic );
+            FontManager.Draw( "the quick brown fox jumps over the lazy dog.1234567890", new Vector2( 0, 50 ), 1f, Color.WhiteSmoke, 0, FontType.Lucida );
         }
     }
 }

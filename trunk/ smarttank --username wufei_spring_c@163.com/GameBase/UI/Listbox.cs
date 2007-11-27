@@ -414,7 +414,7 @@ namespace GameBase.UI
             {
                 Color dynamicTextColor = new Color( new Vector4( forecolor.ToVector3().X, forecolor.ToVector3().Y, forecolor.ToVector3().Z, alpha ) );
                 //font.Draw(Items[i + startIndex], position + new Vector2(4f, 4f) + new Vector2(0f, charHeight * i), 1f, dynamicTextColor, spriteBatch);
-                FontManager.DrawLucidaInScrnCoord( Items[i + startIndex], position + new Vector2( 4f, 4f ) + new Vector2( 0f, charHeight * i ), Control.fontScale, dynamicTextColor, 0f );
+                FontManager.DrawInScrnCoord( Items[i + startIndex], position + new Vector2( 4f, 4f ) + new Vector2( 0f, charHeight * i ), Control.fontScale, dynamicTextColor, 0f, FontType.Lucida );
 
 
                 //Selected Area

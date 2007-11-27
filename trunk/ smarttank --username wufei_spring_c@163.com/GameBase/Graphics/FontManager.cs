@@ -10,7 +10,6 @@ namespace GameBase.Graphics
 {
     /// <summary>
     /// 提供字符的绘制功能。
-    /// 暂时无法显示中文。
     /// </summary>
     public static class FontManager
     {
@@ -57,7 +56,37 @@ namespace GameBase.Graphics
         #region Draw Functions
 
         /// <summary>
-        /// 在逻辑坐标中绘制一段文字
+        /// 在逻辑坐标中绘制一段文字。
+        /// 注意，如果文字内容中包含中文，必须选用中文字体
+        /// </summary>
+        /// <param name="text">文字内容</param>
+        /// <param name="pos">文字起始处在逻辑坐标中的位置</param>
+        /// <param name="scale">文字的大小</param>
+        /// <param name="color">颜色</param>
+        /// <param name="rota">顺时针旋转弧度</param>
+        /// <param name="layerDepth">深度，0为最表层，1为最深层</param>
+        /// <param name="fontType">字体</param>
+        static public void Draw ( string text, Vector2 pos, float scale, float rota, Color color, float layerDepth, FontType fontType )
+        {
+            switch (fontType)
+            {
+                case FontType.Comic:
+                    DrawComic( text, pos, scale, rota, color, layerDepth );
+                    break;
+                case FontType.Lucida:
+                    DrawLucida( text, pos, scale, rota, color, layerDepth );
+                    break;
+                case FontType.HanDinJianShu:
+                    ChineseWriter.WriteText( text, Coordin.ScreenPos( pos ), scale, rota, color, layerDepth, fontType );
+                    break;
+                default:
+                    break;
+            }
+        }
+
+        /// <summary>
+        /// 在逻辑坐标中绘制一段文字。
+        /// 注意，如果文字内容中包含中文，必须选用中文字体
         /// </summary>
         /// <param name="text">文字内容</param>
         /// <param name="pos">文字起始处在逻辑坐标中的位置</param>
@@ -67,17 +96,7 @@ namespace GameBase.Graphics
         /// <param name="fontType">字体</param>
         static public void Draw ( string text, Vector2 pos, float scale, Color color, float layerDepth, FontType fontType )
         {
-            switch (fontType)
-            {
-                case FontType.Comic:
-                    DrawComic( text, pos, scale, color, layerDepth );
-                    break;
-                case FontType.Lucida:
-                    DrawLucida( text, pos, scale, color, layerDepth );
-                    break;
-                default:
-                    break;
-            }
+            Draw( text, pos, scale, 0, color, layerDepth, fontType );
         }
 
         /// <summary>
@@ -88,9 +107,16 @@ namespace GameBase.Graphics
         /// <param name="scale">文字的大小</param>
         /// <param name="color">颜色</param>
         /// <param name="layerDepth">深度，0为最表层，1为最深层</param>
-        static public void DrawComic ( string text, Vector2 pos, float scale, Color color, float layerDepth )
+        static private void DrawComic ( string text, Vector2 pos, float scale, float rota, Color color, float layerDepth )
         {
-            textSpriteBatch.DrawString( comicFont, text, Coordin.ScreenPos( pos ), color, 0f, Vector2.Zero, scale, SpriteEffects.None, layerDepth );
+            try
+            {
+                textSpriteBatch.DrawString( comicFont, text, Coordin.ScreenPos( pos ), color, rota, Vector2.Zero, scale, SpriteEffects.None, layerDepth );
+            }
+            catch (Exception)
+            {
+                Log.Write( "用不支持中文的字体绘制包含中文字符的字符串： " + text );
+            }
         }
 
         /// <summary>
@@ -101,9 +127,16 @@ namespace GameBase.Graphics
         /// <param name="scale">文字的大小</param>
         /// <param name="color">颜色</param>
         /// <param name="layerDepth">深度，0为最表层，1为最深层</param>
-        static public void DrawComicInScrnCoord ( string text, Vector2 pos, float scale, Color color, float layerDepth )
+        static private void DrawComicInScrnCoord ( string text, Vector2 pos, float scale, float rota, Color color, float layerDepth )
         {
-            textSpriteBatch.DrawString( comicFont, text, pos, color, 0f, Vector2.Zero, scale, SpriteEffects.None, layerDepth );
+            try
+            {
+                textSpriteBatch.DrawString( comicFont, text, pos, color, rota, Vector2.Zero, scale, SpriteEffects.None, layerDepth );
+            }
+            catch (Exception)
+            {
+                Log.Write( "用不支持中文的字体绘制包含中文字符的字符串： " + text );
+            }
         }
 
         /// <summary>
@@ -114,9 +147,16 @@ namespace GameBase.Graphics
         /// <param name="scale">文字的大小</param>
         /// <param name="color">颜色</param>
         /// <param name="layerDepth">深度，0为最表层，1为最深层</param>
-        static public void DrawLucida ( string text, Vector2 pos, float scale, Color color, float layerDepth )
+        static private void DrawLucida ( string text, Vector2 pos, float scale, float rota, Color color, float layerDepth )
         {
-            textSpriteBatch.DrawString( lucidaFont, text, Coordin.ScreenPos( pos ), color, 0f, Vector2.Zero, scale, SpriteEffects.None, layerDepth );
+            try
+            {
+                textSpriteBatch.DrawString( lucidaFont, text, Coordin.ScreenPos( pos ), color, rota, Vector2.Zero, scale, SpriteEffects.None, layerDepth );
+            }
+            catch (Exception)
+            {
+                Log.Write( "用不支持中文的字体绘制包含中文字符的字符串： " + text );
+            }
         }
 
         /// <summary>
@@ -127,13 +167,43 @@ namespace GameBase.Graphics
         /// <param name="scale">文字的大小</param>
         /// <param name="color">颜色</param>
         /// <param name="layerDepth">深度，0为最表层，1为最深层</param>
-        static public void DrawLucidaInScrnCoord ( string text, Vector2 pos, float scale, Color color, float layerDepth )
+        static private void DrawLucidaInScrnCoord ( string text, Vector2 pos, float scale, float rota, Color color, float layerDepth )
         {
-            textSpriteBatch.DrawString( lucidaFont, text, pos, color, 0f, Vector2.Zero, scale, SpriteEffects.None, layerDepth );
+            try
+            {
+                textSpriteBatch.DrawString( lucidaFont, text, pos, color, rota, Vector2.Zero, scale, SpriteEffects.None, layerDepth );
+            }
+            catch (Exception)
+            {
+                Log.Write( "用不支持中文的字体绘制包含中文字符的字符串： " + text );
+            }
         }
 
         /// <summary>
         /// 在屏幕坐标中绘制一段文字
+        /// 注意，如果文字内容中包含中文，必须选用中文字体
+        /// </summary>
+        /// <param name="text">文字内容</param>
+        /// <param name="pos">文字起始处在屏幕坐标中的位置</param>
+        /// <param name="scale">文字的大小</param>
+        /// <param name="rota">旋转角</param>
+        /// <param name="color">颜色</param>
+        /// <param name="layerDepth">深度，0为最表层，1为最深层</param>
+        /// <param name="fontType">字体</param>
+        static public void DrawInScrnCoord ( string text, Vector2 pos, float scale, float rota, Color color, float layerDepth, FontType fontType )
+        {
+            if (fontType == FontType.Comic)
+                DrawComicInScrnCoord( text, pos, scale, rota, color, layerDepth );
+            else if (fontType == FontType.Lucida)
+                DrawLucidaInScrnCoord( text, pos, scale, rota, color, layerDepth );
+            else if (((int)fontType & 0x10) == 0x10)
+                ChineseWriter.WriteText( text, pos, rota, scale, color, layerDepth, fontType );
+
+        }
+
+        /// <summary>
+        /// 在屏幕坐标中绘制一段文字
+        /// 注意，如果文字内容中包含中文，必须选用中文字体
         /// </summary>
         /// <param name="text">文字内容</param>
         /// <param name="pos">文字起始处在屏幕坐标中的位置</param>
@@ -143,17 +213,7 @@ namespace GameBase.Graphics
         /// <param name="fontType">字体</param>
         static public void DrawInScrnCoord ( string text, Vector2 pos, float scale, Color color, float layerDepth, FontType fontType )
         {
-            switch (fontType)
-            {
-                case FontType.Comic:
-                    DrawComicInScrnCoord( text, pos, scale, color, layerDepth );
-                    break;
-                case FontType.Lucida:
-                    DrawLucidaInScrnCoord( text, pos, scale, color, layerDepth );
-                    break;
-                default:
-                    break;
-            }
+            DrawInScrnCoord( text, pos, scale, 0f, color, layerDepth, fontType );
         }
 
         #endregion
@@ -162,6 +222,7 @@ namespace GameBase.Graphics
 
         /// <summary>
         /// 获取一段文字在屏幕坐标上的长度
+        /// 注意，如果文字内容中包含中文，必须选用中文字体
         /// </summary>
         /// <param name="text">文字的内容</param>
         /// <param name="scale">文字的大小</param>
@@ -169,16 +230,28 @@ namespace GameBase.Graphics
         /// <returns></returns>
         static public float LengthOfString ( string text, float scale, FontType fontType )
         {
-            if (fontType == FontType.Comic)
+            try
             {
-                return comicFont.MeasureString( text ).X * scale;
+                if (fontType == FontType.Comic)
+                {
+                    return comicFont.MeasureString( text ).X * scale;
+                }
+                else if (fontType == FontType.Lucida)
+                {
+                    return lucidaFont.MeasureString( text ).X * scale;
+                }
+                else if (((int)fontType & 0x10) == 0x10)
+                {
+                    return ChineseWriter.MeasureString( text, scale, fontType );
+                }
+                else return -1;
             }
-            else if (fontType == FontType.Lucida)
+            catch (Exception)
             {
-                return lucidaFont.MeasureString( text ).X * scale;
+                Log.Write( "用不支持中文的字体获取包含中文字符的字符串的长度： " + text );
+                return -1;
             }
-            else return 0;
-        } 
+        }
         #endregion
     }
 
@@ -190,11 +263,15 @@ namespace GameBase.Graphics
         /// <summary>
         /// Comic字体
         /// </summary>
-        Comic,
+        Comic = 0x00,
         /// <summary>
         /// Lucida字体
         /// </summary>
-        Lucida
+        Lucida = 0x01,
+        /// <summary>
+        /// 汉鼎简舒，中文字体。
+        /// </summary>
+        HanDinJianShu = 0x10,
     }
 
 

@@ -119,6 +119,15 @@ namespace InterRules.ShootTheBall
             scene = new SceneKeeperCommon();
             SceneInitial();
             GameManager.LoadScene( scene );
+
+            LoadResource();
+        }
+
+        private void LoadResource ()
+        {
+            ChineseWriter.BuildTexture( "哦，这个家伙变小了！", FontType.HanDinJianShu );
+            ChineseWriter.BuildTexture( "当这个物体消失时，你会获得100分！", FontType.HanDinJianShu );
+            ChineseWriter.BuildTexture( "不过这个物体也会开始运动。", FontType.HanDinJianShu );
         }
 
         private void InintialBackGround ()
@@ -271,14 +280,14 @@ namespace InterRules.ShootTheBall
 
             if (showFirstHit)
             {
-                TextEffect.AddRiseFade( "As Your See, the Object will turn smarter when hit.", new Vector2( 20, 70 ), 1.1f, Color.Red, LayerDepth.Text, FontType.Comic, 300, 0.2f );
+                TextEffect.AddRiseFade( "哦，这个家伙变小了！", new Vector2( 50, 70 ), 1.4f, Color.Red, LayerDepth.Text, FontType.HanDinJianShu, 300, 0.2f );
                 showFirstHit = false;
             }
 
             if (showFirstScore)
             {
-                TextEffect.AddRiseFade( "When the Object disappear, you will get 100 SCORE!", new Vector2( 20, 70 ), 1.1f, Color.Red, LayerDepth.Text, FontType.Comic, 300, 0.2f );
-                TextEffect.AddRiseFade( "And the Object will be start to MOVE!", new Vector2( 20, 80 ), 1.1f, Color.Red, LayerDepth.Text, FontType.Comic, 300, 0.2f );
+                TextEffect.AddRiseFade( "当这个物体消失时，你会获得100分！", new Vector2( 20, 70 ), 1.4f, Color.Red, LayerDepth.Text, FontType.HanDinJianShu, 300, 0.2f );
+                TextEffect.AddRiseFade( "不过这个物体也会开始运动。", new Vector2( 20, 80 ), 1.4f, Color.Red, LayerDepth.Text, FontType.HanDinJianShu, 300, 0.2f );
 
                 showFirstScore = false;
             }
@@ -303,23 +312,23 @@ namespace InterRules.ShootTheBall
 
             if (tank.Rader.PointInRader( InputHandler.CurMousePosInLogic ))
             {
-                FontManager.DrawLucidaInScrnCoord( "mouse In Rader!", ConvertHelper.PointToVector2( InputHandler.CurMousePos ), 1f, Color.Yellow, LayerDepth.Text );
+                FontManager.DrawInScrnCoord( "mouse In Rader!", ConvertHelper.PointToVector2( InputHandler.CurMousePos ), 0.6f, Color.Yellow, LayerDepth.Text, FontType.Lucida );
             }
 
             if (tank.Rader.ShelterObjs.Length != 0)
             {
                 foreach (IShelterObj obj in tank.Rader.ShelterObjs)
                 {
-                    FontManager.DrawLucida( "I am Sheltered by " + obj.ObjInfo.Name + " Pos: " + ((IGameObj)obj).Pos.ToString(), tank.Pos, 1f, Color.Yellow, LayerDepth.Text );
+                    FontManager.Draw( "I am Sheltered by " + obj.ObjInfo.Name + " Pos: " + ((IGameObj)obj).Pos.ToString(), tank.Pos, 0.6f, Color.Yellow, LayerDepth.Text, FontType.Lucida );
                 }
             }
 
 
-            FontManager.DrawComicInScrnCoord( "You Score : " + Score.ToString(), new Vector2( 500, 40 ), 1f, Color.Yellow, LayerDepth.Text );
-            FontManager.DrawComicInScrnCoord( "Shoot Sum : " + shootSum.ToString(), new Vector2( 500, 60 ), 1f, Color.Yellow, LayerDepth.Text );
-            FontManager.DrawComicInScrnCoord( "hit Sum   : " + hitSum.ToString(), new Vector2( 500, 80 ), 1f, Color.Yellow, LayerDepth.Text );
+            FontManager.DrawInScrnCoord( "You Score : " + Score.ToString(), new Vector2( 500, 40 ), 0.6f, Color.Yellow, LayerDepth.Text, FontType.Comic );
+            FontManager.DrawInScrnCoord( "Shoot Sum : " + shootSum.ToString(), new Vector2( 500, 60 ), 0.6f, Color.Yellow, LayerDepth.Text, FontType.Comic );
+            FontManager.DrawInScrnCoord( "hit Sum   : " + hitSum.ToString(), new Vector2( 500, 80 ), 0.6f, Color.Yellow, LayerDepth.Text, FontType.Comic );
             float hitRate = shootSum != 0 ? (float)hitSum * 100 / (float)shootSum : 0;
-            FontManager.DrawComicInScrnCoord( "hit rate  : " + hitRate.ToString() + "%", new Vector2( 500, 100 ), 1f, Color.Yellow, LayerDepth.Text );
+            FontManager.DrawInScrnCoord( "hit rate  : " + hitRate.ToString() + "%", new Vector2( 500, 100 ), 0.6f, Color.Yellow, LayerDepth.Text, FontType.Comic );
 
 
         }

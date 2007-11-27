@@ -56,7 +56,7 @@ namespace SmartTank.Test
             BasicGraphics.DrawPoint( new Vector2( 90, 95 ), 1f, Color.Red, 0 );
             BasicGraphics.FillRectangle( new Rectangle( 60, 80, 30, 15 ), ColorHelper.ApplyAlphaToColor( Color.Green, 0.7f ), 0.5f, SpriteBlendMode.AlphaBlend );
 
-            FontManager.DrawLucida( "Press The Mouse Left Button, I'll Show You An EarthQuake!", new Vector2( 20, 10 ), 1f, Color.Gold, 0f );
+            FontManager.Draw( "Press The Mouse Left Button, I'll Show You An EarthQuake!", new Vector2( 20, 10 ), 0.6f, Color.Gold, 0f, FontType.Lucida );
             TextEffect.Draw();
         }
     }

@@ -39,7 +39,8 @@ namespace GameBase.Graphics
         }
 
         /// <summary>
-        /// 指定逻辑坐标添加一个RiseFade文字特效
+        /// 指定逻辑坐标添加一个RiseFade文字特效。
+        /// 注意，如果文字内容中包含中文，必须选用中文字体
         /// </summary>
         /// <param name="text">文字内容</param>
         /// <param name="pos">显示的逻辑位置</param>
@@ -55,7 +56,8 @@ namespace GameBase.Graphics
         }
 
         /// <summary>
-        /// 在屏幕坐标中添加一个RiseFade文字特效
+        /// 在屏幕坐标中添加一个RiseFade文字特效。
+        /// 注意，如果文字内容中包含中文，必须选用中文字体
         /// </summary>
         /// <param name="text">文字内容</param>
         /// <param name="pos">显示的屏幕位置</param>

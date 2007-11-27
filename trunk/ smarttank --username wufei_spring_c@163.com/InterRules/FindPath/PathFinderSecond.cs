@@ -144,7 +144,7 @@ namespace InterRules.FindPath
                     foreach (GraphPath<NaviPoint> path in naviPoint.neighbors)
                     {
                         BasicGraphics.DrawLine( naviPoint.value.Pos, path.neighbor.value.Pos, 3f, Color.Yellow, 0.1f );
-                        FontManager.DrawComic( path.weight.ToString(), 0.5f * (naviPoint.value.Pos + path.neighbor.value.Pos), 0.5f, Color.Black, 0f );
+                        FontManager.Draw( path.weight.ToString(), 0.5f * (naviPoint.value.Pos + path.neighbor.value.Pos), 0.5f, Color.Black, 0f, FontType.Comic );
                     }
                 }
 
@@ -155,10 +155,10 @@ namespace InterRules.FindPath
             }
 
             if (seeItem)
-                FontManager.DrawLucida( "I see Item!", orderServer.Pos, 1f, Color.Black, 0f );
+                FontManager.Draw( "I see Item!", orderServer.Pos, 1f, Color.Black, 0f, FontType.Lucida );
 
             if (itemDisappeared)
-                FontManager.DrawLucida( "Item Disappeared!", orderServer.Pos - new Vector2( 0, 10 ), 1f, Color.Black, 0f );
+                FontManager.Draw( "Item Disappeared!", orderServer.Pos - new Vector2( 0, 10 ), 1f, Color.Black, 0f, FontType.Lucida );
         }
 
         #endregion
