@@ -52,6 +52,7 @@
       <Private>False</Private>
     </Reference>
     <Reference Include="System.Data" />
+    <Reference Include="System.Drawing" />
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
@@ -163,6 +164,10 @@
       <XNAUseContentPipeline>false</XNAUseContentPipeline>
       <Name>BasicGraphics</Name>
     </Compile>
+    <Compile Include="Graphics\ChineseWriter.cs">
+      <XNAUseContentPipeline>false</XNAUseContentPipeline>
+      <Name>ChineseWriter</Name>
+    </Compile>
     <Compile Include="Graphics\IAnimated.cs">
       <XNAUseContentPipeline>false</XNAUseContentPipeline>
       <Name>IAnimated</Name>
@@ -170,6 +175,10 @@
     <Compile Include="Graphics\SpriteBorder.cs">
       <XNAUseContentPipeline>false</XNAUseContentPipeline>
       <Name>SpriteBorder</Name>
+    </Compile>
+    <Compile Include="Graphics\Test\ChineseWriterTest.cs">
+      <XNAUseContentPipeline>false</XNAUseContentPipeline>
+      <Name>ChineseWriterTest</Name>
     </Compile>
     <Compile Include="Graphics\Test\SpriteBorderTest.cs">
       <XNAUseContentPipeline>false</XNAUseContentPipeline>

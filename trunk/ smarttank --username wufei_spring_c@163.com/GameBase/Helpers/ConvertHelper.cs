@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using Microsoft.Xna.Framework;
 using GameBase.DataStructure;
+using Microsoft.Xna.Framework.Graphics;
 
 namespace GameBase.Helpers
 {
@@ -26,6 +27,11 @@ namespace GameBase.Helpers
         public static Rectangle RectanglefToRectangle ( Rectanglef rect )
         {
             return new Rectangle( (int)rect.X, (int)rect.Y, (int)rect.Width, (int)rect.Height );
+        }
+
+        public static Color SysColorToXNAColor ( System.Drawing.Color sysColor )
+        {
+            return new Color( sysColor.R, sysColor.G, sysColor.B, sysColor.A );
         }
     }
 }

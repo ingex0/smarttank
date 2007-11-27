@@ -5,6 +5,10 @@ using Platform.Update;
 
 namespace Platform.UpdateManage
 {
+    /*
+     * 需要进一步的完善，添加Interval功能
+     * 
+     * */
 
     public delegate void OnTimerCallHandler ();
 

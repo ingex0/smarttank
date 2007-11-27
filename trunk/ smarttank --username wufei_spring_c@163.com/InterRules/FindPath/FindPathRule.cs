@@ -24,6 +24,7 @@ using Platform.GameObjects.Item;
 using Platform.GameObjects;
 using Platform.Senses.Vision;
 using Platform.GameDraw.UIElement;
+using Platform.UpdateManage;
 
 namespace InterRules.FindPath
 {
@@ -157,6 +158,13 @@ namespace InterRules.FindPath
             InitialAI(tankAI);
 
             camera.Focus(tank, true);
+
+            GameTimer timer = new GameTimer( 5,
+                delegate()
+                {
+                    TextEffect.AddRiseFadeInScrnCoordin( "test FadeUp in Scrn!", new Vector2( 100, 100 ), 1f, Color.Black, LayerDepth.Text, FontType.Lucida, 300, 0.5f );
+                    TextEffect.AddRiseFade( "test FadeUp in Login!", new Vector2( 100, 100 ), 1f, Color.White, LayerDepth.Text, FontType.Lucida, 300, 0.5f );
+                } );
         }
 
         private void InitialAI(IAI tankAI)

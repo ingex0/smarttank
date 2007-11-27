@@ -408,8 +408,6 @@ namespace InterRules.Duel
                 return true;
             }
 
-            GameTimer.UpdateTimers( seconds );
-
             if (!gameStart)
                 return false;
 

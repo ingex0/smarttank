@@ -51,7 +51,7 @@ namespace GameBase.Graphics
         /// <param name="step">每次时间循环中，上升的高度，以像素为单位</param>
         static public void AddRiseFade ( string text, Vector2 pos, float Scale, Color color, float layerDepth, FontType fontType, float existedFrame, float step )
         {
-            sEffects.AddLast( new RiseFadeEffect( text, Coordin.ScreenPos( pos ), Scale, color, layerDepth, fontType, existedFrame, step ) );
+            sEffects.AddLast( new RiseFadeEffect( text, true, pos, Scale, color, layerDepth, fontType, existedFrame, step ) );
         }
 
         /// <summary>
@@ -67,7 +67,7 @@ namespace GameBase.Graphics
         /// <param name="step">每次时间循环中，上升的高度，以像素为单位</param>
         static public void AddRiseFadeInScrnCoordin ( string text, Vector2 pos, float Scale, Color color, float layerDepth, FontType fontType, float existedFrame, float step )
         {
-            sEffects.AddLast( new RiseFadeEffect( text, pos, Scale, color, layerDepth, fontType, existedFrame, step ) );
+            sEffects.AddLast( new RiseFadeEffect( text, false, pos, Scale, color, layerDepth, fontType, existedFrame, step ) );
         }
 
         /// <summary>
@@ -105,31 +105,35 @@ namespace GameBase.Graphics
         #region Variables
 
 
-        string mText;
+        string text;
 
-        Vector2 mPos;
+        Vector2 pos;
 
-        float mScale;
+        float scale;
 
-        Color mColor;
+        Color color;
 
-        float mLayerDepth;
+        float layerDepth;
 
-        FontType mFontType;
+        FontType fontType;
 
-        float mSumFrame;
-        float mFrameRePlatforms;
+        float sumFrame;
+        float frameRePlatforms;
 
-        float mSetp;
+        float step;
 
-        bool mEnded = false;
+        bool ended = false;
+
+        bool inLogic = false;
+
+        float curDest = 0;
 
         /// <summary>
         /// 
         /// </summary>
         public bool Ended
         {
-            get { return mEnded; }
+            get { return ended; }
         }
         #endregion
 
@@ -144,21 +148,21 @@ namespace GameBase.Graphics
         /// <param name="fontType">字体</param>
         /// <param name="existedFrame">保持在屏幕中的时间循环次数</param>
         /// <param name="step">每次时间循环中，上升的高度，以像素为单位</param>
-        public RiseFadeEffect ( string text, Vector2 pos, float scale, Color color, float layerDepth, FontType fontType, float existFrame, float step )
+        public RiseFadeEffect ( string text, bool inLogic, Vector2 pos, float scale, Color color, float layerDepth, FontType fontType, float existFrame, float step )
         {
             if (scale <= 0 || existFrame <= 1)
                 throw new Exception( "scale and existFrame cann't be below Zero!" );
 
-            mText = text;
-            //mPos = Coordin.ScreenPos( pos );
-            mPos = pos;
-            mScale = scale;
-            mColor = color;
-            mLayerDepth = layerDepth;
-            mFontType = fontType;
-            mSumFrame = existFrame;
-            mFrameRePlatforms = existFrame;
-            mSetp = step;
+            this.text = text;
+            this.inLogic = inLogic;
+            this.pos = pos;
+            this.scale = scale;
+            this.color = color;
+            this.layerDepth = layerDepth;
+            this.fontType = fontType;
+            this.sumFrame = existFrame;
+            this.frameRePlatforms = existFrame;
+            this.step = step;
         }
 
         #region Draw
@@ -168,17 +172,20 @@ namespace GameBase.Graphics
         /// </summary>
         public void Draw ()
         {
-            if (mFrameRePlatforms <= 0)
+            if (frameRePlatforms <= 0)
             {
-                mEnded = true;
+                ended = true;
                 return;
             }
             else
             {
-                mFrameRePlatforms--;
-                mPos.Y -= mSetp;
-                mColor = ColorHelper.ApplyAlphaToColor( mColor, CalAlpha() );
-                FontManager.Draw( mText, Coordin.LogicPos( mPos ), mScale, mColor, mLayerDepth, mFontType );
+                frameRePlatforms--;
+                curDest += step;
+                color = ColorHelper.ApplyAlphaToColor( color, CalAlpha() );
+                if (inLogic)
+                    FontManager.DrawInScrnCoord( text, Coordin.ScreenPos( pos ) - new Vector2( 0, curDest ), scale, color, layerDepth, fontType );
+                else
+                    FontManager.DrawInScrnCoord( text, pos - new Vector2( 0, curDest ), scale, color, layerDepth, fontType );
             }
         }
 
@@ -186,10 +193,10 @@ namespace GameBase.Graphics
 
         float CalAlpha ()
         {
-            if (mFrameRePlatforms > 0.5f * mSumFrame)
+            if (frameRePlatforms > 0.5f * sumFrame)
                 return 1f;
             else
-                return (mFrameRePlatforms - (int)(0.5f * mSumFrame)) / (0.5f * mSumFrame) + 1;
+                return (frameRePlatforms - (int)(0.5f * sumFrame)) / (0.5f * sumFrame) + 1;
         }
 
 

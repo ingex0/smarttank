@@ -61,8 +61,6 @@ namespace GameBase.Helpers
             get { return Path.Combine( GameBaseDirectory, "Item" ); }
         }
 
-       
-
         #endregion
 
         #region FilePath

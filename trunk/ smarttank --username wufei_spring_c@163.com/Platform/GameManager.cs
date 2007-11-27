@@ -134,6 +134,8 @@ namespace Platform
 
             float elapsedSeconds = (float)gameTime.ElapsedGameTime.TotalSeconds;
 
+            GameTimer.UpdateTimers( elapsedSeconds );
+
             if (gameScreens.Peek().Update( elapsedSeconds ))
             {
                 gameScreens.Pop();

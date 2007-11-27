@@ -102,7 +102,6 @@ namespace GameBase
             graphics = new GraphicsDeviceManager( this );
             clientRec = Window.ClientBounds;
             curInstance = this;
-            
             //graphics.ToggleFullScreen();
         }
 
