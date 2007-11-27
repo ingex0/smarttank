@@ -16,7 +16,7 @@ namespace GameBase.Graphics.Test
 
         protected override void GameDraw ( Microsoft.Xna.Framework.GameTime gameTime )
         {
-            ChineseWriter.WriteText( "Œ‚∑…", new Vector2( 100, 100 ), 0, 1f, Color.White, 0f );
+            ChineseWriter.WriteText( "Œ‚∑…Spring1234567!@$^&*()?/.,:;'", new Vector2( 100, 100 ), 0, 2f, Color.Red, 0f );
         }
     }
 }

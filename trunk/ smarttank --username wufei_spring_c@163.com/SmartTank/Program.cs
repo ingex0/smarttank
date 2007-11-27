@@ -20,11 +20,11 @@ namespace SmartTank
         /// </summary>
         static void Main ( string[] args )
         {
-            //GameManager gameManager = new GameManager();
-            //gameManager.Run();
+            GameManager gameManager = new GameManager();
+            gameManager.Run();
 
-            ChineseWriterTest chineseWriterTest = new ChineseWriterTest();
-            chineseWriterTest.Run();
+            //ChineseWriterTest chineseWriterTest = new ChineseWriterTest();
+            //chineseWriterTest.Run();
 
             //testConvexHall.Run();
 

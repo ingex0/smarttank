@@ -9,9 +9,9 @@ using Microsoft.Xna.Framework;
 
 namespace GameBase.Graphics
 {
-    class ChineseWriter
+    public class ChineseWriter
     {
-        const float fontDrawEmSize = 32;
+        const float fontDrawEmSize = 20;
 
         static PrivateFontCollection privateFontCollection;
         static System.Drawing.FontFamily[] fontFamilys;
@@ -21,6 +21,9 @@ namespace GameBase.Graphics
 
         static Dictionary<string, Texture2D> cache = new Dictionary<string, Texture2D>();
 
+        /// <summary>
+        /// 初始化
+        /// </summary>
         public static void Intitial ()
         {
             privateFontCollection = new PrivateFontCollection();
@@ -32,6 +35,15 @@ namespace GameBase.Graphics
 
         }
 
+        /// <summary>
+        /// 绘制包含中文字的文字
+        /// </summary>
+        /// <param name="text"></param>
+        /// <param name="scrnPos"></param>
+        /// <param name="rota"></param>
+        /// <param name="scale"></param>
+        /// <param name="color"></param>
+        /// <param name="layerDepth"></param>
         public static void WriteText ( string text, Vector2 scrnPos, float rota, float scale, Color color, float layerDepth )
         {
             Texture2D texture;
@@ -49,7 +61,14 @@ namespace GameBase.Graphics
 
         }
 
-        private static Texture2D BuildTexture ( string text, System.Drawing.Font font )
+        /// <summary>
+        /// 建立贴图并添加到缓冲中。
+        /// 尽量在第一次绘制之前调用该函数，这样可以避免建立贴图的过程造成游戏的停滞
+        /// </summary>
+        /// <param name="text"></param>
+        /// <param name="font"></param>
+        /// <returns></returns>
+        public static Texture2D BuildTexture ( string text, System.Drawing.Font font )
         {
             if (lastGraphics == null)
             {

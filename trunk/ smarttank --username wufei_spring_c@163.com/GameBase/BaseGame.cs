@@ -165,7 +165,7 @@ namespace GameBase
                 GameDraw( gameTime );
 
                 if (showFps)
-                    FontManager.DrawComicInScrnCoord( "FPS = " + Fps.ToString(), new Vector2( 30, 15 ), 1f, Color.White, 0f );
+                    FontManager.DrawComicInScrnCoord( "FPS = " + Fps.ToString(), new Vector2( 30, 15 ), 0.5f, Color.White, 0f );
 
                 TextEffect.Draw();
 

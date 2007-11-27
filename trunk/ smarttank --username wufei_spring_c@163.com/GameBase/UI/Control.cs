@@ -15,6 +15,8 @@ namespace GameBase.UI
         public static ResourceUsage resourceUsage = ResourceUsage.None;
         public static ResourceManagementMode resourceMode = ResourceManagementMode.Automatic;
 
+        public const float fontScale = 0.5f;
+
 
         public Vector2 position;
         //public Vector2 Origin
