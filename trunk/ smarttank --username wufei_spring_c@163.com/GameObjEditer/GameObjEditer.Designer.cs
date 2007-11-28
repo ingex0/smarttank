@@ -30,22 +30,22 @@
         {
             this.menuStrip = new System.Windows.Forms.MenuStrip();
             this.文件ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.新建ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.打开ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.保存ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.退出ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.贴图ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.导入ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.提取边界ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.新建ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.节点ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.添加节点ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.删除节点ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.贴图ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.导入ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.提取边界ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripContainer1 = new System.Windows.Forms.ToolStripContainer();
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
-            this.toolStrip = new System.Windows.Forms.ToolStrip();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
-            this.pictureBox = new System.Windows.Forms.PictureBox();
             this.treeView = new System.Windows.Forms.TreeView();
+            this.pictureBox = new System.Windows.Forms.PictureBox();
+            this.toolStrip = new System.Windows.Forms.ToolStrip();
             this.menuStrip.SuspendLayout();
             this.toolStripContainer1.BottomToolStripPanel.SuspendLayout();
             this.toolStripContainer1.ContentPanel.SuspendLayout();
@@ -80,50 +80,29 @@
             this.文件ToolStripMenuItem.Size = new System.Drawing.Size( 67, 20 );
             this.文件ToolStripMenuItem.Text = "场景物体";
             // 
+            // 新建ToolStripMenuItem
+            // 
+            this.新建ToolStripMenuItem.Name = "新建ToolStripMenuItem";
+            this.新建ToolStripMenuItem.Size = new System.Drawing.Size( 98, 22 );
+            this.新建ToolStripMenuItem.Text = "新建";
+            // 
             // 打开ToolStripMenuItem
             // 
             this.打开ToolStripMenuItem.Name = "打开ToolStripMenuItem";
-            this.打开ToolStripMenuItem.Size = new System.Drawing.Size( 152, 22 );
+            this.打开ToolStripMenuItem.Size = new System.Drawing.Size( 98, 22 );
             this.打开ToolStripMenuItem.Text = "打开";
             // 
             // 保存ToolStripMenuItem
             // 
             this.保存ToolStripMenuItem.Name = "保存ToolStripMenuItem";
-            this.保存ToolStripMenuItem.Size = new System.Drawing.Size( 152, 22 );
+            this.保存ToolStripMenuItem.Size = new System.Drawing.Size( 98, 22 );
             this.保存ToolStripMenuItem.Text = "保存";
             // 
             // 退出ToolStripMenuItem
             // 
             this.退出ToolStripMenuItem.Name = "退出ToolStripMenuItem";
-            this.退出ToolStripMenuItem.Size = new System.Drawing.Size( 152, 22 );
+            this.退出ToolStripMenuItem.Size = new System.Drawing.Size( 98, 22 );
             this.退出ToolStripMenuItem.Text = "退出";
-            // 
-            // 贴图ToolStripMenuItem
-            // 
-            this.贴图ToolStripMenuItem.DropDownItems.AddRange( new System.Windows.Forms.ToolStripItem[] {
-            this.导入ToolStripMenuItem,
-            this.提取边界ToolStripMenuItem} );
-            this.贴图ToolStripMenuItem.Name = "贴图ToolStripMenuItem";
-            this.贴图ToolStripMenuItem.Size = new System.Drawing.Size( 43, 20 );
-            this.贴图ToolStripMenuItem.Text = "贴图";
-            // 
-            // 导入ToolStripMenuItem
-            // 
-            this.导入ToolStripMenuItem.Name = "导入ToolStripMenuItem";
-            this.导入ToolStripMenuItem.Size = new System.Drawing.Size( 152, 22 );
-            this.导入ToolStripMenuItem.Text = "导入";
-            // 
-            // 提取边界ToolStripMenuItem
-            // 
-            this.提取边界ToolStripMenuItem.Name = "提取边界ToolStripMenuItem";
-            this.提取边界ToolStripMenuItem.Size = new System.Drawing.Size( 152, 22 );
-            this.提取边界ToolStripMenuItem.Text = "提取边界";
-            // 
-            // 新建ToolStripMenuItem
-            // 
-            this.新建ToolStripMenuItem.Name = "新建ToolStripMenuItem";
-            this.新建ToolStripMenuItem.Size = new System.Drawing.Size( 152, 22 );
-            this.新建ToolStripMenuItem.Text = "新建";
             // 
             // 节点ToolStripMenuItem
             // 
@@ -137,14 +116,35 @@
             // 添加节点ToolStripMenuItem
             // 
             this.添加节点ToolStripMenuItem.Name = "添加节点ToolStripMenuItem";
-            this.添加节点ToolStripMenuItem.Size = new System.Drawing.Size( 152, 22 );
+            this.添加节点ToolStripMenuItem.Size = new System.Drawing.Size( 122, 22 );
             this.添加节点ToolStripMenuItem.Text = "添加节点";
             // 
             // 删除节点ToolStripMenuItem
             // 
             this.删除节点ToolStripMenuItem.Name = "删除节点ToolStripMenuItem";
-            this.删除节点ToolStripMenuItem.Size = new System.Drawing.Size( 152, 22 );
+            this.删除节点ToolStripMenuItem.Size = new System.Drawing.Size( 122, 22 );
             this.删除节点ToolStripMenuItem.Text = "删除节点";
+            // 
+            // 贴图ToolStripMenuItem
+            // 
+            this.贴图ToolStripMenuItem.DropDownItems.AddRange( new System.Windows.Forms.ToolStripItem[] {
+            this.导入ToolStripMenuItem,
+            this.提取边界ToolStripMenuItem} );
+            this.贴图ToolStripMenuItem.Name = "贴图ToolStripMenuItem";
+            this.贴图ToolStripMenuItem.Size = new System.Drawing.Size( 43, 20 );
+            this.贴图ToolStripMenuItem.Text = "贴图";
+            // 
+            // 导入ToolStripMenuItem
+            // 
+            this.导入ToolStripMenuItem.Name = "导入ToolStripMenuItem";
+            this.导入ToolStripMenuItem.Size = new System.Drawing.Size( 122, 22 );
+            this.导入ToolStripMenuItem.Text = "导入";
+            // 
+            // 提取边界ToolStripMenuItem
+            // 
+            this.提取边界ToolStripMenuItem.Name = "提取边界ToolStripMenuItem";
+            this.提取边界ToolStripMenuItem.Size = new System.Drawing.Size( 122, 22 );
+            this.提取边界ToolStripMenuItem.Text = "提取边界";
             // 
             // toolStripContainer1
             // 
@@ -179,14 +179,6 @@
             this.statusStrip1.TabIndex = 0;
             this.statusStrip1.Text = "statusStrip";
             // 
-            // toolStrip
-            // 
-            this.toolStrip.Dock = System.Windows.Forms.DockStyle.None;
-            this.toolStrip.Location = new System.Drawing.Point( 0, 3 );
-            this.toolStrip.Name = "toolStrip";
-            this.toolStrip.Size = new System.Drawing.Size( 26, 111 );
-            this.toolStrip.TabIndex = 0;
-            // 
             // splitContainer1
             // 
             this.splitContainer1.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -204,6 +196,15 @@
             this.splitContainer1.SplitterDistance = 208;
             this.splitContainer1.TabIndex = 0;
             // 
+            // treeView
+            // 
+            this.treeView.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.treeView.Location = new System.Drawing.Point( 0, 0 );
+            this.treeView.Name = "treeView";
+            this.treeView.Size = new System.Drawing.Size( 208, 486 );
+            this.treeView.TabIndex = 0;
+            this.treeView.MouseClick += new System.Windows.Forms.MouseEventHandler( this.treeView_MouseClick );
+            // 
             // pictureBox
             // 
             this.pictureBox.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -213,13 +214,13 @@
             this.pictureBox.TabIndex = 0;
             this.pictureBox.TabStop = false;
             // 
-            // treeView
+            // toolStrip
             // 
-            this.treeView.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.treeView.Location = new System.Drawing.Point( 0, 0 );
-            this.treeView.Name = "treeView";
-            this.treeView.Size = new System.Drawing.Size( 208, 486 );
-            this.treeView.TabIndex = 0;
+            this.toolStrip.Dock = System.Windows.Forms.DockStyle.None;
+            this.toolStrip.Location = new System.Drawing.Point( 0, 3 );
+            this.toolStrip.Name = "toolStrip";
+            this.toolStrip.Size = new System.Drawing.Size( 26, 111 );
+            this.toolStrip.TabIndex = 0;
             // 
             // GameObjEditer
             // 

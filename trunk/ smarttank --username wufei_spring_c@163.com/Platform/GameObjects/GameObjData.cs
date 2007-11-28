@@ -15,6 +15,7 @@ namespace Platform.GameObjects
         public List<Vector2> visiKeyPoint;
         public List<Vector2> structKeyPoint;
 
+        public GameObjDataNode parent;
         public List<GameObjDataNode> childNodes;
 
         public GameObjDataNode ()
@@ -23,6 +24,13 @@ namespace Platform.GameObjects
             visiKeyPoint = new List<Vector2>();
             structKeyPoint = new List<Vector2>();
             childNodes = new List<GameObjDataNode>();
+        }
+
+        public GameObjDataNode ( string nodeName, GameObjDataNode parent )
+            : this()
+        {
+            this.nodeName = nodeName;
+            this.parent = parent;
         }
 
         #region IEnumerable<GameObjDataNode> ≥…‘±
@@ -47,7 +55,7 @@ namespace Platform.GameObjects
             }
         }
 
-        
+
 
         #endregion
 
@@ -119,7 +127,7 @@ namespace Platform.GameObjects
 
         public GameObjDataNode baseNode;
 
-        public GameObjDataNode this [int index ]
+        public GameObjDataNode this[int index]
         {
             get
             {
@@ -134,6 +142,15 @@ namespace Platform.GameObjects
             }
         }
 
+        public GameObjData ()
+        {
 
+        }
+
+        public GameObjData ( string objName )
+        {
+            this.name = objName;
+            this.baseNode = new GameObjDataNode( "Base", null );
+        }
     }
 }
