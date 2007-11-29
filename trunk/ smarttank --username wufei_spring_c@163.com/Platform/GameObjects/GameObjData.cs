@@ -26,6 +26,11 @@ namespace Platform.GameObjects
             childNodes = new List<GameObjDataNode>();
         }
 
+        public GameObjDataNode ( string nodeName )
+            : this( nodeName, null )
+        {
+        }
+
         public GameObjDataNode ( string nodeName, GameObjDataNode parent )
             : this()
         {
