@@ -212,6 +212,16 @@ namespace GameBase.Graphics
         #region LoadTexture Functions
 
         /// <summary>
+        /// 检查贴图的是否能建立边界，如果建立边界失败，将抛出异常。
+        /// 被场景物体编辑器调用。
+        /// </summary>
+        /// <param name="tex"></param>
+        public static void CheckBorder ( Texture2D tex )
+        {
+            SpriteBorder border = new SpriteBorder( tex );
+        }
+
+        /// <summary>
         /// Load Texture From File
         /// 从文件中导入贴图。
         /// 由于导入过程可能会导致游戏的停顿，尽量从素材管道中导入贴图

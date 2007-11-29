@@ -55,7 +55,7 @@
             this.listViewStruct = new System.Windows.Forms.ListView();
             this.structIndex = new System.Windows.Forms.ColumnHeader();
             this.structPos = new System.Windows.Forms.ColumnHeader();
-            this.pictureBox = new System.Windows.Forms.PictureBox();
+            this.pictureBox = new PictureBoxGird.PictureBoxGird();
             this.toolStrip = new System.Windows.Forms.ToolStrip();
             this.openTexDialog = new System.Windows.Forms.OpenFileDialog();
             this.menuStrip.SuspendLayout();
@@ -130,14 +130,14 @@
             // importToolStripMenuItem
             // 
             this.importToolStripMenuItem.Name = "importToolStripMenuItem";
-            this.importToolStripMenuItem.Size = new System.Drawing.Size( 122, 22 );
+            this.importToolStripMenuItem.Size = new System.Drawing.Size( 152, 22 );
             this.importToolStripMenuItem.Text = "导入";
             this.importToolStripMenuItem.Click += new System.EventHandler( this.ImportToolStripMenuItem_Click );
             // 
             // borderToolStripMenuItem
             // 
             this.borderToolStripMenuItem.Name = "borderToolStripMenuItem";
-            this.borderToolStripMenuItem.Size = new System.Drawing.Size( 122, 22 );
+            this.borderToolStripMenuItem.Size = new System.Drawing.Size( 152, 22 );
             this.borderToolStripMenuItem.Text = "提取边界";
             this.borderToolStripMenuItem.Click += new System.EventHandler( this.BorderToolStripMenuItem_Click );
             // 
@@ -409,7 +409,6 @@
         private System.Windows.Forms.ToolStripContainer toolStripContainer1;
         private System.Windows.Forms.StatusStrip statusStrip;
         private System.Windows.Forms.SplitContainer splitContainer1;
-        private System.Windows.Forms.PictureBox pictureBox;
         private System.Windows.Forms.ToolStrip toolStrip;
         private System.Windows.Forms.TreeView treeView;
         private System.Windows.Forms.SplitContainer splitContainer2;
@@ -427,5 +426,6 @@
         private System.Windows.Forms.ColumnHeader structIndex;
         private System.Windows.Forms.ColumnHeader structPos;
         private System.Windows.Forms.OpenFileDialog openTexDialog;
+        private PictureBoxGird.PictureBoxGird pictureBox;
     }
 }

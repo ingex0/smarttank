@@ -19,11 +19,13 @@ namespace GameBase.Graphics
     {
         public Point curPoint;
         public Point prePoint;
+        public SpriteBorder.BorderMap borderMap;
 
-        public BorderBulidException ( Point curPoint, Point prePoint )
+        public BorderBulidException ( Point curPoint, Point prePoint, SpriteBorder.BorderMap borderMap )
         {
             this.curPoint = curPoint;
             this.prePoint = prePoint;
+            this.borderMap = borderMap;
         }
     }
 
@@ -88,7 +90,7 @@ namespace GameBase.Graphics
         /// </summary>
         public const int minBlockAlpha = 10;
 
-        private class BorderMap
+        public class BorderMap
         {
             bool[,] borderMap;
 
@@ -354,10 +356,10 @@ namespace GameBase.Graphics
                     if (!findNext)
                     {
 #if SHOWERROR
-                        ShowDataToConsole();
-                        ShowCurListResult( result );
+                        //ShowDataToConsole();
+                        //ShowCurListResult( result );
 #endif
-                        throw new BorderBulidException( curPoint, prePoint );
+                        throw new BorderBulidException( curPoint, prePoint, borderMap );
                     }
                 }
 
@@ -409,7 +411,7 @@ namespace GameBase.Graphics
             }
             //else if (surroundBorder.Length == 3)
             else
-                throw new Exception();
+                throw new BorderBulidException( firPoint, prePoint, borderMap );
         }
 
 

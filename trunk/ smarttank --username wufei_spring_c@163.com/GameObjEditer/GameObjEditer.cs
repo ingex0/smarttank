@@ -8,6 +8,7 @@ using System.Windows.Forms;
 using Platform.GameObjects;
 using Microsoft.Xna.Framework.Graphics;
 using System.IO;
+using GameBase.Graphics;
 
 namespace GameObjEditer
 {
@@ -335,8 +336,19 @@ namespace GameObjEditer
             UpdateTexPathList();
             UpdateTexListContentMenu();
             UpdateMenu();
+            UpdatePictureBox();
         }
 
+        private void UpdatePictureBox ()
+        {
+            if (CurBitMap != null)
+                pictureBox.LoadPicture( CurBitMap );
+
+            if (CurTexIndex == -1)
+                pictureBox.ClearPicture();
+
+            pictureBox.Invalidate();
+        }
 
         #region TreeViewContentMenu
 
@@ -502,7 +514,7 @@ namespace GameObjEditer
 
         #endregion
 
-        #region TexContentMenu
+        #region TexListContentMenu
 
         void InitialTexContentMenu ()
         {
@@ -520,13 +532,17 @@ namespace GameObjEditer
             ToolStripMenuItem downTexLabel = new ToolStripMenuItem();
             downTexLabel.Name = "下移";
             downTexLabel.Text = "下移";
+            ToolStripMenuItem checkBorderLabel = new ToolStripMenuItem();
+            checkBorderLabel.Name = "提取边界";
+            checkBorderLabel.Text = "提取边界";
 
-            texListMenuStrip.Items.AddRange( new ToolStripItem[] { importTexLabel, delTexLabel, upTexLabel, downTexLabel } );
+            texListMenuStrip.Items.AddRange( new ToolStripItem[] { importTexLabel, delTexLabel, upTexLabel, downTexLabel, checkBorderLabel } );
 
             importTexLabel.Click += new EventHandler( importTexLabel_Click );
             delTexLabel.Click += new EventHandler( delTexLabel_Click );
             upTexLabel.Click += new EventHandler( upTexLabel_Click );
             downTexLabel.Click += new EventHandler( downTexLabel_Click );
+            checkBorderLabel.Click += new EventHandler( checkBorderLabel_Click );
 
             listViewTex.ContextMenuStrip = texListMenuStrip;
         }
@@ -536,6 +552,7 @@ namespace GameObjEditer
             LoadTex();
             UpdateComponent();
             pictureBox.Invalidate();
+            showError = false;
         }
 
         void delTexLabel_Click ( object sender, EventArgs e )
@@ -543,6 +560,7 @@ namespace GameObjEditer
             DelTex();
             UpdateComponent();
             pictureBox.Invalidate();
+            showError = false;
         }
 
         void upTexLabel_Click ( object sender, EventArgs e )
@@ -557,6 +575,11 @@ namespace GameObjEditer
             DownTex();
             UpdateComponent();
             pictureBox.Invalidate();
+        }
+
+        void checkBorderLabel_Click ( object sender, EventArgs e )
+        {
+            CheckBorder();
         }
 
         void UpdateTexPathList ()
@@ -581,7 +604,7 @@ namespace GameObjEditer
         private void listViewTex_MouseClick ( object sender, MouseEventArgs e )
         {
             CurTexIndex = listViewTex.GetItemAt( e.X, e.Y ).Index;
-            pictureBox.Invalidate();
+            UpdateComponent();
         }
 
         void UpdateTexListContentMenu ()
@@ -589,12 +612,15 @@ namespace GameObjEditer
             texListMenuStrip.Items["移除贴图"].Enabled = true;
             texListMenuStrip.Items["上移"].Enabled = true;
             texListMenuStrip.Items["下移"].Enabled = true;
+            texListMenuStrip.Items["提取边界"].Enabled = true;
+
 
             if (CurTexIndex == -1)
             {
                 texListMenuStrip.Items["移除贴图"].Enabled = false;
                 texListMenuStrip.Items["上移"].Enabled = false;
                 texListMenuStrip.Items["下移"].Enabled = false;
+                texListMenuStrip.Items["提取边界"].Enabled = false;
             }
             if (CurTexIndex == 0)
             {
@@ -616,7 +642,7 @@ namespace GameObjEditer
         {
             string texPath = openTexDialog.FileName;
             ((TreeNodeNode)CurTreeNode).AddTex( texPath, device );
-            UpdateTexPathList();
+            UpdateComponent();
         }
 
         void DelTex ()
@@ -625,6 +651,8 @@ namespace GameObjEditer
             {
                 ((TreeNodeNode)CurTreeNode).DelTex( CurTexIndex );
                 CurTexIndex--;
+
+
             }
         }
 
@@ -643,6 +671,40 @@ namespace GameObjEditer
             {
                 ((TreeNodeNode)CurTreeNode).downTex( CurTexIndex );
                 CurTexIndex++;
+            }
+        }
+
+        #endregion
+
+        #region CheckBorder
+
+        SpriteBorder.BorderMap borderMap;
+        Point errorPoint;
+
+        bool showError = false;
+
+        void CheckBorder ()
+        {
+            if (CurXNATex != null)
+            {
+                showError = false;
+                try
+                {
+                    Sprite.CheckBorder( CurXNATex );
+                }
+                catch (BorderBulidException e)
+                {
+                    borderMap = e.borderMap;
+                    errorPoint = new Point( e.curPoint.X, e.curPoint.Y );
+                    showError = true;
+                    pictureBox.TexFocusPos = errorPoint;
+                    pictureBox.Invalidate();
+                }
+
+                if (!showError)
+                    MessageBox.Show( "生成边界成功！" );
+                else
+                    MessageBox.Show( "生成边界失败！" );
             }
         }
 
@@ -697,16 +759,21 @@ namespace GameObjEditer
 
         private void pictureBox_Paint ( object sender, PaintEventArgs e )
         {
-            if (CurBitMap == null)
-                return;
-
-            e.Graphics.DrawImage( CurBitMap, new Point( 0, 0 ) );
+            if (showError)
+            {
+                for (int y = -2; y < borderMap.Height - 2; y++)
+                {
+                    for (int x = -2; x < borderMap.Width - 2; x++)
+                    {
+                        if (borderMap[x, y])
+                        {
+                            e.Graphics.FillRectangle( new SolidBrush( System.Drawing.Color.Green ), pictureBox.RectAtPos( x, y ) );
+                        }
+                    }
+                }
+                e.Graphics.FillRectangle( new SolidBrush( System.Drawing.Color.Red ), pictureBox.RectAtPos( errorPoint.X, errorPoint.Y ) );
+            }
         }
-
-
-
-
-
 
     }
 }
