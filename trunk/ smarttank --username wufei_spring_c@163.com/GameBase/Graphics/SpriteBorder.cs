@@ -225,6 +225,17 @@ namespace GameBase.Graphics
             CreateBorderCircles( tex );
         }
 
+        /// <summary>
+        /// 构造指定贴图的边界，为了测试，返回borderMap
+        /// </summary>
+        /// <param name="tex"></param>
+        /// <param name="borderMap"></param>
+        public SpriteBorder ( Texture2D tex, out SpriteBorder.BorderMap borderMap )
+            : this( tex )
+        {
+            borderMap = this.borderMap;
+        }
+
         #region Private Functions
 
         const int minBorderListLength = 10;

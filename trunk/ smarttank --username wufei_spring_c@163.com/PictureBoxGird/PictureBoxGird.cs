@@ -111,6 +111,12 @@ namespace PictureBoxGird
 
         bool alphaMode = false;
 
+        public bool AlphaMode
+        {
+            get { return alphaMode; }
+            set { alphaMode = value; }
+        }
+
         public void ToggleAlphaMode ()
         {
             alphaMode = !alphaMode;
@@ -119,12 +125,12 @@ namespace PictureBoxGird
 
         protected override void OnPaint ( PaintEventArgs pe )
         {
+            base.OnPaint( pe );
             if (bitmap != null)
             {
                 DrawBitMap( pe.Graphics );
                 DrawGrid( pe.Graphics );
             }
-            base.OnPaint( pe );
         }
 
         private void DrawBitMap ( Graphics graphics )
@@ -148,7 +154,7 @@ namespace PictureBoxGird
                         for (int x = Math.Max( 0, (int)minTexPos.X ); x <= Math.Min( bitmap.Width - 1, maxTexPos.X ); x++)
                         {
                             Color color = bitmap.GetPixel( x, y );
-                            graphics.FillRectangle( new SolidBrush( Color.FromArgb( 255, 255 - color.A, 255 - color.A, 255 - color.A ) ), RectAtPos( x, y ) );
+                            graphics.FillRectangle( new SolidBrush( Color.FromArgb( color.A, 255 - color.A, 255 - color.A, 255 - color.A ) ), RectAtPos( x, y ) );
                         }
                     }
                 }
@@ -202,6 +208,38 @@ namespace PictureBoxGird
         }
         CoodinChange coordinChange;
 
+        float moveFactor = 1f;
+
+        public bool Controlling
+        {
+            get { return coordinChange != CoodinChange.None; }
+        }
+
+        [Description( "指定平移的鼠标灵敏度" ), Category( "控制" )]
+        public float MoveFactor
+        {
+            get { return moveFactor; }
+            set { moveFactor = value; }
+        }
+
+        float zoomFactor = 1f;
+
+        [Description( "指定缩放的鼠标灵敏度" ), Category( "控制" )]
+        public float ZoomFactor
+        {
+            get { return zoomFactor; }
+            set { zoomFactor = value; }
+        }
+
+        float zoomWheelFactor = 1f;
+
+        [Description( "指定缩放的鼠标滑轮灵敏度" ), Category( "控制" )]
+        public float ZoomWheelFactor
+        {
+            get { return zoomWheelFactor; }
+            set { zoomWheelFactor = value; }
+        }
+
         protected override void OnMouseEnter ( EventArgs e )
         {
             base.OnMouseEnter( e );
@@ -226,11 +264,11 @@ namespace PictureBoxGird
                 PointF curMousePos = new PointF( e.X, e.Y );
                 if (coordinChange == CoodinChange.Move)
                 {
-                    texFocusPos = new PointF( preFocusPos.X + (curMousePos.X - mouseDownPos.X) / 5f, preFocusPos.Y + (curMousePos.Y - mouseDownPos.Y) / 5f );
+                    texFocusPos = new PointF( preFocusPos.X + (curMousePos.X - mouseDownPos.X) * moveFactor * 0.2f, preFocusPos.Y + (curMousePos.Y - mouseDownPos.Y) * moveFactor * 0.2f );
                 }
                 else if (coordinChange == CoodinChange.Zoom)
                 {
-                    float delta = (curMousePos.Y - mouseDownPos.Y) / 100;
+                    float delta = (curMousePos.Y - mouseDownPos.Y) * 0.01f * zoomFactor;
                     delta = Math.Max( -0.9f, delta );
                     scale = preScale * (1 + delta);
                 }
@@ -252,11 +290,11 @@ namespace PictureBoxGird
         {
             base.OnKeyDown( e );
 
-            if (e.Control || e.Alt)
+            if (e.Control || e.KeyCode == Keys.Z)
             {
                 if (e.Control)
                     coordinChange = CoodinChange.Move;
-                else if (e.Alt)
+                else if (e.KeyCode == Keys.Z)
                     coordinChange = CoodinChange.Zoom;
             }
             else if (e.Shift)
@@ -286,7 +324,7 @@ namespace PictureBoxGird
         protected override void OnMouseWheel ( MouseEventArgs e )
         {
             base.OnMouseWheel( e );
-            float delta = Math.Max( -0.9f, Math.Min( 9f, (float)(e.Delta) / 500f ) );
+            float delta = Math.Max( -0.9f, Math.Min( 9f, (float)(e.Delta) * 0.002f * zoomWheelFactor ) );
             scale = scale * (1 + delta);
             this.Invalidate();
         }

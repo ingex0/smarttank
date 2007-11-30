@@ -216,9 +216,9 @@ namespace GameBase.Graphics
         /// 被场景物体编辑器调用。
         /// </summary>
         /// <param name="tex"></param>
-        public static void CheckBorder ( Texture2D tex )
+        public static void CheckBorder ( Texture2D tex, out SpriteBorder.BorderMap borderMap )
         {
-            SpriteBorder border = new SpriteBorder( tex );
+            SpriteBorder border = new SpriteBorder( tex, out borderMap );
         }
 
         /// <summary>

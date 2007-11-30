@@ -85,6 +85,7 @@ namespace GameObjEditer
                 textures = new List<Texture2D>();
                 bitmaps = new List<Bitmap>();
                 texNames = new List<string>();
+                borderMaps = new List<SpriteBorder.BorderMap>();
                 dateNode = new GameObjDataNode( text );
             }
 
@@ -115,7 +116,7 @@ namespace GameObjEditer
             {
                 get
                 {
-                    if (textures.Count > 0)
+                    if (curTexIndex >= 0 && curTexIndex < bitmaps.Count)
                         return textures[curTexIndex];
                     else
                         return null;
@@ -126,8 +127,19 @@ namespace GameObjEditer
             {
                 get
                 {
-                    if (bitmaps.Count > 0)
+                    if (curTexIndex >= 0 && curTexIndex < bitmaps.Count)
                         return bitmaps[curTexIndex];
+                    else
+                        return null;
+                }
+            }
+
+            public SpriteBorder.BorderMap CurBorderMap
+            {
+                get
+                {
+                    if (curTexIndex >= 0 && curTexIndex < bitmaps.Count)
+                        return borderMaps[curTexIndex];
                     else
                         return null;
                 }
@@ -148,11 +160,14 @@ namespace GameObjEditer
                 }
             }
 
+            public List<SpriteBorder.BorderMap> borderMaps;
+
             public void AddTex ( string filePath, GraphicsDevice device )
             {
                 textures.Add( Texture2D.FromFile( device, filePath ) );
                 bitmaps.Add( new Bitmap( filePath ) );
                 texNames.Add( Path.GetFileName( filePath ) );
+                borderMaps.Add( null );
                 dateNode.texPaths.Add( Path.GetFileName( filePath ) );
                 curTexIndex = textures.Count - 1;
             }
@@ -165,7 +180,13 @@ namespace GameObjEditer
                 textures.RemoveAt( index );
                 bitmaps.RemoveAt( index );
                 texNames.RemoveAt( index );
+                borderMaps.RemoveAt( index );
                 dateNode.texPaths.RemoveAt( index );
+            }
+
+            public void SetBorderMap ( SpriteBorder.BorderMap borderMap )
+            {
+                borderMaps[curTexIndex] = borderMap;
             }
 
             public void UpTex ( int index )
@@ -248,6 +269,7 @@ namespace GameObjEditer
 
         ContextMenuStrip treeMenuStrip;
         ContextMenuStrip texListMenuStrip;
+        ContextMenuStrip pictureMenuStrip;
 
         TreeNode CurTreeNode
         {
@@ -297,6 +319,17 @@ namespace GameObjEditer
             }
         }
 
+        SpriteBorder.BorderMap CurBorderMap
+        {
+            get
+            {
+                if (CurXNATex != null)
+                    return ((TreeNodeNode)CurTreeNode).CurBorderMap;
+                else
+                    return null;
+            }
+        }
+
         #endregion
 
         public GameObjEditer ()
@@ -305,8 +338,8 @@ namespace GameObjEditer
             InitialTreeViewContentMenu();
             InitialTexContentMenu();
             InitialGraphicsDevice();
-
             InitialTexContentMenu();
+            InitialPictureBoxContentMenu();
         }
 
         private void InitialGraphicsDevice ()
@@ -337,6 +370,7 @@ namespace GameObjEditer
             UpdateTexListContentMenu();
             UpdateMenu();
             UpdatePictureBox();
+            UpdatePictureMenuStrip();
         }
 
         private void UpdatePictureBox ()
@@ -552,7 +586,6 @@ namespace GameObjEditer
             LoadTex();
             UpdateComponent();
             pictureBox.Invalidate();
-            showError = false;
         }
 
         void delTexLabel_Click ( object sender, EventArgs e )
@@ -560,7 +593,6 @@ namespace GameObjEditer
             DelTex();
             UpdateComponent();
             pictureBox.Invalidate();
-            showError = false;
         }
 
         void upTexLabel_Click ( object sender, EventArgs e )
@@ -579,7 +611,11 @@ namespace GameObjEditer
 
         void checkBorderLabel_Click ( object sender, EventArgs e )
         {
-            CheckBorder();
+            if (CheckBorder())
+                MessageBox.Show( "生成边界成功！" );
+            else
+                MessageBox.Show( "生成边界失败！" );
+            pictureBox.Invalidate();
         }
 
         void UpdateTexPathList ()
@@ -651,8 +687,6 @@ namespace GameObjEditer
             {
                 ((TreeNodeNode)CurTreeNode).DelTex( CurTexIndex );
                 CurTexIndex--;
-
-
             }
         }
 
@@ -678,34 +712,33 @@ namespace GameObjEditer
 
         #region CheckBorder
 
-        SpriteBorder.BorderMap borderMap;
         Point errorPoint;
-
         bool showError = false;
 
-        void CheckBorder ()
+        bool CheckBorder ()
         {
             if (CurXNATex != null)
             {
-                showError = false;
+                bool success = true; ;
                 try
                 {
-                    Sprite.CheckBorder( CurXNATex );
+                    SpriteBorder.BorderMap borderMap;
+                    Sprite.CheckBorder( CurXNATex, out borderMap );
+                    ((TreeNodeNode)CurTreeNode).SetBorderMap( borderMap );
                 }
                 catch (BorderBulidException e)
                 {
-                    borderMap = e.borderMap;
+                    ((TreeNodeNode)CurTreeNode).SetBorderMap( e.borderMap );
+                    success = false;
                     errorPoint = new Point( e.curPoint.X, e.curPoint.Y );
-                    showError = true;
                     pictureBox.TexFocusPos = errorPoint;
                     pictureBox.Invalidate();
                 }
+                showError = !success;
 
-                if (!showError)
-                    MessageBox.Show( "生成边界成功！" );
-                else
-                    MessageBox.Show( "生成边界失败！" );
+                return success;
             }
+            return false;
         }
 
         #endregion
@@ -757,10 +790,16 @@ namespace GameObjEditer
 
         #endregion
 
+        #region PictureBox
+
+        bool editMode = false;
+
         private void pictureBox_Paint ( object sender, PaintEventArgs e )
         {
-            if (showError)
+            if (CurBorderMap != null)
             {
+                SpriteBorder.BorderMap borderMap = CurBorderMap;
+
                 for (int y = -2; y < borderMap.Height - 2; y++)
                 {
                     for (int x = -2; x < borderMap.Width - 2; x++)
@@ -771,9 +810,145 @@ namespace GameObjEditer
                         }
                     }
                 }
-                e.Graphics.FillRectangle( new SolidBrush( System.Drawing.Color.Red ), pictureBox.RectAtPos( errorPoint.X, errorPoint.Y ) );
+                if (showError)
+                    e.Graphics.FillRectangle( new SolidBrush( System.Drawing.Color.Red ), pictureBox.RectAtPos( errorPoint.X, errorPoint.Y ) );
             }
         }
+
+        void InitialPictureBoxContentMenu ()
+        {
+            pictureMenuStrip = new ContextMenuStrip();
+
+            ToolStripMenuItem checkBorder = new ToolStripMenuItem();
+            checkBorder.Name = "提取边界";
+            checkBorder.Text = "提取边界";
+            ToolStripMenuItem alphaMode = new ToolStripMenuItem();
+            alphaMode.Name = "Alpha模式";
+            alphaMode.Text = "切换到Alpha模式";
+            ToolStripMenuItem editMode = new ToolStripMenuItem();
+            editMode.Name = "编辑模式";
+            editMode.Text = "切换到编辑模式";
+            ToolStripMenuItem pen = new ToolStripMenuItem();
+            pen.Name = "画笔";
+            pen.Text = "切换到透明画笔";
+            pen.Visible = false;
+
+            checkBorder.Click += new EventHandler( checkBorder_Click );
+            alphaMode.Click += new EventHandler( alphaMode_Click );
+            editMode.Click += new EventHandler( editMode_Click );
+            pen.Click += new EventHandler( pen_Click );
+
+            pictureMenuStrip.Items.AddRange( new ToolStripItem[] { checkBorder, alphaMode, pen, editMode } );
+            pictureBox.ContextMenuStrip = pictureMenuStrip;
+        }
+
+        bool blackPen = true;
+
+        void pen_Click ( object sender, EventArgs e )
+        {
+            blackPen = !blackPen;
+            if (blackPen)
+            {
+                pictureMenuStrip.Items["画笔"].Text = "切换到透明画笔";
+            }
+            else
+            {
+                pictureMenuStrip.Items["画笔"].Text = "切换到黑色画笔";
+            }
+        }
+
+        void UpdatePictureMenuStrip ()
+        {
+            if (CurBitMap == null)
+            {
+                pictureMenuStrip.Items["提取边界"].Enabled = false;
+                pictureMenuStrip.Items["Alpha模式"].Enabled = false;
+                pictureMenuStrip.Items["编辑模式"].Enabled = false;
+
+                editMode = false;
+                pictureMenuStrip.Items["画笔"].Visible = false;
+                pictureMenuStrip.Items["编辑模式"].Text = "切换到编辑模式";
+            }
+            else
+            {
+                pictureMenuStrip.Items["提取边界"].Enabled = true;
+                pictureMenuStrip.Items["Alpha模式"].Enabled = true;
+                pictureMenuStrip.Items["编辑模式"].Enabled = true;
+            }
+        }
+
+        void checkBorder_Click ( object sender, EventArgs e )
+        {
+            if (CheckBorder())
+                MessageBox.Show( "生成边界成功！" );
+            else
+                MessageBox.Show( "生成边界失败！" );
+            pictureBox.Invalidate();
+        }
+
+        void alphaMode_Click ( object sender, EventArgs e )
+        {
+            pictureBox.AlphaMode = !pictureBox.AlphaMode;
+            if (pictureBox.AlphaMode)
+            {
+                pictureMenuStrip.Items["Alpha模式"].Text = "取消Alpha模式";
+            }
+            else
+            {
+                pictureMenuStrip.Items["Alpha模式"].Text = "切换到Alpha模式";
+            }
+            pictureBox.Invalidate();
+        }
+
+        void editMode_Click ( object sender, EventArgs e )
+        {
+            editMode = !editMode;
+
+            if (editMode)
+            {
+                pictureMenuStrip.Items["画笔"].Visible = true;
+                pictureMenuStrip.Items["编辑模式"].Text = "取消编辑模式";
+            }
+            else
+            {
+                pictureMenuStrip.Items["画笔"].Visible = false;
+                pictureMenuStrip.Items["编辑模式"].Text = "切换到编辑模式";
+            }
+        }
+
+        private void pictureBox_MouseClick ( object sender, MouseEventArgs e )
+        {
+            if (editMode && !pictureBox.Controlling)
+            {
+                PointF TexPos = pictureBox.TexPos( e.X, e.Y );
+                if (e.Button == MouseButtons.Left)
+                {
+                    if (blackPen)
+                        SetAlpha( (int)TexPos.X, (int)TexPos.Y, 255 );
+                    else
+                        SetAlpha( (int)TexPos.X, (int)TexPos.Y, 0 );
+                }
+            }
+        }
+
+        void SetAlpha ( int x, int y, byte alpha )
+        {
+            if (CurBitMap != null && CurXNATex != null)
+            {
+                System.Drawing.Color preColor = CurBitMap.GetPixel( x, y );
+                CurBitMap.SetPixel( x, y, System.Drawing.Color.FromArgb( alpha, preColor ) );
+
+                Microsoft.Xna.Framework.Graphics.Color[] data = new Microsoft.Xna.Framework.Graphics.Color[CurXNATex.Width * CurXNATex.Height];
+                CurXNATex.GetData<Microsoft.Xna.Framework.Graphics.Color>( data );
+                Microsoft.Xna.Framework.Graphics.Color preXNAColor = data[y * CurXNATex.Width + x];
+                data[y * CurXNATex.Width + x] = new Microsoft.Xna.Framework.Graphics.Color( preXNAColor.R, preXNAColor.G, preXNAColor.B, alpha );
+                CurXNATex.SetData<Microsoft.Xna.Framework.Graphics.Color>( data );
+                pictureBox.Invalidate();
+            }
+        }
+
+        #endregion
+
 
     }
 }

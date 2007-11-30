@@ -130,14 +130,14 @@
             // importToolStripMenuItem
             // 
             this.importToolStripMenuItem.Name = "importToolStripMenuItem";
-            this.importToolStripMenuItem.Size = new System.Drawing.Size( 152, 22 );
+            this.importToolStripMenuItem.Size = new System.Drawing.Size( 122, 22 );
             this.importToolStripMenuItem.Text = "导入";
             this.importToolStripMenuItem.Click += new System.EventHandler( this.ImportToolStripMenuItem_Click );
             // 
             // borderToolStripMenuItem
             // 
             this.borderToolStripMenuItem.Name = "borderToolStripMenuItem";
-            this.borderToolStripMenuItem.Size = new System.Drawing.Size( 152, 22 );
+            this.borderToolStripMenuItem.Size = new System.Drawing.Size( 122, 22 );
             this.borderToolStripMenuItem.Text = "提取边界";
             this.borderToolStripMenuItem.Click += new System.EventHandler( this.BorderToolStripMenuItem_Click );
             // 
@@ -342,11 +342,17 @@
             this.pictureBox.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.pictureBox.Dock = System.Windows.Forms.DockStyle.Fill;
             this.pictureBox.Location = new System.Drawing.Point( 0, 0 );
+            this.pictureBox.MoveFactor = 1F;
             this.pictureBox.Name = "pictureBox";
+            this.pictureBox.Scale = 0F;
             this.pictureBox.Size = new System.Drawing.Size( 522, 486 );
             this.pictureBox.TabIndex = 0;
             this.pictureBox.TabStop = false;
+            this.pictureBox.TexFocusPos = ((System.Drawing.PointF)(resources.GetObject( "pictureBox.TexFocusPos" )));
+            this.pictureBox.ZoomFactor = 1F;
+            this.pictureBox.ZoomWheelFactor = 1F;
             this.pictureBox.Paint += new System.Windows.Forms.PaintEventHandler( this.pictureBox_Paint );
+            this.pictureBox.MouseClick += new System.Windows.Forms.MouseEventHandler( this.pictureBox_MouseClick );
             // 
             // toolStrip
             // 
