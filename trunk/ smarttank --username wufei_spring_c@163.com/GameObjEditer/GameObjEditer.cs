@@ -78,6 +78,8 @@ namespace GameObjEditer
             List<Bitmap> bitmaps;
 
             int curTexIndex = -1;
+            int curVisiPointIndex = -1;
+            int curStructPointIndex = -1;
 
             public TreeNodeNode ( string text )
                 : base( text )
@@ -106,10 +108,32 @@ namespace GameObjEditer
                 }
             }
 
+            public List<Microsoft.Xna.Framework.Vector2> VisiPoints
+            {
+                get { return dateNode.visiKeyPoint; }
+            }
+
+            public List<Microsoft.Xna.Framework.Vector2> StructPoints
+            {
+                get { return dateNode.structKeyPoint; }
+            }
+
             public int CurTexIndex
             {
                 get { return curTexIndex; }
                 set { curTexIndex = value; }
+            }
+
+            public int CurVisiPointIndex
+            {
+                get { return curVisiPointIndex; }
+                set { curVisiPointIndex = value; }
+            }
+
+            public int CurStructPointIndex
+            {
+                get { return curStructPointIndex; }
+                set { curStructPointIndex = value; }
             }
 
             public Texture2D CurXNATex
@@ -182,6 +206,7 @@ namespace GameObjEditer
                 texNames.RemoveAt( index );
                 borderMaps.RemoveAt( index );
                 dateNode.texPaths.RemoveAt( index );
+                curTexIndex--;
             }
 
             public void SetBorderMap ( SpriteBorder.BorderMap borderMap )
@@ -209,6 +234,8 @@ namespace GameObjEditer
                 string tempPath = dateNode.texPaths[index];
                 dateNode.texPaths[index] = dateNode.texPaths[index - 1];
                 dateNode.texPaths[index - 1] = tempPath;
+
+                curTexIndex--;
             }
 
             public void downTex ( int index )
@@ -231,6 +258,90 @@ namespace GameObjEditer
                 string tempPath = dateNode.texPaths[index];
                 dateNode.texPaths[index] = dateNode.texPaths[index + 1];
                 dateNode.texPaths[index + 1] = tempPath;
+
+                curTexIndex++;
+            }
+
+            public void AddVisiPoint ( float x, float y )
+            {
+                dateNode.visiKeyPoint.Add( new Microsoft.Xna.Framework.Vector2( x, y ) );
+
+                curVisiPointIndex = dateNode.visiKeyPoint.Count - 1;
+            }
+
+            public void DelVisiPoint ()
+            {
+                if (curVisiPointIndex < 0 || curVisiPointIndex >= dateNode.visiKeyPoint.Count)
+                    return;
+
+                dateNode.visiKeyPoint.RemoveAt( curVisiPointIndex );
+
+                curVisiPointIndex--;
+            }
+
+            public void UpVisiPoint ()
+            {
+                if (curVisiPointIndex <= 0 || curVisiPointIndex >= dateNode.visiKeyPoint.Count)
+                    return;
+
+                Microsoft.Xna.Framework.Vector2 temp = dateNode.visiKeyPoint[curVisiPointIndex];
+                dateNode.visiKeyPoint[curVisiPointIndex] = dateNode.visiKeyPoint[curVisiPointIndex - 1];
+                dateNode.visiKeyPoint[curVisiPointIndex - 1] = temp;
+
+                curVisiPointIndex--;
+            }
+
+            public void DownVisiPoint ()
+            {
+                if (curVisiPointIndex < 0 || curVisiPointIndex >= dateNode.visiKeyPoint.Count - 1)
+                    return;
+
+                Microsoft.Xna.Framework.Vector2 temp = dateNode.visiKeyPoint[curVisiPointIndex];
+                dateNode.visiKeyPoint[curVisiPointIndex] = dateNode.visiKeyPoint[curVisiPointIndex + 1];
+                dateNode.visiKeyPoint[curVisiPointIndex + 1] = temp;
+
+                curVisiPointIndex++;
+            }
+
+            public void AddStructPoint ( float x, float y )
+            {
+                dateNode.structKeyPoint.Add( new Microsoft.Xna.Framework.Vector2( x, y ) );
+
+                curStructPointIndex = dateNode.structKeyPoint.Count - 1;
+            }
+
+            public void DelStructiPoint ()
+            {
+                if (curStructPointIndex < 0 || curStructPointIndex >= dateNode.structKeyPoint.Count)
+                    return;
+
+                dateNode.structKeyPoint.RemoveAt( curStructPointIndex );
+
+                curStructPointIndex--;
+            }
+
+            public void UpStructPoint ()
+            {
+                if (curStructPointIndex <= 0 || curStructPointIndex >= dateNode.structKeyPoint.Count)
+                    return;
+
+                Microsoft.Xna.Framework.Vector2 temp = dateNode.structKeyPoint[curStructPointIndex];
+                dateNode.structKeyPoint[curStructPointIndex] = dateNode.structKeyPoint[curStructPointIndex - 1];
+                dateNode.structKeyPoint[curStructPointIndex - 1] = temp;
+
+                curStructPointIndex--;
+            }
+
+            public void DownStructPoint ()
+            {
+                if (curStructPointIndex < 0 || curStructPointIndex >= dateNode.structKeyPoint.Count - 1)
+                    return;
+
+                Microsoft.Xna.Framework.Vector2 temp = dateNode.structKeyPoint[curStructPointIndex];
+                dateNode.structKeyPoint[curStructPointIndex] = dateNode.structKeyPoint[curStructPointIndex + 1];
+                dateNode.structKeyPoint[curStructPointIndex + 1] = temp;
+
+                curStructPointIndex++;
             }
 
             #region IEnumerable<TreeNodeEnum> 成员
@@ -270,6 +381,7 @@ namespace GameObjEditer
         ContextMenuStrip treeMenuStrip;
         ContextMenuStrip texListMenuStrip;
         ContextMenuStrip pictureMenuStrip;
+        ContextMenuStrip pointMenuStrip;
 
         TreeNode CurTreeNode
         {
@@ -330,16 +442,52 @@ namespace GameObjEditer
             }
         }
 
+        enum TabState
+        {
+            Texture,
+            VisiPoint,
+            StructPoint,
+        }
+
+        TabState CurTabState
+        {
+            get
+            {
+                if (tabControl1.SelectedTab == texTab)
+                {
+                    return TabState.Texture;
+                }
+                else if (tabControl1.SelectedTab == visiPointTab)
+                {
+                    return TabState.VisiPoint;
+                }
+                else
+                {
+                    return TabState.StructPoint;
+                }
+            }
+        }
+
+
+        Bitmap visiPointMap;
+        Bitmap structPointMap;
+
         #endregion
 
         public GameObjEditer ()
         {
+            visiPointMap = new Bitmap( "Content\\pointBlue.png" );
+            structPointMap = new Bitmap( "Content\\pointRed.png" );
+
             InitializeComponent();
             InitialTreeViewContentMenu();
             InitialTexContentMenu();
             InitialGraphicsDevice();
             InitialTexContentMenu();
             InitialPictureBoxContentMenu();
+            InitialPointContentMenu();
+            pictureBox.LastPaint += new PaintEventHandler( pictureBox_LastPaint );
+
         }
 
         private void InitialGraphicsDevice ()
@@ -371,17 +519,14 @@ namespace GameObjEditer
             UpdateMenu();
             UpdatePictureBox();
             UpdatePictureMenuStrip();
+            UpdateVisiList();
+            UpdateStructList();
+            UpdatePointContentMenu();
         }
 
-        private void UpdatePictureBox ()
+        private void tabControl1_SelectedIndexChanged ( object sender, EventArgs e )
         {
-            if (CurBitMap != null)
-                pictureBox.LoadPicture( CurBitMap );
-
-            if (CurTexIndex == -1)
-                pictureBox.ClearPicture();
-
-            pictureBox.Invalidate();
+            UpdateComponent();
         }
 
         #region TreeViewContentMenu
@@ -686,7 +831,6 @@ namespace GameObjEditer
             if (CurTexIndex != -1 && CurTreeNode is TreeNodeNode)
             {
                 ((TreeNodeNode)CurTreeNode).DelTex( CurTexIndex );
-                CurTexIndex--;
             }
         }
 
@@ -695,7 +839,6 @@ namespace GameObjEditer
             if (CurTexIndex > 0 && CurTreeNode is TreeNodeNode)
             {
                 ((TreeNodeNode)CurTreeNode).UpTex( CurTexIndex );
-                CurTexIndex--;
             }
         }
 
@@ -704,7 +847,6 @@ namespace GameObjEditer
             if (CurTexIndex >= 0 && CurTreeNode is TreeNodeNode)
             {
                 ((TreeNodeNode)CurTreeNode).downTex( CurTexIndex );
-                CurTexIndex++;
             }
         }
 
@@ -739,6 +881,192 @@ namespace GameObjEditer
                 return success;
             }
             return false;
+        }
+
+        #endregion
+
+        #region PointContentMenu
+
+        void InitialPointContentMenu ()
+        {
+            pointMenuStrip = new ContextMenuStrip();
+
+            ToolStripMenuItem delPoint = new ToolStripMenuItem();
+            delPoint.Name = "删除关键点";
+            delPoint.Text = "删除关键点";
+            ToolStripMenuItem upPoint = new ToolStripMenuItem();
+            upPoint.Name = "上升";
+            upPoint.Text = "上升";
+            ToolStripMenuItem downPoint = new ToolStripMenuItem();
+            downPoint.Name = "下降";
+            downPoint.Text = "下降";
+
+            delPoint.Click += new EventHandler( delPoint_Click );
+            upPoint.Click += new EventHandler( upPoint_Click );
+            downPoint.Click += new EventHandler( downPoint_Click );
+
+            pointMenuStrip.Items.AddRange( new ToolStripItem[] { delPoint, upPoint, downPoint } );
+
+            listViewVisi.ContextMenuStrip = pointMenuStrip;
+            listViewStruct.ContextMenuStrip = pointMenuStrip;
+        }
+
+        void UpdatePointContentMenu ()
+        {
+            pointMenuStrip.Items["删除关键点"].Enabled = true;
+            pointMenuStrip.Items["上升"].Enabled = true;
+            pointMenuStrip.Items["下降"].Enabled = true;
+
+            if (CurTreeNode == null)
+            {
+                pointMenuStrip.Items["删除关键点"].Enabled = false;
+                pointMenuStrip.Items["上升"].Enabled = false;
+                pointMenuStrip.Items["下降"].Enabled = false;
+            }
+            else
+            {
+                if (CurTabState == TabState.VisiPoint)
+                {
+                    int index = ((TreeNodeNode)CurTreeNode).CurVisiPointIndex;
+                    int count = ((TreeNodeNode)CurTreeNode).VisiPoints.Count;
+                    if (index < 0 || index >= count)
+                    {
+                        pointMenuStrip.Items["删除关键点"].Enabled = false;
+                        pointMenuStrip.Items["上升"].Enabled = false;
+                        pointMenuStrip.Items["下降"].Enabled = false;
+                    }
+
+                    if (index <= 0)
+                    {
+                        pointMenuStrip.Items["上升"].Enabled = false;
+                    }
+                    if (index >= count - 1)
+                    {
+                        pointMenuStrip.Items["下降"].Enabled = false;
+                    }
+
+                }
+                else if (CurTabState == TabState.StructPoint)
+                {
+                    int index = ((TreeNodeNode)CurTreeNode).CurStructPointIndex;
+                    int count = ((TreeNodeNode)CurTreeNode).StructPoints.Count;
+
+                    if (index < 0 || index >= count)
+                    {
+                        pointMenuStrip.Items["删除关键点"].Enabled = false;
+                        pointMenuStrip.Items["上升"].Enabled = false;
+                        pointMenuStrip.Items["下降"].Enabled = false;
+                    }
+
+                    if (index <= 0)
+                    {
+                        pointMenuStrip.Items["上升"].Enabled = false;
+                    }
+                    if (index >= count - 1)
+                    {
+                        pointMenuStrip.Items["下降"].Enabled = false;
+                    }
+                }
+            }
+        }
+
+        void delPoint_Click ( object sender, EventArgs e )
+        {
+            if (CurTreeNode == null)
+                return;
+
+            if (CurTabState == TabState.VisiPoint)
+            {
+                ((TreeNodeNode)CurTreeNode).DelVisiPoint();
+            }
+            else if (CurTabState == TabState.StructPoint)
+            {
+                ((TreeNodeNode)CurTreeNode).DelStructiPoint();
+            }
+            UpdateComponent();
+        }
+
+        void upPoint_Click ( object sender, EventArgs e )
+        {
+            if (CurTreeNode == null)
+                return;
+
+            if (CurTabState == TabState.VisiPoint)
+            {
+                ((TreeNodeNode)CurTreeNode).UpVisiPoint();
+            }
+            else if (CurTabState == TabState.StructPoint)
+            {
+                ((TreeNodeNode)CurTreeNode).UpStructPoint();
+            }
+            UpdateComponent();
+        }
+
+        void downPoint_Click ( object sender, EventArgs e )
+        {
+            if (CurTreeNode == null)
+                return;
+
+            if (CurTabState == TabState.VisiPoint)
+            {
+                ((TreeNodeNode)CurTreeNode).DownVisiPoint();
+            }
+            else if (CurTabState == TabState.StructPoint)
+            {
+                ((TreeNodeNode)CurTreeNode).DownStructPoint();
+            }
+            UpdateComponent();
+        }
+
+        void UpdateVisiList ()
+        {
+            if (CurTreeNode != null)
+            {
+                listViewVisi.Items.Clear();
+                int i = 0;
+                foreach (Microsoft.Xna.Framework.Vector2 pos in ((TreeNodeNode)CurTreeNode).VisiPoints)
+                {
+                    ListViewItem item = new ListViewItem( i.ToString() );
+                    listViewVisi.Items.Add( item );
+                    item.SubItems.Add( "( " + pos.X + ", " + pos.Y + " )" );
+                    i++;
+                }
+                int selectIndex = ((TreeNodeNode)CurTreeNode).CurVisiPointIndex;
+                if (selectIndex >= 0 && selectIndex < i)
+                    listViewVisi.Items[selectIndex].Selected = true;
+            }
+        }
+
+        void UpdateStructList ()
+        {
+            if (CurTreeNode != null)
+            {
+                listViewStruct.Items.Clear();
+                int i = 0;
+                foreach (Microsoft.Xna.Framework.Vector2 pos in ((TreeNodeNode)CurTreeNode).StructPoints)
+                {
+                    ListViewItem item = new ListViewItem( i.ToString() );
+                    listViewStruct.Items.Add( item );
+                    item.SubItems.Add( "( " + pos.X + ", " + pos.Y + " )" );
+                    i++;
+                }
+
+                int selectIndex = ((TreeNodeNode)CurTreeNode).CurStructPointIndex;
+                if (selectIndex >= 0 && selectIndex < i)
+                    listViewStruct.Items[selectIndex].Selected = true;
+            }
+        }
+
+        private void listViewVisi_MouseClick ( object sender, MouseEventArgs e )
+        {
+            ((TreeNodeNode)CurTreeNode).CurVisiPointIndex = listViewVisi.GetItemAt( e.X, e.Y ).Index;
+            UpdateComponent();
+        }
+
+        private void listViewStruct_MouseClick ( object sender, MouseEventArgs e )
+        {
+            ((TreeNodeNode)CurTreeNode).CurStructPointIndex = listViewStruct.GetItemAt( e.X, e.Y ).Index;
+            UpdateComponent();
         }
 
         #endregion
@@ -794,6 +1122,17 @@ namespace GameObjEditer
 
         bool editMode = false;
 
+        private void UpdatePictureBox ()
+        {
+            if (CurBitMap != null && pictureBox.CurBitMap != CurBitMap)
+                pictureBox.LoadPicture( CurBitMap );
+
+            if (CurTexIndex == -1)
+                pictureBox.ClearPicture();
+
+            pictureBox.Invalidate();
+        }
+
         private void pictureBox_Paint ( object sender, PaintEventArgs e )
         {
             if (CurBorderMap != null)
@@ -812,6 +1151,39 @@ namespace GameObjEditer
                 }
                 if (showError)
                     e.Graphics.FillRectangle( new SolidBrush( System.Drawing.Color.Red ), pictureBox.RectAtPos( errorPoint.X, errorPoint.Y ) );
+            }
+        }
+
+        void pictureBox_LastPaint ( object sender, PaintEventArgs e )
+        {
+            List<Microsoft.Xna.Framework.Vector2> visiPoints = ((TreeNodeNode)CurTreeNode).VisiPoints;
+            PointF[] visiPos = new PointF[visiPoints.Count];
+            for (int i = 0; i < visiPos.Length; i++)
+            {
+                visiPos[i] = pictureBox.ScrnPos( visiPoints[i].X, visiPoints[i].Y );
+            }
+
+            List<Microsoft.Xna.Framework.Vector2> structPoints = ((TreeNodeNode)CurTreeNode).StructPoints;
+            PointF[] structPos = new PointF[structPoints.Count];
+            for (int i = 0; i < structPos.Length; i++)
+            {
+                structPos[i] = pictureBox.ScrnPos( structPoints[i].X, structPoints[i].Y );
+            }
+
+            if (visiPos.Length > 0)
+            {
+                foreach (PointF point in visiPos)
+                {
+                    e.Graphics.DrawImage( visiPointMap, new PointF( point.X - 20, point.Y - 20 ) );
+                }
+            }
+
+            if (structPos.Length > 0)
+            {
+                foreach (PointF point in structPos)
+                {
+                    e.Graphics.DrawImage( structPointMap, new PointF( point.X - 20, point.Y - 20 ) );
+                }
             }
         }
 
@@ -842,38 +1214,66 @@ namespace GameObjEditer
             pictureBox.ContextMenuStrip = pictureMenuStrip;
         }
 
-        bool blackPen = true;
+        PenKind penKind = PenKind.black;
+        enum PenKind
+        {
+            trans,
+            half,
+            black,
+        }
 
         void pen_Click ( object sender, EventArgs e )
         {
-            blackPen = !blackPen;
-            if (blackPen)
+            penKind = (PenKind)((((int)penKind) + 1) % 3);
+            if (penKind == PenKind.trans)
             {
-                pictureMenuStrip.Items["画笔"].Text = "切换到透明画笔";
+                pictureMenuStrip.Items["画笔"].Text = "切换到半透明画笔";
             }
-            else
+            else if (penKind == PenKind.half)
             {
                 pictureMenuStrip.Items["画笔"].Text = "切换到黑色画笔";
+            }
+            else if (penKind == PenKind.black)
+            {
+                pictureMenuStrip.Items["画笔"].Text = "切换到透明画笔";
             }
         }
 
         void UpdatePictureMenuStrip ()
         {
+
             if (CurBitMap == null)
             {
+                pictureMenuStrip.Items["编辑模式"].Enabled = false;
                 pictureMenuStrip.Items["提取边界"].Enabled = false;
                 pictureMenuStrip.Items["Alpha模式"].Enabled = false;
-                pictureMenuStrip.Items["编辑模式"].Enabled = false;
-
-                editMode = false;
                 pictureMenuStrip.Items["画笔"].Visible = false;
                 pictureMenuStrip.Items["编辑模式"].Text = "切换到编辑模式";
+                editMode = false;
             }
             else
             {
                 pictureMenuStrip.Items["提取边界"].Enabled = true;
                 pictureMenuStrip.Items["Alpha模式"].Enabled = true;
                 pictureMenuStrip.Items["编辑模式"].Enabled = true;
+            }
+
+            if (CurTabState == TabState.Texture)
+            {
+                pictureMenuStrip.Items["提取边界"].Visible = true;
+                pictureMenuStrip.Items["Alpha模式"].Visible = true;
+            }
+            else if (CurTabState == TabState.VisiPoint)
+            {
+                pictureMenuStrip.Items["提取边界"].Visible = false;
+                pictureMenuStrip.Items["Alpha模式"].Visible = false;
+                pictureMenuStrip.Items["画笔"].Visible = false;
+            }
+            else if (CurTabState == TabState.StructPoint)
+            {
+                pictureMenuStrip.Items["提取边界"].Visible = false;
+                pictureMenuStrip.Items["Alpha模式"].Visible = false;
+                pictureMenuStrip.Items["画笔"].Visible = false;
             }
         }
 
@@ -906,7 +1306,10 @@ namespace GameObjEditer
 
             if (editMode)
             {
-                pictureMenuStrip.Items["画笔"].Visible = true;
+                if (CurTabState == TabState.Texture)
+                {
+                    pictureMenuStrip.Items["画笔"].Visible = true;
+                }
                 pictureMenuStrip.Items["编辑模式"].Text = "取消编辑模式";
             }
             else
@@ -920,20 +1323,54 @@ namespace GameObjEditer
         {
             if (editMode && !pictureBox.Controlling)
             {
-                PointF TexPos = pictureBox.TexPos( e.X, e.Y );
-                if (e.Button == MouseButtons.Left)
+                PointF texPos = pictureBox.TexPos( e.X, e.Y );
+                if (CurTabState == TabState.Texture)
                 {
-                    if (blackPen)
-                        SetAlpha( (int)TexPos.X, (int)TexPos.Y, 255 );
-                    else
-                        SetAlpha( (int)TexPos.X, (int)TexPos.Y, 0 );
+                    if (e.Button == MouseButtons.Left)
+                    {
+                        if (penKind == PenKind.black)
+                            SetAlpha( (int)texPos.X, (int)texPos.Y, 255 );
+                        else if (penKind == PenKind.trans)
+                            SetAlpha( (int)texPos.X, (int)texPos.Y, 0 );
+                        else if (penKind == PenKind.half)
+                            SetAlpha( (int)texPos.X, (int)texPos.Y, SpriteBorder.minBlockAlpha );
+                    }
                 }
             }
         }
 
+        private void pictureBox_MouseDoubleClick ( object sender, MouseEventArgs e )
+        {
+            if (editMode && !pictureBox.Controlling)
+            {
+                PointF texPos = pictureBox.TexPos( e.X, e.Y );
+
+                if (CurTabState == TabState.VisiPoint)
+                {
+                    if (e.Button == MouseButtons.Left)
+                    {
+                        ((TreeNodeNode)CurTreeNode).AddVisiPoint( texPos.X, texPos.Y );
+                    }
+                }
+                else if (CurTabState == TabState.StructPoint)
+                {
+                    if (e.Button == MouseButtons.Left)
+                    {
+                        ((TreeNodeNode)CurTreeNode).AddStructPoint( texPos.X, texPos.Y );
+                    }
+                }
+            }
+            pictureBox.Invalidate();
+            UpdateVisiList();
+            UpdateStructList();
+        }
+
+
         void SetAlpha ( int x, int y, byte alpha )
         {
-            if (CurBitMap != null && CurXNATex != null)
+            if (CurBitMap != null && CurXNATex != null &&
+                x >= 0 && x < CurBitMap.Width &&
+                y >= 0 && y < CurBitMap.Height)
             {
                 System.Drawing.Color preColor = CurBitMap.GetPixel( x, y );
                 CurBitMap.SetPixel( x, y, System.Drawing.Color.FromArgb( alpha, preColor ) );
@@ -948,7 +1385,6 @@ namespace GameObjEditer
         }
 
         #endregion
-
 
     }
 }

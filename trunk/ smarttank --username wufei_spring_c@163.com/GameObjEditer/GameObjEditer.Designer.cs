@@ -100,21 +100,21 @@
             // openToolStripMenuItem
             // 
             this.openToolStripMenuItem.Name = "openToolStripMenuItem";
-            this.openToolStripMenuItem.Size = new System.Drawing.Size( 98, 22 );
+            this.openToolStripMenuItem.Size = new System.Drawing.Size( 152, 22 );
             this.openToolStripMenuItem.Text = "打开";
             this.openToolStripMenuItem.Click += new System.EventHandler( this.OpenToolStripMenuItem_Click );
             // 
             // saveToolStripMenuItem
             // 
             this.saveToolStripMenuItem.Name = "saveToolStripMenuItem";
-            this.saveToolStripMenuItem.Size = new System.Drawing.Size( 98, 22 );
+            this.saveToolStripMenuItem.Size = new System.Drawing.Size( 152, 22 );
             this.saveToolStripMenuItem.Text = "保存";
             this.saveToolStripMenuItem.Click += new System.EventHandler( this.SaveToolStripMenuItem_Click );
             // 
             // exitToolStripMenuItem
             // 
             this.exitToolStripMenuItem.Name = "exitToolStripMenuItem";
-            this.exitToolStripMenuItem.Size = new System.Drawing.Size( 98, 22 );
+            this.exitToolStripMenuItem.Size = new System.Drawing.Size( 152, 22 );
             this.exitToolStripMenuItem.Text = "退出";
             this.exitToolStripMenuItem.Click += new System.EventHandler( this.ExitToolStripMenuItem_Click );
             // 
@@ -130,14 +130,14 @@
             // importToolStripMenuItem
             // 
             this.importToolStripMenuItem.Name = "importToolStripMenuItem";
-            this.importToolStripMenuItem.Size = new System.Drawing.Size( 122, 22 );
+            this.importToolStripMenuItem.Size = new System.Drawing.Size( 152, 22 );
             this.importToolStripMenuItem.Text = "导入";
             this.importToolStripMenuItem.Click += new System.EventHandler( this.ImportToolStripMenuItem_Click );
             // 
             // borderToolStripMenuItem
             // 
             this.borderToolStripMenuItem.Name = "borderToolStripMenuItem";
-            this.borderToolStripMenuItem.Size = new System.Drawing.Size( 122, 22 );
+            this.borderToolStripMenuItem.Size = new System.Drawing.Size( 152, 22 );
             this.borderToolStripMenuItem.Text = "提取边界";
             this.borderToolStripMenuItem.Click += new System.EventHandler( this.BorderToolStripMenuItem_Click );
             // 
@@ -232,6 +232,7 @@
             this.tabControl1.SelectedIndex = 0;
             this.tabControl1.Size = new System.Drawing.Size( 236, 263 );
             this.tabControl1.TabIndex = 0;
+            this.tabControl1.SelectedIndexChanged += new System.EventHandler( this.tabControl1_SelectedIndexChanged );
             // 
             // texTab
             // 
@@ -285,16 +286,21 @@
             // 
             // listViewVisi
             // 
+            this.listViewVisi.Activation = System.Windows.Forms.ItemActivation.OneClick;
             this.listViewVisi.Columns.AddRange( new System.Windows.Forms.ColumnHeader[] {
             this.visiIndex,
             this.visiPos} );
             this.listViewVisi.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.listViewVisi.FullRowSelect = true;
+            this.listViewVisi.HideSelection = false;
             this.listViewVisi.Location = new System.Drawing.Point( 3, 3 );
+            this.listViewVisi.MultiSelect = false;
             this.listViewVisi.Name = "listViewVisi";
             this.listViewVisi.Size = new System.Drawing.Size( 222, 232 );
             this.listViewVisi.TabIndex = 0;
             this.listViewVisi.UseCompatibleStateImageBehavior = false;
             this.listViewVisi.View = System.Windows.Forms.View.Details;
+            this.listViewVisi.MouseClick += new System.Windows.Forms.MouseEventHandler( this.listViewVisi_MouseClick );
             // 
             // visiIndex
             // 
@@ -303,6 +309,7 @@
             // visiPos
             // 
             this.visiPos.Text = "坐标";
+            this.visiPos.Width = 147;
             // 
             // structPointTab
             // 
@@ -317,16 +324,21 @@
             // 
             // listViewStruct
             // 
+            this.listViewStruct.Activation = System.Windows.Forms.ItemActivation.OneClick;
             this.listViewStruct.Columns.AddRange( new System.Windows.Forms.ColumnHeader[] {
             this.structIndex,
             this.structPos} );
             this.listViewStruct.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.listViewStruct.FullRowSelect = true;
+            this.listViewStruct.HideSelection = false;
             this.listViewStruct.Location = new System.Drawing.Point( 3, 3 );
+            this.listViewStruct.MultiSelect = false;
             this.listViewStruct.Name = "listViewStruct";
             this.listViewStruct.Size = new System.Drawing.Size( 222, 232 );
             this.listViewStruct.TabIndex = 0;
             this.listViewStruct.UseCompatibleStateImageBehavior = false;
             this.listViewStruct.View = System.Windows.Forms.View.Details;
+            this.listViewStruct.MouseClick += new System.Windows.Forms.MouseEventHandler( this.listViewStruct_MouseClick );
             // 
             // structIndex
             // 
@@ -335,9 +347,11 @@
             // structPos
             // 
             this.structPos.Text = "坐标";
+            this.structPos.Width = 145;
             // 
             // pictureBox
             // 
+            this.pictureBox.AlphaMode = false;
             this.pictureBox.BackgroundImage = ((System.Drawing.Image)(resources.GetObject( "pictureBox.BackgroundImage" )));
             this.pictureBox.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.pictureBox.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -352,6 +366,7 @@
             this.pictureBox.ZoomFactor = 1F;
             this.pictureBox.ZoomWheelFactor = 1F;
             this.pictureBox.Paint += new System.Windows.Forms.PaintEventHandler( this.pictureBox_Paint );
+            this.pictureBox.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler( this.pictureBox_MouseDoubleClick );
             this.pictureBox.MouseClick += new System.Windows.Forms.MouseEventHandler( this.pictureBox_MouseClick );
             // 
             // toolStrip

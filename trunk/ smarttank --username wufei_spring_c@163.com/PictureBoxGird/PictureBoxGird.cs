@@ -13,10 +13,11 @@ namespace PictureBoxGird
         #region Variables
 
         Bitmap bitmap;
-        //Bitmap alphaMap;
 
         float scale;
         PointF texFocusPos;
+
+        public event PaintEventHandler LastPaint;
 
         #endregion
 
@@ -82,6 +83,11 @@ namespace PictureBoxGird
             this.bitmap = null;
         }
 
+        public Bitmap CurBitMap
+        {
+            get { return bitmap; }
+        }
+
         #endregion
 
         #region Coordin
@@ -94,6 +100,12 @@ namespace PictureBoxGird
         }
 
         public PointF ScrnPos ( int x, int y )
+        {
+            PointF scrnCenter = ScrnCenter;
+            return new PointF( (x - texFocusPos.X) * scale + scrnCenter.X, (y - texFocusPos.Y) * scale + scrnCenter.Y );
+        }
+
+        public PointF ScrnPos ( float x, float y )
         {
             PointF scrnCenter = ScrnCenter;
             return new PointF( (x - texFocusPos.X) * scale + scrnCenter.X, (y - texFocusPos.Y) * scale + scrnCenter.Y );
@@ -131,6 +143,8 @@ namespace PictureBoxGird
                 DrawBitMap( pe.Graphics );
                 DrawGrid( pe.Graphics );
             }
+            if (LastPaint != null)
+                LastPaint( this, pe );
         }
 
         private void DrawBitMap ( Graphics graphics )
