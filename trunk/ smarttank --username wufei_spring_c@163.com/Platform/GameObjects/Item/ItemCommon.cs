@@ -7,6 +7,7 @@ using GameBase.Graphics;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Platform.Senses.Vision;
+using System.IO;
 
 namespace Platform.GameObjects.Item
 {
@@ -58,7 +59,7 @@ namespace Platform.GameObjects.Item
             Vector2 pos, float azi, Vector2 vel, float rotaVel )
         {
             objInfo = new GameObjInfo( name, script );
-            sprite = new Sprite( true, texPath, true );
+            sprite = new Sprite( false, texPath, true );
             sprite.SetParameters( texOrigin, pos, scale, azi, Color.White, LayerDepth.GroundObj, SpriteBlendMode.AlphaBlend );
             sprite.UpdateTransformBounding();
             this.keyPoints = keyPoints;
@@ -67,6 +68,15 @@ namespace Platform.GameObjects.Item
             phiUpdater.OnCollied += new OnCollidedEventHandler( phiUpdater_OnCollied );
             phiUpdater.OnOverlap += new OnCollidedEventHandler( phiUpdater_OnOverlap );
         }
+
+        public ItemCommon ( string name, string script, string dataPath, GameObjData data, float scale, Vector2 pos, float azi, Vector2 vel, float rotaVel )
+            : this( name, script, Path.Combine( dataPath, data.baseNode.texPaths[0] ),
+            data.baseNode.structKeyPoints[0], scale, data.baseNode.visiKeyPoints.ToArray(),
+            pos, azi, vel, rotaVel )
+        {
+
+        }
+
 
         void phiUpdater_OnOverlap ( IGameObj sender, CollisionResult result, GameObjInfo objB )
         {

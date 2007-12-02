@@ -449,6 +449,17 @@ namespace InterRules.Duel
 
             BasicGraphics.DrawRectangle( mapSize, 3, Color.Red, 0f );
             BasicGraphics.DrawRectangleInScrn( scrnViewRect, 3, Color.Green, 0f );
+
+            //foreach (Vector2 visiPoint in tank1.KeyPoints)
+            //{
+            //    BasicGraphics.DrawPoint( Vector2.Transform( visiPoint, tank1.TransMatrix ), 0.4f, Color.Blue, 0f );
+            //}
+
+            //foreach (Vector2 visiPoint in tank2.KeyPoints)
+            //{
+            //    BasicGraphics.DrawPoint( Vector2.Transform( visiPoint, tank2.TransMatrix ), 0.4f, Color.Blue, 0f );
+            //}
+
         }
 
         #endregion
@@ -480,9 +491,9 @@ namespace InterRules.Duel
         public DuelTank ( TankSkinSinTurData skinData, Vector2 pos, float Azi, string tankName,
             float tankRaderLength, float tankMaxForwardSpd, float tankMaxBackwardSpd,
             float live )
-            : base( new GameObjInfo( "DuelTank", tankName ), new TankSkinSinTur( skinData ),
-                tankRaderLength, MathHelper.Pi * 0.15f, Color.Yellow,
-                tankMaxForwardSpd, tankMaxBackwardSpd, MathHelper.PiOver4, MathHelper.PiOver4, MathHelper.Pi, 0.8f, pos, Azi )
+            : base( new GameObjInfo( "DuelTank", tankName ) , new TankSkinSinTur( skinData ) ,
+                tankRaderLength, MathHelper .Pi * 0.15f , Color.Yellow ,
+                tankMaxForwardSpd, tankMaxBackwardSpd , MathHelper.PiOver4 , MathHelper .PiOver4 , MathHelper.Pi, 0.8f, pos, Azi )
         {
             this.live = live;
             smoke = new SmokeGenerater( 0, 30, Vector2.Zero, 0.3f, 0, false, this );

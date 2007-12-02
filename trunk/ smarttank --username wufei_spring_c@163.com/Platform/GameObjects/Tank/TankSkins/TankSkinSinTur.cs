@@ -10,7 +10,7 @@ using GameBase;
 
 namespace Platform.GameObjects.Tank.TankSkins
 {
-    public class TankSkinSinTur 
+    public class TankSkinSinTur
     {
         #region Variables
 
@@ -81,7 +81,7 @@ namespace Platform.GameObjects.Tank.TankSkins
 
         #region Constuctions
 
-        public TankSkinSinTur (TankSkinSinTurData data)
+        public TankSkinSinTur ( TankSkinSinTurData data )
         {
             this.data = data;
         }
@@ -95,11 +95,11 @@ namespace Platform.GameObjects.Tank.TankSkins
         private void InitialSprites ( Vector2 pos, float baseRota, float turretRota )
         {
             baseSprite = new Sprite();
-            baseSprite.LoadTextureFromContent( Path.Combine( Directories.TankTexture, data.baseTexPath ), true );
+            baseSprite.LoadTextureFromFile( data.baseTexPath, true );
             baseSprite.SetParameters( data.baseTexOrigin, pos, data.texScale, baseRota, Color.White, LayerDepth.TankBase, SpriteBlendMode.AlphaBlend );
 
             turretSprite = new Sprite();
-            turretSprite.LoadTextureFromContent( Path.Combine( Directories.TankTexture, data.turretTexPath ), true );
+            turretSprite.LoadTextureFromFile( data.turretTexPath, true );
             turretSprite.SetParameters( data.turretTexOrigin, turretLinker.GetTexturePos( pos, baseRota ), data.texScale, turretRota + baseRota, Color.White, LayerDepth.TankTurret, SpriteBlendMode.AlphaBlend );
         }
 
@@ -196,6 +196,9 @@ namespace Platform.GameObjects.Tank.TankSkins
 
         #endregion
 
-
+        public Vector2[] VisiKeyPoints
+        {
+            get { return data.visiKeyPoints; }
+        }
     }
 }

@@ -5,6 +5,8 @@ using Microsoft.Xna.Framework;
 using System.Xml.Serialization;
 using System.IO;
 using GameBase.Helpers;
+using System.Collections;
+using System.Xml;
 
 namespace Platform.GameObjects
 {
@@ -12,8 +14,8 @@ namespace Platform.GameObjects
     {
         public string nodeName;
         public List<string> texPaths;
-        public List<Vector2> visiKeyPoint;
-        public List<Vector2> structKeyPoint;
+        public List<Vector2> visiKeyPoints;
+        public List<Vector2> structKeyPoints;
 
         public GameObjDataNode parent;
         public List<GameObjDataNode> childNodes;
@@ -21,8 +23,8 @@ namespace Platform.GameObjects
         public GameObjDataNode ()
         {
             texPaths = new List<string>();
-            visiKeyPoint = new List<Vector2>();
-            structKeyPoint = new List<Vector2>();
+            visiKeyPoints = new List<Vector2>();
+            structKeyPoints = new List<Vector2>();
             childNodes = new List<GameObjDataNode>();
         }
 
@@ -72,24 +74,136 @@ namespace Platform.GameObjects
         }
 
         #endregion
+
+        public void WriteToXML ( XmlWriter writer )
+        {
+            writer.WriteStartElement( "GameObjDataNode" );
+
+            writer.WriteElementString( "NodeName", nodeName );
+
+            writer.WriteStartElement( "TexPaths" );
+            writer.WriteElementString( "count", texPaths.Count.ToString() );
+            foreach (string texPath in texPaths)
+            {
+                writer.WriteElementString( "string", texPath );
+            }
+            writer.WriteEndElement();
+
+            writer.WriteStartElement( "VisiKeyPoints" );
+            writer.WriteElementString( "count", visiKeyPoints.Count.ToString() );
+            foreach (Vector2 visiPoint in visiKeyPoints)
+            {
+                writer.WriteStartElement( "Vector2" );
+                writer.WriteElementString( "X", visiPoint.X.ToString() );
+                writer.WriteElementString( "Y", visiPoint.Y.ToString() );
+                writer.WriteEndElement();
+            }
+            writer.WriteEndElement();
+
+            writer.WriteStartElement( "StructKeyPoints" );
+            writer.WriteElementString( "count", structKeyPoints.Count.ToString() );
+            foreach (Vector2 structPoint in structKeyPoints)
+            {
+                writer.WriteStartElement( "Vector2" );
+                writer.WriteElementString( "X", structPoint.X.ToString() );
+                writer.WriteElementString( "Y", structPoint.Y.ToString() );
+                writer.WriteEndElement();
+            }
+            writer.WriteEndElement();
+
+            writer.WriteStartElement( "Childs" );
+            writer.WriteElementString( "count", childNodes.Count.ToString() );
+            foreach (GameObjDataNode child in childNodes)
+            {
+                child.WriteToXML( writer );
+            }
+            writer.WriteEndElement();
+
+            writer.WriteEndElement();
+        }
+
+        static public GameObjDataNode ReadFromXML ( XmlReader reader )
+        {
+            GameObjDataNode result = new GameObjDataNode();
+
+            reader.ReadStartElement( "GameObjDataNode" );
+
+            result.nodeName = reader.ReadElementString( "NodeName" );
+
+            reader.ReadStartElement( "TexPaths" );
+            int countTex = int.Parse( reader.ReadElementString( "count" ) );
+            for (int i = 0; i < countTex; i++)
+            {
+                result.texPaths.Add( reader.ReadElementString( "string" ) );
+            }
+            reader.ReadEndElement();
+
+            reader.ReadStartElement( "VisiKeyPoints" );
+            int countVisi = int.Parse( reader.ReadElementString( "count" ) );
+            for (int i = 0; i < countVisi; i++)
+            {
+                reader.ReadStartElement( "Vector2" );
+                float x = float.Parse( reader.ReadElementString( "X" ) );
+                float y = float.Parse( reader.ReadElementString( "Y" ) );
+                reader.ReadEndElement();
+
+                result.visiKeyPoints.Add( new Vector2( x, y ) );
+            }
+            reader.ReadEndElement();
+
+            reader.ReadStartElement( "StructKeyPoints" );
+            int countStruct = int.Parse( reader.ReadElementString( "count" ) );
+            for (int i = 0; i < countStruct; i++)
+            {
+                reader.ReadStartElement( "Vector2" );
+                float x = float.Parse( reader.ReadElementString( "X" ) );
+                float y = float.Parse( reader.ReadElementString( "Y" ) );
+                reader.ReadEndElement();
+
+                result.structKeyPoints.Add( new Vector2( x, y ) );
+            }
+            reader.ReadEndElement();
+
+            reader.ReadStartElement( "Childs" );
+            int countChild = int.Parse( reader.ReadElementString( "count" ) );
+            for (int i = 0; i < countChild; i++)
+            {
+                result.childNodes.Add( GameObjDataNode.ReadFromXML( reader ) );
+            }
+            reader.ReadEndElement();
+
+            reader.ReadEndElement();
+
+            return result;
+        }
     }
 
     public class GameObjData
     {
         #region statics
 
-        static XmlSerializer serializer;
-
         static public void Save ( Stream stream, GameObjData data )
         {
-            if (serializer == null)
-                serializer = new XmlSerializer( typeof( GameObjData ) );
-
             try
             {
-                serializer.Serialize( stream, data );
+                XmlWriterSettings setting = new XmlWriterSettings();
+                setting.Indent = true;
+                XmlWriter writer = XmlWriter.Create( stream, setting );
+
+                writer.WriteStartElement( "GameObjData" );
+                writer.WriteElementString( "Name", data.name );
+                writer.WriteElementString( "Creater", data.creater );
+                writer.WriteElementString( "Year", data.year.ToString() );
+                writer.WriteElementString( "Month", data.month.ToString() );
+                writer.WriteElementString( "Day", data.day.ToString() );
+
+                data.baseNode.WriteToXML( writer );
+
+                writer.WriteEndElement();
+
+                writer.Flush();
             }
-            catch (Exception)
+            catch (Exception e)
             {
                 Log.Write( "Save GameObjData error!" );
             }
@@ -101,14 +215,22 @@ namespace Platform.GameObjects
 
         static public GameObjData Load ( Stream stream )
         {
-            if (serializer == null)
-                serializer = new XmlSerializer( typeof( GameObjData ) );
-
-            GameObjData result = null;
+            GameObjData result = new GameObjData();
 
             try
             {
-                result = (GameObjData)serializer.Deserialize( stream );
+                XmlReader reader = XmlReader.Create( stream );
+
+                reader.ReadStartElement( "GameObjData" );
+                result.name = reader.ReadElementString( "Name" );
+                result.creater = reader.ReadElementString( "Creater" );
+                result.year = int.Parse( reader.ReadElementString( "Year" ) );
+                result.month = int.Parse( reader.ReadElementString( "Month" ) );
+                result.day = int.Parse( reader.ReadElementString( "Day" ) );
+
+                result.baseNode = GameObjDataNode.ReadFromXML( reader );
+
+                reader.ReadEndElement();
             }
             catch (Exception)
             {
@@ -155,7 +277,7 @@ namespace Platform.GameObjects
         public GameObjData ( string objName )
         {
             this.name = objName;
-            this.baseNode = new GameObjDataNode( "Base", null );
+            //this.baseNode = new GameObjDataNode( "Base", null );
         }
     }
 }

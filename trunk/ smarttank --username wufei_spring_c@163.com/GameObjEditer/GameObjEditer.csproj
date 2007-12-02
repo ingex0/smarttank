@@ -69,6 +69,14 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="EnterYourName.cs">
+      <SubType>Form</SubType>
+      <XNAUseContentPipeline>false</XNAUseContentPipeline>
+      <Name>EnterYourName</Name>
+    </Compile>
+    <Compile Include="EnterYourName.Designer.cs">
+      <DependentUpon>EnterYourName.cs</DependentUpon>
+    </Compile>
     <Compile Include="GameObjEditer.cs">
       <SubType>Form</SubType>
       <XNAUseContentPipeline>false</XNAUseContentPipeline>
@@ -76,6 +84,8 @@
     </Compile>
     <Compile Include="GameObjEditer.Designer.cs">
       <DependentUpon>GameObjEditer.cs</DependentUpon>
+      <XNAUseContentPipeline>false</XNAUseContentPipeline>
+      <Name>GameObjEditer.Designer</Name>
     </Compile>
     <Compile Include="Program.cs">
       <XNAUseContentPipeline>false</XNAUseContentPipeline>
@@ -97,6 +107,12 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="EnterYourName.resx">
+      <SubType>Designer</SubType>
+      <XNAUseContentPipeline>false</XNAUseContentPipeline>
+      <Name>EnterYourName</Name>
+      <DependentUpon>EnterYourName.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="GameObjEditer.resx">
       <SubType>Designer</SubType>
       <XNAUseContentPipeline>false</XNAUseContentPipeline>

@@ -443,7 +443,7 @@ namespace Platform.GameObjects.Tank.Tanks
 
         public Vector2[] KeyPoints
         {
-            get { return new Vector2[] { new Vector2( 0, 0 ) }; }
+            get { return skin.VisiKeyPoints; }
         }
 
         public Matrix TransMatrix

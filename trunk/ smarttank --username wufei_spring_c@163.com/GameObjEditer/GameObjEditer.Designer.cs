@@ -39,6 +39,8 @@
             this.borderToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripContainer1 = new System.Windows.Forms.ToolStripContainer();
             this.statusStrip = new System.Windows.Forms.StatusStrip();
+            this.toolStripStatusBaseInfo = new System.Windows.Forms.ToolStripStatusLabel();
+            this.toolStripStatusMousePos = new System.Windows.Forms.ToolStripStatusLabel();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
             this.splitContainer2 = new System.Windows.Forms.SplitContainer();
             this.treeView = new System.Windows.Forms.TreeView();
@@ -58,11 +60,16 @@
             this.pictureBox = new PictureBoxGird.PictureBoxGird();
             this.toolStrip = new System.Windows.Forms.ToolStrip();
             this.openTexDialog = new System.Windows.Forms.OpenFileDialog();
+            this.openGameObjDialog = new System.Windows.Forms.OpenFileDialog();
+            this.toolStripStatusLabelEdit = new System.Windows.Forms.ToolStripStatusLabel();
+            this.toolStripStatusLabelEditState = new System.Windows.Forms.ToolStripStatusLabel();
+            this.toolStripStatusAlpha = new System.Windows.Forms.ToolStripStatusLabel();
             this.menuStrip.SuspendLayout();
             this.toolStripContainer1.BottomToolStripPanel.SuspendLayout();
             this.toolStripContainer1.ContentPanel.SuspendLayout();
             this.toolStripContainer1.RightToolStripPanel.SuspendLayout();
             this.toolStripContainer1.SuspendLayout();
+            this.statusStrip.SuspendLayout();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
             this.splitContainer1.SuspendLayout();
@@ -100,21 +107,21 @@
             // openToolStripMenuItem
             // 
             this.openToolStripMenuItem.Name = "openToolStripMenuItem";
-            this.openToolStripMenuItem.Size = new System.Drawing.Size( 152, 22 );
+            this.openToolStripMenuItem.Size = new System.Drawing.Size( 98, 22 );
             this.openToolStripMenuItem.Text = "打开";
             this.openToolStripMenuItem.Click += new System.EventHandler( this.OpenToolStripMenuItem_Click );
             // 
             // saveToolStripMenuItem
             // 
             this.saveToolStripMenuItem.Name = "saveToolStripMenuItem";
-            this.saveToolStripMenuItem.Size = new System.Drawing.Size( 152, 22 );
+            this.saveToolStripMenuItem.Size = new System.Drawing.Size( 98, 22 );
             this.saveToolStripMenuItem.Text = "保存";
             this.saveToolStripMenuItem.Click += new System.EventHandler( this.SaveToolStripMenuItem_Click );
             // 
             // exitToolStripMenuItem
             // 
             this.exitToolStripMenuItem.Name = "exitToolStripMenuItem";
-            this.exitToolStripMenuItem.Size = new System.Drawing.Size( 152, 22 );
+            this.exitToolStripMenuItem.Size = new System.Drawing.Size( 98, 22 );
             this.exitToolStripMenuItem.Text = "退出";
             this.exitToolStripMenuItem.Click += new System.EventHandler( this.ExitToolStripMenuItem_Click );
             // 
@@ -130,14 +137,14 @@
             // importToolStripMenuItem
             // 
             this.importToolStripMenuItem.Name = "importToolStripMenuItem";
-            this.importToolStripMenuItem.Size = new System.Drawing.Size( 152, 22 );
+            this.importToolStripMenuItem.Size = new System.Drawing.Size( 122, 22 );
             this.importToolStripMenuItem.Text = "导入";
             this.importToolStripMenuItem.Click += new System.EventHandler( this.ImportToolStripMenuItem_Click );
             // 
             // borderToolStripMenuItem
             // 
             this.borderToolStripMenuItem.Name = "borderToolStripMenuItem";
-            this.borderToolStripMenuItem.Size = new System.Drawing.Size( 152, 22 );
+            this.borderToolStripMenuItem.Size = new System.Drawing.Size( 122, 22 );
             this.borderToolStripMenuItem.Text = "提取边界";
             this.borderToolStripMenuItem.Click += new System.EventHandler( this.BorderToolStripMenuItem_Click );
             // 
@@ -168,11 +175,27 @@
             // statusStrip
             // 
             this.statusStrip.Dock = System.Windows.Forms.DockStyle.None;
+            this.statusStrip.Items.AddRange( new System.Windows.Forms.ToolStripItem[] {
+            this.toolStripStatusBaseInfo,
+            this.toolStripStatusLabelEdit,
+            this.toolStripStatusAlpha,
+            this.toolStripStatusLabelEditState,
+            this.toolStripStatusMousePos} );
             this.statusStrip.Location = new System.Drawing.Point( 0, 0 );
             this.statusStrip.Name = "statusStrip";
             this.statusStrip.Size = new System.Drawing.Size( 788, 22 );
             this.statusStrip.TabIndex = 0;
             this.statusStrip.Text = "statusStrip";
+            // 
+            // toolStripStatusBaseInfo
+            // 
+            this.toolStripStatusBaseInfo.Name = "toolStripStatusBaseInfo";
+            this.toolStripStatusBaseInfo.Size = new System.Drawing.Size( 0, 17 );
+            // 
+            // toolStripStatusMousePos
+            // 
+            this.toolStripStatusMousePos.Name = "toolStripStatusMousePos";
+            this.toolStripStatusMousePos.Size = new System.Drawing.Size( 0, 17 );
             // 
             // splitContainer1
             // 
@@ -365,6 +388,7 @@
             this.pictureBox.TexFocusPos = ((System.Drawing.PointF)(resources.GetObject( "pictureBox.TexFocusPos" )));
             this.pictureBox.ZoomFactor = 1F;
             this.pictureBox.ZoomWheelFactor = 1F;
+            this.pictureBox.MouseMove += new System.Windows.Forms.MouseEventHandler( this.pictureBox_MouseMove );
             this.pictureBox.Paint += new System.Windows.Forms.PaintEventHandler( this.pictureBox_Paint );
             this.pictureBox.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler( this.pictureBox_MouseDoubleClick );
             this.pictureBox.MouseClick += new System.Windows.Forms.MouseEventHandler( this.pictureBox_MouseClick );
@@ -381,6 +405,26 @@
             // 
             this.openTexDialog.Filter = "\"png文件|*.png";
             this.openTexDialog.FileOk += new System.ComponentModel.CancelEventHandler( this.openTexDialog_FileOk );
+            // 
+            // openGameObjDialog
+            // 
+            this.openGameObjDialog.Filter = "\"xml文件|*.xml";
+            this.openGameObjDialog.FileOk += new System.ComponentModel.CancelEventHandler( this.openGameObjDialog_FileOk );
+            // 
+            // toolStripStatusLabelEdit
+            // 
+            this.toolStripStatusLabelEdit.Name = "toolStripStatusLabelEdit";
+            this.toolStripStatusLabelEdit.Size = new System.Drawing.Size( 0, 17 );
+            // 
+            // toolStripStatusLabelEditState
+            // 
+            this.toolStripStatusLabelEditState.Name = "toolStripStatusLabelEditState";
+            this.toolStripStatusLabelEditState.Size = new System.Drawing.Size( 0, 17 );
+            // 
+            // toolStripStatusAlpha
+            // 
+            this.toolStripStatusAlpha.Name = "toolStripStatusAlpha";
+            this.toolStripStatusAlpha.Size = new System.Drawing.Size( 0, 17 );
             // 
             // GameObjEditer
             // 
@@ -401,6 +445,8 @@
             this.toolStripContainer1.RightToolStripPanel.PerformLayout();
             this.toolStripContainer1.ResumeLayout( false );
             this.toolStripContainer1.PerformLayout();
+            this.statusStrip.ResumeLayout( false );
+            this.statusStrip.PerformLayout();
             this.splitContainer1.Panel1.ResumeLayout( false );
             this.splitContainer1.Panel2.ResumeLayout( false );
             this.splitContainer1.ResumeLayout( false );
@@ -448,5 +494,11 @@
         private System.Windows.Forms.ColumnHeader structPos;
         private System.Windows.Forms.OpenFileDialog openTexDialog;
         private PictureBoxGird.PictureBoxGird pictureBox;
+        private System.Windows.Forms.OpenFileDialog openGameObjDialog;
+        private System.Windows.Forms.ToolStripStatusLabel toolStripStatusBaseInfo;
+        private System.Windows.Forms.ToolStripStatusLabel toolStripStatusMousePos;
+        private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabelEdit;
+        private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabelEditState;
+        private System.Windows.Forms.ToolStripStatusLabel toolStripStatusAlpha;
     }
 }

@@ -208,14 +208,15 @@ namespace InterRules.ShootTheBall
             tank.onShoot += new Tank.ShootEventHandler( Tank_onShoot );
             tank.ShellSpeed = shellSpeed;
 
-            ItemCommon item = new ItemCommon( "item", "Scorpion", Path.Combine( Directories.ContentDirectory, "GameObjs\\scorpion" ), new Vector2( 128, 128 ), 0.031f, new Vector2[] { new Vector2( 128, 128 ) },
-                new Vector2( 150, 50 ), 0f, Vector2.Zero, 0 );
-            item.OnCollided += new Platform.PhisicalCollision.OnCollidedEventHandler( item_OnCollided );
+            //ItemCommon item = new ItemCommon( "item", "Scorpion", Path.Combine( Directories.ContentDirectory, "GameObjs\\scorpion" ), new Vector2( 128, 128 ), 0.031f, new Vector2[] { new Vector2( 128, 128 ) },
+            //    new Vector2( 150, 50 ), 0f, Vector2.Zero, 0 );
+            Ball ball = new Ball( 0.031f, new Vector2( 150, 50 ), 0, Vector2.Zero, 0 );
+            ball.OnCollided += new Platform.PhisicalCollision.OnCollidedEventHandler( item_OnCollided );
 
-            smoke = new SmokeGenerater( 0, 50, Vector2.Zero, 0.3f, 0f, true, item );
+            smoke = new SmokeGenerater( 0, 50, Vector2.Zero, 0.3f, 0f, true, ball );
 
             scene.AddGameObj( tank, true, false, true, SceneKeeperCommon.GameObjLayer.HighBulge );
-            scene.AddGameObj( item, true, false, false, SceneKeeperCommon.GameObjLayer.HighBulge, new GetEyeableInfoHandler( GetItemInfo ) );
+            scene.AddGameObj( ball, true, false, false, SceneKeeperCommon.GameObjLayer.HighBulge, new GetEyeableInfoHandler( GetItemInfo ) );
             scene.SetBorder( mapSize );
 
             //camera.Focus( tank );
@@ -513,6 +514,16 @@ namespace InterRules.ShootTheBall
         }
 
         #endregion
+    }
+
+    class Ball : ItemCommon
+    {
+        public Ball ( float scale, Vector2 pos, float azi, Vector2 vel, float rotaVel )
+            : base( "item", "Scorpion", Path.Combine( Directories.ItemDirectory, "Internal\\Ball" ),
+            GameObjData.Load( File.OpenRead( Path.Combine( Directories.ItemDirectory, "Internal\\Ball\\Ball.xml" ) ) ),
+            scale, pos, azi, vel, rotaVel )
+        {
+        }
     }
 
     //class TankEyeableInfo : IEyeableInfo

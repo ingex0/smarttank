@@ -224,7 +224,6 @@ namespace GameBase.Graphics
         /// <summary>
         /// Load Texture From File
         /// 从文件中导入贴图。
-        /// 由于导入过程可能会导致游戏的停顿，尽量从素材管道中导入贴图
         /// </summary>
         /// <param name="texturePath">the texture Directory and File Name, without GameBaseDirectory Path.
         /// 贴图文件的相对于游戏运行文件的路径</param>
@@ -285,7 +284,6 @@ namespace GameBase.Graphics
         /// which is used in calulate the Normal vector,
         /// biger the number is, more border points will be added to the result of Normal Vector. 
         /// 从文件中导入贴图，并添加冲突检测的支持
-        /// 由于导入过程可能会导致游戏的停顿，尽量从素材管道中导入贴图
         /// </summary>
         /// <param name="texturePath">贴图文件的相对于游戏运行文件的路径</param>
         /// <param name="AverageSum">使用该传入值作为AverageSum。

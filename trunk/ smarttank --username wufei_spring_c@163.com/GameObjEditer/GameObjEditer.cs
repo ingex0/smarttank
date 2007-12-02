@@ -9,6 +9,7 @@ using Platform.GameObjects;
 using Microsoft.Xna.Framework.Graphics;
 using System.IO;
 using GameBase.Graphics;
+using GameBase.Helpers;
 
 namespace GameObjEditer
 {
@@ -18,7 +19,7 @@ namespace GameObjEditer
 
         class TreeNodeObj : TreeNode
         {
-            GameObjData obj;
+            public GameObjData obj;
 
             public GameObjData GameObj
             {
@@ -30,8 +31,19 @@ namespace GameObjEditer
             {
                 obj = new GameObjData( objName );
                 TreeNodeNode baseNode = new TreeNodeNode( "Base" );
-                this.Nodes.Add( baseNode );
                 TreeNodeNode.AddToChilds( this, baseNode );
+                obj.creater = "your name";
+                obj.year = DateTime.Today.Year;
+                obj.month = DateTime.Today.Month;
+                obj.day = DateTime.Today.Day;
+            }
+
+            public TreeNodeObj ( GameObjData data, string path )
+                : base( data.name )
+            {
+                obj = data;
+                TreeNodeNode baseNode = new TreeNodeNode( data.baseNode, path );
+                TreeNodeNode.AddToChilds( this, baseNode, false );
             }
 
             public void Rename ( string newName )
@@ -42,24 +54,44 @@ namespace GameObjEditer
                 Text = newName;
                 obj.name = newName;
             }
+
+            public TreeNodeNode BaseNode
+            {
+                get
+                {
+                    if (Nodes.Count == 1)
+                        return (TreeNodeNode)this.Nodes[0];
+                    else
+                        return null;
+                }
+            }
         }
 
         class TreeNodeNode : TreeNode, IEnumerable<TreeNodeNode>
         {
             static public void AddToChilds ( TreeNode parent, TreeNodeNode child )
             {
+                AddToChilds( parent, child, true );
+            }
+
+            static public void AddToChilds ( TreeNode parent, TreeNodeNode child, bool addDataNodeChild )
+            {
                 if (parent is TreeNodeObj)
                 {
-                    if (((TreeNodeObj)parent).GameObj.baseNode == null)
+                    if (((TreeNodeObj)parent).BaseNode == null)
                     {
-                        ((TreeNodeObj)parent).GameObj.baseNode = child.dateNode;
+                        if (addDataNodeChild)
+                            ((TreeNodeObj)parent).GameObj.baseNode = child.dateNode;
                         parent.Nodes.Add( child );
                     }
                 }
                 else if (parent is TreeNodeNode)
                 {
-                    ((TreeNodeNode)parent).dateNode.childNodes.Add( child.dateNode );
-                    child.dateNode.parent = ((TreeNodeNode)parent).dateNode;
+                    if (addDataNodeChild)
+                    {
+                        ((TreeNodeNode)parent).dateNode.childNodes.Add( child.dateNode );
+                        child.dateNode.parent = ((TreeNodeNode)parent).dateNode;
+                    }
                     parent.Nodes.Add( child );
                 }
             }
@@ -91,6 +123,24 @@ namespace GameObjEditer
                 dateNode = new GameObjDataNode( text );
             }
 
+            public TreeNodeNode ( GameObjDataNode dateNode, string path )
+                : this( dateNode.nodeName )
+            {
+                this.dateNode = dateNode;
+
+                foreach (string texName in dateNode.texPaths)
+                {
+                    AddTex( Path.Combine( path, texName ), GameObjEditer.device, false );
+                }
+
+                foreach (GameObjDataNode child in dateNode.childNodes)
+                {
+                    TreeNodeNode childNode = new TreeNodeNode( child, path );
+                    AddToChilds( this, childNode, false );
+                }
+
+            }
+
             public void Rename ( string newName )
             {
                 if (newName == string.Empty)
@@ -110,12 +160,17 @@ namespace GameObjEditer
 
             public List<Microsoft.Xna.Framework.Vector2> VisiPoints
             {
-                get { return dateNode.visiKeyPoint; }
+                get { return dateNode.visiKeyPoints; }
             }
 
             public List<Microsoft.Xna.Framework.Vector2> StructPoints
             {
-                get { return dateNode.structKeyPoint; }
+                get { return dateNode.structKeyPoints; }
+            }
+
+            public List<Texture2D> Textures
+            {
+                get { return textures; }
             }
 
             public int CurTexIndex
@@ -186,13 +241,14 @@ namespace GameObjEditer
 
             public List<SpriteBorder.BorderMap> borderMaps;
 
-            public void AddTex ( string filePath, GraphicsDevice device )
+            public void AddTex ( string filePath, GraphicsDevice device, bool addDataNodeTexPath )
             {
                 textures.Add( Texture2D.FromFile( device, filePath ) );
                 bitmaps.Add( new Bitmap( filePath ) );
                 texNames.Add( Path.GetFileName( filePath ) );
                 borderMaps.Add( null );
-                dateNode.texPaths.Add( Path.GetFileName( filePath ) );
+                if (addDataNodeTexPath)
+                    dateNode.texPaths.Add( Path.GetFileName( filePath ) );
                 curTexIndex = textures.Count - 1;
             }
 
@@ -264,82 +320,82 @@ namespace GameObjEditer
 
             public void AddVisiPoint ( float x, float y )
             {
-                dateNode.visiKeyPoint.Add( new Microsoft.Xna.Framework.Vector2( x, y ) );
+                dateNode.visiKeyPoints.Add( new Microsoft.Xna.Framework.Vector2( x, y ) );
 
-                curVisiPointIndex = dateNode.visiKeyPoint.Count - 1;
+                curVisiPointIndex = dateNode.visiKeyPoints.Count - 1;
             }
 
             public void DelVisiPoint ()
             {
-                if (curVisiPointIndex < 0 || curVisiPointIndex >= dateNode.visiKeyPoint.Count)
+                if (curVisiPointIndex < 0 || curVisiPointIndex >= dateNode.visiKeyPoints.Count)
                     return;
 
-                dateNode.visiKeyPoint.RemoveAt( curVisiPointIndex );
+                dateNode.visiKeyPoints.RemoveAt( curVisiPointIndex );
 
                 curVisiPointIndex--;
             }
 
             public void UpVisiPoint ()
             {
-                if (curVisiPointIndex <= 0 || curVisiPointIndex >= dateNode.visiKeyPoint.Count)
+                if (curVisiPointIndex <= 0 || curVisiPointIndex >= dateNode.visiKeyPoints.Count)
                     return;
 
-                Microsoft.Xna.Framework.Vector2 temp = dateNode.visiKeyPoint[curVisiPointIndex];
-                dateNode.visiKeyPoint[curVisiPointIndex] = dateNode.visiKeyPoint[curVisiPointIndex - 1];
-                dateNode.visiKeyPoint[curVisiPointIndex - 1] = temp;
+                Microsoft.Xna.Framework.Vector2 temp = dateNode.visiKeyPoints[curVisiPointIndex];
+                dateNode.visiKeyPoints[curVisiPointIndex] = dateNode.visiKeyPoints[curVisiPointIndex - 1];
+                dateNode.visiKeyPoints[curVisiPointIndex - 1] = temp;
 
                 curVisiPointIndex--;
             }
 
             public void DownVisiPoint ()
             {
-                if (curVisiPointIndex < 0 || curVisiPointIndex >= dateNode.visiKeyPoint.Count - 1)
+                if (curVisiPointIndex < 0 || curVisiPointIndex >= dateNode.visiKeyPoints.Count - 1)
                     return;
 
-                Microsoft.Xna.Framework.Vector2 temp = dateNode.visiKeyPoint[curVisiPointIndex];
-                dateNode.visiKeyPoint[curVisiPointIndex] = dateNode.visiKeyPoint[curVisiPointIndex + 1];
-                dateNode.visiKeyPoint[curVisiPointIndex + 1] = temp;
+                Microsoft.Xna.Framework.Vector2 temp = dateNode.visiKeyPoints[curVisiPointIndex];
+                dateNode.visiKeyPoints[curVisiPointIndex] = dateNode.visiKeyPoints[curVisiPointIndex + 1];
+                dateNode.visiKeyPoints[curVisiPointIndex + 1] = temp;
 
                 curVisiPointIndex++;
             }
 
             public void AddStructPoint ( float x, float y )
             {
-                dateNode.structKeyPoint.Add( new Microsoft.Xna.Framework.Vector2( x, y ) );
+                dateNode.structKeyPoints.Add( new Microsoft.Xna.Framework.Vector2( x, y ) );
 
-                curStructPointIndex = dateNode.structKeyPoint.Count - 1;
+                curStructPointIndex = dateNode.structKeyPoints.Count - 1;
             }
 
             public void DelStructiPoint ()
             {
-                if (curStructPointIndex < 0 || curStructPointIndex >= dateNode.structKeyPoint.Count)
+                if (curStructPointIndex < 0 || curStructPointIndex >= dateNode.structKeyPoints.Count)
                     return;
 
-                dateNode.structKeyPoint.RemoveAt( curStructPointIndex );
+                dateNode.structKeyPoints.RemoveAt( curStructPointIndex );
 
                 curStructPointIndex--;
             }
 
             public void UpStructPoint ()
             {
-                if (curStructPointIndex <= 0 || curStructPointIndex >= dateNode.structKeyPoint.Count)
+                if (curStructPointIndex <= 0 || curStructPointIndex >= dateNode.structKeyPoints.Count)
                     return;
 
-                Microsoft.Xna.Framework.Vector2 temp = dateNode.structKeyPoint[curStructPointIndex];
-                dateNode.structKeyPoint[curStructPointIndex] = dateNode.structKeyPoint[curStructPointIndex - 1];
-                dateNode.structKeyPoint[curStructPointIndex - 1] = temp;
+                Microsoft.Xna.Framework.Vector2 temp = dateNode.structKeyPoints[curStructPointIndex];
+                dateNode.structKeyPoints[curStructPointIndex] = dateNode.structKeyPoints[curStructPointIndex - 1];
+                dateNode.structKeyPoints[curStructPointIndex - 1] = temp;
 
                 curStructPointIndex--;
             }
 
             public void DownStructPoint ()
             {
-                if (curStructPointIndex < 0 || curStructPointIndex >= dateNode.structKeyPoint.Count - 1)
+                if (curStructPointIndex < 0 || curStructPointIndex >= dateNode.structKeyPoints.Count - 1)
                     return;
 
-                Microsoft.Xna.Framework.Vector2 temp = dateNode.structKeyPoint[curStructPointIndex];
-                dateNode.structKeyPoint[curStructPointIndex] = dateNode.structKeyPoint[curStructPointIndex + 1];
-                dateNode.structKeyPoint[curStructPointIndex + 1] = temp;
+                Microsoft.Xna.Framework.Vector2 temp = dateNode.structKeyPoints[curStructPointIndex];
+                dateNode.structKeyPoints[curStructPointIndex] = dateNode.structKeyPoints[curStructPointIndex + 1];
+                dateNode.structKeyPoints[curStructPointIndex + 1] = temp;
 
                 curStructPointIndex++;
             }
@@ -389,7 +445,27 @@ namespace GameObjEditer
             set { treeView.SelectedNode = value; }
         }
 
-        GraphicsDevice device;
+        TreeNodeObj CurTreeObj
+        {
+            get
+            {
+                if (CurTreeNode != null)
+                {
+                    if (CurTreeNode is TreeNodeObj)
+                    {
+                        return (TreeNodeObj)CurTreeNode;
+                    }
+                    else
+                    {
+                        return ((TreeNodeNode)CurTreeNode).TreeNodeObj;
+                    }
+                }
+                else
+                    return null;
+            }
+        }
+
+        static GraphicsDevice device;
 
         int CurTexIndex
         {
@@ -522,6 +598,7 @@ namespace GameObjEditer
             UpdateVisiList();
             UpdateStructList();
             UpdatePointContentMenu();
+            UpdateStatusBar();
         }
 
         private void tabControl1_SelectedIndexChanged ( object sender, EventArgs e )
@@ -822,7 +899,7 @@ namespace GameObjEditer
         private void openTexDialog_FileOk ( object sender, CancelEventArgs e )
         {
             string texPath = openTexDialog.FileName;
-            ((TreeNodeNode)CurTreeNode).AddTex( texPath, device );
+            ((TreeNodeNode)CurTreeNode).AddTex( texPath, device, true );
             UpdateComponent();
         }
 
@@ -917,7 +994,7 @@ namespace GameObjEditer
             pointMenuStrip.Items["上升"].Enabled = true;
             pointMenuStrip.Items["下降"].Enabled = true;
 
-            if (CurTreeNode == null)
+            if (CurTreeNode == null || CurTreeNode is TreeNodeObj)
             {
                 pointMenuStrip.Items["删除关键点"].Enabled = false;
                 pointMenuStrip.Items["上升"].Enabled = false;
@@ -1020,7 +1097,7 @@ namespace GameObjEditer
 
         void UpdateVisiList ()
         {
-            if (CurTreeNode != null)
+            if (CurTreeNode != null && CurTreeNode is TreeNodeNode)
             {
                 listViewVisi.Items.Clear();
                 int i = 0;
@@ -1035,11 +1112,15 @@ namespace GameObjEditer
                 if (selectIndex >= 0 && selectIndex < i)
                     listViewVisi.Items[selectIndex].Selected = true;
             }
+            else
+            {
+                listViewVisi.Items.Clear();
+            }
         }
 
         void UpdateStructList ()
         {
-            if (CurTreeNode != null)
+            if (CurTreeNode != null && CurTreeNode is TreeNodeNode)
             {
                 listViewStruct.Items.Clear();
                 int i = 0;
@@ -1054,6 +1135,10 @@ namespace GameObjEditer
                 int selectIndex = ((TreeNodeNode)CurTreeNode).CurStructPointIndex;
                 if (selectIndex >= 0 && selectIndex < i)
                     listViewStruct.Items[selectIndex].Selected = true;
+            }
+            else
+            {
+                listViewStruct.Items.Clear();
             }
         }
 
@@ -1089,7 +1174,6 @@ namespace GameObjEditer
             }
         }
 
-
         private void ImportToolStripMenuItem_Click ( object sender, EventArgs e )
         {
             LoadTex();
@@ -1103,17 +1187,104 @@ namespace GameObjEditer
 
         private void SaveToolStripMenuItem_Click ( object sender, EventArgs e )
         {
-
+            Save();
         }
 
         private void OpenToolStripMenuItem_Click ( object sender, EventArgs e )
         {
-
+            Open();
         }
 
         private void BorderToolStripMenuItem_Click ( object sender, EventArgs e )
         {
 
+        }
+
+        void Save ()
+        {
+            TreeNodeObj curObj;
+            if (CurTreeNode is TreeNodeObj)
+            {
+                curObj = (TreeNodeObj)CurTreeNode;
+            }
+            else
+            {
+                curObj = ((TreeNodeNode)CurTreeNode).TreeNodeObj;
+            }
+
+            if (curObj.BaseNode == null)
+                return;
+
+            EnterYourName enterName = new EnterYourName( "保存" + curObj.obj.name + "场景物体中，请输入您的名字以便储存。" );
+
+            enterName.ShowDialog();
+            if (enterName.SelectYes)
+            {
+                curObj.obj.creater = enterName.CreatorName;
+
+
+
+                string savePath = Path.Combine( Directories.ItemDirectory, curObj.obj.creater); 
+
+                if (!Directory.Exists( savePath ))
+                {
+                    Directory.CreateDirectory( savePath );
+                }
+
+                savePath = Path.Combine( savePath, curObj.obj.name );
+
+                if (!Directory.Exists( savePath ))
+                {
+                    Directory.CreateDirectory( savePath );
+                }
+
+                foreach (TreeNodeNode node in curObj.BaseNode)
+                {
+                    int i = 0;
+                    foreach (Texture2D texture in node.Textures)
+                    {
+                        texture.Save( Path.Combine( savePath, node.TexNames[i] ), ImageFileFormat.Png );
+                        i++;
+                    }
+                }
+
+                string filePath = Path.Combine( savePath, curObj.obj.name + ".xml" );
+                if (File.Exists( filePath ))
+                {
+                    DialogResult result = MessageBox.Show( "filePath文件已存在，是否覆盖？", "文件已存在", MessageBoxButtons.YesNo );
+                    if (result == DialogResult.No)
+                        return;
+                    else
+                        File.Delete( filePath );
+                }
+
+                FileStream stream = File.Create( filePath );
+
+                GameObjData.Save( stream, curObj.obj );
+            }
+        }
+
+        void Open ()
+        {
+            openGameObjDialog.ShowDialog();
+        }
+
+        private void openGameObjDialog_FileOk ( object sender, CancelEventArgs e )
+        {
+            try
+            {
+                FileStream stream = File.OpenRead( openGameObjDialog.FileName );
+                GameObjData newObj = GameObjData.Load( stream );
+
+                string path = Path.GetDirectoryName( openGameObjDialog.FileName );
+                TreeNodeObj newObjNode = new TreeNodeObj( newObj, path );
+                treeView.Nodes.Add( newObjNode );
+                newObjNode.Expand();
+                CurTreeNode = newObjNode.Nodes[0];
+            }
+            catch (Exception)
+            {
+            }
         }
 
         #endregion
@@ -1156,33 +1327,37 @@ namespace GameObjEditer
 
         void pictureBox_LastPaint ( object sender, PaintEventArgs e )
         {
-            List<Microsoft.Xna.Framework.Vector2> visiPoints = ((TreeNodeNode)CurTreeNode).VisiPoints;
-            PointF[] visiPos = new PointF[visiPoints.Count];
-            for (int i = 0; i < visiPos.Length; i++)
+            if (CurTreeNode != null && CurTreeNode is TreeNodeNode)
             {
-                visiPos[i] = pictureBox.ScrnPos( visiPoints[i].X, visiPoints[i].Y );
-            }
 
-            List<Microsoft.Xna.Framework.Vector2> structPoints = ((TreeNodeNode)CurTreeNode).StructPoints;
-            PointF[] structPos = new PointF[structPoints.Count];
-            for (int i = 0; i < structPos.Length; i++)
-            {
-                structPos[i] = pictureBox.ScrnPos( structPoints[i].X, structPoints[i].Y );
-            }
-
-            if (visiPos.Length > 0)
-            {
-                foreach (PointF point in visiPos)
+                List<Microsoft.Xna.Framework.Vector2> visiPoints = ((TreeNodeNode)CurTreeNode).VisiPoints;
+                PointF[] visiPos = new PointF[visiPoints.Count];
+                for (int i = 0; i < visiPos.Length; i++)
                 {
-                    e.Graphics.DrawImage( visiPointMap, new PointF( point.X - 20, point.Y - 20 ) );
+                    visiPos[i] = pictureBox.ScrnPos( visiPoints[i].X, visiPoints[i].Y );
                 }
-            }
 
-            if (structPos.Length > 0)
-            {
-                foreach (PointF point in structPos)
+                List<Microsoft.Xna.Framework.Vector2> structPoints = ((TreeNodeNode)CurTreeNode).StructPoints;
+                PointF[] structPos = new PointF[structPoints.Count];
+                for (int i = 0; i < structPos.Length; i++)
                 {
-                    e.Graphics.DrawImage( structPointMap, new PointF( point.X - 20, point.Y - 20 ) );
+                    structPos[i] = pictureBox.ScrnPos( structPoints[i].X, structPoints[i].Y );
+                }
+
+                if (visiPos.Length > 0)
+                {
+                    foreach (PointF point in visiPos)
+                    {
+                        e.Graphics.DrawImage( visiPointMap, new PointF( point.X - 20, point.Y - 20 ) );
+                    }
+                }
+
+                if (structPos.Length > 0)
+                {
+                    foreach (PointF point in structPos)
+                    {
+                        e.Graphics.DrawImage( structPointMap, new PointF( point.X - 20, point.Y - 20 ) );
+                    }
                 }
             }
         }
@@ -1225,18 +1400,8 @@ namespace GameObjEditer
         void pen_Click ( object sender, EventArgs e )
         {
             penKind = (PenKind)((((int)penKind) + 1) % 3);
-            if (penKind == PenKind.trans)
-            {
-                pictureMenuStrip.Items["画笔"].Text = "切换到半透明画笔";
-            }
-            else if (penKind == PenKind.half)
-            {
-                pictureMenuStrip.Items["画笔"].Text = "切换到黑色画笔";
-            }
-            else if (penKind == PenKind.black)
-            {
-                pictureMenuStrip.Items["画笔"].Text = "切换到透明画笔";
-            }
+
+            UpdateComponent();
         }
 
         void UpdatePictureMenuStrip ()
@@ -1261,19 +1426,56 @@ namespace GameObjEditer
             if (CurTabState == TabState.Texture)
             {
                 pictureMenuStrip.Items["提取边界"].Visible = true;
-                pictureMenuStrip.Items["Alpha模式"].Visible = true;
             }
             else if (CurTabState == TabState.VisiPoint)
             {
                 pictureMenuStrip.Items["提取边界"].Visible = false;
-                pictureMenuStrip.Items["Alpha模式"].Visible = false;
                 pictureMenuStrip.Items["画笔"].Visible = false;
             }
             else if (CurTabState == TabState.StructPoint)
             {
                 pictureMenuStrip.Items["提取边界"].Visible = false;
-                pictureMenuStrip.Items["Alpha模式"].Visible = false;
                 pictureMenuStrip.Items["画笔"].Visible = false;
+            }
+
+            if (editMode)
+            {
+                if (CurTabState == TabState.Texture)
+                {
+                    pictureMenuStrip.Items["画笔"].Visible = true;
+
+                    if (penKind == PenKind.trans)
+                    {
+                        pictureMenuStrip.Items["画笔"].Text = "切换到半透明画笔";
+                    }
+                    else if (penKind == PenKind.half)
+                    {
+                        pictureMenuStrip.Items["画笔"].Text = "切换到黑色画笔";
+                    }
+                    else if (penKind == PenKind.black)
+                    {
+                        pictureMenuStrip.Items["画笔"].Text = "切换到透明画笔";
+                    }
+
+
+                }
+                pictureMenuStrip.Items["编辑模式"].Text = "取消编辑模式";
+
+
+            }
+            else
+            {
+                pictureMenuStrip.Items["画笔"].Visible = false;
+                pictureMenuStrip.Items["编辑模式"].Text = "切换到编辑模式";
+            }
+
+            if (pictureBox.AlphaMode)
+            {
+                pictureMenuStrip.Items["Alpha模式"].Text = "取消Alpha模式";
+            }
+            else
+            {
+                pictureMenuStrip.Items["Alpha模式"].Text = "切换到Alpha模式";
             }
         }
 
@@ -1289,34 +1491,13 @@ namespace GameObjEditer
         void alphaMode_Click ( object sender, EventArgs e )
         {
             pictureBox.AlphaMode = !pictureBox.AlphaMode;
-            if (pictureBox.AlphaMode)
-            {
-                pictureMenuStrip.Items["Alpha模式"].Text = "取消Alpha模式";
-            }
-            else
-            {
-                pictureMenuStrip.Items["Alpha模式"].Text = "切换到Alpha模式";
-            }
-            pictureBox.Invalidate();
+            UpdateComponent();
         }
 
         void editMode_Click ( object sender, EventArgs e )
         {
             editMode = !editMode;
-
-            if (editMode)
-            {
-                if (CurTabState == TabState.Texture)
-                {
-                    pictureMenuStrip.Items["画笔"].Visible = true;
-                }
-                pictureMenuStrip.Items["编辑模式"].Text = "取消编辑模式";
-            }
-            else
-            {
-                pictureMenuStrip.Items["画笔"].Visible = false;
-                pictureMenuStrip.Items["编辑模式"].Text = "切换到编辑模式";
-            }
+            UpdateComponent();
         }
 
         private void pictureBox_MouseClick ( object sender, MouseEventArgs e )
@@ -1365,6 +1546,14 @@ namespace GameObjEditer
             UpdateStructList();
         }
 
+        private void pictureBox_MouseMove ( object sender, MouseEventArgs e )
+        {
+            if (pictureBox.CurBitMap != null)
+            {
+                PointF curMousePos = pictureBox.TexPos( e.X, e.Y );
+                statusStrip.Items["toolStripStatusMousePos"].Text = "当前鼠标位置：" + curMousePos.ToString();
+            }
+        }
 
         void SetAlpha ( int x, int y, byte alpha )
         {
@@ -1382,6 +1571,59 @@ namespace GameObjEditer
                 CurXNATex.SetData<Microsoft.Xna.Framework.Graphics.Color>( data );
                 pictureBox.Invalidate();
             }
+        }
+
+        #endregion
+
+        #region StatusBar
+
+        void UpdateStatusBar ()
+        {
+            if (CurTreeObj != null)
+            {
+                statusStrip.Items["toolStripStatusBaseInfo"].Text = CurTreeObj.obj.name + " / " + CurTreeObj.obj.creater + " / " + CurTreeObj.obj.year + ":" + CurTreeObj.obj.month + ":" + CurTreeObj.obj.day;
+                if (editMode)
+                {
+                    statusStrip.Items["toolStripStatusLabelEdit"].Text = "编辑模式";
+                    statusStrip.Items["toolStripStatusLabelEditState"].Visible = true;
+                    if (CurTabState == TabState.Texture)
+                    {
+                        if (penKind == PenKind.black)
+                            statusStrip.Items["toolStripStatusLabelEditState"].Text = "黑色画笔";
+                        else if (penKind == PenKind.half)
+                            statusStrip.Items["toolStripStatusLabelEditState"].Text = "半透明画笔";
+                        else
+                            statusStrip.Items["toolStripStatusLabelEditState"].Text = "透明画笔";
+
+
+
+                    }
+                    else if (CurTabState == TabState.VisiPoint)
+                    {
+                        statusStrip.Items["toolStripStatusLabelEditState"].Text = "双击添加可视关键点";
+                    }
+                    else if (CurTabState == TabState.StructPoint)
+                    {
+                        statusStrip.Items["toolStripStatusLabelEditState"].Text = "双击添加结构关键点";
+                    }
+                }
+                else
+                {
+                    statusStrip.Items["toolStripStatusLabelEdit"].Text = "查看模式";
+                    statusStrip.Items["toolStripStatusLabelEditState"].Visible = false;
+                }
+
+                if (pictureBox.AlphaMode)
+                {
+                    statusStrip.Items["toolStripStatusAlpha"].Text = "Alpha模式";
+                }
+                else
+                {
+                    statusStrip.Items["toolStripStatusAlpha"].Text = "颜色模式";
+                }
+            }
+
+
         }
 
         #endregion
