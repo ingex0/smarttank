@@ -95,10 +95,22 @@ namespace Platform.Senses.Memory
 
                     group.memory.HandlerObjDisappear( disappearedObjs );
 
+                    // 得到边界有更新的物体
+                    List<EyeableBorderObjInfo> updatedObjInfo = new List<EyeableBorderObjInfo>();
+
                     // 更新物体信息
                     foreach (EyeableBorderObjInfo info in curObjInfo)
                     {
-                        group.memory.ApplyEyeableBorderObjInfo( info );
+                        if (group.memory.ApplyEyeableBorderObjInfo( info ))
+                        {
+                            updatedObjInfo.Add( info );
+                        }
+                    }
+
+                    // 通知物体获得了更新的消息
+                    if (updatedObjInfo.Count != 0)
+                    {
+                        raderOwner.BorderObjUpdated( updatedObjInfo.ToArray() );
                     }
                 }
             }

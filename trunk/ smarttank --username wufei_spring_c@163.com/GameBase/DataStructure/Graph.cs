@@ -39,6 +39,34 @@ namespace GameBase.DataStructure
     public class GraphPoint<T>
     {
         /// <summary>
+        /// 复制一幅图。复制图的节点，但不复制节点中的值。
+        /// </summary>
+        /// <param name="graph"></param>
+        /// <returns></returns>
+        static public GraphPoint<T>[] DepthCopy ( GraphPoint<T>[] graph )
+        {
+            GraphPoint<T>[] result = new GraphPoint<T>[graph.Length];
+
+            Dictionary<GraphPoint<T>, int> indexCahe = new Dictionary<GraphPoint<T>, int>();
+
+            for (int i = 0; i < graph.Length; i++)
+            {
+                result[i] = new GraphPoint<T>( graph[i].value, new List<GraphPath<T>>() );
+                indexCahe.Add( graph[i], i );
+            }
+
+            for (int i = 0; i < graph.Length; i++)
+            {
+                foreach (GraphPath<T> path in graph[i].neighbors)
+                {
+                    Link( result[indexCahe[path.neighbor]], result[i], path.weight );
+                }
+            }
+
+            return result;
+        }
+
+        /// <summary>
         /// 节点中的值
         /// </summary>
         public T value;
@@ -79,4 +107,6 @@ namespace GameBase.DataStructure
             p2.neighbors.Add( new GraphPath<T>( p1, weight ) );
         }
     }
+
+
 }

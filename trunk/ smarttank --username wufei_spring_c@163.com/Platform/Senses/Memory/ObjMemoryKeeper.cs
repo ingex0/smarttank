@@ -53,16 +53,21 @@ namespace Platform.Senses.Memory
         //    get { return naviMap; }
         //}
 
-        internal void ApplyEyeableBorderObjInfo ( EyeableBorderObjInfo objInfo )
+        internal bool ApplyEyeableBorderObjInfo ( EyeableBorderObjInfo objInfo )
         {
+            bool objUpdated = false;
             if (memoryObjs.ContainsKey( objInfo.Obj ))
             {
-                memoryObjs[objInfo.Obj].Combine( objInfo );
+                if (memoryObjs[objInfo.Obj].Combine( objInfo ))
+                    objUpdated = true;
             }
             else
             {
                 memoryObjs.Add( objInfo.Obj, objInfo );
+                objUpdated = true;
             }
+
+            return objUpdated;
         }
 
         internal Dictionary<IHasBorderObj, EyeableBorderObjInfo> MemoryObjs

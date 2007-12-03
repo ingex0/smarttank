@@ -77,6 +77,16 @@ namespace Platform.GameObjects.Tank.TankSkins
             }
         }
 
+        public float TankWidth
+        {
+            get { return baseSprite.Width * data.texScale; }
+        }
+
+        public float TankLength
+        {
+            get { return baseSprite.Height * data.texScale; }
+        }
+
         #endregion
 
         #region Constuctions

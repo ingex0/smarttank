@@ -92,6 +92,10 @@
       <XNAUseContentPipeline>false</XNAUseContentPipeline>
       <Name>PathFinderFirst</Name>
     </Compile>
+    <Compile Include="FindPath\PathFinderThird.cs">
+      <XNAUseContentPipeline>false</XNAUseContentPipeline>
+      <Name>PathFinderThird</Name>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ShootTheBall\AutoShootAI.cs">
       <XNAUseContentPipeline>false</XNAUseContentPipeline>

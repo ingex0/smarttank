@@ -28,6 +28,7 @@ namespace InterRules.FindPath
 
         bool seeItem = false;
         bool itemDisappeared = false;
+
         #region IAI ≥…‘±
 
         public IAICommonServer CommonServer
@@ -41,7 +42,13 @@ namespace InterRules.FindPath
             {
                 orderServer = (IAIOrderServerSinTur)value;
                 action = new AIActionHelper( orderServer );
+                orderServer.onBorderObjUpdated += new Platform.Shelter.BorderObjUpdatedEventHandler( orderServer_onBorderObjUpdated );
             }
+        }
+
+        void orderServer_onBorderObjUpdated ( EyeableBorderObjInfo[] borderObjInfos )
+        {
+            int x = 0;
         }
 
         #endregion

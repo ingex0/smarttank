@@ -49,7 +49,7 @@ namespace Platform.Senses.Memory
         //    this.visiBorder = new CircleList<BordPoint>();
         //}
 
-        internal void Combine ( CircleList<BordPoint> borderB )
+        internal bool Combine ( CircleList<BordPoint> borderB )
         {
             CircleListNode<BordPoint> curA = this.visiBorder.First;
 
@@ -62,6 +62,8 @@ namespace Platform.Senses.Memory
             }
 
             bool objborderChanged = false;
+
+            bool borderUpdated = false;
 
             foreach (BordPoint pB in borderB)
             {
@@ -80,6 +82,7 @@ namespace Platform.Senses.Memory
                 }
                 else
                 {
+                    borderUpdated = true;
                     this.visiBorder.InsertAfter( pB, curA.pre );
                     curA = curA.pre;
                 }
@@ -115,6 +118,8 @@ namespace Platform.Senses.Memory
             //    checkCur = checkCur.next;
             //}
             #endregion
+
+            return borderUpdated;
         }
 
         internal void ShowInfo ()

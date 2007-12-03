@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using Platform.Senses.Vision;
 using Microsoft.Xna.Framework;
+using Platform.Shelter;
 
 namespace Platform.GameObjects.Tank.TankAIs
 {
@@ -23,5 +24,7 @@ namespace Platform.GameObjects.Tank.TankAIs
         float FireLeftCDTime { get;}
 
         void Fire ();
+
+        event BorderObjUpdatedEventHandler onBorderObjUpdated;
     }
 }

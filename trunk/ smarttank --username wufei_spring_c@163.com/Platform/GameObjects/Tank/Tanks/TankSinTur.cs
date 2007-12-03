@@ -28,6 +28,8 @@ namespace Platform.GameObjects.Tank.Tanks
 
         public event OnCollidedEventHandler onOverLap;
 
+        public event BorderObjUpdatedEventHandler onBorderObjUpdated;
+
         #endregion
 
         #region Variables
@@ -287,6 +289,12 @@ namespace Platform.GameObjects.Tank.Tanks
             }
         }
 
+        public void BorderObjUpdated ( EyeableBorderObjInfo[] borderObjInfo )
+        {
+            if (onBorderObjUpdated != null)
+                onBorderObjUpdated( borderObjInfo );
+        }
+
         #endregion
 
         #region IAIOrderServerSinTur 成员
@@ -352,6 +360,16 @@ namespace Platform.GameObjects.Tank.Tanks
         public void Fire ()
         {
             controller.Fire();
+        }
+
+        public float TankWidth
+        {
+            get { return skin.TankWidth; }
+        }
+
+        public float TankLength
+        {
+            get { return skin.TankLength; }
         }
 
         public event OnCollidedEventHandlerAI OnCollide;
@@ -453,5 +471,11 @@ namespace Platform.GameObjects.Tank.Tanks
 
         #endregion
 
+        #region IAIOrderServer 成员
+
+
+
+
+        #endregion
     }
 }

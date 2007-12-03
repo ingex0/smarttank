@@ -59,11 +59,20 @@ namespace Platform.Senses.Memory
             get { return border.Obj; }
         }
 
-        internal void Combine ( EyeableBorderObjInfo borderObjInfo )
+        internal bool Combine ( EyeableBorderObjInfo borderObjInfo )
         {
+            bool objUpdated = false;
+
+            if (borderObjInfo.eyeableInfo.Pos != this.eyeableInfo.Pos)
+                objUpdated = true;
+
             this.eyeableInfo = borderObjInfo.eyeableInfo;
-            this.border.Combine( borderObjInfo.border.VisiBorder );
+            if (this.border.Combine( borderObjInfo.border.VisiBorder ))
+                objUpdated = true;
+
             isDisappeared = false;
+
+            return objUpdated;
         }
 
         internal void SetIsDisappeared ( bool isDisappeared )
