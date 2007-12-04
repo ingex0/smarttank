@@ -54,16 +54,16 @@ namespace Platform.Senses.Memory
             CircleListNode<BordPoint> curA = this.visiBorder.First;
 
             int iA = 0;
+            bool borderUpdated = false;
 
             if (curA.value.index > borderB.First.value.index)
             {
                 this.visiBorder.AddFirst( borderB.First.value );
                 curA = this.visiBorder.First;
+                borderUpdated = true;
             }
 
             bool objborderChanged = false;
-
-            bool borderUpdated = false;
 
             foreach (BordPoint pB in borderB)
             {

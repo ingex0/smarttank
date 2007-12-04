@@ -7,6 +7,8 @@ using Platform.Senses.Memory;
 using GameBase.DataStructure;
 using Microsoft.Xna.Framework;
 using GameBase.Input;
+using GameBase.Graphics;
+using Microsoft.Xna.Framework.Graphics;
 
 namespace InterRules.FindPath
 {
@@ -33,7 +35,29 @@ namespace InterRules.FindPath
 
         public void Draw ()
         {
+            if (naviMap != null)
+            {
+                foreach (GraphPoint<NaviPoint> naviPoint in naviMap.Map)
+                {
+                    BasicGraphics.DrawPoint( naviPoint.value.Pos, 1f, Color.Yellow, 0.1f );
 
+                    foreach (GraphPath<NaviPoint> path in naviPoint.neighbors)
+                    {
+                        BasicGraphics.DrawLine( naviPoint.value.Pos, path.neighbor.value.Pos, 3f, Color.Yellow, 0.1f );
+                        FontManager.Draw( path.weight.ToString(), 0.5f * (naviPoint.value.Pos + path.neighbor.value.Pos), 0.5f, Color.Black, 0f, FontType.Comic );
+                    }
+                }
+
+                foreach (Segment guardLine in naviMap.GuardLines)
+                {
+                    BasicGraphics.DrawLine( guardLine.startPoint, guardLine.endPoint, 3f, Color.Red, 0f, SpriteBlendMode.AlphaBlend );
+                }
+
+                foreach (Segment borderLine in naviMap.BorderLines)
+                {
+                    BasicGraphics.DrawLine( borderLine.startPoint, borderLine.endPoint, 3f, Color.Brown, 0f, SpriteBlendMode.AlphaBlend );
+                }
+            }
         }
 
         public IAIOrderServer OrderServer
@@ -51,6 +75,8 @@ namespace InterRules.FindPath
         Vector2 aimPos;
         bool hasOrder = false;
 
+        NodeAStar[] path;
+        int curPathIndex = 0;
 
         #region IUpdater 成员
 
@@ -58,6 +84,8 @@ namespace InterRules.FindPath
         {
             CheckOrder();
             CheckOrderFinish();
+
+            action.Update( seconds );
         }
 
         private void CheckOrder ()
@@ -70,7 +98,25 @@ namespace InterRules.FindPath
                     aimPos = InputHandler.CurMousePosInLogic;
                     UpdateNaviMap();
                     CalPath();
+                    MoveToNextKeyPoint();
                 }
+            }
+        }
+
+        private void MoveToNextKeyPoint ()
+        {
+            if (curPathIndex < path.Length)
+            {
+                while (curPathIndex < path.Length && Vector2.Distance( orderServer.Pos, path[curPathIndex].point.value.Pos ) < 0.3f * orderServer.TankLength)
+                {
+                    curPathIndex++;
+                }
+                action.AddOrder( new OrderMoveToPosSmooth( path[curPathIndex].point.value.Pos, MathHelper.PiOver4, 0, 0,
+                    delegate( IActionOrder order )
+                    {
+                        curPathIndex++;
+                        MoveToNextKeyPoint();
+                    }, false ) );
             }
         }
 
@@ -95,9 +141,37 @@ namespace InterRules.FindPath
 
         void OnBorderObjUpdated ( EyeableBorderObjInfo[] borderObjInfos )
         {
-            // 更新导航图并重新计算路径。
             UpdateNaviMap();
-            CalPath();
+
+            foreach (EyeableBorderObjInfo obj in orderServer.EyeableBorderObjInfos)
+            {
+                obj.UpdateConvexHall( orderServer.TankWidth );
+            }
+
+            if (hasOrder)
+            {
+                CalPath();
+                MoveToNextKeyPoint();
+            }
+        }
+
+        class NodeAStar
+        {
+            public GraphPoint<NaviPoint> point;
+            public NodeAStar father;
+
+            public float G;
+            public float H;
+            public float F;
+
+            public NodeAStar ( GraphPoint<NaviPoint> point, NodeAStar father )
+            {
+                this.point = point;
+                this.father = father;
+                this.G = 0;
+                this.H = 0;
+                this.F = 0;
+            }
         }
 
         private void CalPath ()
@@ -116,24 +190,90 @@ namespace InterRules.FindPath
             // 将当前点和目标点加入到导航图中
             int curPointSum = temp.Length;
             Vector2 curPos = orderServer.Pos;
-
-            AddPointToNaviMap( map, curPos, curPointSum, naviMap.GuardLines );
+            GraphPoint<NaviPoint> curNaviPoint = new GraphPoint<NaviPoint>( new NaviPoint( null, -1, curPos ), new List<GraphPath<NaviPoint>>() );
+            GraphPoint<NaviPoint> aimNaviPoint = new GraphPoint<NaviPoint>( new NaviPoint( null, -1, aimPos ), new List<GraphPath<NaviPoint>>() );
+            AddPointToNaviMap( map, curNaviPoint, curPointSum, naviMap.GuardLines, naviMap.BorderLines );
             curPointSum++;
-            AddPointToNaviMap( map, aimPos, curPointSum, naviMap.GuardLines );
+            AddPointToNaviMap( map, aimNaviPoint, curPointSum, naviMap.GuardLines, naviMap.BorderLines );
 
             // 计算最短路径
 
+            List<NodeAStar> open = new List<NodeAStar>();
+            List<NodeAStar> close = new List<NodeAStar>();
+            open.Add( new NodeAStar( curNaviPoint, null ) );
 
+            NodeAStar cur = null;
+            while (open.Count != 0)
+            {
+                cur = open[open.Count - 1];
+
+                if (cur.point == aimNaviPoint)
+                    break;
+
+                open.RemoveAt( open.Count - 1 );
+                close.Add( cur );
+
+                foreach (GraphPath<NaviPoint> path in cur.point.neighbors)
+                {
+                    if (Contains( open, path.neighbor ) || Contains( close, path.neighbor ))
+                        continue;
+
+                    NodeAStar childNode = new NodeAStar( path.neighbor, cur );
+                    childNode.G = cur.G + path.weight;
+                    childNode.H = Vector2.Distance( aimPos, childNode.point.value.Pos );
+                    childNode.F = childNode.G + childNode.H;
+                    SortInsert( open, childNode );
+                }
+            }
+
+            if (cur == null)
+                return;
+
+            Stack<NodeAStar> cahe = new Stack<NodeAStar>();
+            while (cur.father != null)
+            {
+                cahe.Push( cur );
+                cur = cur.father;
+            }
+
+            this.path = cahe.ToArray();
+            curPathIndex = 0;
         }
 
-        private void AddPointToNaviMap ( GraphPoint<NaviPoint>[] map, Vector2 newPoint, int curPointSum, List<Segment> guardLines )
+        private void SortInsert ( List<NodeAStar> open, NodeAStar childNode )
         {
-            GraphPoint<NaviPoint> newNaviP = new GraphPoint<NaviPoint>( new NaviPoint( null, -1, newPoint ), new List<GraphPath<NaviPoint>>() );
+            int i = 0;
+            while (i < open.Count && open[i].F > childNode.F)
+            {
+                i++;
+            }
+            if (i == open.Count)
+                open.Add( childNode );
+            else
+                open.Insert( i, childNode );
+        }
 
+        private bool Contains ( List<NodeAStar> list, GraphPoint<NaviPoint> graphPoint )
+        {
+            if (list.Find( new Predicate<NodeAStar>(
+                delegate( NodeAStar node )
+                {
+                    if (node.point == graphPoint)
+                        return true;
+                    else
+                        return false;
+                } ) ) == null)
+                return false;
+            else
+                return true;
+        }
+
+        private void AddPointToNaviMap ( GraphPoint<NaviPoint>[] map, GraphPoint<NaviPoint> newNaviP, int curPointSum, List<Segment> guardLines, List<Segment> borderLines )
+        {
             map[curPointSum] = newNaviP;
             for (int i = 0; i < curPointSum; i++)
             {
-                Segment seg = new Segment( newPoint, map[i].value.Pos );
+                Segment seg = new Segment( newNaviP.value.Pos, map[i].value.Pos );
 
                 bool cross = false;
                 foreach (Segment guardLine in guardLines)
@@ -147,7 +287,20 @@ namespace InterRules.FindPath
 
                 if (!cross)
                 {
-                    float weight = Vector2.Distance( newPoint, map[i].value.Pos );
+                    foreach (Segment borderLine in borderLines)
+                    {
+                        if (Segment.IsCross( borderLine, seg ))
+                        {
+                            cross = true;
+                            break;
+                        }
+
+                    }
+                }
+
+                if (!cross)
+                {
+                    float weight = Vector2.Distance( newNaviP.value.Pos, map[i].value.Pos );
                     GraphPoint<NaviPoint>.Link( map[i], newNaviP, weight );
                 }
             }

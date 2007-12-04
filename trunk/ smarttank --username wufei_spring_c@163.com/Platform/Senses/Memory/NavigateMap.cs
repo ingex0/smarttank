@@ -43,6 +43,8 @@ namespace Platform.Senses.Memory
 
         List<Segment> guardLines;
 
+        List<Segment> borderLines;
+
         public GraphPoint<NaviPoint>[] Map
         {
             get { return naviGraph; }
@@ -51,6 +53,11 @@ namespace Platform.Senses.Memory
         public List<Segment> GuardLines
         {
             get { return guardLines; }
+        }
+
+        public List<Segment> BorderLines
+        {
+            get { return borderLines; }
         }
 
         public NavigateMap ( EyeableBorderObjInfo[] objInfos, Rectanglef mapBorder, float spaceForTank )
@@ -62,6 +69,8 @@ namespace Platform.Senses.Memory
         {
 
             #region 对每一个BorderObj生成逻辑坐标上的凸包点集，并向外扩展
+
+            borderLines = new List<Segment>();
 
             List<GraphPoint<NaviPoint>[]> convexs = new List<GraphPoint<NaviPoint>[]>();
             foreach (EyeableBorderObjInfo obj in objInfos)
@@ -79,7 +88,6 @@ namespace Platform.Senses.Memory
                     List<GraphPoint<NaviPoint>> list = new List<GraphPoint<NaviPoint>>();
                     for (int i = 0; i < bordPoints.Count; i++)
                     {
-
                         Vector2 lastPos = Vector2.Transform( ConvertHelper.PointToVector2( bordPoints[i - 1 < 0 ? bordPoints.Count - 1 : i - 1].p ), matrix );
                         Vector2 curPos = Vector2.Transform( ConvertHelper.PointToVector2( bordPoints[i].p ), matrix );
                         Vector2 nextPos = Vector2.Transform( ConvertHelper.PointToVector2( bordPoints[(i + 1) % bordPoints.Count].p ), matrix );
@@ -110,6 +118,9 @@ namespace Platform.Senses.Memory
                                 new NaviPoint( obj, bordPoints[i].index, curPos + spaceForTank * cenV - vertiL * vertiV ),
                                 new List<GraphPath<NaviPoint>>() ) );
                         }
+
+                        // 添加borderLine
+                        borderLines.Add( new Segment( curPos, nextPos ) );
                     }
                     convexHall = list.ToArray();
                     convexs.Add( convexHall );
@@ -131,6 +142,9 @@ namespace Platform.Senses.Memory
                     //{
 
                     //}
+
+                    // 添加borderLine
+                    borderLines.Add( new Segment( startPos, endPos ) );
 
                     convexs.Add( convexHall );
                 }
@@ -206,7 +220,7 @@ namespace Platform.Senses.Memory
 
             #endregion
 
-            #region 检查凸包之间连线是否与警戒线相交，如不相交则连接并计算权值
+            #region 检查凸包之间连线是否与警戒线以及边界线相交，如不相交则连接并计算权值
 
             for (int i = 0; i < convexs.Count - 1; i++)
             {
@@ -229,6 +243,17 @@ namespace Platform.Senses.Memory
                                 {
                                     isCross = true;
                                     break;
+                                }
+                            }
+                            if (!isCross)
+                            {
+                                foreach (Segment borderLine in borderLines)
+                                {
+                                    if (Segment.IsCross( link, borderLine ))
+                                    {
+                                        isCross = true;
+                                        break;
+                                    }
                                 }
                             }
 

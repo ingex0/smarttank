@@ -79,12 +79,12 @@ namespace Platform.GameObjects.Tank.TankSkins
 
         public float TankWidth
         {
-            get { return baseSprite.Width * data.texScale; }
+            get { return baseSprite.Width; }
         }
 
         public float TankLength
         {
-            get { return baseSprite.Height * data.texScale; }
+            get { return baseSprite.Height; }
         }
 
         #endregion

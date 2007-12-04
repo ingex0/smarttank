@@ -1158,6 +1158,148 @@ namespace Platform.AIHelper
     }
     #endregion
 
+
+    #region OrderMoveToPosSmooth
+    /// <summary>
+    /// 移动到目标点。
+    /// 与OrderMoveToPosDirect命令的不同之处在于，当目标方向与当前方向的夹角在某个阀值之内时，将在转弯的同时向前移动。
+    /// </summary>
+    public class OrderMoveToPosSmooth : IActionOrder
+    {
+        IAIOrderServer orderServer;
+
+        bool isEnd = false;
+
+        ActionFinishHandler finishHandler;
+        bool stopCallFinish = false;
+
+        Vector2 aimPos;
+        float smoothAng = MathHelper.PiOver2;
+
+        float vel;
+        float rotaVel;
+
+        bool turnWise;
+
+        bool rotaWForward = false;
+
+        /// <summary>
+        /// 移动到目标点。
+        /// 与OrderMoveToPosDirect命令的不同之处在于，当目标方向与当前方向的夹角在某个阀值之内时，将在转弯的同时向前移动。
+        /// </summary>
+        /// <param name="aimPos">目标点</param>
+        /// <param name="smoothAng">允许在转弯的同时向前移动的最大角度</param>
+        /// <param name="vel">向前移动的速度。如果为0，将取最大速度</param>
+        /// <param name="rotaVel">旋转的速度。如果为0，将取最大速度</param>
+        /// <param name="finishHandler">命令结束后的处理函数</param>
+        /// <param name="stopCallFinish">指定当命令被终止时是否调用结束处理函数</param>
+        public OrderMoveToPosSmooth ( Vector2 aimPos, float smoothAng, float vel, float rotaVel, ActionFinishHandler finishHandler, bool stopCallFinish )
+        {
+            this.aimPos = aimPos;
+            this.finishHandler = finishHandler;
+            this.stopCallFinish = stopCallFinish;
+            this.vel = Math.Abs( vel );
+            this.rotaVel = Math.Abs( rotaVel );
+            this.smoothAng = smoothAng;
+        }
+
+
+        #region IActionOrder 成员
+
+        public ActionRights NeedRights
+        {
+            get { return ActionRights.Rota | ActionRights.Move; }
+        }
+
+        public IAIOrderServer OrderServer
+        {
+            set
+            {
+                this.orderServer = value;
+
+                if (vel == 0)
+                    vel = orderServer.MaxForwardSpeed;
+                if (rotaVel == 0)
+                    rotaVel = orderServer.MaxRotaSpeed;
+
+                Vector2 curPos = orderServer.Pos;
+                Vector2 refPos = aimPos - curPos;
+                float aimAzi = MathTools.AziFromRefPos( refPos );
+                float curAzi = orderServer.Azi;
+                float deltaAzi = MathTools.AngTransInPI( aimAzi - curAzi );
+                if (deltaAzi > 0)
+                    turnWise = true;
+                else
+                    turnWise = false;
+
+                orderServer.TurnRightSpeed = Math.Sign( deltaAzi ) * rotaVel;
+
+                if (Math.Abs( deltaAzi ) < smoothAng && refPos.Length() > 2 * vel / rotaVel)
+                {
+                    rotaWForward = true;
+                    orderServer.ForwardSpeed = vel;
+                }
+            }
+        }
+
+        public bool IsEnd
+        {
+            get { return isEnd; }
+        }
+
+        public void Stop ()
+        {
+            if (stopCallFinish && finishHandler != null)
+            {
+                finishHandler( this );
+            }
+        }
+
+        #endregion
+
+        #region IUpdater 成员
+
+        public void Update ( float seconds )
+        {
+            Vector2 curPos = orderServer.Pos;
+            Vector2 refPos = aimPos - curPos;
+            float aimAzi = MathTools.AziFromRefPos( refPos );
+            float curAzi = orderServer.Azi;
+            float deltaAzi = MathTools.AngTransInPI( aimAzi - curAzi );
+
+            if (turnWise && deltaAzi < 0)
+                orderServer.TurnRightSpeed = 0;
+            else if (!turnWise && deltaAzi > 0)
+                orderServer.TurnRightSpeed = 0;
+
+            if (Math.Abs( deltaAzi ) < smoothAng && refPos.Length() > 2 * vel / rotaVel && !rotaWForward)
+            {
+                rotaWForward = true;
+                orderServer.ForwardSpeed = vel;
+            }
+
+            if (!rotaWForward && orderServer.TurnRightSpeed == 0)
+            {
+                orderServer.ForwardSpeed = vel;
+            }
+
+            if (orderServer.TurnRightSpeed == 0 && Math.Abs( MathTools.AngTransInPI( curAzi - aimAzi ) ) > MathHelper.PiOver4)
+            {
+                isEnd = true;
+                orderServer.TurnRightSpeed = 0;
+                orderServer.ForwardSpeed = 0;
+
+                if (finishHandler != null)
+                {
+                    finishHandler( this );
+                }
+            }
+        }
+
+        #endregion
+    }
+    #endregion
+
     #region OrderMoveCircle
     public class OrderMoveCircle : IActionOrder
     {

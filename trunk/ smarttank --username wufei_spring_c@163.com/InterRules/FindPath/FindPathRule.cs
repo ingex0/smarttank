@@ -67,6 +67,7 @@ namespace InterRules.FindPath
             aiList.OnChangeSelection += new EventHandler( AIList_OnChangeSelection );
 
             aiLoader = new AILoader();
+            aiLoader.AddInterAI( typeof( PathFinderThird ) );
             aiLoader.AddInterAI( typeof( PathFinderSecond ) );
             aiLoader.AddInterAI( typeof( ManualControl ) );
             aiLoader.AddInterAI( typeof( PathFinderFirst ) );
