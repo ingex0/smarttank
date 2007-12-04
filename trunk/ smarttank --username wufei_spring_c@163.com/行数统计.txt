@@ -8,3 +8,14 @@ SmartTank	595
 
 total		21935
 
+2007年12月4日统计：
+
+GameBase	9565
+Platform	10787
+InterRules	3749
+AssetRegister	661
+SmartTank	544
+GameObjEditer	2504
+PictureBoxGrid	419
+
+total		28229

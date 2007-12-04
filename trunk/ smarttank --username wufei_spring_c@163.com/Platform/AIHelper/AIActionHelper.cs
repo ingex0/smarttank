@@ -1158,11 +1158,11 @@ namespace Platform.AIHelper
     }
     #endregion
 
-
     #region OrderMoveToPosSmooth
     /// <summary>
-    /// 移动到目标点。
+    /// 光滑地移动到目标点。
     /// 与OrderMoveToPosDirect命令的不同之处在于，当目标方向与当前方向的夹角在某个阀值之内时，将在转弯的同时向前移动。
+    /// 这使该命令能够适用于可能会不间歇地调用的场合。
     /// </summary>
     public class OrderMoveToPosSmooth : IActionOrder
     {
@@ -1234,10 +1234,31 @@ namespace Platform.AIHelper
 
                 orderServer.TurnRightSpeed = Math.Sign( deltaAzi ) * rotaVel;
 
-                if (Math.Abs( deltaAzi ) < smoothAng && refPos.Length() > 2 * vel / rotaVel)
+                if (Math.Abs( deltaAzi ) < smoothAng)
                 {
-                    rotaWForward = true;
-                    orderServer.ForwardSpeed = vel;
+                    Line refLine = new Line( curPos, orderServer.Direction );
+                    Line vertice = MathTools.VerticeLine( refLine, curPos );
+                    Line midVert = MathTools.MidVerLine( curPos, aimPos );
+                    Vector2 interPoint;
+
+                    bool canFor = false;
+                    if (MathTools.InterPoint( vertice, midVert, out interPoint ))
+                    {
+                        float radius = Vector2.Distance( interPoint, curPos );
+
+                        if (radius > vel / rotaVel)
+                            canFor = true;
+                    }
+                    else
+                    {
+                        canFor = true;
+                    }
+
+                    if (canFor)
+                    {
+                        rotaWForward = true;
+                        orderServer.ForwardSpeed = vel;
+                    }
                 }
             }
         }
@@ -1272,10 +1293,30 @@ namespace Platform.AIHelper
             else if (!turnWise && deltaAzi > 0)
                 orderServer.TurnRightSpeed = 0;
 
-            if (Math.Abs( deltaAzi ) < smoothAng && refPos.Length() > 2 * vel / rotaVel && !rotaWForward)
+            if (!rotaWForward && Math.Abs( deltaAzi ) < smoothAng)
             {
-                rotaWForward = true;
-                orderServer.ForwardSpeed = vel;
+                Line refLine = new Line( curPos, orderServer.Direction );
+                Line vertice = MathTools.VerticeLine( refLine, curPos );
+                Line midVert = MathTools.MidVerLine( curPos, aimPos );
+                Vector2 interPoint;
+
+                bool canFor = false;
+                if (MathTools.InterPoint( vertice, midVert, out interPoint ))
+                {
+                    float radius = Vector2.Distance( interPoint, curPos );
+                    if (radius > vel / rotaVel)
+                        canFor = true;
+                }
+                else
+                {
+                    canFor = true;
+                }
+
+                if (canFor)
+                {
+                    rotaWForward = true;
+                    orderServer.ForwardSpeed = vel;
+                }
             }
 
             if (!rotaWForward && orderServer.TurnRightSpeed == 0)

@@ -59,6 +59,8 @@ namespace Platform.Senses.Memory
 
                     // 查找是否有消失的物体
                     List<IHasBorderObj> disappearedObjs = new List<IHasBorderObj>();
+                    List<EyeableBorderObjInfo> disappearedObjInfos = new List<EyeableBorderObjInfo>();
+
 
                     foreach (KeyValuePair<IHasBorderObj, EyeableBorderObjInfo> pair in group.memory.MemoryObjs)
                     {
@@ -89,7 +91,10 @@ namespace Platform.Senses.Memory
                                 }
                             }
                             if (!find)
+                            {
                                 disappearedObjs.Add( pair.Key );
+                                disappearedObjInfos.Add( pair.Value );
+                            }
                         }
                     }
 
@@ -103,8 +108,15 @@ namespace Platform.Senses.Memory
                     {
                         if (group.memory.ApplyEyeableBorderObjInfo( info ))
                         {
+                            // 当物体边界有更新时添加到更新物体中
                             updatedObjInfo.Add( info );
                         }
+                    }
+
+                    // 发现物体消失时也判定物体有更新
+                    foreach (EyeableBorderObjInfo info in disappearedObjInfos)
+                    {
+                        updatedObjInfo.Add( info );
                     }
 
                     // 通知物体获得了更新的消息

@@ -124,12 +124,12 @@ namespace GameBase.Helpers
         }
 
         /// <summary>
-        /// 计算两直线的交点
+        /// 计算两直线的交点，当两直线存在交点时返回true
         /// </summary>
         /// <param name="line1"></param>
         /// <param name="line2"></param>
         /// <param name="result"></param>
-        /// <returns></returns>
+        /// <returns>当两直线存在交点时返回true</returns>
         public static bool InterPoint ( Line line1, Line line2, out Vector2 result )
         {
             if (Vector2.Normalize( line1.direction ) == Vector2.Normalize( line2.direction ) ||

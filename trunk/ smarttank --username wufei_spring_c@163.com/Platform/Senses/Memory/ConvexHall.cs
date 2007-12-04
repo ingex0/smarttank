@@ -38,7 +38,7 @@ namespace Platform.Senses.Memory
             for (int i = 2; i < border.Length; i++)
             {
                 BordPoint p1 = stack.Pop();
-                
+
                 BordPoint p0 = stack.Peek();
 
                 BordPoint p2 = cur.value;
@@ -72,6 +72,16 @@ namespace Platform.Senses.Memory
                 if (!CountWise( templist[templist.Count - 1], templist[0], templist[templist.Count - 2] ))
                 {
                     templist.RemoveAt( templist.Count - 1 );
+                }
+            }
+            else if (templist.Count == 3)
+            {
+                if (!CountWise( templist[0], templist[1], templist[templist.Count - 1] ))
+                {
+                    templist.RemoveAt( 0 );
+                    BordPoint temp = templist[0];
+                    templist[0] = templist[1];
+                    templist[1] = temp;
                 }
             }
 
@@ -124,7 +134,8 @@ namespace Platform.Senses.Memory
         {
             Vector2 v1 = new Vector2( p1.p.X - p0.p.X, p1.p.Y - p0.p.Y );
             Vector2 v2 = new Vector2( p2.p.X - p1.p.X, p2.p.Y - p1.p.Y );
-            return MathTools.Vector2Cross( v1, v2 ) < 0;
+            float cross = MathTools.Vector2Cross( v1, v2 );
+            return cross < 0 || cross == 0 && Vector2.Dot( v1, v2 ) < 0;
         }
     }
 }

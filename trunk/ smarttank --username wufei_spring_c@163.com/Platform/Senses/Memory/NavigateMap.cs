@@ -37,6 +37,53 @@ namespace Platform.Senses.Memory
         }
     }
 
+    public class GuardConvex
+    {
+        public GraphPoint<NaviPoint>[] points;
+
+        public GraphPoint<NaviPoint> this[int i]
+        {
+            get { return points[i]; }
+        }
+
+        public int Length
+        {
+            get { return points.Length; }
+        }
+
+        public GuardConvex ( GraphPoint<NaviPoint>[] points )
+        {
+            this.points = points;
+        }
+
+        public bool PointInConvex ( Vector2 p )
+        {
+            float sign = 0;
+            bool first = true;
+            for (int i = 0; i < points.Length; i++)
+            {
+                GraphPoint<NaviPoint> cur = points[i];
+                GraphPoint<NaviPoint> next = points[(i + 1) % points.Length];
+
+                float cross = MathTools.Vector2Cross( p - cur.value.Pos, next.value.Pos - p );
+
+                if (first)
+                {
+                    sign = cross;
+                    first = false;
+                }
+                else
+                {
+                    if (Math.Sign( sign ) != Math.Sign( cross ))
+                    {
+                        return false;
+                    }
+                }
+            }
+            return true;
+        }
+    }
+
     public class NavigateMap
     {
         GraphPoint<NaviPoint>[] naviGraph;
@@ -44,6 +91,8 @@ namespace Platform.Senses.Memory
         List<Segment> guardLines;
 
         List<Segment> borderLines;
+
+        List<GuardConvex> convexs;
 
         public GraphPoint<NaviPoint>[] Map
         {
@@ -60,6 +109,11 @@ namespace Platform.Senses.Memory
             get { return borderLines; }
         }
 
+        public List<GuardConvex> Convexs
+        {
+            get { return convexs; }
+        }
+
         public NavigateMap ( EyeableBorderObjInfo[] objInfos, Rectanglef mapBorder, float spaceForTank )
         {
             BuildMap( objInfos, mapBorder, spaceForTank );
@@ -72,7 +126,7 @@ namespace Platform.Senses.Memory
 
             borderLines = new List<Segment>();
 
-            List<GraphPoint<NaviPoint>[]> convexs = new List<GraphPoint<NaviPoint>[]>();
+            convexs = new List<GuardConvex>();
             foreach (EyeableBorderObjInfo obj in objInfos)
             {
                 if (obj.ConvexHall == null || obj.IsDisappeared || obj.ConvexHall.Points == null)
@@ -123,7 +177,7 @@ namespace Platform.Senses.Memory
                         borderLines.Add( new Segment( curPos, nextPos ) );
                     }
                     convexHall = list.ToArray();
-                    convexs.Add( convexHall );
+                    convexs.Add( new GuardConvex( convexHall ) );
                 }
                 else if (bordPoints.Count == 2)
                 {
@@ -146,7 +200,7 @@ namespace Platform.Senses.Memory
                     // 添加borderLine
                     borderLines.Add( new Segment( startPos, endPos ) );
 
-                    convexs.Add( convexHall );
+                    convexs.Add( new GuardConvex( convexHall ) );
                 }
 
             }
@@ -157,9 +211,9 @@ namespace Platform.Senses.Memory
 
             guardLines = new List<Segment>();
 
-            foreach (GraphPoint<NaviPoint>[] convex in convexs)
+            foreach (GuardConvex convex in convexs)
             {
-                for (int i = 0; i < convex.Length; i++)
+                for (int i = 0; i < convex.points.Length; i++)
                 {
                     guardLines.Add( new Segment( convex[i].value.Pos, convex[(i + 1) % convex.Length].value.Pos ) );
 
@@ -182,7 +236,7 @@ namespace Platform.Senses.Memory
 
             #region 检查凸包内部连线是否和警戒线相交,如不相交则连接该连线并计算权值
 
-            foreach (GraphPoint<NaviPoint>[] convex in convexs)
+            foreach (GuardConvex convex in convexs)
             {
                 for (int i = 0; i < convex.Length; i++)
                 {
@@ -226,13 +280,13 @@ namespace Platform.Senses.Memory
             {
                 for (int j = i + 1; j < convexs.Count; j++)
                 {
-                    foreach (GraphPoint<NaviPoint> p1 in convexs[i])
+                    foreach (GraphPoint<NaviPoint> p1 in convexs[i].points)
                     {
                         // 检查连线是否超出边界
                         if (!mapBorder.Contains( p1.value.Pos ))
                             continue;
 
-                        foreach (GraphPoint<NaviPoint> p2 in convexs[j])
+                        foreach (GraphPoint<NaviPoint> p2 in convexs[j].points)
                         {
                             Segment link = new Segment( p1.value.Pos, p2.value.Pos );
 
@@ -277,9 +331,9 @@ namespace Platform.Senses.Memory
 
             List<GraphPoint<NaviPoint>> points = new List<GraphPoint<NaviPoint>>();
 
-            foreach (GraphPoint<NaviPoint>[] convex in convexs)
+            foreach (GuardConvex convex in convexs)
             {
-                foreach (GraphPoint<NaviPoint> p in convex)
+                foreach (GraphPoint<NaviPoint> p in convex.points)
                 {
                     points.Add( p );
                 }
