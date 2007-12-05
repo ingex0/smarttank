@@ -173,7 +173,7 @@ namespace GameBase.Graphics
         /// <param name="blendMode">»ìºÏÄ£Ê½</param>
         public void SetParameters ( Vector2 origin, Vector2 pos, float scale, float rata, Color color, float layerDepth, SpriteBlendMode blendMode )
         {
-            SetParameters( origin, pos, (float)(tex.Width) * scale, (float)(tex.Height) * scale, rata, color, layerDepth, blendMode );
+            SetParameters( origin, pos, (float)(cellWidth) * scale, (float)(cellHeight) * scale, rata, color, layerDepth, blendMode );
         }
 
         /// <summary>
