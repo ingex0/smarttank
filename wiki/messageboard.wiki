@@ -1,3 +1,4 @@
 #summary 留言版，欢迎大家提出自己的建议
+#labels Featured
 
 = 就留在下面吧 =
