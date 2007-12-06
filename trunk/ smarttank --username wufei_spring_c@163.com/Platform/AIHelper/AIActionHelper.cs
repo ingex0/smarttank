@@ -1166,6 +1166,8 @@ namespace Platform.AIHelper
     /// </summary>
     public class OrderMoveToPosSmooth : IActionOrder
     {
+        const float fixFactor = 0.9f;
+
         IAIOrderServer orderServer;
 
         bool isEnd = false;
@@ -1246,7 +1248,7 @@ namespace Platform.AIHelper
                     {
                         float radius = Vector2.Distance( interPoint, curPos );
 
-                        if (radius > vel / rotaVel)
+                        if (radius * fixFactor > vel / rotaVel)
                             canFor = true;
                     }
                     else
@@ -1304,7 +1306,7 @@ namespace Platform.AIHelper
                 if (MathTools.InterPoint( vertice, midVert, out interPoint ))
                 {
                     float radius = Vector2.Distance( interPoint, curPos );
-                    if (radius > vel / rotaVel)
+                    if (radius * fixFactor > vel / rotaVel)
                         canFor = true;
                 }
                 else

@@ -344,5 +344,313 @@ namespace Platform.Senses.Memory
             #endregion
         }
 
+        /// <summary>
+        /// 检查点是否在生成的警戒线凸包之中
+        /// </summary>
+        /// <param name="p">要检查的点</param>
+        /// <param name="convex">如果点处于某个凸包之中，返回这个凸包，否则为null</param>
+        /// <returns></returns>
+        public bool PointInConvexs ( Vector2 p, out GuardConvex convex )
+        {
+            foreach (GuardConvex conve in convexs)
+            {
+                if (conve.PointInConvex( p ))
+                {
+                    convex = conve;
+                    return true;
+                }
+            }
+            convex = null;
+            return false;
+        }
+
+        /// <summary>
+        /// 检查点是否在生成的警戒线凸包之中
+        /// </summary>
+        /// <param name="p"></param>
+        /// <returns></returns>
+        public bool PointInConvexs ( Vector2 p )
+        {
+            GuardConvex temp;
+            return PointInConvexs( p, out temp );
+        }
+
+        #region 使用A*算法计算路径
+
+        class NodeAStar
+        {
+            public GraphPoint<NaviPoint> point;
+            public NodeAStar father;
+
+            public float G;
+            public float H;
+            public float F;
+
+            public NodeAStar ( GraphPoint<NaviPoint> point, NodeAStar father )
+            {
+                this.point = point;
+                this.father = father;
+                this.G = 0;
+                this.H = 0;
+                this.F = 0;
+            }
+        }
+
+        /// <summary>
+        /// 使用A*算法依据当前信息计算一条最短的路径。
+        /// 注意，如果目标点在警戒线以内，会返回一条并非如你期望的路径。
+        /// 所以请自行实现目标点无法到达时的处理逻辑。
+        /// </summary>
+        /// <param name="curPos"></param>
+        /// <param name="aimPos"></param>
+        /// <returns></returns>
+        public NaviPoint[] CalPathUseAStar ( Vector2 curPos, Vector2 aimPos )
+        {
+
+            #region 复制导航图
+            GraphPoint<NaviPoint>[] map = new GraphPoint<NaviPoint>[Map.Length + 2];
+            GraphPoint<NaviPoint>[] temp = GraphPoint<NaviPoint>.DepthCopy( Map );
+            for (int i = 0; i < temp.Length; i++)
+            {
+                map[i] = temp[i];
+            }
+            #endregion
+
+            #region 将当前点和目标点加入到导航图中
+            int prePointSum = temp.Length;
+            GraphPoint<NaviPoint> curNaviPoint = new GraphPoint<NaviPoint>( new NaviPoint( null, -1, curPos ), new List<GraphPath<NaviPoint>>() );
+            GraphPoint<NaviPoint> aimNaviPoint = new GraphPoint<NaviPoint>( new NaviPoint( null, -1, aimPos ), new List<GraphPath<NaviPoint>>() );
+            AddCurPosToNaviMap( map, curNaviPoint, prePointSum, GuardLines, BorderLines );
+            AddAimPosToNaviMap( map, aimNaviPoint, curNaviPoint, prePointSum, GuardLines, BorderLines );
+
+            #endregion
+
+            #region 计算最短路径，使用A*算法
+
+            List<NodeAStar> open = new List<NodeAStar>();
+            List<NodeAStar> close = new List<NodeAStar>();
+            open.Add( new NodeAStar( curNaviPoint, null ) );
+
+            NodeAStar cur = null;
+            while (open.Count != 0)
+            {
+                cur = open[open.Count - 1];
+
+                if (cur.point == aimNaviPoint)
+                    break;
+
+                open.RemoveAt( open.Count - 1 );
+                close.Add( cur );
+
+                foreach (GraphPath<NaviPoint> path in cur.point.neighbors)
+                {
+                    if (Contains( close, path.neighbor ))
+                    {
+                        continue;
+                    }
+                    else
+                    {
+                        NodeAStar inOpenNode;
+                        if (Contains( open, path.neighbor, out inOpenNode ))
+                        {
+                            float G = cur.G + path.weight;
+                            if (inOpenNode.G > G)
+                            {
+                                inOpenNode.G = G;
+                                inOpenNode.F = G + inOpenNode.H;
+                            }
+                        }
+                        else
+                        {
+                            NodeAStar childNode = new NodeAStar( path.neighbor, cur );
+                            childNode.G = cur.G + path.weight;
+                            childNode.H = Vector2.Distance( aimPos, childNode.point.value.Pos );
+                            childNode.F = childNode.G + childNode.H;
+                            SortInsert( open, childNode );
+                        }
+                    }
+                }
+            }
+
+            //if (cur == null)
+            //    return null;
+
+            Stack<NodeAStar> cahe = new Stack<NodeAStar>();
+            while (cur.father != null)
+            {
+                cahe.Push( cur );
+                cur = cur.father;
+            }
+
+            NaviPoint[] result = new NaviPoint[cahe.Count];
+
+            int j = 0;
+            foreach (NodeAStar node in cahe)
+            {
+                result[j] = node.point.value;
+                j++;
+            }
+
+            return result;
+
+            #endregion
+        }
+
+        private void SortInsert ( List<NodeAStar> open, NodeAStar childNode )
+        {
+            int i = 0;
+            while (i < open.Count && open[i].F > childNode.F)
+            {
+                i++;
+            }
+            if (i == open.Count)
+                open.Add( childNode );
+            else
+                open.Insert( i, childNode );
+        }
+
+        private bool Contains ( List<NodeAStar> list, GraphPoint<NaviPoint> graphPoint, out NodeAStar findNode )
+        {
+            if ((findNode = list.Find( new Predicate<NodeAStar>(
+                delegate( NodeAStar node )
+                {
+                    if (node.point == graphPoint)
+                        return true;
+                    else
+                        return false;
+                } ) )) == null)
+                return false;
+            else
+                return true;
+        }
+
+        private bool Contains ( List<NodeAStar> list, GraphPoint<NaviPoint> graphPoint )
+        {
+            if (list.Find( new Predicate<NodeAStar>(
+                delegate( NodeAStar node )
+                {
+                    if (node.point == graphPoint)
+                        return true;
+                    else
+                        return false;
+                } ) ) == null)
+                return false;
+            else
+                return true;
+        }
+
+        private void AddCurPosToNaviMap ( GraphPoint<NaviPoint>[] map, GraphPoint<NaviPoint> curNaviP,
+            int prePointSum, List<Segment> guardLines, List<Segment> borderLines )
+        {
+            map[prePointSum] = curNaviP;
+            for (int i = 0; i < prePointSum; i++)
+            {
+                Segment seg = new Segment( curNaviP.value.Pos, map[i].value.Pos );
+
+                bool cross = false;
+                foreach (Segment guardLine in guardLines)
+                {
+                    if (Segment.IsCross( guardLine, seg ))
+                    {
+                        cross = true;
+                        break;
+                    }
+                }
+
+                if (!cross)
+                {
+                    foreach (Segment borderLine in borderLines)
+                    {
+                        if (Segment.IsCross( borderLine, seg ))
+                        {
+                            cross = true;
+                            break;
+                        }
+
+                    }
+                }
+
+                if (!cross)
+                {
+                    float weight = Vector2.Distance( curNaviP.value.Pos, map[i].value.Pos );
+                    GraphPoint<NaviPoint>.Link( map[i], curNaviP, weight );
+                }
+            }
+        }
+
+        private void AddAimPosToNaviMap ( GraphPoint<NaviPoint>[] map, GraphPoint<NaviPoint> aimNaviP, GraphPoint<NaviPoint> curNaviP,
+            int prePointSum, List<Segment> guardLines, List<Segment> borderLines )
+        {
+            map[prePointSum + 1] = aimNaviP;
+            for (int i = 0; i < prePointSum; i++)
+            {
+                Segment seg = new Segment( aimNaviP.value.Pos, map[i].value.Pos );
+
+                bool cross = false;
+                foreach (Segment guardLine in guardLines)
+                {
+                    if (Segment.IsCross( guardLine, seg ))
+                    {
+                        cross = true;
+                        break;
+                    }
+                }
+
+                if (!cross)
+                {
+                    foreach (Segment borderLine in borderLines)
+                    {
+                        if (Segment.IsCross( borderLine, seg ))
+                        {
+                            cross = true;
+                            break;
+                        }
+
+                    }
+                }
+
+                if (!cross)
+                {
+                    float weight = Vector2.Distance( aimNaviP.value.Pos, map[i].value.Pos );
+                    GraphPoint<NaviPoint>.Link( map[i], aimNaviP, weight );
+                }
+            }
+
+            Segment curToAim = new Segment( curNaviP.value.Pos, aimNaviP.value.Pos );
+
+            bool link = true;
+            foreach (Segment guardLine in guardLines)
+            {
+                if (Segment.IsCross( guardLine, curToAim ))
+                {
+                    if (MathTools.Vector2Cross( guardLine.endPoint - guardLine.startPoint, curNaviP.value.Pos - guardLine.endPoint ) < 0)
+                    {
+                        link = false;
+                        break;
+                    }
+                }
+            }
+
+            if (link)
+            {
+                foreach (Segment borderLine in borderLines)
+                {
+                    if (Segment.IsCross( borderLine, curToAim ))
+                    {
+                        link = false;
+                        break;
+                    }
+
+                }
+            }
+
+            if (link)
+            {
+                float weight = Vector2.Distance( curNaviP.value.Pos, aimNaviP.value.Pos );
+                GraphPoint<NaviPoint>.Link( curNaviP, aimNaviP, weight );
+            }
+        } 
+
+        #endregion
     }
 }
