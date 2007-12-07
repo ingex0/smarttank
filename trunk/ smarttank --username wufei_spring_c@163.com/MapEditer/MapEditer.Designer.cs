@@ -28,9 +28,17 @@
         /// </summary>
         private void InitializeComponent ()
         {
-            this.components = new System.ComponentModel.Container();
+            this.SuspendLayout();
+            // 
+            // MapEditer
+            // 
+            this.AutoScaleDimensions = new System.Drawing.SizeF( 6F, 12F );
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.ClientSize = new System.Drawing.Size( 941, 578 );
+            this.Name = "MapEditer";
             this.Text = "MapEditer";
+            this.ResumeLayout( false );
+
         }
 
         #endregion
