@@ -184,7 +184,8 @@ namespace InterRules.FindPath
             sceneKeeper = new SceneKeeperCommon();
 
             tank = new TankSinTur( new Platform.GameObjects.GameObjInfo( "Tank", string.Empty ),
-                new TankSkinSinTur( TankSkinSinTurData.M1A2 ), tankRaderDepth, tankRaderAng, Color.Wheat,
+                TankSinTur.M60TexPath, TankSinTur.M60Data,
+                tankRaderDepth, tankRaderAng, Color.Wheat,
                 tankMaxForwardSpd, tankMaxBackwardSpd, tankMaxRotaSpd, tankMaxRotaTurretSpd, tankMaxRotaRaderSpd,
                 0.3f, tankStartPos, tankStartAzi );
 

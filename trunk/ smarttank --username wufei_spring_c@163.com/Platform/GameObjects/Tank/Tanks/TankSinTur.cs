@@ -15,11 +15,25 @@ using Platform.GameObjects.Tank.TankAIs;
 using Platform.PhisicalCollision;
 using Platform.Senses.Memory;
 using GameBase.DataStructure;
+using System.IO;
 
 namespace Platform.GameObjects.Tank.Tanks
 {
     public class TankSinTur : Tank, IRaderOwner, IAIOrderServerSinTur, IEyeableObj
     {
+        #region Statics
+
+        static public string M1A2TexPath = Path.Combine( Directories.ItemDirectory, "Internal\\M1A2" );
+        static public GameObjData M1A2Data = GameObjData.Load( File.OpenRead( Path.Combine( M1A2TexPath, "M1A2.xml" ) ) );
+
+        static public string M60TexPath = Path.Combine( Directories.ItemDirectory, "Internal\\M60" );
+        static public GameObjData M60Data = GameObjData.Load( File.OpenRead( Path.Combine( M60TexPath, "M60.xml" ) ) );
+
+        static public string TigerTexPath = Path.Combine( Directories.ItemDirectory, "Internal\\Tiger" );
+        static public GameObjData TigerData = GameObjData.Load( File.OpenRead( Path.Combine( TigerTexPath, "Tiger.xml" ) ) );
+
+        #endregion
+
         #region Events
 
         public event ShootEventHandler onShoot;
@@ -168,14 +182,14 @@ namespace Platform.GameObjects.Tank.Tanks
 
         #region Consturction
 
-        public TankSinTur ( GameObjInfo objInfo, TankSkinSinTur skin,
+        public TankSinTur ( GameObjInfo objInfo, string texPath, GameObjData skinData,
             float raderLength, float raderAng, Color raderColor,
             float maxForwardSpeed, float maxBackwardSpeed, float maxRotaSpeed,
             float maxTurretRotaSpeed, float maxRaderRotaSpeed, float fireCDTime,
             Vector2 pos, float baseAzi )
         {
             this.objInfo = objInfo;
-            this.skin = skin;
+            this.skin = new TankSkinSinTur( new TankSkinSinTurData( texPath, skinData ) );
             skin.Initial( pos, baseAzi, 0 );
             controller = new TankContrSinTur( objInfo, new Sprite[] { skin.Sprites[0] } , pos, baseAzi, maxForwardSpeed, maxBackwardSpeed, maxRotaSpeed, maxTurretRotaSpeed, maxRaderRotaSpeed, Math.Max( 0, fireCDTime ) );
             colChecker = controller;
@@ -187,14 +201,14 @@ namespace Platform.GameObjects.Tank.Tanks
 
         }
 
-        public TankSinTur ( GameObjInfo objInfo, TankSkinSinTur skin,
+        public TankSinTur ( GameObjInfo objInfo, string texPath, GameObjData skinData,
             float raderLength, float raderAng, Color raderColor, float raderAzi,
             float maxForwardSpeed, float maxBackwardSpeed, float maxRotaSpeed,
             float maxTurretRotaSpeed, float maxRaderRotaSpeed, float fireCDTime,
             Vector2 pos, float baseRota, float turretRota )
         {
             this.objInfo = objInfo;
-            this.skin = skin;
+            this.skin = new TankSkinSinTur( new TankSkinSinTurData( texPath, skinData ) );
             skin.Initial( pos, baseRota, turretRota );
             controller = new TankContrSinTur( objInfo, new Sprite[] { skin.Sprites[0] } , pos, baseRota, maxForwardSpeed, maxBackwardSpeed, maxRotaSpeed, maxTurretRotaSpeed, maxRaderRotaSpeed, Math.Max( 0, fireCDTime ) );
             colChecker = controller;

@@ -58,6 +58,9 @@ namespace Platform.Senses.Memory
 
         public bool PointInConvex ( Vector2 p )
         {
+            if (points.Length < 3)
+                return false;
+
             float sign = 0;
             bool first = true;
             for (int i = 0; i < points.Length; i++)
@@ -181,16 +184,20 @@ namespace Platform.Senses.Memory
                 }
                 else if (bordPoints.Count == 2)
                 {
-                    convexHall = new GraphPoint<NaviPoint>[2];
+                    convexHall = new GraphPoint<NaviPoint>[4];
                     Vector2 startPos = Vector2.Transform( ConvertHelper.PointToVector2( bordPoints[0].p ), matrix );
                     Vector2 endPos = Vector2.Transform( ConvertHelper.PointToVector2( bordPoints[1].p ), matrix );
                     Vector2 dir = endPos - startPos;
+                    dir.Normalize();
                     Vector2 normal = new Vector2( dir.Y, -dir.X );
-                    normal.Normalize();
                     convexHall[0] = new GraphPoint<NaviPoint>(
-                        new NaviPoint( obj, bordPoints[0].index, startPos + spaceForTank * normal ), new List<GraphPath<NaviPoint>>() );
+                        new NaviPoint( obj, bordPoints[0].index, startPos - dir * spaceForTank ), new List<GraphPath<NaviPoint>>() );
                     convexHall[1] = new GraphPoint<NaviPoint>(
+                        new NaviPoint( obj, bordPoints[0].index, startPos + spaceForTank * normal ), new List<GraphPath<NaviPoint>>() );
+                    convexHall[2] = new GraphPoint<NaviPoint>(
                         new NaviPoint( obj, bordPoints[1].index, endPos + spaceForTank * normal ), new List<GraphPath<NaviPoint>>() );
+                    convexHall[3] = new GraphPoint<NaviPoint>(
+                        new NaviPoint( obj, bordPoints[1].index, endPos + dir * spaceForTank ), new List<GraphPath<NaviPoint>>() );
 
                     //if (float.IsNaN( convexHall[0].value.Pos.X ) || float.IsNaN( convexHall[1].value.Pos.X ))
                     //{

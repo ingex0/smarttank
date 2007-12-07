@@ -194,7 +194,7 @@ namespace InterRules.ShootTheBall
 
         private void SceneInitial ()
         {
-            tank = new TankSinTur( new GameObjInfo( "Tank", "Player" ), new TankSkinSinTur( TankSkinSinTurData.M60 ),
+            tank = new TankSinTur( new GameObjInfo( "Tank", "Player" ), TankSinTur.M60TexPath, TankSinTur.M60Data,
                 170, MathHelper.PiOver4, Color.Yellow,
                 0f, 80, 60, 0.6f * MathHelper.Pi, 0.5f * MathHelper.Pi, MathHelper.Pi, 2f,
                 new Vector2( 100, 50 ), 0, 0 );

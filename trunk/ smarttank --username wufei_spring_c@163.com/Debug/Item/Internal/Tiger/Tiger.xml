@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <GameObjData>
   <Name>Tiger</Name>
-  <Creater>Internal</Creater>
+  <Creater>new</Creater>
   <Year>2007</Year>
   <Month>12</Month>
   <Day>2</Day>
@@ -49,6 +49,14 @@
         <Y>62.17106</Y>
       </Vector2>
     </StructKeyPoints>
+    <intDatas>
+      <count>1</count>
+      <int>2</int>
+    </intDatas>
+    <floatDatas>
+      <count>1</count>
+      <float>0.12</float>
+    </floatDatas>
     <Childs>
       <count>1</count>
       <GameObjDataNode>
@@ -67,6 +75,12 @@
             <Y>101.094</Y>
           </Vector2>
         </StructKeyPoints>
+        <intDatas>
+          <count>0</count>
+        </intDatas>
+        <floatDatas>
+          <count>0</count>
+        </floatDatas>
         <Childs>
           <count>0</count>
         </Childs>

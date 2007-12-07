@@ -17,6 +17,10 @@ namespace Platform.GameObjects
         public List<Vector2> visiKeyPoints;
         public List<Vector2> structKeyPoints;
 
+        // 暂时只添加这两类数据格式
+        public List<int> intDatas;
+        public List<float> floatDatas;
+
         public GameObjDataNode parent;
         public List<GameObjDataNode> childNodes;
 
@@ -26,6 +30,9 @@ namespace Platform.GameObjects
             visiKeyPoints = new List<Vector2>();
             structKeyPoints = new List<Vector2>();
             childNodes = new List<GameObjDataNode>();
+
+            intDatas = new List<int>();
+            floatDatas = new List<float>();
         }
 
         public GameObjDataNode ( string nodeName )
@@ -111,6 +118,22 @@ namespace Platform.GameObjects
             }
             writer.WriteEndElement();
 
+            writer.WriteStartElement( "intDatas" );
+            writer.WriteElementString( "count", intDatas.Count.ToString() );
+            foreach (int i in intDatas)
+            {
+                writer.WriteElementString( "int", i.ToString() );
+            }
+            writer.WriteEndElement();
+
+            writer.WriteStartElement( "floatDatas" );
+            writer.WriteElementString( "count", floatDatas.Count.ToString() );
+            foreach (float f in floatDatas)
+            {
+                writer.WriteElementString( "float", f.ToString() );
+            }
+            writer.WriteEndElement();
+
             writer.WriteStartElement( "Childs" );
             writer.WriteElementString( "count", childNodes.Count.ToString() );
             foreach (GameObjDataNode child in childNodes)
@@ -161,6 +184,22 @@ namespace Platform.GameObjects
                 reader.ReadEndElement();
 
                 result.structKeyPoints.Add( new Vector2( x, y ) );
+            }
+            reader.ReadEndElement();
+
+            reader.ReadStartElement( "intDatas" );
+            int countInt = int.Parse( reader.ReadElementString( "count" ) );
+            for (int i = 0; i < countInt; i++)
+            {
+                result.intDatas.Add( int.Parse( reader.ReadElementString( "int" ) ) );
+            }
+            reader.ReadEndElement();
+
+            reader.ReadStartElement( "floatDatas" );
+            int countFloat = int.Parse( reader.ReadElementString( "count" ) );
+            for (int i = 0; i < countFloat; i++)
+            {
+                result.floatDatas.Add( float.Parse( reader.ReadElementString( "float" ) ) );
             }
             reader.ReadEndElement();
 

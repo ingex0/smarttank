@@ -400,6 +400,42 @@ namespace GameObjEditer
                 curStructPointIndex++;
             }
 
+            public List<int> IntDatas
+            {
+                get { return dateNode.intDatas; }
+            }
+
+            public List<float> FloatDatas
+            {
+                get { return dateNode.floatDatas; }
+            }
+
+            public void AddIntData ( int value )
+            {
+                dateNode.intDatas.Add( value );
+            }
+
+            public void AddFloatData ( float value )
+            {
+                dateNode.floatDatas.Add( value );
+            }
+
+            public void DelIntData ( int index )
+            {
+                if (dateNode.intDatas.Count > index)
+                {
+                    dateNode.intDatas.RemoveAt( index );
+                }
+            }
+
+            public void DelFloatData ( int index )
+            {
+                if (dateNode.floatDatas.Count > index)
+                {
+                    dateNode.floatDatas.RemoveAt( index );
+                }
+            }
+
             #region IEnumerable<TreeNodeEnum> 成员
 
             public IEnumerator<TreeNodeNode> GetEnumerator ()
@@ -438,11 +474,26 @@ namespace GameObjEditer
         ContextMenuStrip texListMenuStrip;
         ContextMenuStrip pictureMenuStrip;
         ContextMenuStrip pointMenuStrip;
+        ContextMenuStrip dataMenuStrip;
+
 
         TreeNode CurTreeNode
         {
             get { return treeView.SelectedNode; }
             set { treeView.SelectedNode = value; }
+        }
+
+        TreeNodeNode CurNodeNode
+        {
+            get
+            {
+                if (CurTreeNode != null && CurTreeNode is TreeNodeNode)
+                {
+                    return (TreeNodeNode)CurTreeNode;
+                }
+                else
+                    return null;
+            }
         }
 
         TreeNodeObj CurTreeObj
@@ -523,6 +574,8 @@ namespace GameObjEditer
             Texture,
             VisiPoint,
             StructPoint,
+            IntData,
+            FloatData,
         }
 
         TabState CurTabState
@@ -537,9 +590,17 @@ namespace GameObjEditer
                 {
                     return TabState.VisiPoint;
                 }
-                else
+                else if (tabControl1.SelectedTab == structPointTab)
                 {
                     return TabState.StructPoint;
+                }
+                else if (tabControl1.SelectedTab == intDataTab)
+                {
+                    return TabState.IntData;
+                }
+                else
+                {
+                    return TabState.FloatData;
                 }
             }
         }
@@ -562,6 +623,9 @@ namespace GameObjEditer
             InitialTexContentMenu();
             InitialPictureBoxContentMenu();
             InitialPointContentMenu();
+
+            InitialDataListContentMenu();
+
             pictureBox.LastPaint += new PaintEventHandler( pictureBox_LastPaint );
 
         }
@@ -599,6 +663,7 @@ namespace GameObjEditer
             UpdateStructList();
             UpdatePointContentMenu();
             UpdateStatusBar();
+            UpdateDataList();
         }
 
         private void tabControl1_SelectedIndexChanged ( object sender, EventArgs e )
@@ -1224,7 +1289,7 @@ namespace GameObjEditer
 
 
 
-                string savePath = Path.Combine( Directories.ItemDirectory, curObj.obj.creater); 
+                string savePath = Path.Combine( Directories.ItemDirectory, curObj.obj.creater );
 
                 if (!Directory.Exists( savePath ))
                 {
@@ -1243,6 +1308,15 @@ namespace GameObjEditer
                     int i = 0;
                     foreach (Texture2D texture in node.Textures)
                     {
+                        string saveFile = Path.Combine( savePath, node.TexNames[i] );
+                        if (File.Exists( saveFile ))
+                        {
+                            DialogResult result = MessageBox.Show( "贴图文件已存在，是否覆盖？", "文件已存在", MessageBoxButtons.YesNo );
+                            if (result == DialogResult.No)
+                                return;
+                            else
+                                File.Delete( saveFile );
+                        }
                         texture.Save( Path.Combine( savePath, node.TexNames[i] ), ImageFileFormat.Png );
                         i++;
                     }
@@ -1251,7 +1325,7 @@ namespace GameObjEditer
                 string filePath = Path.Combine( savePath, curObj.obj.name + ".xml" );
                 if (File.Exists( filePath ))
                 {
-                    DialogResult result = MessageBox.Show( "filePath文件已存在，是否覆盖？", "文件已存在", MessageBoxButtons.YesNo );
+                    DialogResult result = MessageBox.Show( "XML文件已存在，是否覆盖？", "文件已存在", MessageBoxButtons.YesNo );
                     if (result == DialogResult.No)
                         return;
                     else
@@ -1623,6 +1697,127 @@ namespace GameObjEditer
                 }
             }
 
+
+        }
+
+        #endregion
+
+        #region IntList
+
+        private void InitialDataListContentMenu ()
+        {
+            dataMenuStrip = new ContextMenuStrip();
+
+            ToolStripMenuItem addData = new ToolStripMenuItem();
+            addData.Name = "添加新数据";
+            addData.Text = "添加新数据";
+
+            ToolStripMenuItem delData = new ToolStripMenuItem();
+            delData.Name = "删除数据";
+            delData.Text = "删除数据";
+
+            addData.Click += new EventHandler( addData_Click );
+            delData.Click += new EventHandler( delData_Click );
+
+            dataMenuStrip.Items.AddRange( new ToolStripItem[] { addData, delData } );
+
+            listViewInt.ContextMenuStrip = dataMenuStrip;
+            listViewFloat.ContextMenuStrip = dataMenuStrip;
+        }
+
+        void delData_Click ( object sender, EventArgs e )
+        {
+            if (CurTabState == TabState.IntData)
+            {
+                if (listViewInt.SelectedIndices.Count > 0 && CurNodeNode != null)
+                {
+                    int delIndex = listViewInt.SelectedIndices[0];
+                    CurNodeNode.DelIntData( delIndex );
+                }
+            }
+            else if (CurTabState == TabState.FloatData)
+            {
+                if (listViewFloat.SelectedIndices.Count > 0 && CurNodeNode != null)
+                {
+                    int delIndex = listViewFloat.SelectedIndices[0];
+                    CurNodeNode.DelFloatData( delIndex );
+                }
+            }
+            UpdateComponent();
+        }
+
+        void addData_Click ( object sender, EventArgs e )
+        {
+            if (CurTabState == TabState.IntData)
+            {
+                if (CurNodeNode != null)
+                {
+                    EnterNumber enter = new EnterNumber();
+                    enter.ShowDialog();
+                    int value = new int();
+                    try
+                    {
+                        value = int.Parse( enter.NumberText );
+                    }
+                    catch (Exception)
+                    {
+                        MessageBox.Show( "输入格式错误！" );
+                        return;
+                    }
+                    CurNodeNode.AddIntData( value );
+                }
+            }
+            else if (CurTabState == TabState.FloatData)
+            {
+                if (CurNodeNode != null)
+                {
+                    EnterNumber enter = new EnterNumber();
+                    enter.ShowDialog();
+                    float value = new float();
+                    try
+                    {
+                        value = float.Parse( enter.NumberText );
+                    }
+                    catch (Exception)
+                    {
+                        MessageBox.Show( "输入格式错误！" );
+                        return;
+                    }
+                    CurNodeNode.AddFloatData( value );
+                }
+            }
+            UpdateComponent();
+        }
+
+        void UpdateDataList ()
+        {
+            listViewInt.Items.Clear();
+
+            if (CurNodeNode != null)
+            {
+                int index = 0;
+                foreach (int i in CurNodeNode.IntDatas)
+                {
+                    ListViewItem newItem = new ListViewItem( index.ToString() );
+                    newItem.SubItems.Add( i.ToString() );
+                    listViewInt.Items.Add( newItem );
+                    index++;
+                }
+            }
+
+            listViewFloat.Items.Clear();
+
+            if (CurNodeNode != null)
+            {
+                int index = 0;
+                foreach (float f in CurNodeNode.FloatDatas)
+                {
+                    ListViewItem newItem = new ListViewItem( index.ToString() );
+                    newItem.SubItems.Add( f.ToString() );
+                    listViewFloat.Items.Add( newItem );
+                    index++;
+                }
+            }
 
         }
 

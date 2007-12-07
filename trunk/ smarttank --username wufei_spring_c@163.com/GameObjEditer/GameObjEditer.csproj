@@ -69,6 +69,14 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="EnterNumber.cs">
+      <SubType>Form</SubType>
+      <XNAUseContentPipeline>false</XNAUseContentPipeline>
+      <Name>EnterNumber</Name>
+    </Compile>
+    <Compile Include="EnterNumber.Designer.cs">
+      <DependentUpon>EnterNumber.cs</DependentUpon>
+    </Compile>
     <Compile Include="EnterYourName.cs">
       <SubType>Form</SubType>
       <XNAUseContentPipeline>false</XNAUseContentPipeline>
@@ -107,6 +115,12 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="EnterNumber.resx">
+      <SubType>Designer</SubType>
+      <XNAUseContentPipeline>false</XNAUseContentPipeline>
+      <Name>EnterNumber</Name>
+      <DependentUpon>EnterNumber.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="EnterYourName.resx">
       <SubType>Designer</SubType>
       <XNAUseContentPipeline>false</XNAUseContentPipeline>

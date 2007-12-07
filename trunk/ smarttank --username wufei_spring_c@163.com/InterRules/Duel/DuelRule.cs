@@ -263,11 +263,11 @@ namespace InterRules.Duel
 
         private void SceneInitial ()
         {
-            tank1 = new DuelTank( TankSkinSinTurData.M60, new Vector2( mapSize.X + 150 + RandomHelper.GetRandomFloat( -40, 40 ),
+            tank1 = new DuelTank( TankSinTur.M60TexPath, TankSinTur.M60Data, new Vector2( mapSize.X + 150 + RandomHelper.GetRandomFloat( -40, 40 ),
                 mapSize.Y + 60 + RandomHelper.GetRandomFloat( -10, 10 ) ),
                 MathHelper.Pi + RandomHelper.GetRandomFloat( -MathHelper.PiOver4, MathHelper.PiOver4 ),
                 "Tank1", tankRaderLength, tankMaxForwardSpd, tankMaxBackwardSpd, 10 );
-            tank2 = new DuelTank( TankSkinSinTurData.M1A2, new Vector2( mapSize.X + 150 + RandomHelper.GetRandomFloat( -40, 40 ),
+            tank2 = new DuelTank( TankSinTur.M1A2TexPath, TankSinTur.M1A2Data, new Vector2( mapSize.X + 150 + RandomHelper.GetRandomFloat( -40, 40 ),
                 mapSize.Y + 160 + RandomHelper.GetRandomFloat( -10, 10 ) ),
                 RandomHelper.GetRandomFloat( -MathHelper.PiOver4, MathHelper.PiOver4 ),
                 "Tank2", tankRaderLength, tankMaxForwardSpd, tankMaxBackwardSpd, 10 );
@@ -488,12 +488,12 @@ namespace InterRules.Duel
 
         public SmokeGenerater smoke;
 
-        public DuelTank ( TankSkinSinTurData skinData, Vector2 pos, float Azi, string tankName,
+        public DuelTank ( string texPath, GameObjData skinData, Vector2 pos, float Azi, string tankName,
             float tankRaderLength, float tankMaxForwardSpd, float tankMaxBackwardSpd,
             float live )
-            : base( new GameObjInfo( "DuelTank", tankName ) , new TankSkinSinTur( skinData ) ,
-                tankRaderLength, MathHelper .Pi * 0.15f , Color.Yellow ,
-                tankMaxForwardSpd, tankMaxBackwardSpd , MathHelper.PiOver4 , MathHelper .PiOver4 , MathHelper.Pi, 0.8f, pos, Azi )
+            : base( new GameObjInfo( "DuelTank", tankName ), texPath, skinData,
+                tankRaderLength, MathHelper. Pi * 0.15f, Color. Yellow,
+                tankMaxForwardSpd, tankMaxBackwardSpd, MathHelper.PiOver4, MathHelper.PiOver4, MathHelper. Pi, 0.8f, pos, Azi )
         {
             this.live = live;
             smoke = new SmokeGenerater( 0, 30, Vector2.Zero, 0.3f, 0, false, this );

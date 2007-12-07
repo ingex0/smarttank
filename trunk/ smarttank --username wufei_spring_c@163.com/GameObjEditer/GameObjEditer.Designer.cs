@@ -40,6 +40,9 @@
             this.toolStripContainer1 = new System.Windows.Forms.ToolStripContainer();
             this.statusStrip = new System.Windows.Forms.StatusStrip();
             this.toolStripStatusBaseInfo = new System.Windows.Forms.ToolStripStatusLabel();
+            this.toolStripStatusLabelEdit = new System.Windows.Forms.ToolStripStatusLabel();
+            this.toolStripStatusAlpha = new System.Windows.Forms.ToolStripStatusLabel();
+            this.toolStripStatusLabelEditState = new System.Windows.Forms.ToolStripStatusLabel();
             this.toolStripStatusMousePos = new System.Windows.Forms.ToolStripStatusLabel();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
             this.splitContainer2 = new System.Windows.Forms.SplitContainer();
@@ -61,9 +64,14 @@
             this.toolStrip = new System.Windows.Forms.ToolStrip();
             this.openTexDialog = new System.Windows.Forms.OpenFileDialog();
             this.openGameObjDialog = new System.Windows.Forms.OpenFileDialog();
-            this.toolStripStatusLabelEdit = new System.Windows.Forms.ToolStripStatusLabel();
-            this.toolStripStatusLabelEditState = new System.Windows.Forms.ToolStripStatusLabel();
-            this.toolStripStatusAlpha = new System.Windows.Forms.ToolStripStatusLabel();
+            this.intDataTab = new System.Windows.Forms.TabPage();
+            this.floatDataTab = new System.Windows.Forms.TabPage();
+            this.listViewInt = new System.Windows.Forms.ListView();
+            this.intIndex = new System.Windows.Forms.ColumnHeader();
+            this.intValue = new System.Windows.Forms.ColumnHeader();
+            this.listViewFloat = new System.Windows.Forms.ListView();
+            this.floatIndex = new System.Windows.Forms.ColumnHeader();
+            this.floatValue = new System.Windows.Forms.ColumnHeader();
             this.menuStrip.SuspendLayout();
             this.toolStripContainer1.BottomToolStripPanel.SuspendLayout();
             this.toolStripContainer1.ContentPanel.SuspendLayout();
@@ -81,6 +89,8 @@
             this.visiPointTab.SuspendLayout();
             this.structPointTab.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox)).BeginInit();
+            this.intDataTab.SuspendLayout();
+            this.floatDataTab.SuspendLayout();
             this.SuspendLayout();
             // 
             // menuStrip
@@ -192,6 +202,21 @@
             this.toolStripStatusBaseInfo.Name = "toolStripStatusBaseInfo";
             this.toolStripStatusBaseInfo.Size = new System.Drawing.Size( 0, 17 );
             // 
+            // toolStripStatusLabelEdit
+            // 
+            this.toolStripStatusLabelEdit.Name = "toolStripStatusLabelEdit";
+            this.toolStripStatusLabelEdit.Size = new System.Drawing.Size( 0, 17 );
+            // 
+            // toolStripStatusAlpha
+            // 
+            this.toolStripStatusAlpha.Name = "toolStripStatusAlpha";
+            this.toolStripStatusAlpha.Size = new System.Drawing.Size( 0, 17 );
+            // 
+            // toolStripStatusLabelEditState
+            // 
+            this.toolStripStatusLabelEditState.Name = "toolStripStatusLabelEditState";
+            this.toolStripStatusLabelEditState.Size = new System.Drawing.Size( 0, 17 );
+            // 
             // toolStripStatusMousePos
             // 
             this.toolStripStatusMousePos.Name = "toolStripStatusMousePos";
@@ -249,8 +274,11 @@
             this.tabControl1.Controls.Add( this.texTab );
             this.tabControl1.Controls.Add( this.visiPointTab );
             this.tabControl1.Controls.Add( this.structPointTab );
+            this.tabControl1.Controls.Add( this.intDataTab );
+            this.tabControl1.Controls.Add( this.floatDataTab );
             this.tabControl1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tabControl1.Location = new System.Drawing.Point( 0, 0 );
+            this.tabControl1.Multiline = true;
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
             this.tabControl1.Size = new System.Drawing.Size( 236, 263 );
@@ -260,10 +288,10 @@
             // texTab
             // 
             this.texTab.Controls.Add( this.listViewTex );
-            this.texTab.Location = new System.Drawing.Point( 4, 21 );
+            this.texTab.Location = new System.Drawing.Point( 4, 38 );
             this.texTab.Name = "texTab";
             this.texTab.Padding = new System.Windows.Forms.Padding( 3 );
-            this.texTab.Size = new System.Drawing.Size( 228, 238 );
+            this.texTab.Size = new System.Drawing.Size( 228, 221 );
             this.texTab.TabIndex = 0;
             this.texTab.Text = "贴图";
             this.texTab.UseVisualStyleBackColor = true;
@@ -280,7 +308,7 @@
             this.listViewTex.Location = new System.Drawing.Point( 3, 3 );
             this.listViewTex.MultiSelect = false;
             this.listViewTex.Name = "listViewTex";
-            this.listViewTex.Size = new System.Drawing.Size( 222, 232 );
+            this.listViewTex.Size = new System.Drawing.Size( 222, 215 );
             this.listViewTex.TabIndex = 0;
             this.listViewTex.UseCompatibleStateImageBehavior = false;
             this.listViewTex.View = System.Windows.Forms.View.Details;
@@ -299,10 +327,10 @@
             // visiPointTab
             // 
             this.visiPointTab.Controls.Add( this.listViewVisi );
-            this.visiPointTab.Location = new System.Drawing.Point( 4, 21 );
+            this.visiPointTab.Location = new System.Drawing.Point( 4, 38 );
             this.visiPointTab.Name = "visiPointTab";
             this.visiPointTab.Padding = new System.Windows.Forms.Padding( 3 );
-            this.visiPointTab.Size = new System.Drawing.Size( 228, 238 );
+            this.visiPointTab.Size = new System.Drawing.Size( 228, 221 );
             this.visiPointTab.TabIndex = 1;
             this.visiPointTab.Text = "可视关键点";
             this.visiPointTab.UseVisualStyleBackColor = true;
@@ -319,7 +347,7 @@
             this.listViewVisi.Location = new System.Drawing.Point( 3, 3 );
             this.listViewVisi.MultiSelect = false;
             this.listViewVisi.Name = "listViewVisi";
-            this.listViewVisi.Size = new System.Drawing.Size( 222, 232 );
+            this.listViewVisi.Size = new System.Drawing.Size( 222, 215 );
             this.listViewVisi.TabIndex = 0;
             this.listViewVisi.UseCompatibleStateImageBehavior = false;
             this.listViewVisi.View = System.Windows.Forms.View.Details;
@@ -411,20 +439,73 @@
             this.openGameObjDialog.Filter = "\"xml文件|*.xml";
             this.openGameObjDialog.FileOk += new System.ComponentModel.CancelEventHandler( this.openGameObjDialog_FileOk );
             // 
-            // toolStripStatusLabelEdit
+            // intDataTab
             // 
-            this.toolStripStatusLabelEdit.Name = "toolStripStatusLabelEdit";
-            this.toolStripStatusLabelEdit.Size = new System.Drawing.Size( 0, 17 );
+            this.intDataTab.Controls.Add( this.listViewInt );
+            this.intDataTab.Location = new System.Drawing.Point( 4, 38 );
+            this.intDataTab.Name = "intDataTab";
+            this.intDataTab.Padding = new System.Windows.Forms.Padding( 3 );
+            this.intDataTab.Size = new System.Drawing.Size( 228, 221 );
+            this.intDataTab.TabIndex = 3;
+            this.intDataTab.Text = "IntDatas";
+            this.intDataTab.UseVisualStyleBackColor = true;
             // 
-            // toolStripStatusLabelEditState
+            // floatDataTab
             // 
-            this.toolStripStatusLabelEditState.Name = "toolStripStatusLabelEditState";
-            this.toolStripStatusLabelEditState.Size = new System.Drawing.Size( 0, 17 );
+            this.floatDataTab.Controls.Add( this.listViewFloat );
+            this.floatDataTab.Location = new System.Drawing.Point( 4, 38 );
+            this.floatDataTab.Name = "floatDataTab";
+            this.floatDataTab.Padding = new System.Windows.Forms.Padding( 3 );
+            this.floatDataTab.Size = new System.Drawing.Size( 228, 221 );
+            this.floatDataTab.TabIndex = 4;
+            this.floatDataTab.Text = "FloatDatas";
+            this.floatDataTab.UseVisualStyleBackColor = true;
             // 
-            // toolStripStatusAlpha
+            // listViewInt
             // 
-            this.toolStripStatusAlpha.Name = "toolStripStatusAlpha";
-            this.toolStripStatusAlpha.Size = new System.Drawing.Size( 0, 17 );
+            this.listViewInt.Columns.AddRange( new System.Windows.Forms.ColumnHeader[] {
+            this.intIndex,
+            this.intValue} );
+            this.listViewInt.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.listViewInt.FullRowSelect = true;
+            this.listViewInt.Location = new System.Drawing.Point( 3, 3 );
+            this.listViewInt.Name = "listViewInt";
+            this.listViewInt.Size = new System.Drawing.Size( 222, 215 );
+            this.listViewInt.TabIndex = 0;
+            this.listViewInt.UseCompatibleStateImageBehavior = false;
+            this.listViewInt.View = System.Windows.Forms.View.Details;
+            // 
+            // intIndex
+            // 
+            this.intIndex.Text = "Index";
+            this.intIndex.Width = 80;
+            // 
+            // intValue
+            // 
+            this.intValue.Text = "Value";
+            this.intValue.Width = 127;
+            // 
+            // listViewFloat
+            // 
+            this.listViewFloat.Columns.AddRange( new System.Windows.Forms.ColumnHeader[] {
+            this.floatIndex,
+            this.floatValue} );
+            this.listViewFloat.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.listViewFloat.FullRowSelect = true;
+            this.listViewFloat.Location = new System.Drawing.Point( 3, 3 );
+            this.listViewFloat.Name = "listViewFloat";
+            this.listViewFloat.Size = new System.Drawing.Size( 222, 215 );
+            this.listViewFloat.TabIndex = 0;
+            this.listViewFloat.UseCompatibleStateImageBehavior = false;
+            this.listViewFloat.View = System.Windows.Forms.View.Details;
+            // 
+            // floatIndex
+            // 
+            this.floatIndex.Text = "Index";
+            // 
+            // floatValue
+            // 
+            this.floatValue.Text = "Value";
             // 
             // GameObjEditer
             // 
@@ -458,6 +539,8 @@
             this.visiPointTab.ResumeLayout( false );
             this.structPointTab.ResumeLayout( false );
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox)).EndInit();
+            this.intDataTab.ResumeLayout( false );
+            this.floatDataTab.ResumeLayout( false );
             this.ResumeLayout( false );
             this.PerformLayout();
 
@@ -500,5 +583,13 @@
         private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabelEdit;
         private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabelEditState;
         private System.Windows.Forms.ToolStripStatusLabel toolStripStatusAlpha;
+        private System.Windows.Forms.TabPage intDataTab;
+        private System.Windows.Forms.TabPage floatDataTab;
+        private System.Windows.Forms.ListView listViewInt;
+        private System.Windows.Forms.ColumnHeader intIndex;
+        private System.Windows.Forms.ColumnHeader intValue;
+        private System.Windows.Forms.ListView listViewFloat;
+        private System.Windows.Forms.ColumnHeader floatIndex;
+        private System.Windows.Forms.ColumnHeader floatValue;
     }
 }

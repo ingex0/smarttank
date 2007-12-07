@@ -10,8 +10,9 @@ using GameBase;
 
 namespace Platform.GameObjects.Tank.TankSkins
 {
-    public class TankSkinSinTur
+    class TankSkinSinTur
     {
+
         #region Variables
 
         TankSkinSinTurData data;

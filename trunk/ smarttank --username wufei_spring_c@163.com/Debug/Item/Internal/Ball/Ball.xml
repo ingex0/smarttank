@@ -77,6 +77,12 @@
         <Y>125.3457</Y>
       </Vector2>
     </StructKeyPoints>
+    <intDatas>
+      <count>0</count>
+    </intDatas>
+    <floatDatas>
+      <count>0</count>
+    </floatDatas>
     <Childs>
       <count>0</count>
     </Childs>

@@ -7,8 +7,10 @@ using GameBase.Helpers;
 
 namespace Platform.GameObjects.Tank.TankSkins
 {
-    public struct TankSkinSinTurData
+    struct TankSkinSinTurData
     {
+        #region Old Code
+
         //public static TankSkinSinTurData M1A2 = new TankSkinSinTurData(
         //    "M1A2\\base", "M1A2\\turret", 0.1f,
         //    new Vector2( 43, 100 ), new Vector2( 43, 100 ), new Vector2( 38, 145 ), 145,
@@ -22,35 +24,37 @@ namespace Platform.GameObjects.Tank.TankSkins
         //    "M60\\base", "M60\\turret", 0.1f,
         //    new Vector2( 41, 81 ), new Vector2( 41, 68 ), new Vector2( 35, 131 ), 131, 3, 7, 2 );
 
-        public static TankSkinSinTurData M1A2 = CreateM1A2();
+        //public static TankSkinSinTurData M1A2 = CreateM1A2();
 
-        public static TankSkinSinTurData Tiger = CreateTiger();
+        //public static TankSkinSinTurData Tiger = CreateTiger();
 
-        public static TankSkinSinTurData M60 = CreateM60();
+        //public static TankSkinSinTurData M60 = CreateM60();
 
-        private static TankSkinSinTurData CreateM1A2 ()
-        {
-            string path = Path.Combine( Directories.ItemDirectory, "Internal\\M1A2" );
-            GameObjData data = GameObjData.Load( File.OpenRead( Path.Combine( path, "M1A2.xml" ) ) );
+        //private static TankSkinSinTurData CreateM1A2 ()
+        //{
+        //    string path = Path.Combine( Directories.ItemDirectory, "Internal\\M1A2" );
+        //    GameObjData data = GameObjData.Load( File.OpenRead( Path.Combine( path, "M1A2.xml" ) ) );
 
-            return new TankSkinSinTurData( path, data, 0.1f, 3, 7, 2 );
-        }
+        //    return new TankSkinSinTurData( path, data );
+        //}
 
-        private static TankSkinSinTurData CreateTiger ()
-        {
-            string path = Path.Combine( Directories.ItemDirectory, "Internal\\Tiger" );
-            GameObjData data = GameObjData.Load( File.OpenRead( Path.Combine( path, "Tiger.xml" ) ) );
+        //private static TankSkinSinTurData CreateTiger ()
+        //{
+        //    string path = Path.Combine( Directories.ItemDirectory, "Internal\\Tiger" );
+        //    GameObjData data = GameObjData.Load( File.OpenRead( Path.Combine( path, "Tiger.xml" ) ) );
 
-            return new TankSkinSinTurData( path, data, 0.12f, 3, 7, 2 );
-        }
+        //    return new TankSkinSinTurData( path, data );
+        //}
 
-        private static TankSkinSinTurData CreateM60 ()
-        {
-            string path = Path.Combine( Directories.ItemDirectory, "Internal\\M60" );
-            GameObjData data = GameObjData.Load( File.OpenRead( Path.Combine( path, "M60.xml" ) ) );
+        //private static TankSkinSinTurData CreateM60 ()
+        //{
+        //    string path = Path.Combine( Directories.ItemDirectory, "Internal\\M60" );
+        //    GameObjData data = GameObjData.Load( File.OpenRead( Path.Combine( path, "M60.xml" ) ) );
 
-            return new TankSkinSinTurData( path, data, 0.1f, 3, 7, 2 );
-        }
+        //    return new TankSkinSinTurData( path, data );
+        //}
+
+        #endregion
 
         #region Variables
 
@@ -96,10 +100,10 @@ namespace Platform.GameObjects.Tank.TankSkins
             this.visiKeyPoints = visiKeyPoints;
         }
 
-        public TankSkinSinTurData ( string texPath, GameObjData data, float texScale, int backFrame, int recoilFrame, float recoilTexes )
-            : this( Path.Combine( texPath, data.baseNode.texPaths[0] ), Path.Combine( texPath, data.baseNode.childNodes[0].texPaths[0] ), texScale,
+        public TankSkinSinTurData ( string texPath, GameObjData data )
+            : this( Path.Combine( texPath, data.baseNode.texPaths[0] ), Path.Combine( texPath, data.baseNode.childNodes[0].texPaths[0] ), data.baseNode.floatDatas[0],
             data.baseNode.structKeyPoints[0], data.baseNode.structKeyPoints[1], data.baseNode.childNodes[0].structKeyPoints[0],
-            data.baseNode.childNodes[0].structKeyPoints[0].Y, data.baseNode.visiKeyPoints.ToArray(), backFrame, recoilFrame, recoilTexes )
+            data.baseNode.childNodes[0].structKeyPoints[0].Y, data.baseNode.visiKeyPoints.ToArray(), 3, 7, data.baseNode.intDatas[0] )
         {
 
         }
