@@ -18,6 +18,7 @@ namespace Platform.Scene
      * 具体化碰撞关系和遮挡关系。适用一般情况。
      * 
      * */
+    [Obsolete("该场景管理类的设计存在问题，将要删除")]
     public class SceneKeeperCommon : ISceneKeeper
     {
         #region Keepers

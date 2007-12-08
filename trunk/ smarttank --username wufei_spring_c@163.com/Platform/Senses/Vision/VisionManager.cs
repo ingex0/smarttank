@@ -18,6 +18,7 @@ namespace Platform.Senses.Vision
     {
         #region Private type
 
+        [Obsolete]
         struct BinGroup
         {
             public IEnumerable<IRaderOwner> raderOwners;
@@ -29,24 +30,46 @@ namespace Platform.Senses.Vision
             }
         }
 
+        struct BinGroupBeta
+        {
+            public IEnumerable<IRaderOwner> raderOwners;
+            public IEnumerable<IEyeableObj> eyeableObjs;
+
+            public BinGroupBeta ( IEnumerable<IRaderOwner> raderOwners, IEnumerable<IEyeableObj> eyeableObjs )
+            {
+                this.raderOwners = raderOwners;
+                this.eyeableObjs = eyeableObjs;
+            }
+        }
+
         #endregion
 
         #region Variables
 
+        [Obsolete]
         List<BinGroup> groups = new List<BinGroup>();
+
+        List<BinGroupBeta> groupsBeta = new List<BinGroupBeta>();
 
         #endregion
 
         #region Public Methods
 
+        [Obsolete( "修改了IEyeableObj接口，现在将由IEyeableObj保存GetEyeableInfoHandler" )]
         public void AddVisionGroup ( IEnumerable<IRaderOwner> raderOwners, IEnumerable<KeyValuePair<IEyeableObj, GetEyeableInfoHandler>> set )
         {
             groups.Add( new BinGroup( raderOwners, set ) );
         }
 
+        public void AddVisionGroup ( IEnumerable<IRaderOwner> raderOwners, IEnumerable<IEyeableObj> eyeableObjs )
+        {
+            groupsBeta.Add( new BinGroupBeta( raderOwners, eyeableObjs ) );
+        }
+
         public void ClearGroups ()
         {
             groups.Clear();
+            groupsBeta.Clear();
         }
 
         #endregion
@@ -65,6 +88,7 @@ namespace Platform.Senses.Vision
 
         }
 
+        [Obsolete]
         private static void CheckVisible ( BinGroup group, IRaderOwner raderOwner )
         {
             List<IEyeableInfo> inRaderObjInfos = new List<IEyeableInfo>();
@@ -118,11 +142,64 @@ namespace Platform.Senses.Vision
             }
 
             raderOwner.Rader.CurEyeableObjs = inRaderObjInfos;
-
             raderOwner.Rader.EyeableBorderObjInfos = EyeableBorderObjs.ToArray();
+        }
 
+        /*
+         * 将作为CheckVisible的替代，尚未测试。
+         * */
+        private static void CheckVisibleBeta ( BinGroupBeta group, IRaderOwner raderOwner )
+        {
+            List<IEyeableInfo> inRaderObjInfos = new List<IEyeableInfo>();
 
+            List<EyeableBorderObjInfo> EyeableBorderObjs = new List<EyeableBorderObjInfo>();
 
+            foreach (IEyeableObj obj in group.eyeableObjs)
+            {
+                if (raderOwner == obj)
+                    continue;
+
+                // 检查是否为当前雷达的遮挡物体
+
+                bool isShelter = false;
+                foreach (ObjVisiBorder objBorder in raderOwner.Rader.ShelterVisiBorders)
+                {
+                    if (objBorder.Obj == obj)
+                    {
+                        IEyeableInfo eyeableInfo = obj.GetEyeableInfoHandler( raderOwner, obj );
+                        inRaderObjInfos.Add( eyeableInfo );
+
+                        EyeableBorderObjs.Add( new EyeableBorderObjInfo( eyeableInfo, objBorder ) );
+
+                        isShelter = true;
+                        break;
+                    }
+                }
+
+                // 检查非遮挡物体是否可见
+                if (!isShelter)
+                {
+                    foreach (Vector2 keyPoint in obj.KeyPoints)
+                    {
+                        if (raderOwner.Rader.PointInRader( Vector2.Transform( keyPoint, obj.TransMatrix ) ))
+                        {
+                            IEyeableInfo eyeableInfo = obj.GetEyeableInfoHandler( raderOwner, obj );
+                            inRaderObjInfos.Add( eyeableInfo );
+
+                            if (obj is IHasBorderObj)
+                            {
+                                ObjVisiBorder border = CalNonShelterVisiBorder( (IHasBorderObj)obj, raderOwner.Rader );
+                                if (border != null)
+                                    EyeableBorderObjs.Add( new EyeableBorderObjInfo( eyeableInfo, border ) );
+                            }
+                            break;
+                        }
+                    }
+                }
+            }
+
+            raderOwner.Rader.CurEyeableObjs = inRaderObjInfos;
+            raderOwner.Rader.EyeableBorderObjInfos = EyeableBorderObjs.ToArray();
         }
 
         private static ObjVisiBorder CalNonShelterVisiBorder ( IHasBorderObj obj, Rader rader )

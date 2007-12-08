@@ -13,6 +13,8 @@ namespace Platform.Senses.Vision
         Matrix TransMatrix { get;}
         Vector2 Pos { get;}
         GameObjInfo ObjInfo { get;}
+
+        GetEyeableInfoHandler GetEyeableInfoHandler { get;set;}
     }
 
     public interface IEyeableInfo

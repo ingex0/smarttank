@@ -63,6 +63,7 @@ namespace GameBase.DataStructure
     /// </summary>
     /// <typeparam name="T"></typeparam>
     [Serializable]
+    [Obsolete("由于设计的一些不合理之处，该数据结构废弃，请使用新的MultiList类提供相似功能")]
     public class MultiLinkedList<T> : IEnumerable<T> where T : class
     {
         #region Emunerator

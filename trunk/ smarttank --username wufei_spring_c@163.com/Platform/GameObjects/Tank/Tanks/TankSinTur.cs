@@ -483,6 +483,20 @@ namespace Platform.GameObjects.Tank.Tanks
             get { return skin.Sprites[0].Transform; }
         }
 
+        GetEyeableInfoHandler getEyeableInfoHandler;
+
+        public GetEyeableInfoHandler GetEyeableInfoHandler
+        {
+            get
+            {
+                return getEyeableInfoHandler;
+            }
+            set
+            {
+                getEyeableInfoHandler = value;
+            }
+        }
+
         #endregion
 
         #region IAIOrderServer ≥…‘±
@@ -491,5 +505,6 @@ namespace Platform.GameObjects.Tank.Tanks
 
 
         #endregion
+
     }
 }

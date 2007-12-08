@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Windows.Forms;
 
-namespace GameObjEditer
+namespace MapEditer
 {
     static class Program
     {
@@ -14,7 +14,7 @@ namespace GameObjEditer
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault( false );
-            Application.Run( new GameObjEditer() );
+            Application.Run( new MapEditer() );
         }
     }
 }

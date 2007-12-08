@@ -76,6 +76,10 @@
       <XNAUseContentPipeline>false</XNAUseContentPipeline>
       <Name>MultiLinkedList</Name>
     </Compile>
+    <Compile Include="DataStructure\MultiList.cs">
+      <XNAUseContentPipeline>false</XNAUseContentPipeline>
+      <Name>MultiList</Name>
+    </Compile>
     <Compile Include="DataStructure\Rectanglef.cs">
       <XNAUseContentPipeline>false</XNAUseContentPipeline>
       <Name>Rectanglef</Name>

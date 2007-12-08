@@ -153,6 +153,20 @@ namespace Platform.GameObjects.Item
             get { return sprite.Transform; }
         }
 
+        GetEyeableInfoHandler getEyeableInfoHandler;
+
+        public GetEyeableInfoHandler GetEyeableInfoHandler
+        {
+            get
+            {
+                return getEyeableInfoHandler ;
+            }
+            set
+            {
+                getEyeableInfoHandler = value;
+            }
+        }
+
         #endregion
 
         #region IColChecker ≥…‘±

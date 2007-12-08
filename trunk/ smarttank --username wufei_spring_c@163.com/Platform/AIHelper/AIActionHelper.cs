@@ -460,7 +460,7 @@ namespace Platform.AIHelper
         /// <summary>
         /// 
         /// </summary>
-        /// <param name="aimAzi">目标位置</param>
+        /// <param name="aimPos">目标位置</param>
         public OrderRotaTurretToPos ( Vector2 aimPos )
         {
             this.aimPos = aimPos;
@@ -1664,7 +1664,7 @@ namespace Platform.AIHelper
         /// <summary>
         /// 
         /// </summary>
-        /// <param name="rotaAng">最大扫描角</param>
+        /// <param name="rotaAzi">最大扫描角</param>
         /// <param name="rotaSpeed">扫描速度,如果为零，则为最大旋转速度</param>
         /// <param name="startAtRight">是否先向右扫描</param>
         public OrderScanRaderAzi ( float rotaAzi, float rotaSpeed, bool startAtRight )

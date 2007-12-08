@@ -66,6 +66,10 @@
     <Compile Include="MapEditer.Designer.cs">
       <DependentUpon>MapEditer.cs</DependentUpon>
     </Compile>
+    <Compile Include="Program.cs">
+      <XNAUseContentPipeline>false</XNAUseContentPipeline>
+      <Name>Program</Name>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

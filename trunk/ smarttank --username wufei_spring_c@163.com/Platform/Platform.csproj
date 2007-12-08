@@ -215,9 +215,21 @@
       <XNAUseContentPipeline>false</XNAUseContentPipeline>
       <Name>IHasBorderObj</Name>
     </Compile>
+    <Compile Include="Scene\Group.cs">
+      <XNAUseContentPipeline>false</XNAUseContentPipeline>
+      <Name>Group</Name>
+    </Compile>
     <Compile Include="Scene\SceneCommonObjInfo.cs">
       <XNAUseContentPipeline>false</XNAUseContentPipeline>
       <Name>SceneCommonObjInfo</Name>
+    </Compile>
+    <Compile Include="Scene\SceneMgr.cs">
+      <XNAUseContentPipeline>false</XNAUseContentPipeline>
+      <Name>SceneMgr</Name>
+    </Compile>
+    <Compile Include="Scene\TypeGroup.cs">
+      <XNAUseContentPipeline>false</XNAUseContentPipeline>
+      <Name>TypeGroup</Name>
     </Compile>
     <Compile Include="Senses\Memory\ConvexHall.cs">
       <XNAUseContentPipeline>false</XNAUseContentPipeline>

@@ -18,7 +18,7 @@ namespace Platform.GameObjects
     public interface IGameObj : IUpdater, IDrawableObj
     {
         GameObjInfo ObjInfo { get;}
-        Vector2 Pos { get;set;}
+        new Vector2 Pos { get;set;}
         float Azi { get;}
     }
 
