@@ -28,6 +28,18 @@ namespace GameBase.Graphics
             lineTexture = BaseGame.Content.Load<Texture2D>( Path.Combine( Directories.BasicGraphicsContent, "line" ) );
             retangleTexture = BaseGame.Content.Load<Texture2D>( Path.Combine( Directories.BasicGraphicsContent, "retangle" ) );
         }
+
+        /// <summary>
+        /// 为地图编辑器提供支持
+        /// </summary>
+        /// <param name="device"></param>
+        static public void Initial ( GraphicsDevice device )
+        {
+            pointTexture = Texture2D.FromFile( device, Path.Combine( Directories.BasicGraphicsContent, "point.png" ) );
+            lineTexture = Texture2D.FromFile( device, Path.Combine( Directories.BasicGraphicsContent, "line.png" ) );
+            retangleTexture = Texture2D.FromFile( device, Path.Combine( Directories.BasicGraphicsContent, "retangle.png" ) );
+        }
+
         #endregion
 
         #region Draw Point
