@@ -127,6 +127,14 @@
       <XNAUseContentPipeline>false</XNAUseContentPipeline>
       <Name>Compass</Name>
     </Compile>
+    <Compile Include="GameObjects\EditableAttribute.cs">
+      <XNAUseContentPipeline>false</XNAUseContentPipeline>
+      <Name>EditableAttribute</Name>
+    </Compile>
+    <Compile Include="GameObjects\GameObjAttribute.cs">
+      <XNAUseContentPipeline>false</XNAUseContentPipeline>
+      <Name>GameObjAttribute</Name>
+    </Compile>
     <Compile Include="GameObjects\GameObjData.cs">
       <XNAUseContentPipeline>false</XNAUseContentPipeline>
       <Name>GameObjData</Name>

@@ -20,7 +20,7 @@
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
-    <OutputPath>bin\x86\Debug</OutputPath>
+    <OutputPath>..\Debug\</OutputPath>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
@@ -49,6 +49,14 @@
     <Reference Include="mscorlib">
       <Private>False</Private>
     </Reference>
+    <Reference Include="Platform, Version=1.0.0.0, Culture=neutral, processorArchitecture=x86">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Debug\Platform.dll</HintPath>
+    </Reference>
+    <Reference Include="ProperityEditer, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\ProperityEditer\bin\Debug\ProperityEditer.dll</HintPath>
+    </Reference>
     <Reference Include="System">
       <Private>False</Private>
     </Reference>
@@ -56,8 +64,32 @@
     <Reference Include="System.Drawing" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
+    <Reference Include="WeifenLuo.WinFormsUI.Docking, Version=2.2.2900.25073, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\..\编程资源\库\DockPanel\DockPanel_2_2_Source\Src\WinFormsUI\bin\Debug\WeifenLuo.WinFormsUI.Docking.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BackGroundPanel.cs">
+      <XNAUseContentPipeline>false</XNAUseContentPipeline>
+      <Name>BackGroundPanel</Name>
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="BackGroundPanel.Designer.cs">
+      <DependentUpon>BackGroundPanel.cs</DependentUpon>
+    </Compile>
+    <Compile Include="DisplayMgr.cs">
+      <XNAUseContentPipeline>false</XNAUseContentPipeline>
+      <Name>DisplayMgr</Name>
+    </Compile>
+    <Compile Include="GroupPanel.cs">
+      <XNAUseContentPipeline>false</XNAUseContentPipeline>
+      <Name>GroupPanel</Name>
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="GroupPanel.Designer.cs">
+      <DependentUpon>GroupPanel.cs</DependentUpon>
+    </Compile>
     <Compile Include="MapEditer.cs">
       <SubType>Form</SubType>
       <XNAUseContentPipeline>false</XNAUseContentPipeline>
@@ -65,6 +97,36 @@
     </Compile>
     <Compile Include="MapEditer.Designer.cs">
       <DependentUpon>MapEditer.cs</DependentUpon>
+      <XNAUseContentPipeline>false</XNAUseContentPipeline>
+      <Name>MapEditer.Designer</Name>
+    </Compile>
+    <Compile Include="ObjClassInfo.cs">
+      <XNAUseContentPipeline>false</XNAUseContentPipeline>
+      <Name>ObjClassInfo</Name>
+    </Compile>
+    <Compile Include="ObjClassSearcher.cs">
+      <XNAUseContentPipeline>false</XNAUseContentPipeline>
+      <Name>ObjClassSearcher</Name>
+    </Compile>
+    <Compile Include="ObjDisplay.cs">
+      <XNAUseContentPipeline>false</XNAUseContentPipeline>
+      <Name>ObjDisplay</Name>
+    </Compile>
+    <Compile Include="ObjDisplayPanel.cs">
+      <XNAUseContentPipeline>false</XNAUseContentPipeline>
+      <Name>ObjDisplayPanel</Name>
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ObjDisplayPanel.Designer.cs">
+      <DependentUpon>ObjDisplayPanel.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ObjPropertyPanel.cs">
+      <XNAUseContentPipeline>false</XNAUseContentPipeline>
+      <Name>ObjPropertyPanel</Name>
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ObjPropertyPanel.Designer.cs">
+      <DependentUpon>ObjPropertyPanel.cs</DependentUpon>
     </Compile>
     <Compile Include="Program.cs">
       <XNAUseContentPipeline>false</XNAUseContentPipeline>
@@ -73,11 +135,23 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="GroupPanel.resx">
+      <SubType>Designer</SubType>
+      <XNAUseContentPipeline>false</XNAUseContentPipeline>
+      <Name>GroupPanel</Name>
+      <DependentUpon>GroupPanel.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="MapEditer.resx">
       <SubType>Designer</SubType>
       <XNAUseContentPipeline>false</XNAUseContentPipeline>
       <Name>MapEditer</Name>
       <DependentUpon>MapEditer.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ObjDisplayPanel.resx">
+      <SubType>Designer</SubType>
+      <XNAUseContentPipeline>false</XNAUseContentPipeline>
+      <Name>ObjDisplayPanel</Name>
+      <DependentUpon>ObjDisplayPanel.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
