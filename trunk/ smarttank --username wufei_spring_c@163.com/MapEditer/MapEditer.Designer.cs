@@ -51,23 +51,23 @@
             this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
             this.toolStripButtonMove = new System.Windows.Forms.ToolStripButton();
             this.toolStripButtonZoom = new System.Windows.Forms.ToolStripButton();
-            this.toolStrip2 = new System.Windows.Forms.ToolStrip();
-            this.toolStripButtonMoveCamera = new System.Windows.Forms.ToolStripButton();
-            this.toolStripButtonZoomCamera = new System.Windows.Forms.ToolStripButton();
-            this.toolStripButtonRotaCamera = new System.Windows.Forms.ToolStripButton();
             this.toolStrip3 = new System.Windows.Forms.ToolStrip();
             this.toolStripButtonShowGroupPanel = new System.Windows.Forms.ToolStripButton();
             this.toolStripButtonShowMapPanel = new System.Windows.Forms.ToolStripButton();
             this.toolStripButtonShowObjCreatePanel = new System.Windows.Forms.ToolStripButton();
             this.toolStripButtonShowObjPropertyPanel = new System.Windows.Forms.ToolStripButton();
+            this.toolStrip2 = new System.Windows.Forms.ToolStrip();
+            this.toolStripButtonMoveCamera = new System.Windows.Forms.ToolStripButton();
+            this.toolStripButtonZoomCamera = new System.Windows.Forms.ToolStripButton();
+            this.toolStripButtonRotaCamera = new System.Windows.Forms.ToolStripButton();
             this.menuStrip1.SuspendLayout();
             this.toolStripContainer1.BottomToolStripPanel.SuspendLayout();
             this.toolStripContainer1.ContentPanel.SuspendLayout();
             this.toolStripContainer1.TopToolStripPanel.SuspendLayout();
             this.toolStripContainer1.SuspendLayout();
             this.toolStrip1.SuspendLayout();
-            this.toolStrip2.SuspendLayout();
             this.toolStrip3.SuspendLayout();
+            this.toolStrip2.SuspendLayout();
             this.SuspendLayout();
             // 
             // menuStrip1
@@ -160,7 +160,7 @@
             // toolStripContainer1.ContentPanel
             // 
             this.toolStripContainer1.ContentPanel.Controls.Add( this.dockPanel );
-            this.toolStripContainer1.ContentPanel.Size = new System.Drawing.Size( 860, 400 );
+            this.toolStripContainer1.ContentPanel.Size = new System.Drawing.Size( 860, 375 );
             this.toolStripContainer1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.toolStripContainer1.Location = new System.Drawing.Point( 0, 24 );
             this.toolStripContainer1.Name = "toolStripContainer1";
@@ -170,6 +170,7 @@
             // 
             // toolStripContainer1.TopToolStripPanel
             // 
+            this.toolStripContainer1.TopToolStripPanel.Controls.Add( this.toolStrip2 );
             this.toolStripContainer1.TopToolStripPanel.Controls.Add( this.toolStrip1 );
             this.toolStripContainer1.TopToolStripPanel.Controls.Add( this.toolStrip3 );
             // 
@@ -188,7 +189,7 @@
             this.dockPanel.DocumentStyle = WeifenLuo.WinFormsUI.Docking.DocumentStyle.DockingSdi;
             this.dockPanel.Location = new System.Drawing.Point( 0, 0 );
             this.dockPanel.Name = "dockPanel";
-            this.dockPanel.Size = new System.Drawing.Size( 860, 400 );
+            this.dockPanel.Size = new System.Drawing.Size( 860, 375 );
             this.dockPanel.TabIndex = 0;
             // 
             // toolStrip1
@@ -202,7 +203,7 @@
             this.toolStripSeparator2,
             this.toolStripButtonMove,
             this.toolStripButtonZoom} );
-            this.toolStrip1.Location = new System.Drawing.Point( 7, 0 );
+            this.toolStrip1.Location = new System.Drawing.Point( 7, 25 );
             this.toolStrip1.Name = "toolStrip1";
             this.toolStrip1.Size = new System.Drawing.Size( 139, 25 );
             this.toolStrip1.TabIndex = 0;
@@ -267,48 +268,6 @@
             this.toolStripButtonZoom.Text = "toolStripButton3";
             this.toolStripButtonZoom.ToolTipText = "缩放";
             // 
-            // toolStrip2
-            // 
-            this.toolStrip2.Dock = System.Windows.Forms.DockStyle.None;
-            this.toolStrip2.Items.AddRange( new System.Windows.Forms.ToolStripItem[] {
-            this.toolStripButtonMoveCamera,
-            this.toolStripButtonZoomCamera,
-            this.toolStripButtonRotaCamera} );
-            this.toolStrip2.Location = new System.Drawing.Point( 152, 24 );
-            this.toolStrip2.Name = "toolStrip2";
-            this.toolStrip2.Size = new System.Drawing.Size( 81, 25 );
-            this.toolStrip2.TabIndex = 1;
-            // 
-            // toolStripButtonMoveCamera
-            // 
-            this.toolStripButtonMoveCamera.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.toolStripButtonMoveCamera.Image = ((System.Drawing.Image)(resources.GetObject( "toolStripButtonMoveCamera.Image" )));
-            this.toolStripButtonMoveCamera.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripButtonMoveCamera.Name = "toolStripButtonMoveCamera";
-            this.toolStripButtonMoveCamera.Size = new System.Drawing.Size( 23, 22 );
-            this.toolStripButtonMoveCamera.Text = "toolStripButton1";
-            this.toolStripButtonMoveCamera.ToolTipText = "平移摄像机";
-            // 
-            // toolStripButtonZoomCamera
-            // 
-            this.toolStripButtonZoomCamera.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.toolStripButtonZoomCamera.Image = ((System.Drawing.Image)(resources.GetObject( "toolStripButtonZoomCamera.Image" )));
-            this.toolStripButtonZoomCamera.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripButtonZoomCamera.Name = "toolStripButtonZoomCamera";
-            this.toolStripButtonZoomCamera.Size = new System.Drawing.Size( 23, 22 );
-            this.toolStripButtonZoomCamera.Text = "toolStripButton2";
-            this.toolStripButtonZoomCamera.ToolTipText = "缩放摄像机";
-            // 
-            // toolStripButtonRotaCamera
-            // 
-            this.toolStripButtonRotaCamera.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.toolStripButtonRotaCamera.Image = ((System.Drawing.Image)(resources.GetObject( "toolStripButtonRotaCamera.Image" )));
-            this.toolStripButtonRotaCamera.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripButtonRotaCamera.Name = "toolStripButtonRotaCamera";
-            this.toolStripButtonRotaCamera.Size = new System.Drawing.Size( 23, 22 );
-            this.toolStripButtonRotaCamera.Text = "toolStripButton3";
-            this.toolStripButtonRotaCamera.ToolTipText = "旋转摄像机";
-            // 
             // toolStrip3
             // 
             this.toolStrip3.Dock = System.Windows.Forms.DockStyle.None;
@@ -317,7 +276,7 @@
             this.toolStripButtonShowMapPanel,
             this.toolStripButtonShowObjCreatePanel,
             this.toolStripButtonShowObjPropertyPanel} );
-            this.toolStrip3.Location = new System.Drawing.Point( 236, 0 );
+            this.toolStrip3.Location = new System.Drawing.Point( 46, 0 );
             this.toolStrip3.Name = "toolStrip3";
             this.toolStrip3.Size = new System.Drawing.Size( 104, 25 );
             this.toolStrip3.TabIndex = 2;
@@ -366,12 +325,53 @@
             this.toolStripButtonShowObjPropertyPanel.ToolTipText = "显示物体属性面板";
             this.toolStripButtonShowObjPropertyPanel.Click += new System.EventHandler( this.toolStripButtonShowObjPropertyPanel_Click );
             // 
+            // toolStrip2
+            // 
+            this.toolStrip2.Dock = System.Windows.Forms.DockStyle.None;
+            this.toolStrip2.Items.AddRange( new System.Windows.Forms.ToolStripItem[] {
+            this.toolStripButtonMoveCamera,
+            this.toolStripButtonZoomCamera,
+            this.toolStripButtonRotaCamera} );
+            this.toolStrip2.Location = new System.Drawing.Point( 156, 0 );
+            this.toolStrip2.Name = "toolStrip2";
+            this.toolStrip2.Size = new System.Drawing.Size( 81, 25 );
+            this.toolStrip2.TabIndex = 1;
+            // 
+            // toolStripButtonMoveCamera
+            // 
+            this.toolStripButtonMoveCamera.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.toolStripButtonMoveCamera.Image = ((System.Drawing.Image)(resources.GetObject( "toolStripButtonMoveCamera.Image" )));
+            this.toolStripButtonMoveCamera.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripButtonMoveCamera.Name = "toolStripButtonMoveCamera";
+            this.toolStripButtonMoveCamera.Size = new System.Drawing.Size( 23, 22 );
+            this.toolStripButtonMoveCamera.Text = "toolStripButton1";
+            this.toolStripButtonMoveCamera.ToolTipText = "平移摄像机";
+            // 
+            // toolStripButtonZoomCamera
+            // 
+            this.toolStripButtonZoomCamera.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.toolStripButtonZoomCamera.Image = ((System.Drawing.Image)(resources.GetObject( "toolStripButtonZoomCamera.Image" )));
+            this.toolStripButtonZoomCamera.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripButtonZoomCamera.Name = "toolStripButtonZoomCamera";
+            this.toolStripButtonZoomCamera.Size = new System.Drawing.Size( 23, 22 );
+            this.toolStripButtonZoomCamera.Text = "toolStripButton2";
+            this.toolStripButtonZoomCamera.ToolTipText = "缩放摄像机";
+            // 
+            // toolStripButtonRotaCamera
+            // 
+            this.toolStripButtonRotaCamera.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.toolStripButtonRotaCamera.Image = ((System.Drawing.Image)(resources.GetObject( "toolStripButtonRotaCamera.Image" )));
+            this.toolStripButtonRotaCamera.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripButtonRotaCamera.Name = "toolStripButtonRotaCamera";
+            this.toolStripButtonRotaCamera.Size = new System.Drawing.Size( 23, 22 );
+            this.toolStripButtonRotaCamera.Text = "toolStripButton3";
+            this.toolStripButtonRotaCamera.ToolTipText = "旋转摄像机";
+            // 
             // MapEditer
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF( 6F, 12F );
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size( 860, 471 );
-            this.Controls.Add( this.toolStrip2 );
             this.Controls.Add( this.toolStripContainer1 );
             this.Controls.Add( this.menuStrip1 );
             this.IsMdiContainer = true;
@@ -389,10 +389,10 @@
             this.toolStripContainer1.PerformLayout();
             this.toolStrip1.ResumeLayout( false );
             this.toolStrip1.PerformLayout();
-            this.toolStrip2.ResumeLayout( false );
-            this.toolStrip2.PerformLayout();
             this.toolStrip3.ResumeLayout( false );
             this.toolStrip3.PerformLayout();
+            this.toolStrip2.ResumeLayout( false );
+            this.toolStrip2.PerformLayout();
             this.ResumeLayout( false );
             this.PerformLayout();
 

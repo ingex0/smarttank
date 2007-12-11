@@ -28,23 +28,23 @@
         /// </summary>
         private void InitializeComponent ()
         {
-            this.screen = new DeviceCanvas.DeviceCanvas();
+            this.canvas = new DeviceCanvas.DeviceCanvas();
             this.SuspendLayout();
             // 
-            // screen
+            // canvas
             // 
-            this.screen.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.screen.Location = new System.Drawing.Point( 0, 0 );
-            this.screen.Name = "screen";
-            this.screen.Size = new System.Drawing.Size( 292, 267 );
-            this.screen.TabIndex = 0;
+            this.canvas.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.canvas.Location = new System.Drawing.Point( 0, 0 );
+            this.canvas.Name = "canvas";
+            this.canvas.Size = new System.Drawing.Size( 292, 267 );
+            this.canvas.TabIndex = 0;
             // 
             // MainScreen
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF( 6F, 12F );
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size( 292, 267 );
-            this.Controls.Add( this.screen );
+            this.Controls.Add( this.canvas );
             this.Name = "MainScreen";
             this.TabText = "MainScreen";
             this.Text = "MainScreen";
@@ -54,7 +54,7 @@
 
         #endregion
 
-        public DeviceCanvas.DeviceCanvas screen;
+        public DeviceCanvas.DeviceCanvas canvas;
 
 
 

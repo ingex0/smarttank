@@ -28,19 +28,35 @@
         /// </summary>
         private void InitializeComponent ()
         {
+            this.canvas = new DeviceCanvas.DeviceCanvas();
             this.SuspendLayout();
+            // 
+            // canvas
+            // 
+            this.canvas.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.canvas.Location = new System.Drawing.Point( 0, 0 );
+            this.canvas.Name = "canvas";
+            this.canvas.Size = new System.Drawing.Size( 253, 267 );
+            this.canvas.TabIndex = 0;
+            this.canvas.Text = "deviceCanvas1";
             // 
             // ObjDisplayPanel
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF( 6F, 12F );
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size( 253, 267 );
+            this.Controls.Add( this.canvas );
             this.Name = "ObjDisplayPanel";
+            this.TabText = "ObjDisplayPanel";
             this.Text = "ObjDisplayPanel";
             this.ResumeLayout( false );
 
         }
 
         #endregion
+
+        public DeviceCanvas.DeviceCanvas canvas;
+
+
     }
 }

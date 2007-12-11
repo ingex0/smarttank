@@ -22,15 +22,17 @@ namespace MapEditer
 
         MainScreen mainScreen;
         SpriteBatch mainScrnBatch;
-
-
         GraphicsDevice mainDevice;
+
+        GraphicsDevice displayDevice;
+        SpriteBatch displayBatch;
 
         public MapEditer ()
         {
             InitializeComponent();
             InitializeChildForm();
             InitializeMainScrn();
+            InitializeDisplayScrn();
         }
 
         private void InitializeChildForm ()
@@ -67,6 +69,8 @@ namespace MapEditer
             objPropertyPanel.Show( dockPanel, DockState.DockRightAutoHide );
         }
 
+        #region MainScrn
+
         private void InitializeMainScrn ()
         {
             mainScreen = new MainScreen();
@@ -75,8 +79,8 @@ namespace MapEditer
             pp.BackBufferCount = 1;
             pp.IsFullScreen = false;
             pp.SwapEffect = SwapEffect.Discard;
-            pp.BackBufferWidth = mainScreen.screen.Width;
-            pp.BackBufferHeight = mainScreen.screen.Height;
+            pp.BackBufferWidth = mainScreen.canvas.Width;
+            pp.BackBufferHeight = mainScreen.canvas.Height;
 
             pp.AutoDepthStencilFormat = DepthFormat.Depth24Stencil8;
             pp.EnableAutoDepthStencil = true;
@@ -85,12 +89,12 @@ namespace MapEditer
             pp.MultiSampleType = MultiSampleType.None;
 
             mainDevice = new GraphicsDevice( GraphicsAdapter.DefaultAdapter,
-                DeviceType.Hardware, this.mainScreen.screen.Handle,
+                DeviceType.Hardware, this.mainScreen.canvas.Handle,
                 CreateOptions.HardwareVertexProcessing,
                 pp );
 
-            mainScreen.SizeChanged += new EventHandler( mainScreen_SizeChanged );
-            mainScreen.screen.Paint += new EventHandler( mainScreen_Paint );
+            mainScreen.canvas.SizeChanged += new EventHandler( mainScreen_canvas_SizeChanged );
+            mainScreen.canvas.Paint += new EventHandler( mainScreen_canvas_Paint );
 
             mainDevice.Reset();
 
@@ -101,11 +105,11 @@ namespace MapEditer
             BasicGraphics.Initial( mainDevice );
         }
 
-        void mainScreen_Paint ( object sender, EventArgs e )
+        void mainScreen_canvas_Paint ( object sender, EventArgs e )
         {
             mainDevice.Clear( Microsoft.Xna.Framework.Graphics.Color.Blue );
 
-            Coordin.SetScreenViewRect( new Microsoft.Xna.Framework.Rectangle( 0, 0, mainScreen.screen.Width, mainScreen.screen.Height ) );
+            Coordin.SetScreenViewRect( new Microsoft.Xna.Framework.Rectangle( 0, 0, mainScreen.canvas.Width, mainScreen.canvas.Height ) );
             Coordin.SetCamera( 1, new Microsoft.Xna.Framework.Vector2( 100, 100 ), 0 );
 
             Sprite.alphaSprite = mainScrnBatch;
@@ -117,19 +121,83 @@ namespace MapEditer
             mainDevice.Present();
         }
 
-        void mainScreen_SizeChanged ( object sender, EventArgs e )
+        void mainScreen_canvas_SizeChanged ( object sender, EventArgs e )
         {
-            if (this.WindowState == FormWindowState.Minimized)
-                return;
-
             MainDeviceReset();
         }
 
         private void MainDeviceReset ()
         {
-            mainDevice.PresentationParameters.BackBufferWidth = this.mainScreen.screen.Width;
-            mainDevice.PresentationParameters.BackBufferHeight = this.mainScreen.screen.Height;
+            if (this.WindowState == FormWindowState.Minimized ||
+                this.mainScreen.canvas.Width == 0 ||
+                this.mainScreen.canvas.Height == 0)
+                return;
+            mainDevice.PresentationParameters.BackBufferWidth = this.mainScreen.canvas.Width;
+            mainDevice.PresentationParameters.BackBufferHeight = this.mainScreen.canvas.Height;
             mainDevice.Reset();
         }
+
+        #endregion
+
+        #region DisplayScrn
+
+        private void InitializeDisplayScrn ()
+        {
+            PresentationParameters pp = new PresentationParameters();
+            pp.BackBufferCount = 1;
+            pp.IsFullScreen = false;
+            pp.SwapEffect = SwapEffect.Discard;
+            pp.BackBufferWidth = objDisplayPanel.canvas.Width;
+            pp.BackBufferHeight = objDisplayPanel.canvas.Height;
+
+            pp.AutoDepthStencilFormat = DepthFormat.Depth24Stencil8;
+            pp.EnableAutoDepthStencil = true;
+            pp.PresentationInterval = PresentInterval.Default;
+            pp.BackBufferFormat = SurfaceFormat.Unknown;
+            pp.MultiSampleType = MultiSampleType.None;
+
+            displayDevice = new GraphicsDevice( GraphicsAdapter.DefaultAdapter,
+                DeviceType.Hardware, objDisplayPanel.canvas.Handle,
+                CreateOptions.HardwareVertexProcessing, pp );
+
+            objDisplayPanel.canvas.SizeChanged += new EventHandler( objDisplay_canvas_SizeChanged );
+            objDisplayPanel.canvas.Paint += new EventHandler( objDisplayPanel_canvas_Paint );
+
+            displayBatch = new SpriteBatch( displayDevice );
+        }
+
+        void objDisplayPanel_canvas_Paint ( object sender, EventArgs e )
+        {
+            displayDevice.Clear( Microsoft.Xna.Framework.Graphics.Color.YellowGreen );
+
+            Sprite.alphaSprite = displayBatch;
+            displayBatch.Begin();
+
+            BasicGraphics.DrawLineInScrn( new Microsoft.Xna.Framework.Vector2( 0, 0 ), new Microsoft.Xna.Framework.Vector2( 50, 100 ), 3, Microsoft.Xna.Framework.Graphics.Color.White, 0f );
+
+            displayBatch.End();
+            displayDevice.Present();
+        }
+
+        void objDisplay_canvas_SizeChanged ( object sender, EventArgs e )
+        {
+            DisplayDeviceReset();
+        }
+
+        private void DisplayDeviceReset ()
+        {
+            if (this.WindowState == FormWindowState.Minimized ||
+                this.objDisplayPanel.canvas.Width == 0 ||
+                this.objDisplayPanel.canvas.Height == 0)
+                return;
+
+            displayDevice.PresentationParameters.BackBufferWidth = this.objDisplayPanel.canvas.Width;
+            displayDevice.PresentationParameters.BackBufferHeight = this.objDisplayPanel.canvas.Height;
+            displayDevice.Reset();
+        }
+
+
+        #endregion
+
     }
 }
