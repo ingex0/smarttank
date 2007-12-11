@@ -1,6 +1,0 @@
-obj\x86\Debug\ResolveAssemblyReference.cache
-bin\x86\Debug\TankEngine2D.dll
-bin\x86\Debug\TankEngine2D.pdb
-obj\x86\Debug\TankEngine2D.dll
-obj\x86\Debug\TankEngine2D.pdb
-bin\x86\Debug\TankEngine2D.XML
