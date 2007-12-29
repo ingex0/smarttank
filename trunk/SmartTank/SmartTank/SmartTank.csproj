@@ -52,6 +52,7 @@
     <Reference Include="System">
       <Private>False</Private>
     </Reference>
+    <Reference Include="System.Data" />
     <Reference Include="System.XML" />
     <Reference Include="TankEngine2D, Version=1.0.0.0, Culture=neutral, processorArchitecture=x86">
       <SpecificVersion>False</SpecificVersion>
@@ -159,9 +160,9 @@
       <XNAUseContentPipeline>false</XNAUseContentPipeline>
       <Name>ScaleUp</Name>
     </Compile>
-    <Compile Include="Effects\SceneEffects\EffectsManager.cs">
+    <Compile Include="Effects\SceneEffects\EffectsMgr.cs">
       <XNAUseContentPipeline>false</XNAUseContentPipeline>
-      <Name>EffectsManager</Name>
+      <Name>EffectsMgr</Name>
     </Compile>
     <Compile Include="Effects\SceneEffects\Explode.cs">
       <XNAUseContentPipeline>false</XNAUseContentPipeline>
@@ -194,6 +195,10 @@
     <Compile Include="GameManager.cs">
       <XNAUseContentPipeline>false</XNAUseContentPipeline>
       <Name>GameManager</Name>
+    </Compile>
+    <Compile Include="GameObjs\newIGameObj.cs">
+      <XNAUseContentPipeline>false</XNAUseContentPipeline>
+      <Name>newIGameObj</Name>
     </Compile>
     <Compile Include="PhiCol\Border.cs">
       <XNAUseContentPipeline>false</XNAUseContentPipeline>
@@ -364,9 +369,9 @@
       <XNAUseContentPipeline>false</XNAUseContentPipeline>
       <Name>ObjMemoryKeeper</Name>
     </Compile>
-    <Compile Include="Senses\Memory\ObjMemoryManager.cs">
+    <Compile Include="Senses\Memory\ObjMemoryMgr.cs">
       <XNAUseContentPipeline>false</XNAUseContentPipeline>
-      <Name>ObjMemoryManager</Name>
+      <Name>ObjMemoryMgr</Name>
     </Compile>
     <Compile Include="Senses\Memory\ObjVisiBorder.cs">
       <XNAUseContentPipeline>false</XNAUseContentPipeline>
@@ -376,9 +381,9 @@
       <XNAUseContentPipeline>false</XNAUseContentPipeline>
       <Name>IEyeableObj</Name>
     </Compile>
-    <Compile Include="Senses\Vision\VisionManager.cs">
+    <Compile Include="Senses\Vision\VisionMgr.cs">
       <XNAUseContentPipeline>false</XNAUseContentPipeline>
-      <Name>VisionManager</Name>
+      <Name>VisionMgr</Name>
     </Compile>
     <Compile Include="Shelter\IHasBorderObj.cs">
       <XNAUseContentPipeline>false</XNAUseContentPipeline>
@@ -404,9 +409,9 @@
       <XNAUseContentPipeline>false</XNAUseContentPipeline>
       <Name>RaderDrawer</Name>
     </Compile>
-    <Compile Include="Shelter\ShelterManager.cs">
+    <Compile Include="Shelter\ShelterMgr.cs">
       <XNAUseContentPipeline>false</XNAUseContentPipeline>
-      <Name>ShelterManager</Name>
+      <Name>ShelterMgr</Name>
     </Compile>
     <Compile Include="Sound\Sound.cs">
       <XNAUseContentPipeline>false</XNAUseContentPipeline>
@@ -480,9 +485,9 @@
       <XNAUseContentPipeline>false</XNAUseContentPipeline>
       <Name>NonInertiasPhiUpdater</Name>
     </Compile>
-    <Compile Include="Update\UpdateManager.cs">
+    <Compile Include="Update\UpdateMgr.cs">
       <XNAUseContentPipeline>false</XNAUseContentPipeline>
-      <Name>UpdateManager</Name>
+      <Name>UpdateMgr</Name>
     </Compile>
   </ItemGroup>
   <ItemGroup>

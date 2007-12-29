@@ -68,7 +68,7 @@ namespace SmartTank.PhiCol
         /// 添加需要管理成员彼此间的碰撞的组，不允许重叠。
         /// </summary>
         /// <param name="group"></param>
-        public void AddColGroup ( IEnumerable<ICollideObj> group )
+        public void AddCollideGroup ( IEnumerable<ICollideObj> group )
         {
             ColliderGroups_Single.Add( group );
         }
@@ -78,7 +78,7 @@ namespace SmartTank.PhiCol
         /// </summary>
         /// <param name="group1"></param>
         /// <param name="group2"></param>
-        public void AddColGroup ( IEnumerable<ICollideObj> group1, IEnumerable<ICollideObj> group2 )
+        public void AddCollideGroup ( IEnumerable<ICollideObj> group1, IEnumerable<ICollideObj> group2 )
         {
             ColliderGroups_Binary.Add( new BinGroup( group1, group2 ) );
         }
@@ -87,7 +87,7 @@ namespace SmartTank.PhiCol
         /// 添加需要管理成员彼此间的碰撞的组，允许重叠。
         /// </summary>
         /// <param name="group"></param>
-        public void AddOverlapColGroup ( IEnumerable<ICollideObj> group )
+        public void AddOverlapGroup ( IEnumerable<ICollideObj> group )
         {
             ColliderGroups_CanOverlap_Single.Add( group );
         }
@@ -97,7 +97,7 @@ namespace SmartTank.PhiCol
         /// </summary>
         /// <param name="group1"></param>
         /// <param name="group2"></param>
-        public void AddOverlapColGroup ( IEnumerable<ICollideObj> group1, IEnumerable<ICollideObj> group2 )
+        public void AddOverlapGroup ( IEnumerable<ICollideObj> group1, IEnumerable<ICollideObj> group2 )
         {
             ColliderGroups_CanOverlap_Binary.Add( new BinGroup( group1, group2 ) );
         }

@@ -44,7 +44,7 @@ namespace SmartTank.Effects.SceneEffects.BaseEffects
             this.rotaFunc = rotaFunc;
             this.duration = duration;
             this.layerDepth = layerDepth;
-            EffectsManager.AddManagedEffect( this );
+            EffectsMgr.AddManagedEffect( this );
         }
 
         #region IManagedEffect ≥…‘±

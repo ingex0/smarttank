@@ -4,12 +4,12 @@ using System.Text;
 using SmartTank.Scene;
 using TankEngine2D.Graphics;
 using SmartTank.AI;
-using SmartTank.GameObjects.Tank;
-using SmartTank.GameObjects.Shell;
-using SmartTank.GameObjects.Item;
+using SmartTank.GameObjs.Tank;
+using SmartTank.GameObjs.Shell;
+using SmartTank.GameObjs.Item;
 using System.IO;
 using TankEngine2D.Helpers;
-using SmartTank.GameObjects;
+using SmartTank.GameObjs;
 using SmartTank.Draw;
 using TankEngine2D.Input;
 using TankEngine2D.DataStructure;
@@ -20,7 +20,7 @@ using SmartTank.Senses.Vision;
 using SmartTank.Rule;
 using SmartTank.Effects.SceneEffects;
 using Microsoft.Xna.Framework;
-using SmartTank.GameObjects.Tank.SinTur;
+using SmartTank.GameObjs.Tank.SinTur;
 using SmartTank;
 using SmartTank.Helpers;
 using Microsoft.Xna.Framework.Graphics;
@@ -226,10 +226,10 @@ namespace InterRules.ShootTheBall
 
         public bool Update( float seconds )
         {
-            //GameManager.UpdateManager.Update( seconds );
+            //GameManager.UpdateMgr.Update( seconds );
             //GameManager.PhiColManager.Update( seconds );
-            //GameManager.ShelterManager.Update();
-            //GameManager.VisionManager.Update();
+            //GameManager.ShelterMgr.Update();
+            //GameManager.VisionMgr.Update();
             GameManager.UpdataComponent( seconds );
 
             if (InputHandler.IsKeyDown( Microsoft.Xna.Framework.Input.Keys.Left ))

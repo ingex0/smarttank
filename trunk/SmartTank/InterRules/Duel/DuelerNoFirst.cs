@@ -6,7 +6,7 @@ using SmartTank.AI;
 using SmartTank.AI.AIHelper;
 using TankEngine2D.DataStructure;
 using TankEngine2D.Graphics;
-using SmartTank.GameObjects;
+using SmartTank.GameObjs;
 
 namespace InterRules.Duel
 {

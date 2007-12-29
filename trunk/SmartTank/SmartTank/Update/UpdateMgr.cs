@@ -4,7 +4,7 @@ using System.Text;
 
 namespace SmartTank.Update
 {
-    public class UpdateManager
+    public class UpdateMgr
     {
         List<IEnumerable<IUpdater>> updateGroups = new List<IEnumerable<IUpdater>>();
 

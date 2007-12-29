@@ -6,7 +6,7 @@ using Microsoft.Xna.Framework.Graphics;
 using SmartTank.AI.AIHelper;
 using SmartTank.AI;
 using TankEngine2D.DataStructure;
-using SmartTank.GameObjects.Tank.SinTur;
+using SmartTank.GameObjs.Tank.SinTur;
 using SmartTank.Senses.Vision;
 using TankEngine2D.Helpers;
 

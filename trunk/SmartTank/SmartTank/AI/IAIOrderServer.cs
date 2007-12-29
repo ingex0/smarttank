@@ -7,7 +7,7 @@ using SmartTank.PhiCol;
 using TankEngine2D.Graphics;
 using SmartTank.Senses.Memory;
 using TankEngine2D.DataStructure;
-using SmartTank.GameObjects;
+using SmartTank.GameObjs;
 
 namespace SmartTank.AI
 {

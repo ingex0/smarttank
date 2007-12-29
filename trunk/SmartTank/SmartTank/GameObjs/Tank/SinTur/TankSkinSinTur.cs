@@ -8,7 +8,7 @@ using Microsoft.Xna.Framework.Graphics;
 using TankEngine2D.Helpers;
 using SmartTank.Draw;
 
-namespace SmartTank.GameObjects.Tank.SinTur
+namespace SmartTank.GameObjs.Tank.SinTur
 {
     class TankSkinSinTur
     {

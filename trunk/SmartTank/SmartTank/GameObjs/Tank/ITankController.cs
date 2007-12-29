@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using SmartTank.PhiCol;
 
-namespace SmartTank.GameObjects.Tank
+namespace SmartTank.GameObjs.Tank
 {
     public interface ITankController : IPhisicalUpdater, IColChecker
     {

@@ -8,12 +8,12 @@ using TankEngine2D.Helpers;
 using System.IO;
 using Microsoft.Xna.Framework.Graphics;
 using SmartTank.Scene;
-using SmartTank.GameObjects;
+using SmartTank.GameObjs;
 using TankEngine2D.DataStructure;
 using SmartTank.Helpers;
 using SmartTank.Draw;
 
-namespace SmartTank.GameObjects.Shell
+namespace SmartTank.GameObjs.Shell
 {
     public class ShellNormal : IGameObj, ICollideObj, IPhisicalObj
     {

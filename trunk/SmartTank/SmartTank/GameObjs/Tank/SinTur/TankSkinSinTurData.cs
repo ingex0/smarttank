@@ -5,7 +5,7 @@ using Microsoft.Xna.Framework;
 using System.IO;
 using TankEngine2D.Helpers;
 
-namespace SmartTank.GameObjects.Tank.SinTur
+namespace SmartTank.GameObjs.Tank.SinTur
 {
     struct TankSkinSinTurData
     {

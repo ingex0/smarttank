@@ -5,7 +5,7 @@ using TankEngine2D.Graphics;
 using Microsoft.Xna.Framework;
 using TankEngine2D.DataStructure;
 using Microsoft.Xna.Framework.Graphics;
-using SmartTank.GameObjects;
+using SmartTank.GameObjs;
 
 namespace SmartTank.PhiCol
 {

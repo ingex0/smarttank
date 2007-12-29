@@ -8,7 +8,7 @@ using TankEngine2D.Helpers;
 using System.Collections;
 using System.Xml;
 
-namespace SmartTank.GameObjects
+namespace SmartTank.GameObjs
 {
     public class GameObjDataNode : IEnumerable<GameObjDataNode>
     {

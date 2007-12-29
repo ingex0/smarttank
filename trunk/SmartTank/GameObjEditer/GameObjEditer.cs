@@ -7,7 +7,7 @@ using System.Text;
 using System.Windows.Forms;
 using Microsoft.Xna.Framework.Graphics;
 using System.IO;
-using SmartTank.GameObjects;
+using SmartTank.GameObjs;
 using TankEngine2D.Graphics;
 using SmartTank.Helpers;
 

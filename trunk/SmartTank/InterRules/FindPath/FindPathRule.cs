@@ -14,14 +14,14 @@ using SmartTank.Draw;
 using SmartTank.Draw.BackGround.VergeTile;
 using SmartTank.Scene;
 using SmartTank.AI;
-using SmartTank.GameObjects.Tank.SinTur;
-using SmartTank.GameObjects.Item;
+using SmartTank.GameObjs.Tank.SinTur;
+using SmartTank.GameObjs.Item;
 using SmartTank.Draw.UI;
 using SmartTank;
 using TankEngine2D.Input;
 using SmartTank.Update;
 using SmartTank.Effects.TextEffects;
-using SmartTank.GameObjects;
+using SmartTank.GameObjs;
 using SmartTank.Helpers;
 using SmartTank.Senses.Vision;
 using TankEngine2D.Graphics;
@@ -175,7 +175,7 @@ namespace InterRules.FindPath
             tankAI.OrderServer = tank;
             tankAI.CommonServer = commonServer;
 
-            GameManager.ObjMemoryManager.AddSingle( tank );
+            GameManager.ObjMemoryMgr.AddSingle( tank );
         }
 
         private void InitialScene ()

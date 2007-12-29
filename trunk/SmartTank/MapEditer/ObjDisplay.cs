@@ -4,7 +4,7 @@ using System.Text;
 using System.Reflection;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using SmartTank.GameObjects;
+using SmartTank.GameObjs;
 
 namespace MapEditer
 {

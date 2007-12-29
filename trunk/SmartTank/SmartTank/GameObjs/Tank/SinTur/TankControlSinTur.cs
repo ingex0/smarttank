@@ -6,10 +6,10 @@ using Microsoft.Xna.Framework;
 using SmartTank.PhiCol;
 using SmartTank.Update;
 using SmartTank.Scene;
-using SmartTank.GameObjects.Shell;
+using SmartTank.GameObjs.Shell;
 using TankEngine2D.Helpers;
 
-namespace SmartTank.GameObjects.Tank.SinTur
+namespace SmartTank.GameObjs.Tank.SinTur
 {
     public class TankContrSinTur : NonInertiasColUpdater, ITankController, IUpdater
     {

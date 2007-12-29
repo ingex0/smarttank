@@ -4,7 +4,7 @@ using System.Text;
 using TankEngine2D.Graphics;
 using TankEngine2D.DataStructure;
 using Microsoft.Xna.Framework;
-using SmartTank.GameObjects;
+using SmartTank.GameObjs;
 
 namespace SmartTank.Shelter
 {

@@ -6,7 +6,7 @@ using TankEngine2D.DataStructure;
 using Microsoft.Xna.Framework.Graphics;
 using TankEngine2D.Helpers;
 using TankEngine2D.Graphics;
-using SmartTank.GameObjects;
+using SmartTank.GameObjs;
 using SmartTank.Draw;
 using SmartTank.Senses.Vision;
 using SmartTank.Senses.Memory;
@@ -285,7 +285,7 @@ namespace SmartTank.Shelter
 
         /// <summary>
         /// 获得曾经见过物体的边界信息。
-        /// 可在ObjMemoryManager中将多个RaderOwner注册为物体边界信息共享组。
+        /// 可在ObjMemoryMgr中将多个RaderOwner注册为物体边界信息共享组。
         /// </summary>
         public ObjMemoryKeeper ObjMemoryKeeper
         {
@@ -395,7 +395,7 @@ namespace SmartTank.Shelter
         #region Draw
 
         /// <summary>
-        /// 被ShelterManager调用
+        /// 被ShelterMgr调用
         /// </summary>
         /// <param name="texture"></param>
         public void SetTexture ( Texture2D[] texture )

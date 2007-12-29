@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
-using SmartTank.GameObjects;
+using SmartTank.GameObjs;
 using SmartTank.PhiCol;
 using SmartTank.Shelter;
 using TankEngine2D.DataStructure;
@@ -9,8 +9,23 @@ using SmartTank.Senses.Vision;
 
 namespace SmartTank.Scene
 {
-    public class TypeGroup<T> : Group
-        where T : class, IGameObj
+    public abstract class TypeGroup : Group
+    {
+        public TypeGroup ( string groupName )
+            : base( groupName )
+        {
+        }
+
+        public abstract bool AddObj ( newIGameObj obj );
+        public abstract bool DelObj ( string name );
+        public abstract bool DelObj ( newIGameObj obj );
+        public abstract newIGameObj GetObj ( string name );
+
+        public abstract IEnumerable<CopyType> GetEnumerableCopy<CopyType> () where CopyType : class;
+    }
+
+    public class TypeGroup<T> : TypeGroup
+        where T : class, newIGameObj
     {
         protected MultiList<T> objs;
 
@@ -46,14 +61,34 @@ namespace SmartTank.Scene
             }
         }
 
-        public bool AddObj ( T obj, string objName )
+        public bool AddObj ( T obj )
         {
-            return objs.Add( objName, obj );
+            return objs.Add( obj.Name, obj );
         }
 
-        public bool DelObj ( string objName )
+        public override bool DelObj ( string objName )
         {
             return objs.Remove( objName );
+        }
+
+        public override bool DelObj ( newIGameObj obj )
+        {
+            return DelObj( obj.Name );
+        }
+
+        public override bool AddObj ( newIGameObj obj )
+        {
+            return AddObj( (T)obj );
+        }
+
+        public override newIGameObj GetObj ( string name )
+        {
+            return objs[name];
+        }
+
+        public override IEnumerable<CopyType> GetEnumerableCopy<CopyType> ()
+        {
+            return objs.GetCopy<CopyType>();
         }
     }
 }

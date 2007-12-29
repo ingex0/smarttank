@@ -7,7 +7,7 @@ using SmartTank.Effects.TextEffects;
 
 namespace SmartTank.Effects.SceneEffects
 {
-    class EffectsManager
+    class EffectsMgr
     {
         static List<IManagedEffect> managedEffects = new List<IManagedEffect>();
 

@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
-using SmartTank.GameObjects;
+using SmartTank.GameObjs;
 using TankEngine2D.DataStructure;
 using SmartTank.PhiCol;
 using SmartTank.Shelter;
@@ -130,17 +130,17 @@ namespace SmartTank.Scene
 
             manager.AddPhiGroup( phisicalObjs );
 
-            manager.AddColGroup( concaveObjs, lowBulgeObjs );
-            manager.AddColGroup( concaveObjs, highBulgeObjs );
-            manager.AddColGroup( lowBulgeObjs, highBulgeObjs );
-            manager.AddColGroup( highBulgeObjs );
-            manager.AddColGroup( highBulgeObjs, lowFlyingObjs );
-            manager.AddOverlapColGroup( highBulgeObjs, highFlyingObjs );
-            manager.AddColGroup( highBulgeObjs, boders );
-            manager.AddOverlapColGroup( lowFlyingObjs, boders );
+            manager.AddCollideGroup( concaveObjs, lowBulgeObjs );
+            manager.AddCollideGroup( concaveObjs, highBulgeObjs );
+            manager.AddCollideGroup( lowBulgeObjs, highBulgeObjs );
+            manager.AddCollideGroup( highBulgeObjs );
+            manager.AddCollideGroup( highBulgeObjs, lowFlyingObjs );
+            manager.AddOverlapGroup( highBulgeObjs, highFlyingObjs );
+            manager.AddCollideGroup( highBulgeObjs, boders );
+            manager.AddOverlapGroup( lowFlyingObjs, boders );
         }
 
-        public void RegistShelter ( ShelterManager manager )
+        public void RegistShelter ( ShelterMgr manager )
         {
             manager.AddRaderShelterGroup( tankRaderOwners, new MultiLinkedList<IShelterObj>[] { tankRaderShelters } );
         }
@@ -150,12 +150,12 @@ namespace SmartTank.Scene
             manager.AddGroup( SenceObjs.GetConvertList<IDrawableObj>() );
         }
 
-        public void RegistUpdaters ( UpdateManager manager )
+        public void RegistUpdaters ( UpdateMgr manager )
         {
             manager.AddGroup( SenceObjs.GetConvertList<IUpdater>() );
         }
 
-        public void RegistVision ( VisionManager manager )
+        public void RegistVision ( VisionMgr manager )
         {
             manager.AddVisionGroup( tankRaderOwners, visibleObjs );
         }

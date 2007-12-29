@@ -8,7 +8,7 @@ using Microsoft.Xna.Framework;
 
 namespace SmartTank.Senses.Memory
 {
-    public class ObjMemoryManager
+    public class ObjMemoryMgr
     {
         #region Type Define
         struct Group

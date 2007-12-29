@@ -9,7 +9,7 @@ using SmartTank.Helpers;
 
 namespace SmartTank.Shelter
 {
-    public partial class ShelterManager
+    public partial class ShelterMgr
     {
 
         class RaderDrawer

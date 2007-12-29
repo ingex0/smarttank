@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using Microsoft.Xna.Framework;
-using SmartTank.GameObjects;
+using SmartTank.GameObjs;
 using SmartTank.Shelter;
 
 namespace SmartTank.Senses.Vision

@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using SmartTank.Shelter;
-using SmartTank.GameObjects;
+using SmartTank.GameObjs;
 using Microsoft.Xna.Framework;
 using SmartTank.PhiCol;
 using TankEngine2D.DataStructure;
@@ -14,7 +14,7 @@ namespace SmartTank.Senses.Vision
 {
     public delegate IEyeableInfo GetEyeableInfoHandler ( IRaderOwner raderOwner, IEyeableObj obj );
 
-    public class VisionManager
+    public class VisionMgr
     {
         #region Private type
 

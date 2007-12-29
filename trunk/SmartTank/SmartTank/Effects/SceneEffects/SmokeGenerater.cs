@@ -8,7 +8,7 @@ using TankEngine2D.Helpers;
 using System.IO;
 using SmartTank.Helpers;
 using SmartTank.Draw;
-using SmartTank.GameObjects;
+using SmartTank.GameObjs;
 
 namespace SmartTank.Effects.SceneEffects
 {
@@ -80,7 +80,7 @@ namespace SmartTank.Effects.SceneEffects
                 } );
 
             if (managered)
-                EffectsManager.AddManagedEffect( this );
+                EffectsMgr.AddManagedEffect( this );
         }
 
         public SmokeGenerater( float duaration, float partiDuara, Vector2 dir, float speed, float concen, bool managered,

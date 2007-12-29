@@ -6,12 +6,12 @@ using Microsoft.Xna.Framework;
 using TankEngine2D.Graphics;
 using TankEngine2D.DataStructure;
 using TankEngine2D.Helpers;
-using SmartTank.GameObjects;
+using SmartTank.GameObjs;
 using SmartTank.Senses.Memory;
 
 namespace SmartTank.Shelter
 {
-    public partial class ShelterManager
+    public partial class ShelterMgr
     {
         class RaderDepthMap
         {

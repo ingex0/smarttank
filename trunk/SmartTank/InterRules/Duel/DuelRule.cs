@@ -7,21 +7,21 @@ using System.IO;
 using SmartTank.Rule;
 using SmartTank.Screens;
 using SmartTank.AI;
-using SmartTank.GameObjects.Tank.SinTur;
+using SmartTank.GameObjs.Tank.SinTur;
 using SmartTank.Effects.SceneEffects;
-using SmartTank.GameObjects;
+using SmartTank.GameObjs;
 using SmartTank.Draw.UI.Controls;
 using SmartTank.Helpers.DependInject;
 using TankEngine2D.DataStructure;
 using SmartTank.Scene;
 using SmartTank.Draw;
 using SmartTank.Draw.BackGround.VergeTile;
-using SmartTank.GameObjects.Tank;
+using SmartTank.GameObjs.Tank;
 using TankEngine2D.Graphics;
 using SmartTank;
 using InterRules.ShootTheBall;
 using TankEngine2D.Input;
-using SmartTank.GameObjects.Shell;
+using SmartTank.GameObjs.Shell;
 using SmartTank.Helpers;
 using TankEngine2D.Helpers;
 using SmartTank.Senses.Vision;
@@ -208,8 +208,8 @@ namespace InterRules.Duel
             tankAI2.OrderServer = tank2;
             tank2.SetTankAI( tankAI2 );
 
-            //GameManager.ObjMemoryManager.AddSingle( tank1 );
-            //GameManager.ObjMemoryManager.AddSingle( tank2 );
+            //GameManager.ObjMemoryMgr.AddSingle( tank1 );
+            //GameManager.ObjMemoryMgr.AddSingle( tank2 );
         }
 
         private void InitialDrawManager ( IAI tankAI1, IAI tankAI2 )

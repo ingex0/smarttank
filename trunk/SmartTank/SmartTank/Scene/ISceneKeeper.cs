@@ -13,12 +13,12 @@ namespace SmartTank.Scene
     {
         void RegistPhiCol ( PhiColMgr manager );
 
-        void RegistShelter ( ShelterManager manager );
+        void RegistShelter ( ShelterMgr manager );
 
         void RegistDrawables ( DrawManager manager );
 
-        void RegistUpdaters ( UpdateManager manager );
+        void RegistUpdaters ( UpdateMgr manager );
 
-        void RegistVision ( VisionManager manager );
+        void RegistVision ( VisionMgr manager );
     }
 }

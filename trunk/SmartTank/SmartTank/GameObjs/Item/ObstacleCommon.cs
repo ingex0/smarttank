@@ -9,7 +9,7 @@ using SmartTank.Senses.Vision;
 using TankEngine2D.Graphics;
 using TankEngine2D.DataStructure;
 
-namespace SmartTank.GameObjects.Item
+namespace SmartTank.GameObjs.Item
 {
     public class ObstacleCommon : IGameObj, ICollideObj, IShelterObj, IEyeableObj, IColChecker
     {

@@ -8,7 +8,7 @@ using Microsoft.Xna.Framework;
 using SmartTank.AI;
 using TankEngine2D.DataStructure;
 
-namespace SmartTank.GameObjects.Tank
+namespace SmartTank.GameObjs.Tank
 {
     public abstract class Tank : IGameObj, ICollideObj, IPhisicalObj
     {

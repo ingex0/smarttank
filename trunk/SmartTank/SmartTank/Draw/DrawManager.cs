@@ -51,7 +51,7 @@ namespace SmartTank.Draw
                 }
             }
 
-            EffectsManager.Draw(condition);
+            EffectsMgr.Draw(condition);
         }
     }
 }

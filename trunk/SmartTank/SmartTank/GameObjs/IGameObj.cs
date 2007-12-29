@@ -6,7 +6,7 @@ using SmartTank.Draw;
 using Microsoft.Xna.Framework;
 using TankEngine2D.Graphics;
 
-namespace SmartTank.GameObjects
+namespace SmartTank.GameObjs
 {
     /*
      * 定义了场景物体的一般接口。

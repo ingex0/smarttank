@@ -14,7 +14,7 @@ using SmartTank.Senses.Memory;
 using TankEngine2D.Helpers;
 using SmartTank.Helpers;
 
-namespace SmartTank.GameObjects.Tank.SinTur
+namespace SmartTank.GameObjs.Tank.SinTur
 {
     public class TankSinTur : Tank, IRaderOwner, IAIOrderServerSinTur, IEyeableObj
     {

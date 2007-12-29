@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace SmartTank.GameObjects
+namespace SmartTank.GameObjs
 {
     [AttributeUsage( AttributeTargets.Class, Inherited = false )]
     class GameObjAttribute : Attribute

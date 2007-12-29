@@ -11,7 +11,7 @@ using TankEngine2D.Graphics;
 using TankEngine2D.DataStructure;
 using SmartTank.Draw;
 
-namespace SmartTank.GameObjects.Item
+namespace SmartTank.GameObjs.Item
 {
     public class ItemCommon : IGameObj, IPhisicalObj, ICollideObj, IShelterObj, IEyeableObj
     {

@@ -11,7 +11,6 @@ namespace SmartTank.Draw.UI
         Vector2 drawPos;           //绘制位置
         Vector2 cameraPos;         //Camera位置
         private float rota;         //指向
-        Vector2 TestPos;
 
         public Vector2 DrawPos
         {

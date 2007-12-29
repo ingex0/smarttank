@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace SmartTank.GameObjects.Tank.SinTur
+namespace SmartTank.GameObjs.Tank.SinTur
 {
     public class TankLimitSinTur
     {

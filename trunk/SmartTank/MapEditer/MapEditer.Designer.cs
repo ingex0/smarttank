@@ -30,9 +30,9 @@
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager( typeof( MapEditer ) );
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
-            this.文件ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.打开脚本ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.保存脚本ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.ToolStripMenuItemFile = new System.Windows.Forms.ToolStripMenuItem();
+            this.MenuItemOpenScene = new System.Windows.Forms.ToolStripMenuItem();
+            this.MenuItemSaveScene = new System.Windows.Forms.ToolStripMenuItem();
             this.视图ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.组编辑面板ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.地面编辑面板ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -43,6 +43,10 @@
             this.toolStripContainer1 = new System.Windows.Forms.ToolStripContainer();
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.dockPanel = new WeifenLuo.WinFormsUI.Docking.DockPanel();
+            this.toolStrip2 = new System.Windows.Forms.ToolStrip();
+            this.toolStripButtonMoveCamera = new System.Windows.Forms.ToolStripButton();
+            this.toolStripButtonZoomCamera = new System.Windows.Forms.ToolStripButton();
+            this.toolStripButtonRotaCamera = new System.Windows.Forms.ToolStripButton();
             this.toolStrip1 = new System.Windows.Forms.ToolStrip();
             this.toolStripButtonGroup = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
@@ -56,24 +60,23 @@
             this.toolStripButtonShowMapPanel = new System.Windows.Forms.ToolStripButton();
             this.toolStripButtonShowObjCreatePanel = new System.Windows.Forms.ToolStripButton();
             this.toolStripButtonShowObjPropertyPanel = new System.Windows.Forms.ToolStripButton();
-            this.toolStrip2 = new System.Windows.Forms.ToolStrip();
-            this.toolStripButtonMoveCamera = new System.Windows.Forms.ToolStripButton();
-            this.toolStripButtonZoomCamera = new System.Windows.Forms.ToolStripButton();
-            this.toolStripButtonRotaCamera = new System.Windows.Forms.ToolStripButton();
+            this.MenuItemNewScene = new System.Windows.Forms.ToolStripMenuItem();
+            this.openSceneDialog = new System.Windows.Forms.OpenFileDialog();
+            this.saveSceneDialog = new System.Windows.Forms.SaveFileDialog();
             this.menuStrip1.SuspendLayout();
             this.toolStripContainer1.BottomToolStripPanel.SuspendLayout();
             this.toolStripContainer1.ContentPanel.SuspendLayout();
             this.toolStripContainer1.TopToolStripPanel.SuspendLayout();
             this.toolStripContainer1.SuspendLayout();
+            this.toolStrip2.SuspendLayout();
             this.toolStrip1.SuspendLayout();
             this.toolStrip3.SuspendLayout();
-            this.toolStrip2.SuspendLayout();
             this.SuspendLayout();
             // 
             // menuStrip1
             // 
             this.menuStrip1.Items.AddRange( new System.Windows.Forms.ToolStripItem[] {
-            this.文件ToolStripMenuItem,
+            this.ToolStripMenuItemFile,
             this.视图ToolStripMenuItem} );
             this.menuStrip1.Location = new System.Drawing.Point( 0, 0 );
             this.menuStrip1.Name = "menuStrip1";
@@ -81,26 +84,29 @@
             this.menuStrip1.TabIndex = 0;
             this.menuStrip1.Text = "menuStrip1";
             // 
-            // 文件ToolStripMenuItem
+            // ToolStripMenuItemFile
             // 
-            this.文件ToolStripMenuItem.DropDownItems.AddRange( new System.Windows.Forms.ToolStripItem[] {
-            this.打开脚本ToolStripMenuItem,
-            this.保存脚本ToolStripMenuItem} );
-            this.文件ToolStripMenuItem.Name = "文件ToolStripMenuItem";
-            this.文件ToolStripMenuItem.Size = new System.Drawing.Size( 43, 20 );
-            this.文件ToolStripMenuItem.Text = "文件";
+            this.ToolStripMenuItemFile.DropDownItems.AddRange( new System.Windows.Forms.ToolStripItem[] {
+            this.MenuItemNewScene,
+            this.MenuItemOpenScene,
+            this.MenuItemSaveScene} );
+            this.ToolStripMenuItemFile.Name = "ToolStripMenuItemFile";
+            this.ToolStripMenuItemFile.Size = new System.Drawing.Size( 43, 20 );
+            this.ToolStripMenuItemFile.Text = "文件";
             // 
-            // 打开脚本ToolStripMenuItem
+            // MenuItemOpenScene
             // 
-            this.打开脚本ToolStripMenuItem.Name = "打开脚本ToolStripMenuItem";
-            this.打开脚本ToolStripMenuItem.Size = new System.Drawing.Size( 122, 22 );
-            this.打开脚本ToolStripMenuItem.Text = "打开脚本";
+            this.MenuItemOpenScene.Name = "MenuItemOpenScene";
+            this.MenuItemOpenScene.Size = new System.Drawing.Size( 152, 22 );
+            this.MenuItemOpenScene.Text = "打开场景";
+            this.MenuItemOpenScene.Click += new System.EventHandler( this.MenuItemOpenScene_Click );
             // 
-            // 保存脚本ToolStripMenuItem
+            // MenuItemSaveScene
             // 
-            this.保存脚本ToolStripMenuItem.Name = "保存脚本ToolStripMenuItem";
-            this.保存脚本ToolStripMenuItem.Size = new System.Drawing.Size( 122, 22 );
-            this.保存脚本ToolStripMenuItem.Text = "保存脚本";
+            this.MenuItemSaveScene.Name = "MenuItemSaveScene";
+            this.MenuItemSaveScene.Size = new System.Drawing.Size( 152, 22 );
+            this.MenuItemSaveScene.Text = "保存场景";
+            this.MenuItemSaveScene.Click += new System.EventHandler( this.MenuItemSaveScene_Click );
             // 
             // 视图ToolStripMenuItem
             // 
@@ -170,9 +176,9 @@
             // 
             // toolStripContainer1.TopToolStripPanel
             // 
+            this.toolStripContainer1.TopToolStripPanel.Controls.Add( this.toolStrip3 );
             this.toolStripContainer1.TopToolStripPanel.Controls.Add( this.toolStrip2 );
             this.toolStripContainer1.TopToolStripPanel.Controls.Add( this.toolStrip1 );
-            this.toolStripContainer1.TopToolStripPanel.Controls.Add( this.toolStrip3 );
             // 
             // statusStrip1
             // 
@@ -192,6 +198,48 @@
             this.dockPanel.Size = new System.Drawing.Size( 860, 375 );
             this.dockPanel.TabIndex = 0;
             // 
+            // toolStrip2
+            // 
+            this.toolStrip2.Dock = System.Windows.Forms.DockStyle.None;
+            this.toolStrip2.Items.AddRange( new System.Windows.Forms.ToolStripItem[] {
+            this.toolStripButtonMoveCamera,
+            this.toolStripButtonZoomCamera,
+            this.toolStripButtonRotaCamera} );
+            this.toolStrip2.Location = new System.Drawing.Point( 69, 0 );
+            this.toolStrip2.Name = "toolStrip2";
+            this.toolStrip2.Size = new System.Drawing.Size( 81, 25 );
+            this.toolStrip2.TabIndex = 1;
+            // 
+            // toolStripButtonMoveCamera
+            // 
+            this.toolStripButtonMoveCamera.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.toolStripButtonMoveCamera.Image = ((System.Drawing.Image)(resources.GetObject( "toolStripButtonMoveCamera.Image" )));
+            this.toolStripButtonMoveCamera.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripButtonMoveCamera.Name = "toolStripButtonMoveCamera";
+            this.toolStripButtonMoveCamera.Size = new System.Drawing.Size( 23, 22 );
+            this.toolStripButtonMoveCamera.Text = "toolStripButton1";
+            this.toolStripButtonMoveCamera.ToolTipText = "平移摄像机";
+            // 
+            // toolStripButtonZoomCamera
+            // 
+            this.toolStripButtonZoomCamera.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.toolStripButtonZoomCamera.Image = ((System.Drawing.Image)(resources.GetObject( "toolStripButtonZoomCamera.Image" )));
+            this.toolStripButtonZoomCamera.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripButtonZoomCamera.Name = "toolStripButtonZoomCamera";
+            this.toolStripButtonZoomCamera.Size = new System.Drawing.Size( 23, 22 );
+            this.toolStripButtonZoomCamera.Text = "toolStripButton2";
+            this.toolStripButtonZoomCamera.ToolTipText = "缩放摄像机";
+            // 
+            // toolStripButtonRotaCamera
+            // 
+            this.toolStripButtonRotaCamera.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.toolStripButtonRotaCamera.Image = ((System.Drawing.Image)(resources.GetObject( "toolStripButtonRotaCamera.Image" )));
+            this.toolStripButtonRotaCamera.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripButtonRotaCamera.Name = "toolStripButtonRotaCamera";
+            this.toolStripButtonRotaCamera.Size = new System.Drawing.Size( 23, 22 );
+            this.toolStripButtonRotaCamera.Text = "toolStripButton3";
+            this.toolStripButtonRotaCamera.ToolTipText = "旋转摄像机";
+            // 
             // toolStrip1
             // 
             this.toolStrip1.Dock = System.Windows.Forms.DockStyle.None;
@@ -203,7 +251,7 @@
             this.toolStripSeparator2,
             this.toolStripButtonMove,
             this.toolStripButtonZoom} );
-            this.toolStrip1.Location = new System.Drawing.Point( 7, 25 );
+            this.toolStrip1.Location = new System.Drawing.Point( 3, 25 );
             this.toolStrip1.Name = "toolStrip1";
             this.toolStrip1.Size = new System.Drawing.Size( 139, 25 );
             this.toolStrip1.TabIndex = 0;
@@ -276,7 +324,7 @@
             this.toolStripButtonShowMapPanel,
             this.toolStripButtonShowObjCreatePanel,
             this.toolStripButtonShowObjPropertyPanel} );
-            this.toolStrip3.Location = new System.Drawing.Point( 46, 0 );
+            this.toolStrip3.Location = new System.Drawing.Point( 142, 25 );
             this.toolStrip3.Name = "toolStrip3";
             this.toolStrip3.Size = new System.Drawing.Size( 104, 25 );
             this.toolStrip3.TabIndex = 2;
@@ -325,47 +373,16 @@
             this.toolStripButtonShowObjPropertyPanel.ToolTipText = "显示物体属性面板";
             this.toolStripButtonShowObjPropertyPanel.Click += new System.EventHandler( this.toolStripButtonShowObjPropertyPanel_Click );
             // 
-            // toolStrip2
+            // MenuItemNewScene
             // 
-            this.toolStrip2.Dock = System.Windows.Forms.DockStyle.None;
-            this.toolStrip2.Items.AddRange( new System.Windows.Forms.ToolStripItem[] {
-            this.toolStripButtonMoveCamera,
-            this.toolStripButtonZoomCamera,
-            this.toolStripButtonRotaCamera} );
-            this.toolStrip2.Location = new System.Drawing.Point( 156, 0 );
-            this.toolStrip2.Name = "toolStrip2";
-            this.toolStrip2.Size = new System.Drawing.Size( 81, 25 );
-            this.toolStrip2.TabIndex = 1;
+            this.MenuItemNewScene.Name = "MenuItemNewScene";
+            this.MenuItemNewScene.Size = new System.Drawing.Size( 152, 22 );
+            this.MenuItemNewScene.Text = "新建场景";
+            this.MenuItemNewScene.Click += new System.EventHandler( this.MenuItemNewScene_Click );
             // 
-            // toolStripButtonMoveCamera
+            // openSceneDialog
             // 
-            this.toolStripButtonMoveCamera.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.toolStripButtonMoveCamera.Image = ((System.Drawing.Image)(resources.GetObject( "toolStripButtonMoveCamera.Image" )));
-            this.toolStripButtonMoveCamera.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripButtonMoveCamera.Name = "toolStripButtonMoveCamera";
-            this.toolStripButtonMoveCamera.Size = new System.Drawing.Size( 23, 22 );
-            this.toolStripButtonMoveCamera.Text = "toolStripButton1";
-            this.toolStripButtonMoveCamera.ToolTipText = "平移摄像机";
-            // 
-            // toolStripButtonZoomCamera
-            // 
-            this.toolStripButtonZoomCamera.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.toolStripButtonZoomCamera.Image = ((System.Drawing.Image)(resources.GetObject( "toolStripButtonZoomCamera.Image" )));
-            this.toolStripButtonZoomCamera.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripButtonZoomCamera.Name = "toolStripButtonZoomCamera";
-            this.toolStripButtonZoomCamera.Size = new System.Drawing.Size( 23, 22 );
-            this.toolStripButtonZoomCamera.Text = "toolStripButton2";
-            this.toolStripButtonZoomCamera.ToolTipText = "缩放摄像机";
-            // 
-            // toolStripButtonRotaCamera
-            // 
-            this.toolStripButtonRotaCamera.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.toolStripButtonRotaCamera.Image = ((System.Drawing.Image)(resources.GetObject( "toolStripButtonRotaCamera.Image" )));
-            this.toolStripButtonRotaCamera.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripButtonRotaCamera.Name = "toolStripButtonRotaCamera";
-            this.toolStripButtonRotaCamera.Size = new System.Drawing.Size( 23, 22 );
-            this.toolStripButtonRotaCamera.Text = "toolStripButton3";
-            this.toolStripButtonRotaCamera.ToolTipText = "旋转摄像机";
+            this.openSceneDialog.Filter = "\"Scene文件|*.scene\"";
             // 
             // MapEditer
             // 
@@ -387,12 +404,12 @@
             this.toolStripContainer1.TopToolStripPanel.PerformLayout();
             this.toolStripContainer1.ResumeLayout( false );
             this.toolStripContainer1.PerformLayout();
+            this.toolStrip2.ResumeLayout( false );
+            this.toolStrip2.PerformLayout();
             this.toolStrip1.ResumeLayout( false );
             this.toolStrip1.PerformLayout();
             this.toolStrip3.ResumeLayout( false );
             this.toolStrip3.PerformLayout();
-            this.toolStrip2.ResumeLayout( false );
-            this.toolStrip2.PerformLayout();
             this.ResumeLayout( false );
             this.PerformLayout();
 
@@ -404,7 +421,7 @@
         private System.Windows.Forms.ToolStripContainer toolStripContainer1;
         private System.Windows.Forms.StatusStrip statusStrip1;
         private System.Windows.Forms.ToolStrip toolStrip1;
-        private System.Windows.Forms.ToolStripMenuItem 文件ToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem ToolStripMenuItemFile;
         private System.Windows.Forms.ToolStripButton toolStripButtonCreate;
         private System.Windows.Forms.ToolStripButton toolStripButtonDel;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
@@ -428,8 +445,11 @@
         private System.Windows.Forms.ToolStripButton toolStripButtonShowMapPanel;
         private System.Windows.Forms.ToolStripButton toolStripButtonShowObjPropertyPanel;
         private System.Windows.Forms.ToolStripButton toolStripButtonShowObjCreatePanel;
-        private System.Windows.Forms.ToolStripMenuItem 打开脚本ToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem 保存脚本ToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem MenuItemOpenScene;
+        private System.Windows.Forms.ToolStripMenuItem MenuItemSaveScene;
         private WeifenLuo.WinFormsUI.Docking.DockPanel dockPanel;
+        private System.Windows.Forms.ToolStripMenuItem MenuItemNewScene;
+        private System.Windows.Forms.OpenFileDialog openSceneDialog;
+        private System.Windows.Forms.SaveFileDialog saveSceneDialog;
     }
 }

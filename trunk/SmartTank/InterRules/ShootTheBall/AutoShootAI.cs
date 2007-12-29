@@ -1,8 +1,8 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
-using SmartTank.GameObjects.Tank;
-using SmartTank.GameObjects.Tank.SinTur;
+using SmartTank.GameObjs.Tank;
+using SmartTank.GameObjs.Tank.SinTur;
 using TankEngine2D.Input;
 using SmartTank.Senses.Vision;
 using TankEngine2D.Helpers;

@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
-using SmartTank.GameObjects;
+using SmartTank.GameObjs;
 using TankEngine2D.DataStructure;
 using Microsoft.Xna.Framework;
 using SmartTank.PhiCol;

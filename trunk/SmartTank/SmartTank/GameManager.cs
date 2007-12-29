@@ -33,15 +33,15 @@ namespace SmartTank
 
         protected static PhiColMgr phiColManager;
 
-        protected static ShelterManager shelterManager;
+        protected static ShelterMgr shelterMgr;
 
         protected static DrawManager drawManager;
 
-        protected static UpdateManager updateManager;
+        protected static UpdateMgr updateMgr;
 
-        protected static VisionManager visionManager;
+        protected static VisionMgr visionMgr;
 
-        protected static ObjMemoryManager objMemoryMananger;
+        protected static ObjMemoryMgr objMemoryMananger;
 
 
         protected static ISceneKeeper curSceneKeeper;
@@ -56,9 +56,9 @@ namespace SmartTank
             get { return phiColManager; }
         }
 
-        public static ShelterManager ShelterManager
+        public static ShelterMgr ShelterMgr
         {
-            get { return shelterManager; }
+            get { return shelterMgr; }
         }
 
         public static DrawManager DrawManager
@@ -66,17 +66,17 @@ namespace SmartTank
             get { return drawManager; }
         }
 
-        public static UpdateManager UpdateManager
+        public static UpdateMgr UpdateMgr
         {
-            get { return updateManager; }
+            get { return updateMgr; }
         }
 
-        public static VisionManager VisionManager
+        public static VisionMgr VisionMgr
         {
-            get { return visionManager; }
+            get { return visionMgr; }
         }
 
-        public static ObjMemoryManager ObjMemoryManager
+        public static ObjMemoryMgr ObjMemoryMgr
         {
             get { return objMemoryMananger; }
         }
@@ -97,11 +97,11 @@ namespace SmartTank
             base.Initialize();
 
             phiColManager = new PhiColMgr();
-            shelterManager = new ShelterManager();
+            shelterMgr = new ShelterMgr();
             drawManager = new DrawManager();
-            updateManager = new UpdateManager();
-            visionManager = new VisionManager();
-            objMemoryMananger = new ObjMemoryManager();
+            updateMgr = new UpdateMgr();
+            visionMgr = new VisionMgr();
+            objMemoryMananger = new ObjMemoryMgr();
 
             Sound.Initial();
 
@@ -168,16 +168,16 @@ namespace SmartTank
         public static void LoadScene ( ISceneKeeper scene )
         {
             phiColManager.ClearGroups();
-            shelterManager.ClearGroups();
+            ShelterMgr.ClearGroups();
             drawManager.ClearGroups();
-            updateManager.ClearGroups();
-            visionManager.ClearGroups();
+            updateMgr.ClearGroups();
+            visionMgr.ClearGroups();
 
             scene.RegistDrawables( drawManager );
             scene.RegistPhiCol( phiColManager );
-            scene.RegistShelter( shelterManager );
-            scene.RegistUpdaters( updateManager );
-            scene.RegistVision( visionManager );
+            scene.RegistShelter( ShelterMgr );
+            scene.RegistUpdaters( updateMgr );
+            scene.RegistVision( visionMgr );
 
             curSceneKeeper = scene;
         }
@@ -186,17 +186,17 @@ namespace SmartTank
 
         public static void UpdataComponent ( float seconds )
         {
-            GameManager.UpdateManager.Update( seconds );
+            GameManager.UpdateMgr.Update( seconds );
             GameManager.PhiColManager.Update( seconds );
-            GameManager.ShelterManager.Update();
-            GameManager.VisionManager.Update();
+            GameManager.ShelterMgr.Update();
+            GameManager.VisionMgr.Update();
             GameManager.objMemoryMananger.Update();
-            EffectsManager.Update( seconds );
+            EffectsMgr.Update( seconds );
         }
 
         public static void ComponentReset ()
         {
-            EffectsManager.Clear();
+            EffectsMgr.Clear();
             Sound.Clear();
             GameTimer.ClearAllTimer();
             TextEffect.Clear();

@@ -8,6 +8,8 @@ using System.Windows.Forms;
 using System.Runtime.InteropServices;
 using WeifenLuo.WinFormsUI.Docking;
 using Microsoft.Xna.Framework.Graphics;
+using SmartTank.Scene;
+using System.IO;
 
 namespace MapEditer
 {
@@ -24,6 +26,8 @@ namespace MapEditer
 
         GraphicsDevice displayDevice;
         SpriteBatch displayBatch;
+
+        SceneMgr curScene;
 
         public MapEditer ()
         {
@@ -196,6 +200,36 @@ namespace MapEditer
 
 
         #endregion
+
+        private void MenuItemNewScene_Click ( object sender, EventArgs e )
+        {
+            //if (curScene != null) // —ØŒ  «∑Ò±£¥Ê
+            curScene = new SceneMgr();
+        }
+
+        private void MenuItemOpenScene_Click ( object sender, EventArgs e )
+        {
+            DialogResult result = openSceneDialog.ShowDialog( this );
+            if (result == DialogResult.OK)
+            {
+                curScene = SceneMgr.Load( openSceneDialog.FileName );
+            }
+        }
+
+        private void MenuItemSaveScene_Click ( object sender, EventArgs e )
+        {
+            if (curScene == null)
+                return;
+
+            DialogResult result = saveSceneDialog.ShowDialog( this );
+            if (result == DialogResult.OK)
+            {
+                Stream file =File.Create(saveSceneDialog.FileName);
+                SceneMgr.Save( file, curScene );
+            }
+        }
+
+
 
     }
 }

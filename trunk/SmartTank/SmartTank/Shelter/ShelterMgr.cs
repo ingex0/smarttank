@@ -14,7 +14,7 @@ namespace SmartTank.Shelter
      * 遮挡关系管理类。
      * 
      * */
-    public partial class ShelterManager
+    public partial class ShelterMgr
     {
         #region Private Type Def
         struct RaderShelterGroup
@@ -45,7 +45,7 @@ namespace SmartTank.Shelter
         #endregion
 
         #region Construction
-        public ShelterManager()
+        public ShelterMgr()
         {
             raderDrawer = new RaderDrawer();
         }
