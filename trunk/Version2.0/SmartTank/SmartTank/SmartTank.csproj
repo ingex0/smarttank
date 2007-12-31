@@ -1,0 +1,475 @@
+﻿<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <ProjectGuid>{26F35A75-9D12-460B-995F-ADF6B500CA1B}</ProjectGuid>
+    <ProjectTypeGuids>{6D335F3A-9D43-41b4-9D22-F6F17C4BE596};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">x86</Platform>
+    <OutputType>WinExe</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>SmartTank</RootNamespace>
+    <AssemblyName>SmartTank</AssemblyName>
+    <XnaFrameworkVersion>v2.0</XnaFrameworkVersion>
+    <XnaPlatform>Windows</XnaPlatform>
+    <ApplicationIcon>
+    </ApplicationIcon>
+    <Thumbnail>
+    </Thumbnail>
+    <XnaCrossPlatformGroupID>{7c2f49ae-b8ab-44c4-b805-e51ef1bbba18}</XnaCrossPlatformGroupID>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x86' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>..\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <NoStdLib>true</NoStdLib>
+    <UseVSHostingProcess>false</UseVSHostingProcess>
+    <PlatformTarget>x86</PlatformTarget>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x86' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\x86\Release</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <NoStdLib>true</NoStdLib>
+    <UseVSHostingProcess>false</UseVSHostingProcess>
+    <PlatformTarget>x86</PlatformTarget>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Microsoft.Xna.Framework, Version=2.0.0.0, Culture=neutral, PublicKeyToken=6d5c3888ef60e27d, processorArchitecture=x86">
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="Microsoft.Xna.Framework.Game, Version=2.0.0.0, Culture=neutral, PublicKeyToken=6d5c3888ef60e27d, processorArchitecture=MSIL">
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="mscorlib">
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="System">
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="System.Data" />
+    <Reference Include="System.XML" />
+    <Reference Include="TankEngine2D, Version=1.0.0.0, Culture=neutral, processorArchitecture=x86">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\TankEngine2D\bin\x86\Debug\TankEngine2D.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="AI\AIAttribute.cs">
+      <Name>AIAttribute</Name>
+    </Compile>
+    <Compile Include="AI\AICommonServer.cs">
+      <Name>AICommonServer</Name>
+    </Compile>
+    <Compile Include="AI\AIHelper\AIActionHelper.cs">
+      <Name>AIActionHelper</Name>
+    </Compile>
+    <Compile Include="AI\AIHelper\ConsiderCenter.cs">
+      <Name>ConsiderCenter</Name>
+    </Compile>
+    <Compile Include="AI\IAI.cs">
+      <Name>IAI</Name>
+    </Compile>
+    <Compile Include="AI\IAIAttribute.cs">
+      <Name>IAIAttribute</Name>
+    </Compile>
+    <Compile Include="AI\IAICommonServer.cs">
+      <Name>IAICommonServer</Name>
+    </Compile>
+    <Compile Include="AI\IAIOrderServer.cs">
+      <Name>IAIOrderServer</Name>
+    </Compile>
+    <Compile Include="AI\IAIOrderServerSinTur.cs">
+      <Name>IAIOrderServerSinTur</Name>
+    </Compile>
+    <Compile Include="AI\IAISinTur.cs">
+      <Name>IAISinTur</Name>
+    </Compile>
+    <Compile Include="AI\ManualControl.cs">
+      <Name>ManualControl</Name>
+    </Compile>
+    <Compile Include="BaseGame.cs">
+      <Name>BaseGame</Name>
+    </Compile>
+    <Compile Include="Draw\BackGround\IBackGround.cs">
+      <Name>IBackGround</Name>
+    </Compile>
+    <Compile Include="Draw\BackGround\VergeTile\VergeTileData.cs">
+      <Name>VergeTileData</Name>
+    </Compile>
+    <Compile Include="Draw\BackGround\VergeTile\VergeTileGround.cs">
+      <Name>VergeTileGround</Name>
+    </Compile>
+    <Compile Include="Draw\Camera.cs">
+      <Name>Camera</Name>
+    </Compile>
+    <Compile Include="Draw\DrawManager.cs">
+      <Name>DrawManager</Name>
+    </Compile>
+    <Compile Include="Draw\GameFonts.cs">
+      <Name>GameFonts</Name>
+    </Compile>
+    <Compile Include="Draw\IDrawableObj.cs">
+      <Name>IDrawableObj</Name>
+    </Compile>
+    <Compile Include="Draw\LayerDepth.cs">
+      <Name>LayerDepth</Name>
+    </Compile>
+    <Compile Include="Draw\UI\Compass.cs">
+      <Name>Compass</Name>
+    </Compile>
+    <Compile Include="Effects\Particles\Particle.cs">
+      <Name>Particle</Name>
+    </Compile>
+    <Compile Include="Effects\Particles\ParticleSystem.cs">
+      <Name>ParticleSystem</Name>
+    </Compile>
+    <Compile Include="Effects\Quake.cs">
+      <Name>Quake</Name>
+    </Compile>
+    <Compile Include="Effects\SceneEffects\BaseEffects\ScaleUp.cs">
+      <Name>ScaleUp</Name>
+    </Compile>
+    <Compile Include="Effects\SceneEffects\EffectsMgr.cs">
+      <Name>EffectsMgr</Name>
+    </Compile>
+    <Compile Include="Effects\SceneEffects\Explode.cs">
+      <Name>Explode</Name>
+    </Compile>
+    <Compile Include="Effects\SceneEffects\IManagedEffect.cs">
+      <Name>IManagedEffect</Name>
+    </Compile>
+    <Compile Include="Effects\SceneEffects\ShellExplode.cs">
+      <Name>ShellExplode</Name>
+    </Compile>
+    <Compile Include="Effects\SceneEffects\ShellExplodeBeta.cs">
+      <Name>ShellExplodeBeta</Name>
+    </Compile>
+    <Compile Include="Effects\SceneEffects\SmokeGenerater.cs">
+      <Name>SmokeGenerater</Name>
+    </Compile>
+    <Compile Include="Effects\TextEffects\FadeUpEffect.cs">
+      <Name>FadeUpEffect</Name>
+    </Compile>
+    <Compile Include="Effects\TextEffects\TextEffert.cs">
+      <Name>TextEffert</Name>
+    </Compile>
+    <Compile Include="GameManager.cs">
+      <Name>GameManager</Name>
+    </Compile>
+    <Compile Include="GameObjs\newIGameObj.cs">
+      <Name>newIGameObj</Name>
+    </Compile>
+    <Compile Include="PhiCol\Border.cs">
+      <Name>Border</Name>
+    </Compile>
+    <Compile Include="GameObjs\EditableAttribute.cs">
+      <Name>EditableAttribute</Name>
+    </Compile>
+    <Compile Include="GameObjs\GameObjAttribute.cs">
+      <Name>GameObjAttribute</Name>
+    </Compile>
+    <Compile Include="GameObjs\GameObjData.cs">
+      <Name>GameObjData</Name>
+    </Compile>
+    <Compile Include="GameObjs\GameObjInfo.cs">
+      <Name>GameObjInfo</Name>
+    </Compile>
+    <Compile Include="GameObjs\IGameObj.cs">
+      <Name>IGameObj</Name>
+    </Compile>
+    <Compile Include="GameObjs\IGameObjSceneInfo.cs">
+      <Name>IGameObjSceneInfo</Name>
+    </Compile>
+    <Compile Include="GameObjs\Item\ItemCommon.cs">
+      <Name>ItemCommon</Name>
+    </Compile>
+    <Compile Include="GameObjs\Item\ObstacleCommon.cs">
+      <Name>ObstacleCommon</Name>
+    </Compile>
+    <Compile Include="GameObjs\Shell\ShellNormal.cs">
+      <Name>ShellNormal</Name>
+    </Compile>
+    <Compile Include="GameObjs\Tank\ITankController.cs">
+      <Name>ITankController</Name>
+    </Compile>
+    <Compile Include="GameObjs\Tank\SinTur\TankControlSinTur.cs">
+      <Name>TankControlSinTur</Name>
+    </Compile>
+    <Compile Include="GameObjs\Tank\SinTur\TankLimitSinTur.cs">
+      <Name>TankLimitSinTur</Name>
+    </Compile>
+    <Compile Include="GameObjs\Tank\SinTur\TankSinTur.cs">
+      <Name>TankSinTur</Name>
+    </Compile>
+    <Compile Include="GameObjs\Tank\SinTur\TankSkinSinTur.cs">
+      <Name>TankSkinSinTur</Name>
+    </Compile>
+    <Compile Include="GameObjs\Tank\SinTur\TankSkinSinTurData.cs">
+      <Name>TankSkinSinTurData</Name>
+    </Compile>
+    <Compile Include="GameObjs\Tank\Tank.cs">
+      <Name>Tank</Name>
+    </Compile>
+    <Compile Include="GameObjs\Tank\TurretLinker.cs">
+      <Name>TurretLinker</Name>
+    </Compile>
+    <Compile Include="Helpers\DependInject\AILoader.cs">
+      <Name>AILoader</Name>
+    </Compile>
+    <Compile Include="Helpers\DependInject\AssetList.cs">
+      <Name>AssetList</Name>
+    </Compile>
+    <Compile Include="Helpers\DependInject\DIHelper.cs">
+      <Name>DIHelper</Name>
+    </Compile>
+    <Compile Include="Helpers\DependInject\RuleLoader.cs">
+      <Name>RuleLoader</Name>
+    </Compile>
+    <Compile Include="Helpers\Directories.cs">
+      <Name>Directories</Name>
+    </Compile>
+    <Compile Include="PhiCol\ICollideObj.cs">
+      <Name>ICollideObj</Name>
+    </Compile>
+    <Compile Include="PhiCol\IPhisicalObj.cs">
+      <Name>IPhisicalObj</Name>
+    </Compile>
+    <Compile Include="PhiCol\PhiColMgr.cs">
+      <Name>PhiColMgr</Name>
+    </Compile>
+    <Compile Include="PhiCol\SpriteColMethod.cs">
+      <Name>SpriteColMethod</Name>
+    </Compile>
+    <Compile Include="Program.cs">
+      <Name>Program</Name>
+    </Compile>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Rule\IGameRule.cs">
+      <Name>IGameRule</Name>
+    </Compile>
+    <Compile Include="Rule\RuleAttribute.cs">
+      <Name>RuleAttribute</Name>
+    </Compile>
+    <Compile Include="Scene\Group.cs">
+      <Name>Group</Name>
+    </Compile>
+    <Compile Include="Scene\ISceneKeeper.cs">
+      <Name>ISceneKeeper</Name>
+    </Compile>
+    <Compile Include="Scene\SceneCommonObjInfo.cs">
+      <Name>SceneCommonObjInfo</Name>
+    </Compile>
+    <Compile Include="Scene\SceneKeeperCommon.cs">
+      <Name>SceneKeeperCommon</Name>
+    </Compile>
+    <Compile Include="Scene\SceneMgr.cs">
+      <Name>SceneMgr</Name>
+    </Compile>
+    <Compile Include="Scene\TypeGroup.cs">
+      <Name>TypeGroup</Name>
+    </Compile>
+    <Compile Include="Screens\IGameScreen.cs">
+      <Name>IGameScreen</Name>
+    </Compile>
+    <Compile Include="Screens\RuleSelectScreen.cs">
+      <Name>RuleSelectScreen</Name>
+    </Compile>
+    <Compile Include="Senses\Memory\ConvexHall.cs">
+      <Name>ConvexHall</Name>
+    </Compile>
+    <Compile Include="Senses\Memory\EyeableBorderObjInfo.cs">
+      <Name>EyeableBorderObjInfo</Name>
+    </Compile>
+    <Compile Include="Senses\Memory\NavigateMap.cs">
+      <Name>NavigateMap</Name>
+    </Compile>
+    <Compile Include="Senses\Memory\ObjMemoryKeeper.cs">
+      <Name>ObjMemoryKeeper</Name>
+    </Compile>
+    <Compile Include="Senses\Memory\ObjMemoryMgr.cs">
+      <Name>ObjMemoryMgr</Name>
+    </Compile>
+    <Compile Include="Senses\Memory\ObjVisiBorder.cs">
+      <Name>ObjVisiBorder</Name>
+    </Compile>
+    <Compile Include="Senses\Vision\IEyeableObj.cs">
+      <Name>IEyeableObj</Name>
+    </Compile>
+    <Compile Include="Senses\Vision\VisionMgr.cs">
+      <Name>VisionMgr</Name>
+    </Compile>
+    <Compile Include="Shelter\IHasBorderObj.cs">
+      <Name>IHasBorderObj</Name>
+    </Compile>
+    <Compile Include="Shelter\IRaderOwner.cs">
+      <Name>IRaderOwner</Name>
+    </Compile>
+    <Compile Include="Shelter\IShelterObj.cs">
+      <Name>IShelterObj</Name>
+    </Compile>
+    <Compile Include="Shelter\Rader.cs">
+      <Name>Rader</Name>
+    </Compile>
+    <Compile Include="Shelter\RaderDepthMap.cs">
+      <Name>RaderDepthMap</Name>
+    </Compile>
+    <Compile Include="Shelter\RaderDrawer.cs">
+      <Name>RaderDrawer</Name>
+    </Compile>
+    <Compile Include="Shelter\ShelterMgr.cs">
+      <Name>ShelterMgr</Name>
+    </Compile>
+    <Compile Include="Sound\Sound.cs">
+      <Name>Sound</Name>
+    </Compile>
+    <Compile Include="Draw\UI\Controls\Button.cs">
+      <Name>Button</Name>
+    </Compile>
+    <Compile Include="Draw\UI\Controls\Checkbox.cs">
+      <Name>Checkbox</Name>
+    </Compile>
+    <Compile Include="Draw\UI\Controls\Combo.cs">
+      <Name>Combo</Name>
+    </Compile>
+    <Compile Include="Draw\UI\Controls\Control.cs">
+      <Name>Control</Name>
+    </Compile>
+    <Compile Include="Draw\UI\Controls\ControlCollection.cs">
+      <Name>ControlCollection</Name>
+    </Compile>
+    <Compile Include="Draw\UI\Controls\Label.cs">
+      <Name>Label</Name>
+    </Compile>
+    <Compile Include="Draw\UI\Controls\Listbox.cs">
+      <Name>Listbox</Name>
+    </Compile>
+    <Compile Include="Draw\UI\Controls\NumericUpDown.cs">
+      <Name>NumericUpDown</Name>
+    </Compile>
+    <Compile Include="Draw\UI\Controls\Progressbar.cs">
+      <Name>Progressbar</Name>
+    </Compile>
+    <Compile Include="Draw\UI\Controls\RadioButton.cs">
+      <Name>RadioButton</Name>
+    </Compile>
+    <Compile Include="Draw\UI\Controls\Scrollbar.cs">
+      <Name>Scrollbar</Name>
+    </Compile>
+    <Compile Include="Draw\UI\Controls\Textbox.cs">
+      <Name>Textbox</Name>
+    </Compile>
+    <Compile Include="Draw\UI\Controls\TextButton.cs">
+      <Name>TextButton</Name>
+    </Compile>
+    <Compile Include="Update\GameTimer.cs">
+      <Name>GameTimer</Name>
+    </Compile>
+    <Compile Include="Update\IUpdater.cs">
+      <Name>IUpdater</Name>
+    </Compile>
+    <Compile Include="PhiCol\NonInertiasColUpdater.cs">
+      <Name>NonInertiasColUpdater</Name>
+    </Compile>
+    <Compile Include="PhiCol\NonInertiasPhiUpdater.cs">
+      <Name>NonInertiasPhiUpdater</Name>
+    </Compile>
+    <Compile Include="Update\UpdateMgr.cs">
+      <Name>UpdateMgr</Name>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="font.cfg">
+      <Name>font</Name>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Game.ico">
+      <Name>Game</Name>
+    </Content>
+    <None Include="GameObjs\Internal\Ball\Ball.xml">
+      <Name>Ball</Name>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="GameObjs\Internal\Ball\scorpion.png">
+      <Importer>TextureImporter</Importer>
+      <Processor>SpriteTextureProcessor</Processor>
+      <Name>scorpion</Name>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="GameObjs\Internal\M1A2\base.png">
+      <Importer>TextureImporter</Importer>
+      <Processor>SpriteTextureProcessor</Processor>
+      <Name>base</Name>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="GameObjs\Internal\M1A2\M1A2.xml">
+      <Name>M1A2</Name>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="GameObjs\Internal\M1A2\turret.png">
+      <Importer>TextureImporter</Importer>
+      <Processor>SpriteTextureProcessor</Processor>
+      <Name>turret</Name>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="GameObjs\Internal\M60\base.png">
+      <Importer>TextureImporter</Importer>
+      <Processor>SpriteTextureProcessor</Processor>
+      <Name>base</Name>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="GameObjs\Internal\M60\M60.xml">
+      <Name>M60</Name>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="GameObjs\Internal\M60\turret.png">
+      <Importer>TextureImporter</Importer>
+      <Processor>SpriteTextureProcessor</Processor>
+      <Name>turret</Name>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="GameObjs\Internal\Tiger\base.png">
+      <Importer>TextureImporter</Importer>
+      <Processor>SpriteTextureProcessor</Processor>
+      <Name>base</Name>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="GameObjs\Internal\Tiger\Tiger.xml">
+      <Name>Tiger</Name>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="GameObjs\Internal\Tiger\turret.png">
+      <Importer>TextureImporter</Importer>
+      <Processor>SpriteTextureProcessor</Processor>
+      <Name>turret</Name>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <NestedContentProject Include="Content.contentproj">
+      <Project>{074de519-cae6-406f-a346-9de99638cf63}</Project>
+      <Visible>False</Visible>
+    </NestedContentProject>
+  </ItemGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+  <ProjectExtensions>
+    <VisualStudio>
+    </VisualStudio>
+  </ProjectExtensions>
+  <Import Project="$(MSBuildExtensionsPath)\Microsoft\XNA Game Studio\v2.0\Microsoft.Xna.GameStudio.Common.targets" />
+  <Import Project="$(MSBuildExtensionsPath)\Microsoft\XNA Game Studio\v2.0\Microsoft.Xna.GameStudio.NestedContent.targets" />
+</Project>
