@@ -1,8 +1,0 @@
-
-规则的动态注入功能已经实现。规则程序集可以使用AssetRegister注册。平台可以通过RuleLoader类获取规则列表。
-
-详见RuleSelectScreen.cs
-
-现在需要有人来做RuleSelectScreen的界面~
-
-下一步完善DuelRule，并构建AI的记忆内容。
