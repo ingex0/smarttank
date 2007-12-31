@@ -1,0 +1,154 @@
+﻿<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <ProjectGuid>{84ab3314-1d99-4f3b-abcd-0f68112895ec}</ProjectGuid>
+    <ProjectTypeGuids>{6D335F3A-9D43-41b4-9D22-F6F17C4BE596};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">x86</Platform>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>TankEngine2D</RootNamespace>
+    <AssemblyName>TankEngine2D</AssemblyName>
+    <XnaFrameworkVersion>v2.0</XnaFrameworkVersion>
+    <XnaPlatform>Windows</XnaPlatform>
+    <Thumbnail>
+    </Thumbnail>
+    <XnaCrossPlatformGroupID>{6b12b818-6985-441e-83b8-bf2f2815468b}</XnaCrossPlatformGroupID>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x86' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\x86\Debug</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <NoStdLib>true</NoStdLib>
+    <UseVSHostingProcess>false</UseVSHostingProcess>
+    <PlatformTarget>x86</PlatformTarget>
+    <DocumentationFile>bin\x86\Debug\TankEngine2D.XML</DocumentationFile>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x86' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\x86\Release</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <NoStdLib>true</NoStdLib>
+    <UseVSHostingProcess>false</UseVSHostingProcess>
+    <PlatformTarget>x86</PlatformTarget>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Microsoft.Xna.Framework, Version=2.0.0.0, Culture=neutral, PublicKeyToken=6d5c3888ef60e27d, processorArchitecture=x86">
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="mscorlib">
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="System">
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.XML" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="DataStruct\CircleList.cs">
+      <Name>CircleList</Name>
+    </Compile>
+    <Compile Include="DataStruct\Graph.cs">
+      <Name>Graph</Name>
+    </Compile>
+    <Compile Include="DataStruct\Line.cs">
+      <Name>Line</Name>
+    </Compile>
+    <Compile Include="DataStruct\MultiLinkedList.cs">
+      <Name>MultiLinkedList</Name>
+    </Compile>
+    <Compile Include="DataStruct\MultiList.cs">
+      <Name>MultiList</Name>
+    </Compile>
+    <Compile Include="DataStruct\Rectanglef.cs">
+      <Name>Rectanglef</Name>
+    </Compile>
+    <Compile Include="DataStruct\Segment.cs">
+      <Name>Segment</Name>
+    </Compile>
+    <Compile Include="Graphics\AnimatedMgr.cs">
+      <Name>AnimatedMgr</Name>
+    </Compile>
+    <Compile Include="Graphics\AnimatedSprite.cs">
+      <Name>AnimatedSprite</Name>
+    </Compile>
+    <Compile Include="Graphics\AnimatedSpriteSeries.cs">
+      <Name>AnimatedSpriteSeries</Name>
+    </Compile>
+    <Compile Include="Graphics\AnimatedSpriteSingle.cs">
+      <Name>AnimatedSpriteSingle</Name>
+    </Compile>
+    <Compile Include="Graphics\BasicGraphics.cs">
+      <Name>BasicGraphics</Name>
+    </Compile>
+    <Compile Include="Graphics\ChineseWriter.cs">
+      <Name>ChineseWriter</Name>
+    </Compile>
+    <Compile Include="Graphics\CollisionResult.cs">
+      <Name>CollisionResult</Name>
+    </Compile>
+    <Compile Include="Graphics\CoordinMgr.cs">
+      <Name>CoordinMgr</Name>
+    </Compile>
+    <Compile Include="Graphics\FontMgr.cs">
+      <Name>FontMgr</Name>
+    </Compile>
+    <Compile Include="Graphics\IAnimated.cs">
+      <Name>IAnimated</Name>
+    </Compile>
+    <Compile Include="Graphics\RenderEngine.cs">
+      <Name>RenderEngine</Name>
+    </Compile>
+    <Compile Include="Graphics\Sprite.cs">
+      <Name>Sprite</Name>
+    </Compile>
+    <Compile Include="Graphics\SpriteBorder.cs">
+      <Name>SpriteBorder</Name>
+    </Compile>
+    <Compile Include="Graphics\SpriteMgr.cs">
+      <Name>SpriteMgr</Name>
+    </Compile>
+    <Compile Include="Helpers\ColorHelper.cs">
+      <Name>ColorHelper</Name>
+    </Compile>
+    <Compile Include="Helpers\ConvertHelper.cs">
+      <Name>ConvertHelper</Name>
+    </Compile>
+    <Compile Include="Helpers\Log.cs">
+      <Name>Log</Name>
+    </Compile>
+    <Compile Include="Helpers\MathTools.cs">
+      <Name>MathTools</Name>
+    </Compile>
+    <Compile Include="Helpers\RandomHelper.cs">
+      <Name>RandomHelper</Name>
+    </Compile>
+    <Compile Include="Input\InputHandler.cs">
+      <Name>InputHandler</Name>
+    </Compile>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <NestedContentProject Include="Content\Content.contentproj">
+      <Project>{62432c15-c7ca-4f99-8f81-84604a84234b}</Project>
+      <Visible>False</Visible>
+    </NestedContentProject>
+  </ItemGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+  <Import Project="$(MSBuildExtensionsPath)\Microsoft\XNA Game Studio\v2.0\Microsoft.Xna.GameStudio.Common.targets" />
+  <Import Project="$(MSBuildExtensionsPath)\Microsoft\XNA Game Studio\v2.0\Microsoft.Xna.GameStudio.NestedContent.targets" />
+</Project>
