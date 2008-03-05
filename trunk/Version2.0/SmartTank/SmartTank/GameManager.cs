@@ -35,7 +35,7 @@ namespace SmartTank
 
         protected static ShelterMgr shelterMgr;
 
-        protected static DrawManager drawManager;
+        protected static DrawMgr drawManager;
 
         protected static UpdateMgr updateMgr;
 
@@ -61,7 +61,7 @@ namespace SmartTank
             get { return shelterMgr; }
         }
 
-        public static DrawManager DrawManager
+        public static DrawMgr DrawManager
         {
             get { return drawManager; }
         }
@@ -98,7 +98,7 @@ namespace SmartTank
 
             phiColManager = new PhiColMgr();
             shelterMgr = new ShelterMgr();
-            drawManager = new DrawManager();
+            drawManager = new DrawMgr();
             updateMgr = new UpdateMgr();
             visionMgr = new VisionMgr();
             objMemoryMananger = new ObjMemoryMgr();
@@ -199,9 +199,9 @@ namespace SmartTank
             EffectsMgr.Clear();
             Sound.Clear();
             GameTimer.ClearAllTimer();
-            TextEffect.Clear();
+            TextEffectMgr.Clear();
             GameManager.objMemoryMananger.ClearGroups();
-            DrawManager.SetCondition( null );
+            DrawMgr.SetCondition( null );
         }
     }
 }

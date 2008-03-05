@@ -5,6 +5,7 @@ using SmartTank.Update;
 using SmartTank.Draw;
 using Microsoft.Xna.Framework;
 using TankEngine2D.Graphics;
+using Microsoft.Xna.Framework.Graphics;
 
 namespace SmartTank.GameObjs
 {
@@ -13,9 +14,9 @@ namespace SmartTank.GameObjs
      * 
      * */
 
-
     public interface IGameObj : IUpdater, IDrawableObj
     {
+        string Name { get;}
         GameObjInfo ObjInfo { get;}
         new Vector2 Pos { get;set;}
         float Azi { get;}

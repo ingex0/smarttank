@@ -8,7 +8,7 @@ using TankEngine2D.DataStructure;
 namespace SmartTank.Draw
 {
     /*
-     * 需要实现场景物体的跟踪。
+     * 实现了场景物体的跟踪。
      * 
      * 视域的缩放动画等效果。
      * 

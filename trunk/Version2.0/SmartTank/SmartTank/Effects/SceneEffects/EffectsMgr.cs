@@ -33,7 +33,7 @@ namespace SmartTank.Effects.SceneEffects
         {
             BaseGame.AnimatedMgr.Draw();
 
-            TextEffect.Draw();
+            TextEffectMgr.Draw();
 
             foreach (IManagedEffect effect in managedEffects)
             {

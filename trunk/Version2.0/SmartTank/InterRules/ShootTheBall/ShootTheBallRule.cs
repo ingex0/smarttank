@@ -29,7 +29,7 @@ using SmartTank.Effects.TextEffects;
 namespace InterRules.ShootTheBall
 {
     /*
-     * 只是一个Demo，便于测试各种效果。
+     * 一个Demo，便于测试各种效果。
      * 
      * 已添加的效果：
      *      
@@ -71,7 +71,8 @@ namespace InterRules.ShootTheBall
 
         readonly Rectanglef mapSize = new Rectanglef( 0, 0, 200, 150 );
 
-        SceneKeeperCommon scene;
+        //SceneKeeperCommon scene;
+        SceneMgr sceneMgr;
 
         TankSinTur tank;
         //TankSinTur tankPlayer;
@@ -114,9 +115,10 @@ namespace InterRules.ShootTheBall
 
             InintialBackGround();
 
-            scene = new SceneKeeperCommon();
+            //scene = new SceneKeeperCommon();
+            sceneMgr = new SceneMgr();
             SceneInitial();
-            GameManager.LoadScene( scene );
+            GameManager.LoadScene( sceneMgr );
 
             LoadResource();
         }
@@ -192,7 +194,7 @@ namespace InterRules.ShootTheBall
 
         private void SceneInitial()
         {
-            tank = new TankSinTur( new GameObjInfo( "Tank", "Player" ), TankSinTur.M60TexPath, TankSinTur.M60Data,
+            tank = new TankSinTur( "tank", new GameObjInfo( "Tank", "Player" ), TankSinTur.M60TexPath, TankSinTur.M60Data,
                 170, MathHelper.PiOver4, Color.Yellow,
                 0f, 80, 60, 0.6f * MathHelper.Pi, 0.5f * MathHelper.Pi, MathHelper.Pi, 2f,
                 new Vector2( 100, 50 ), 0, 0 );
@@ -208,14 +210,33 @@ namespace InterRules.ShootTheBall
 
             //ItemCommon item = new ItemCommon( "item", "Scorpion", Path.Combine( Directories.ContentDirectory, "GameObjs\\scorpion" ), new Vector2( 128, 128 ), 0.031f, new Vector2[] { new Vector2( 128, 128 ) },
             //    new Vector2( 150, 50 ), 0f, Vector2.Zero, 0 );
-            Ball ball = new Ball( 0.031f, new Vector2( 150, 50 ), 0, Vector2.Zero, 0 );
+            Ball ball = new Ball( "ball", 0.031f, new Vector2( 150, 50 ), 0, Vector2.Zero, 0 );
             ball.OnCollided += new OnCollidedEventHandler( item_OnCollided );
 
             smoke = new SmokeGenerater( 0, 50, Vector2.Zero, 0.3f, 0f, true, ball );
 
-            scene.AddGameObj( tank, true, false, true, SceneKeeperCommon.GameObjLayer.HighBulge );
-            scene.AddGameObj( ball, true, false, false, SceneKeeperCommon.GameObjLayer.HighBulge, new GetEyeableInfoHandler( GetItemInfo ) );
-            scene.SetBorder( mapSize );
+            sceneMgr.AddGroup( string.Empty, new TypeGroup<TankSinTur>( "tank" ) );
+            sceneMgr.AddGroup( string.Empty, new TypeGroup<Ball>( "ball" ) );
+            sceneMgr.AddGroup( string.Empty, new TypeGroup<SmartTank.PhiCol.Border>( "border" ) );
+            sceneMgr.AddGroup( string.Empty, new TypeGroup<ShellNormal>( "shell" ) );
+
+            sceneMgr.PhiGroups.Add( "tank" );
+            sceneMgr.PhiGroups.Add( "ball" );
+            sceneMgr.PhiGroups.Add( "shell" );
+
+            sceneMgr.ColPairGroups.Add( new SceneMgr.Pair( "tank", "ball" ) );
+            sceneMgr.ColPairGroups.Add( new SceneMgr.Pair( "tank", "border" ) );
+            sceneMgr.ColPairGroups.Add( new SceneMgr.Pair( "ball", "border" ) );
+            sceneMgr.ColPairGroups.Add( new SceneMgr.Pair( "shell", "border" ) );
+            sceneMgr.ColPairGroups.Add( new SceneMgr.Pair( "shell", "ball" ) );
+
+            sceneMgr.ShelterGroups.Add( new SceneMgr.MulPair( "tank", new List<string>() ) );
+            sceneMgr.VisionGroups.Add( new SceneMgr.MulPair( "tank", new List<string>( new string[] { "ball" } ) ) );
+
+            sceneMgr.AddGameObj( "tank", tank );
+            sceneMgr.AddGameObj( "ball", ball );
+            sceneMgr.AddGameObj( "border", new SmartTank.PhiCol.Border( mapSize ) );
+
 
             //camera.Focus( tank );
         }
@@ -226,10 +247,6 @@ namespace InterRules.ShootTheBall
 
         public bool Update( float seconds )
         {
-            //GameManager.UpdateMgr.Update( seconds );
-            //GameManager.PhiColManager.Update( seconds );
-            //GameManager.ShelterMgr.Update();
-            //GameManager.VisionMgr.Update();
             GameManager.UpdataComponent( seconds );
 
             if (InputHandler.IsKeyDown( Microsoft.Xna.Framework.Input.Keys.Left ))
@@ -271,22 +288,22 @@ namespace InterRules.ShootTheBall
 
             if (firstDraw)
             {
-                //TextEffect.AddRiseFade( "Use 'AWSD' to Move the Tank, 'JK' to Rotate the Turret,", new Vector2( 40, 150 ), 1.2f, Color.Red, LayerDepth.Text, FontType.Comic, 500, 0.2f );
-                //TextEffect.AddRiseFade( "and press Space To Shoot!", new Vector2( 40, 160 ), 1.2f, Color.Red, LayerDepth.Text, FontType.Comic, 500, 0.2f );
+                //TextEffectMgr.AddRiseFade( "Use 'AWSD' to Move the Tank, 'JK' to Rotate the Turret,", new Vector2( 40, 150 ), 1.2f, Color.Red, LayerDepth.Text, FontType.Comic, 500, 0.2f );
+                //TextEffectMgr.AddRiseFade( "and press Space To Shoot!", new Vector2( 40, 160 ), 1.2f, Color.Red, LayerDepth.Text, FontType.Comic, 500, 0.2f );
 
                 firstDraw = false;
             }
 
             if (showFirstHit)
             {
-                TextEffect.AddRiseFade( "哦，这个家伙变小了！", new Vector2( 50, 70 ), 1.4f, Color.Red, LayerDepth.Text, GameFonts.HDZB, 300, 0.2f );
+                TextEffectMgr.AddRiseFade( "哦，这个家伙变小了！", new Vector2( 50, 70 ), 1.4f, Color.Red, LayerDepth.Text, GameFonts.HDZB, 300, 0.2f );
                 showFirstHit = false;
             }
 
             if (showFirstScore)
             {
-                TextEffect.AddRiseFade( "当这个物体消失时，你会获得100分！", new Vector2( 20, 70 ), 1.4f, Color.Red, LayerDepth.Text, GameFonts.HDZB, 300, 0.2f );
-                TextEffect.AddRiseFade( "不过这个物体也会开始运动。", new Vector2( 20, 80 ), 1.4f, Color.Red, LayerDepth.Text, GameFonts.HDZB, 300, 0.2f );
+                TextEffectMgr.AddRiseFade( "当这个物体消失时，你会获得100分！", new Vector2( 20, 70 ), 1.4f, Color.Red, LayerDepth.Text, GameFonts.HDZB, 300, 0.2f );
+                TextEffectMgr.AddRiseFade( "不过这个物体也会开始运动。", new Vector2( 20, 80 ), 1.4f, Color.Red, LayerDepth.Text, GameFonts.HDZB, 300, 0.2f );
 
                 showFirstScore = false;
             }
@@ -300,11 +317,11 @@ namespace InterRules.ShootTheBall
             if (showNiceShoot)
             {
                 if (NiceShootSum >= 30)
-                    TextEffect.AddRiseFade( "GOD LIKE!", tank.Pos, 1.1f, Color.Black, LayerDepth.Text, GameFonts.Comic, 200, 1f );
+                    TextEffectMgr.AddRiseFade( "GOD LIKE!", tank.Pos, 1.1f, Color.Black, LayerDepth.Text, GameFonts.Comic, 200, 1f );
                 else if (NiceShootSum >= 17)
-                    TextEffect.AddRiseFade( "Master Shoot!", tank.Pos, 1.1f, Color.Pink, LayerDepth.Text, GameFonts.Comic, 200, 1f );
+                    TextEffectMgr.AddRiseFade( "Master Shoot!", tank.Pos, 1.1f, Color.Pink, LayerDepth.Text, GameFonts.Comic, 200, 1f );
                 else if (NiceShootSum >= 4)
-                    TextEffect.AddRiseFade( "Nice Shoot!", tank.Pos, 1.1f, Color.GreenYellow, LayerDepth.Text, GameFonts.Comic, 200, 1f );
+                    TextEffectMgr.AddRiseFade( "Nice Shoot!", tank.Pos, 1.1f, Color.GreenYellow, LayerDepth.Text, GameFonts.Comic, 200, 1f );
 
                 showNiceShoot = false;
             }
@@ -318,7 +335,7 @@ namespace InterRules.ShootTheBall
             {
                 foreach (IShelterObj obj in tank.Rader.ShelterObjs)
                 {
-                    BaseGame.FontMgr.Draw( "I am Sheltered by " + obj.ObjInfo.Name + " Pos: " + ((IGameObj)obj).Pos.ToString(), tank.Pos, 0.6f, Color.Yellow, LayerDepth.Text, GameFonts.Lucida );
+                    BaseGame.FontMgr.Draw( "I am Sheltered by " + (obj as IGameObj).Name + " Pos: " + ((IGameObj)obj).Pos.ToString(), tank.Pos, 0.6f, Color.Yellow, LayerDepth.Text, GameFonts.Lucida );
                 }
             }
 
@@ -346,7 +363,7 @@ namespace InterRules.ShootTheBall
         void item_OnCollided( IGameObj Sender, CollisionResult result, GameObjInfo objB )
         {
 
-            if (objB.Name == "Border")
+            if (objB.ObjClass == "Border")
             {
                 ((ItemCommon)Sender).Vel = -2 * Vector2.Dot( ((ItemCommon)Sender).Vel, result.NormalVector ) * result.NormalVector + ((ItemCommon)Sender).Vel;
 
@@ -356,7 +373,7 @@ namespace InterRules.ShootTheBall
 
                 //lastCollideWithBorderTime = curTime;
             }
-            else if (objB.Name == "Tank")
+            else if (objB.ObjClass == "Tank")
             {
                 //((ItemCommon)Sender).Scale += 0.1f * 0.25f;
                 //((ItemCommon)Sender).Pos += result.NormalVector * 10f;
@@ -369,14 +386,14 @@ namespace InterRules.ShootTheBall
                     firstHitTank = false;
                 }
             }
-            else if (objB.Name == "ShellNormal")
+            else if (objB.ObjClass == "ShellNormal")
             {
                 smoke.Concen += 0.3f;
 
                 if (((ItemCommon)Sender).Scale < 0.5f * 0.031f)
                 {
-                    scene.RemoveGameObj( Sender, true, false, false, false, SceneKeeperCommon.GameObjLayer.HighBulge );
-
+                    //scene.RemoveGameObj( Sender, true, false, false, false, SceneKeeperCommon.GameObjLayer.HighBulge );
+                    sceneMgr.DelGameObj( "shell", Sender.Name );
                     Score += 100;
 
                     hitSum++;
@@ -409,7 +426,7 @@ namespace InterRules.ShootTheBall
 
                 if (NiceShootSum >= 30 && !speedy)
                 {
-                    TextEffect.AddRiseFade( "You Got A Speedy Turret!", tank.Pos, 2f, Color.Purple, LayerDepth.Text, GameFonts.Lucida, 300, 0.2f );
+                    TextEffectMgr.AddRiseFade( "You Got A Speedy Turret!", tank.Pos, 2f, Color.Purple, LayerDepth.Text, GameFonts.Lucida, 300, 0.2f );
                     tank.FireCDTime = 2f;
                     speedy = true;
                 }
@@ -431,30 +448,34 @@ namespace InterRules.ShootTheBall
             ((ItemCommon)Sender).Vel = vel;
             ((ItemCommon)Sender).Azi = RandomHelper.GetRandomFloat( 0, 10 );
             ((ItemCommon)Sender).Scale = 0.031f;
-            scene.AddGameObj( Sender, true, false, false, SceneKeeperCommon.GameObjLayer.HighBulge );
+            //scene.AddGameObj( Sender, true, false, false, SceneKeeperCommon.GameObjLayer.HighBulge );
+            sceneMgr.AddGameObj( "ball", Sender );
         }
+
+        int shellCount = 0;
 
         void Tank_onShoot( Tank sender, Vector2 turretEnd, float azi )
         {
-            ShellNormal newShell = new ShellNormal( sender, turretEnd, azi, shellSpeed );
+            ShellNormal newShell = new ShellNormal( "shell" + shellCount.ToString(), sender, turretEnd, azi, shellSpeed );
             newShell.onCollided += new OnCollidedEventHandler( Shell_onCollided );
             newShell.onOverlap += new OnCollidedEventHandler( Shell_onOverlap );
-            scene.AddGameObj( newShell, true, false, false, SceneKeeperCommon.GameObjLayer.lowFlying );
+            //scene.AddGameObj( newShell, true, false, false, SceneKeeperCommon.GameObjLayer.lowFlying );
+            sceneMgr.AddGameObj( "shell", newShell );
             shootSum++;
             //camera.Focus( newShell );
         }
 
         void Shell_onOverlap( IGameObj Sender, CollisionResult result, GameObjInfo objB )
         {
-            if (objB.Name == "Border")
+            if (objB.ObjClass == "Border")
                 NiceShootSum = Math.Max( 0, NiceShootSum - 10 );
             //camera.Focus( tank );
         }
 
         void Shell_onCollided( IGameObj Sender, CollisionResult result, GameObjInfo objB )
         {
-            scene.RemoveGameObj( Sender, true, false, false, false, SceneKeeperCommon.GameObjLayer.lowFlying );
-
+            //scene.RemoveGameObj( Sender, true, false, false, false, SceneKeeperCommon.GameObjLayer.lowFlying );
+            sceneMgr.DelGameObj( "shell", Sender.Name );
 
             //camera.Focus( tank );
             //if (objB.Name == "Border")
@@ -463,10 +484,7 @@ namespace InterRules.ShootTheBall
             //}
         }
 
-        IEyeableInfo GetItemInfo( IRaderOwner raderOwner, IEyeableObj item )
-        {
-            return (IEyeableInfo)(new ItemEyeableInfo( (ItemCommon)item ));
-        }
+
 
         #endregion
 
@@ -516,41 +534,17 @@ namespace InterRules.ShootTheBall
 
     class Ball : ItemCommon
     {
-        public Ball( float scale, Vector2 pos, float azi, Vector2 vel, float rotaVel )
-            : base( "item", "Scorpion" , Path.Combine( Directories.GameObjsDirectory, "Internal\\Ball" ) ,
+        public Ball( string name, float scale, Vector2 pos, float azi, Vector2 vel, float rotaVel )
+            : base( name, "item" , "Scorpion" , Path.Combine( Directories.GameObjsDirectory, "Internal\\Ball" ) ,
             GameObjData.Load( File.OpenRead( Path.Combine( Directories.GameObjsDirectory, "Internal\\Ball\\Ball.xml" ) ) ) ,
             scale , pos , azi , vel , rotaVel )
         {
+            this.GetEyeableInfoHandler = new GetEyeableInfoHandler( GetItemInfo );
+        }
+
+        IEyeableInfo GetItemInfo( IRaderOwner raderOwner, IEyeableObj item )
+        {
+            return (IEyeableInfo)(new ItemEyeableInfo( (ItemCommon)item ));
         }
     }
-
-    //class TankEyeableInfo : IEyeableInfo
-    //{
-
-    //    TankSinTur tank;
-
-    //    public Vector2 Pos
-    //    {
-    //        get { return tank.Pos; }
-    //    }
-
-    //    public Vector2 Vel
-    //    {
-    //        get { return ((TankContrSinTur)tank.PhisicalUpdater).Vel; }
-    //    }
-
-    //    public TankEyeableInfo ( TankSinTur tank )
-    //    {
-    //        this.tank = tank;
-    //    }
-
-    //    #region IEyeableInfo 成员
-
-    //    public GameObjInfo ObjInfo
-    //    {
-    //        get { return tank.ObjInfo; }
-    //    }
-
-    //    #endregion
-    //}
 }

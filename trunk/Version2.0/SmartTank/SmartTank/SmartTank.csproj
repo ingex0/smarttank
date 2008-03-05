@@ -108,7 +108,7 @@
     <Compile Include="Draw\Camera.cs">
       <Name>Camera</Name>
     </Compile>
-    <Compile Include="Draw\DrawManager.cs">
+    <Compile Include="Draw\DrawMgr.cs">
       <Name>DrawManager</Name>
     </Compile>
     <Compile Include="Draw\GameFonts.cs">
@@ -156,14 +156,11 @@
     <Compile Include="Effects\TextEffects\FadeUpEffect.cs">
       <Name>FadeUpEffect</Name>
     </Compile>
-    <Compile Include="Effects\TextEffects\TextEffert.cs">
+    <Compile Include="Effects\TextEffects\TextEffectMgr.cs">
       <Name>TextEffert</Name>
     </Compile>
     <Compile Include="GameManager.cs">
       <Name>GameManager</Name>
-    </Compile>
-    <Compile Include="GameObjs\newIGameObj.cs">
-      <Name>newIGameObj</Name>
     </Compile>
     <Compile Include="PhiCol\Border.cs">
       <Name>Border</Name>
@@ -182,9 +179,6 @@
     </Compile>
     <Compile Include="GameObjs\IGameObj.cs">
       <Name>IGameObj</Name>
-    </Compile>
-    <Compile Include="GameObjs\IGameObjSceneInfo.cs">
-      <Name>IGameObjSceneInfo</Name>
     </Compile>
     <Compile Include="GameObjs\Item\ItemCommon.cs">
       <Name>ItemCommon</Name>
@@ -261,12 +255,6 @@
     </Compile>
     <Compile Include="Scene\ISceneKeeper.cs">
       <Name>ISceneKeeper</Name>
-    </Compile>
-    <Compile Include="Scene\SceneCommonObjInfo.cs">
-      <Name>SceneCommonObjInfo</Name>
-    </Compile>
-    <Compile Include="Scene\SceneKeeperCommon.cs">
-      <Name>SceneKeeperCommon</Name>
     </Compile>
     <Compile Include="Scene\SceneMgr.cs">
       <Name>SceneMgr</Name>

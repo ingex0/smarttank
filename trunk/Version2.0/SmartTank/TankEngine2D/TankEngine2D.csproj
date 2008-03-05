@@ -1,6 +1,6 @@
 ﻿<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
-    <ProjectGuid>{84ab3314-1d99-4f3b-abcd-0f68112895ec}</ProjectGuid>
+    <ProjectGuid>{84AB3314-1D99-4F3B-ABCD-0F68112895EC}</ProjectGuid>
     <ProjectTypeGuids>{6D335F3A-9D43-41b4-9D22-F6F17C4BE596};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">x86</Platform>
@@ -60,9 +60,6 @@
     </Compile>
     <Compile Include="DataStruct\Line.cs">
       <Name>Line</Name>
-    </Compile>
-    <Compile Include="DataStruct\MultiLinkedList.cs">
-      <Name>MultiLinkedList</Name>
     </Compile>
     <Compile Include="DataStruct\MultiList.cs">
       <Name>MultiList</Name>

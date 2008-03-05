@@ -179,31 +179,24 @@ namespace SmartTank.GameObjs.Tank.SinTur
 
         #region Consturction
 
-        public TankSinTur ( GameObjInfo objInfo, string texPath, GameObjData skinData,
+        public TankSinTur( string name, GameObjInfo objInfo, string texPath, GameObjData skinData,
             float raderLength, float raderAng, Color raderColor,
             float maxForwardSpeed, float maxBackwardSpeed, float maxRotaSpeed,
             float maxTurretRotaSpeed, float maxRaderRotaSpeed, float fireCDTime,
             Vector2 pos, float baseAzi )
+            : this( name, objInfo, texPath, skinData,
+            raderLength, raderAng, raderColor, 0, maxForwardSpeed, maxBackwardSpeed, maxRotaSpeed, maxTurretRotaSpeed,
+            maxRaderRotaSpeed, fireCDTime, pos, 0, 0 )
         {
-            this.objInfo = objInfo;
-            this.skin = new TankSkinSinTur( new TankSkinSinTurData( texPath, skinData ) );
-            skin.Initial( pos, baseAzi, 0 );
-            controller = new TankContrSinTur( objInfo, new Sprite[] { skin.Sprites[0] } , pos, baseAzi, maxForwardSpeed, maxBackwardSpeed, maxRotaSpeed, maxTurretRotaSpeed, maxRaderRotaSpeed, Math.Max( 0, fireCDTime ) );
-            colChecker = controller;
-            phisicalUpdater = controller;
-            controller.onShoot += new EventHandler( controller_onShoot );
-            controller.OnCollied += new OnCollidedEventHandler( controller_OnCollied );
-            controller.OnOverlap += new OnCollidedEventHandler( controller_OnOverlap );
-            rader = new Rader( raderAng, raderLength, pos, baseAzi, raderColor );
-
         }
 
-        public TankSinTur ( GameObjInfo objInfo, string texPath, GameObjData skinData,
+        public TankSinTur( string name, GameObjInfo objInfo, string texPath, GameObjData skinData,
             float raderLength, float raderAng, Color raderColor, float raderAzi,
             float maxForwardSpeed, float maxBackwardSpeed, float maxRotaSpeed,
             float maxTurretRotaSpeed, float maxRaderRotaSpeed, float fireCDTime,
             Vector2 pos, float baseRota, float turretRota )
         {
+            this.name = name;
             this.objInfo = objInfo;
             this.skin = new TankSkinSinTur( new TankSkinSinTurData( texPath, skinData ) );
             skin.Initial( pos, baseRota, turretRota );
@@ -211,6 +204,8 @@ namespace SmartTank.GameObjs.Tank.SinTur
             colChecker = controller;
             phisicalUpdater = controller;
             controller.onShoot += new EventHandler( controller_onShoot );
+            controller.OnCollied += new OnCollidedEventHandler( controller_OnCollied );
+            controller.OnOverlap += new OnCollidedEventHandler( controller_OnOverlap );
             rader = new Rader( raderAng, raderLength, pos, raderAzi + baseRota, raderColor );
         }
 
@@ -218,7 +213,7 @@ namespace SmartTank.GameObjs.Tank.SinTur
 
         #region Update
 
-        public override void Update ( float seconds )
+        public override void Update( float seconds )
         {
             base.Update( seconds );
             controller.Update( seconds );
@@ -229,7 +224,7 @@ namespace SmartTank.GameObjs.Tank.SinTur
         #endregion
 
         #region Dead
-        public override void Dead ()
+        public override void Dead()
         {
             base.Dead();
             controller.Enable = false;
@@ -238,7 +233,7 @@ namespace SmartTank.GameObjs.Tank.SinTur
 
         #region Draw
 
-        public override void Draw ()
+        public override void Draw()
         {
             skin.ResetSprites( controller.Pos, controller.Azi, controller.turretAzi );
             skin.Draw();
@@ -257,7 +252,7 @@ namespace SmartTank.GameObjs.Tank.SinTur
 
         #region EventHandler
 
-        void controller_onShoot ( object sender, EventArgs e )
+        void controller_onShoot( object sender, EventArgs e )
         {
             if (onShoot != null)
                 onShoot( this, skin.GetTurretEndPos( controller.Pos, controller.Azi, controller.turretAzi ), controller.Azi + controller.turretAzi );
@@ -265,7 +260,7 @@ namespace SmartTank.GameObjs.Tank.SinTur
             skin.BeginRecoil();
         }
 
-        void controller_OnOverlap ( IGameObj Sender, CollisionResult result, GameObjInfo objB )
+        void controller_OnOverlap( IGameObj Sender, CollisionResult result, GameObjInfo objB )
         {
             if (onOverLap != null)
                 onOverLap( this, result, objB );
@@ -274,7 +269,7 @@ namespace SmartTank.GameObjs.Tank.SinTur
                 OnOverLap( result, objB );
         }
 
-        void controller_OnCollied ( IGameObj Sender, CollisionResult result, GameObjInfo objB )
+        void controller_OnCollied( IGameObj Sender, CollisionResult result, GameObjInfo objB )
         {
             if (onCollide != null)
                 onCollide( this, result, objB );
@@ -300,7 +295,7 @@ namespace SmartTank.GameObjs.Tank.SinTur
             }
         }
 
-        public void BorderObjUpdated ( EyeableBorderObjInfo[] borderObjInfo )
+        public void BorderObjUpdated( EyeableBorderObjInfo[] borderObjInfo )
         {
             if (onBorderObjUpdated != null)
                 onBorderObjUpdated( borderObjInfo );
@@ -310,7 +305,7 @@ namespace SmartTank.GameObjs.Tank.SinTur
 
         #region IAIOrderServerSinTur 成员
 
-        public List<IEyeableInfo> GetEyeableInfo ()
+        public List<IEyeableInfo> GetEyeableInfo()
         {
             return rader.CurEyeableObjs;
         }
@@ -368,7 +363,7 @@ namespace SmartTank.GameObjs.Tank.SinTur
             }
         }
 
-        public void Fire ()
+        public void Fire()
         {
             controller.Fire();
         }
@@ -392,7 +387,7 @@ namespace SmartTank.GameObjs.Tank.SinTur
             get { return rader.ObjMemoryKeeper.GetEyeableBorderObjInfos(); }
         }
 
-        public NavigateMap CalNavigateMap ( NaviMapConsiderObj selectFun, Rectanglef mapBorder, float spaceForTank )
+        public NavigateMap CalNavigateMap( NaviMapConsiderObj selectFun, Rectanglef mapBorder, float spaceForTank )
         {
             return rader.ObjMemoryKeeper.CalNavigationMap( selectFun, mapBorder, spaceForTank );
         }
@@ -401,7 +396,7 @@ namespace SmartTank.GameObjs.Tank.SinTur
 
         #region IEyeableObj 成员
 
-        static public IEyeableInfo GetCommonEyeInfoFun ( IRaderOwner raderOwner, IEyeableObj tank )
+        static public IEyeableInfo GetCommonEyeInfoFun( IRaderOwner raderOwner, IEyeableObj tank )
         {
             return new TankCommonEyeableInfo( (TankSinTur)tank );
         }
@@ -440,7 +435,7 @@ namespace SmartTank.GameObjs.Tank.SinTur
                 get { return turretAimAzi; }
             }
 
-            public TankCommonEyeableInfo ( TankSinTur tank )
+            public TankCommonEyeableInfo( TankSinTur tank )
             {
                 this.eyeableInfo = new EyeableInfo( tank );
 
@@ -502,6 +497,8 @@ namespace SmartTank.GameObjs.Tank.SinTur
 
 
         #endregion
+
+
 
     }
 }

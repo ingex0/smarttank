@@ -22,6 +22,7 @@ namespace SmartTank.GameObjs.Shell
         public event OnCollidedEventHandler onCollided;
         public event OnCollidedEventHandler onOverlap;
 
+        string name;
 
         GameObjInfo objInfo = new GameObjInfo( "ShellNormal", string.Empty );
 
@@ -41,8 +42,9 @@ namespace SmartTank.GameObjs.Shell
             get { return firer; }
         }
 
-        public ShellNormal( IGameObj firer, Vector2 startPos, float startAzi, float speed )
+        public ShellNormal( string name, IGameObj firer, Vector2 startPos, float startAzi, float speed )
         {
+            this.name = name;
             this.firer = firer;
             sprite = new Sprite( BaseGame.RenderEngine, BaseGame.ContentMgr, Path.Combine( Directories.ContentDirectory, texPath ), true );
             sprite.SetParameters( new Vector2( 5, 0 ), startPos, 0.08f, startAzi, Color.White, LayerDepth.Shell, SpriteBlendMode.AlphaBlend );
@@ -59,10 +61,10 @@ namespace SmartTank.GameObjs.Shell
 
         void phiUpdater_OnOverlap( IGameObj Sender, CollisionResult result, GameObjInfo objB )
         {
-            if (objB.Name == "Border")
-            {
-                ((SceneKeeperCommon)(GameManager.CurSceneKeeper)).RemoveGameObj( this, true, false, false, false, SceneKeeperCommon.GameObjLayer.lowFlying );
-            }
+            //if (objB.ObjClass == "Border")
+            //{
+            //    ((SceneKeeperCommon)(GameManager.CurSceneKeeper)).RemoveGameObj( this, true, false, false, false, SceneKeeperCommon.GameObjLayer.lowFlying );
+            //}
 
             if (onOverlap != null)
                 onOverlap( this, result, objB );
@@ -121,7 +123,6 @@ namespace SmartTank.GameObjs.Shell
 
         #endregion
 
-
         #region IHasBorderObj 成员
 
         public CircleList<BorderPoint> BorderData
@@ -137,6 +138,15 @@ namespace SmartTank.GameObjs.Shell
         public Rectanglef BoundingBox
         {
             get { return sprite.BoundRect; }
+        }
+
+        #endregion
+
+        #region IGameObj 成员
+
+        public string Name
+        {
+            get { return name; }
         }
 
         #endregion

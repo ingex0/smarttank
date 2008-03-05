@@ -11,6 +11,8 @@ namespace SmartTank.Scene
     {
         protected string name;
 
+        protected Group father;
+
         protected Dictionary<string, Group> groups;
 
         /// <summary>
@@ -22,6 +24,14 @@ namespace SmartTank.Scene
         }
 
         /// <summary>
+        /// 获得父节点
+        /// </summary>
+        public Group Father
+        {
+            get { return father; }
+        }
+
+        /// <summary>
         /// 获得子组
         /// </summary>
         public Dictionary<string, Group> Childs
@@ -30,10 +40,29 @@ namespace SmartTank.Scene
         }
 
         /// <summary>
+        /// 获得组的路径
+        /// </summary>
+        public string Path
+        {
+            get
+            {
+                Group cur = this;
+                string result = this.name;
+                if (cur.father != null)
+                    while (cur.father.father != null)
+                    {
+                        cur = cur.father;
+                        result = string.Concat( cur.name, "\\", result );
+                    }
+                return result;
+            }
+        }
+
+        /// <summary>
         /// 
         /// </summary>
         /// <param name="name">组名</param>
-        public Group ( string name )
+        public Group( string name )
         {
             this.name = name;
             groups = new Dictionary<string, Group>();
@@ -44,7 +73,7 @@ namespace SmartTank.Scene
         /// </summary>
         /// <param name="groupName">组名</param>
         /// <returns></returns>
-        public Group GetChildGroup ( string groupName )
+        public Group GetChildGroup( string groupName )
         {
             if (groups.ContainsKey( groupName ))
             {
@@ -58,7 +87,7 @@ namespace SmartTank.Scene
         /// </summary>
         /// <param name="group">要添加的子组</param>
         /// <returns></returns>
-        public bool AddChildGroup ( Group group )
+        public bool AddChildGroup( Group group )
         {
             if (groups.ContainsKey( group.name ))
             {
@@ -68,6 +97,7 @@ namespace SmartTank.Scene
             else
             {
                 groups.Add( group.name, group );
+                group.father = this;
                 return true;
             }
         }
@@ -77,11 +107,12 @@ namespace SmartTank.Scene
         /// </summary>
         /// <param name="group">要删除的子组</param>
         /// <returns></returns>
-        public bool DelChildGroup ( Group group )
+        public bool DelChildGroup( Group group )
         {
             if (groups.ContainsKey( group.name ) && groups[group.name] == group)
             {
                 groups.Remove( group.name );
+                group.father = null;
                 return true;
             }
             else
@@ -95,7 +126,7 @@ namespace SmartTank.Scene
         /// </summary>
         /// <param name="groupName">要删除子组的组名</param>
         /// <returns></returns>
-        public bool DelChildGroup ( string groupName )
+        public bool DelChildGroup( string groupName )
         {
             if (groups.ContainsKey( groupName ))
             {

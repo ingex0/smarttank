@@ -46,7 +46,7 @@ namespace InterRules.FindPath
 
         bool waitOrder = true;
 
-        float tempAzi;
+        //float tempAzi;
 
         bool rotaing = false;
 
@@ -108,8 +108,8 @@ namespace InterRules.FindPath
 
             foreach (EyeableBorderObjInfo borderObjInfo in orderServer.EyeableBorderObjInfos)
             {
-                if (!((SceneCommonObjInfo)borderObjInfo.EyeableInfo.ObjInfo.SceneInfo).isTankObstacle)
-                    continue;
+                //if (!((SceneCommonObjInfo)borderObjInfo.EyeableInfo.ObjInfo.SceneInfo).isTankObstacle)
+                //    continue;
 
                 if (InputHandler.JustPressKey( Microsoft.Xna.Framework.Input.Keys.B ))
                     //borderObjInfo.UpdateConvexHall();

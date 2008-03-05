@@ -65,7 +65,7 @@ namespace InterRules.Duel
 
         #endregion
 
-        public DuelRule ()
+        public DuelRule()
         {
             BaseGame.ShowMouse = true;
 
@@ -92,30 +92,30 @@ namespace InterRules.Duel
             LoadResouce();
         }
 
-        private void LoadResouce ()
+        private void LoadResouce()
         {
             ShellExplode.LoadResources();
             Explode.LoadResources();
         }
 
-        void btn_OnPress ( object sender, EventArgs e )
+        void btn_OnPress( object sender, EventArgs e )
         {
             GameManager.AddGameScreen( new DuelGameScreen( aiLoader.GetAIInstance( selectIndexTank1 ), aiLoader.GetAIInstance( selectIndexTank2 ) ) );
         }
 
-        void AIListForTank1_OnChangeSelection ( object sender, EventArgs e )
+        void AIListForTank1_OnChangeSelection( object sender, EventArgs e )
         {
             selectIndexTank1 = AIListForTank1.currentIndex;
         }
 
-        void AIListForTank2_OnChangeSelection ( object sender, EventArgs e )
+        void AIListForTank2_OnChangeSelection( object sender, EventArgs e )
         {
             selectIndexTank2 = AIListForTank2.currentIndex;
         }
 
         #region IGameScreen 成员
 
-        public void Render ()
+        public void Render()
         {
             BaseGame.Device.Clear( Color.LawnGreen );
 
@@ -124,7 +124,7 @@ namespace InterRules.Duel
             btn.Draw( BaseGame.SpriteMgr.alphaSprite, 1 );
         }
 
-        public bool Update ( float second )
+        public bool Update( float second )
         {
 
 
@@ -146,7 +146,7 @@ namespace InterRules.Duel
     {
         #region Constants
         readonly Rectangle scrnViewRect = new Rectangle( 30, 30, 740, 540 );
-        readonly Rectanglef mapSize = new Rectanglef( 0, 0, 300, 220 );
+        readonly Rectanglef mapRect = new Rectanglef( 0, 0, 300, 220 );
         readonly float tankRaderLength = 90;
         readonly float tankMaxForwardSpd = 60;
         readonly float tankMaxBackwardSpd = 50;
@@ -155,7 +155,7 @@ namespace InterRules.Duel
 
         #region Variables
 
-        SceneKeeperCommon scene;
+        SceneMgr sceneMgr;
         Camera camera;
 
         VergeTileGround vergeGround;
@@ -172,7 +172,7 @@ namespace InterRules.Duel
 
         #region Construction
 
-        public DuelGameScreen ( IAI TankAI1, IAI TankAI2 )
+        public DuelGameScreen( IAI TankAI1, IAI TankAI2 )
         {
             BaseGame.CoordinMgr.SetScreenViewRect( scrnViewRect );
 
@@ -183,22 +183,22 @@ namespace InterRules.Duel
 
             InitialBackGround();
 
-            scene = new SceneKeeperCommon();
+            sceneMgr = new SceneMgr();
             SceneInitial();
-            GameManager.LoadScene( scene );
+            GameManager.LoadScene( sceneMgr );
 
             RuleInitial();
 
             AIInitial( TankAI1, TankAI2 );
 
-            InitialDrawManager( TankAI1, TankAI2 );
+            InitialDrawMgr( TankAI1, TankAI2 );
 
             InitialStartTimer();
         }
 
-        private void AIInitial ( IAI tankAI1, IAI tankAI2 )
+        private void AIInitial( IAI tankAI1, IAI tankAI2 )
         {
-            commonServer = new AICommonServer( mapSize );
+            commonServer = new AICommonServer( mapRect );
 
             tankAI1.CommonServer = commonServer;
             tankAI1.OrderServer = tank1;
@@ -212,11 +212,11 @@ namespace InterRules.Duel
             //GameManager.ObjMemoryMgr.AddSingle( tank2 );
         }
 
-        private void InitialDrawManager ( IAI tankAI1, IAI tankAI2 )
+        private void InitialDrawMgr( IAI tankAI1, IAI tankAI2 )
         {
             if (tankAI1 is ManualControl)
             {
-                DrawManager.SetCondition(
+                DrawMgr.SetCondition(
                     delegate( IDrawableObj obj )
                     {
                         if (tank1.IsDead)
@@ -231,7 +231,7 @@ namespace InterRules.Duel
             }
             if (tankAI2 is ManualControl)
             {
-                DrawManager.SetCondition(
+                DrawMgr.SetCondition(
                     delegate( IDrawableObj obj )
                     {
                         if (tank2.IsDead)
@@ -246,7 +246,7 @@ namespace InterRules.Duel
             }
         }
 
-        private void InitialBackGround ()
+        private void InitialBackGround()
         {
             VergeTileData data = new VergeTileData();
             data.gridWidth = 30;
@@ -260,17 +260,17 @@ namespace InterRules.Duel
                 Path.Combine(Directories.ContentDirectory,"BackGround\\Lords_DirtGrass.tga"),
                 Path.Combine(Directories.ContentDirectory,"BackGround\\Lords_GrassDark.tga"),
             };
-            vergeGround = new VergeTileGround( data, scrnViewRect, mapSize );
+            vergeGround = new VergeTileGround( data, scrnViewRect, mapRect );
         }
 
-        private void SceneInitial ()
+        private void SceneInitial()
         {
-            tank1 = new DuelTank( TankSinTur.M60TexPath, TankSinTur.M60Data, new Vector2( mapSize.X + 150 + RandomHelper.GetRandomFloat( -40, 40 ),
-                mapSize.Y + 60 + RandomHelper.GetRandomFloat( -10, 10 ) ),
+            tank1 = new DuelTank( "tank1", TankSinTur.M60TexPath, TankSinTur.M60Data, new Vector2( mapRect.X + 150 + RandomHelper.GetRandomFloat( -40, 40 ),
+                mapRect.Y + 60 + RandomHelper.GetRandomFloat( -10, 10 ) ),
                 MathHelper.Pi + RandomHelper.GetRandomFloat( -MathHelper.PiOver4, MathHelper.PiOver4 ),
                 "Tank1", tankRaderLength, tankMaxForwardSpd, tankMaxBackwardSpd, 10 );
-            tank2 = new DuelTank( TankSinTur.M1A2TexPath, TankSinTur.M1A2Data, new Vector2( mapSize.X + 150 + RandomHelper.GetRandomFloat( -40, 40 ),
-                mapSize.Y + 160 + RandomHelper.GetRandomFloat( -10, 10 ) ),
+            tank2 = new DuelTank( "tank2", TankSinTur.M1A2TexPath, TankSinTur.M1A2Data, new Vector2( mapRect.X + 150 + RandomHelper.GetRandomFloat( -40, 40 ),
+                mapRect.Y + 160 + RandomHelper.GetRandomFloat( -10, 10 ) ),
                 RandomHelper.GetRandomFloat( -MathHelper.PiOver4, MathHelper.PiOver4 ),
                 "Tank2", tankRaderLength, tankMaxForwardSpd, tankMaxBackwardSpd, 10 );
 
@@ -279,36 +279,44 @@ namespace InterRules.Duel
 
             camera.Focus( tank1, true );
 
+            sceneMgr.AddGroup( "", new TypeGroup<DuelTank>( "tank" ) );
+            sceneMgr.AddGroup( "", new TypeGroup<SmartTank.PhiCol.Border>( "border" ) );
+            sceneMgr.AddGroup( "", new TypeGroup<ShellNormal>( "shell" ) );
+            sceneMgr.PhiGroups.Add( "tank" );
+            sceneMgr.PhiGroups.Add( "shell" );
+            sceneMgr.AddColMulGroups( "tank", "border", "shell" );
+            sceneMgr.ShelterGroups.Add( new SceneMgr.MulPair( "tank", new List<string>() ) );
+            sceneMgr.VisionGroups.Add( new SceneMgr.MulPair( "tank", new List<string>( new string[] { "tank" } ) ) );
 
-            scene.AddGameObj( tank1, true, false, true, SceneKeeperCommon.GameObjLayer.HighBulge, new GetEyeableInfoHandler( TankSinTur.GetCommonEyeInfoFun ) );
-            scene.AddGameObj( tank2, true, false, true, SceneKeeperCommon.GameObjLayer.HighBulge, new GetEyeableInfoHandler( TankSinTur.GetCommonEyeInfoFun ) );
-            scene.SetBorder( mapSize );
+            sceneMgr.AddGameObj( "tank", tank1 );
+            sceneMgr.AddGameObj( "tank", tank2 );
+            sceneMgr.AddGameObj( "border", new SmartTank.PhiCol.Border( mapRect ) );
         }
 
-        private void InitialStartTimer ()
+        private void InitialStartTimer()
         {
             new GameTimer( 1,
                 delegate()
                 {
-                    TextEffect.AddRiseFadeInScrnCoordin( "3", new Vector2( 400, 300 ), 3, Color.Red, LayerDepth.Text, GameFonts.Lucida, 200, 1.4f );
+                    TextEffectMgr.AddRiseFadeInScrnCoordin( "3", new Vector2( 400, 300 ), 3, Color.Red, LayerDepth.Text, GameFonts.Lucida, 200, 1.4f );
                 } );
 
             new GameTimer( 2,
                 delegate()
                 {
-                    TextEffect.AddRiseFadeInScrnCoordin( "2", new Vector2( 400, 300 ), 3, Color.Red, LayerDepth.Text, GameFonts.Lucida, 200, 1.4f );
+                    TextEffectMgr.AddRiseFadeInScrnCoordin( "2", new Vector2( 400, 300 ), 3, Color.Red, LayerDepth.Text, GameFonts.Lucida, 200, 1.4f );
                 } );
 
             new GameTimer( 3,
                 delegate()
                 {
-                    TextEffect.AddRiseFadeInScrnCoordin( "1", new Vector2( 400, 300 ), 3, Color.Red, LayerDepth.Text, GameFonts.Lucida, 200, 1.4f );
+                    TextEffectMgr.AddRiseFadeInScrnCoordin( "1", new Vector2( 400, 300 ), 3, Color.Red, LayerDepth.Text, GameFonts.Lucida, 200, 1.4f );
                 } );
 
             new GameTimer( 4,
                 delegate()
                 {
-                    TextEffect.AddRiseFadeInScrnCoordin( "Start!", new Vector2( 400, 300 ), 3, Color.Red, LayerDepth.Text, GameFonts.Lucida, 200, 1.4f );
+                    TextEffectMgr.AddRiseFadeInScrnCoordin( "Start!", new Vector2( 400, 300 ), 3, Color.Red, LayerDepth.Text, GameFonts.Lucida, 200, 1.4f );
 
                 } );
             new GameTimer( 5,
@@ -318,7 +326,7 @@ namespace InterRules.Duel
                 } );
         }
 
-        private void RuleInitial ()
+        private void RuleInitial()
         {
             tank1.onShoot += new Tank.ShootEventHandler( tank_onShoot );
             tank2.onShoot += new Tank.ShootEventHandler( tank_onShoot );
@@ -332,17 +340,19 @@ namespace InterRules.Duel
 
         #region Rules
 
-        void tank_onShoot ( Tank sender, Vector2 turretEnd, float azi )
+        int shellSum = 0;
+        void tank_onShoot( Tank sender, Vector2 turretEnd, float azi )
         {
-            ShellNormal shell = new ShellNormal( sender, turretEnd, azi, shellSpeed );
+            ShellNormal shell = new ShellNormal( "shell" + shellSum.ToString(), sender, turretEnd, azi, shellSpeed );
             shell.onCollided += new OnCollidedEventHandler( shell_onCollided );
-            scene.AddGameObj( shell, true, false, false, SceneKeeperCommon.GameObjLayer.lowFlying );
+            shellSum++;
+            sceneMgr.AddGameObj( "shell", shell );
             Sound.PlayCue( "CANNON1" );
         }
 
-        void tank_onCollide ( IGameObj Sender, CollisionResult result, GameObjInfo objB )
+        void tank_onCollide( IGameObj Sender, CollisionResult result, GameObjInfo objB )
         {
-            if (objB.Name == "ShellNormal")
+            if (objB.ObjClass == "ShellNormal")
             {
                 if (Sender == tank1)
                 {
@@ -388,9 +398,9 @@ namespace InterRules.Duel
             }
         }
 
-        void shell_onCollided ( IGameObj Sender, CollisionResult result, GameObjInfo objB )
+        void shell_onCollided( IGameObj Sender, CollisionResult result, GameObjInfo objB )
         {
-            scene.RemoveGameObj( Sender, true, false, false, false, SceneKeeperCommon.GameObjLayer.lowFlying );
+            sceneMgr.DelGameObj( "shell", Sender.Name );
             new ShellExplodeBeta( Sender.Pos, ((ShellNormal)Sender).Azi );
 
             Quake.BeginQuake( 10, 50 );
@@ -402,7 +412,7 @@ namespace InterRules.Duel
 
         #region IGameScreen 成员
 
-        public bool Update ( float seconds )
+        public bool Update( float seconds )
         {
             if (InputHandler.JustPressKey( Microsoft.Xna.Framework.Input.Keys.Escape ))
             {
@@ -443,13 +453,13 @@ namespace InterRules.Duel
             return false;
         }
 
-        public void Render ()
+        public void Render()
         {
             vergeGround.Draw();
 
             GameManager.DrawManager.Draw();
 
-            BaseGame.BasicGraphics.DrawRectangle( mapSize, 3, Color.Red, 0f );
+            BaseGame.BasicGraphics.DrawRectangle( mapRect, 3, Color.Red, 0f );
             BaseGame.BasicGraphics.DrawRectangleInScrn( scrnViewRect, 3, Color.Green, 0f );
 
             //foreach (Vector2 visiPoint in tank1.KeyPoints)
@@ -490,24 +500,26 @@ namespace InterRules.Duel
 
         public SmokeGenerater smoke;
 
-        public DuelTank ( string texPath, GameObjData skinData, Vector2 pos, float Azi, string tankName,
-            float tankRaderLength, float tankMaxForwardSpd, float tankMaxBackwardSpd,
+        public DuelTank( string name, string texPath, GameObjData skinData , Vector2 pos, float Azi , string tankName,
+            float tankRaderLength, float tankMaxForwardSpd, float tankMaxBackwardSpd ,
             float live )
-            : base( new GameObjInfo( "DuelTank", tankName ), texPath, skinData,
-                tankRaderLength, MathHelper. Pi * 0.15f, Color. Yellow,
-                tankMaxForwardSpd, tankMaxBackwardSpd, MathHelper.PiOver4, MathHelper.PiOver4, MathHelper. Pi, 0.8f, pos, Azi )
+            : base( name, new GameObjInfo( "DuelTank", tankName ) , texPath , skinData ,
+                tankRaderLength , MathHelper.Pi * 0.15f , Color.Yellow ,
+                tankMaxForwardSpd , tankMaxBackwardSpd , MathHelper.PiOver4 , MathHelper.PiOver4 , MathHelper.Pi , 0.8f , pos , Azi )
         {
             this.live = live;
             smoke = new SmokeGenerater( 0, 30, Vector2.Zero, 0.3f, 0, false, this );
+
+            this.GetEyeableInfoHandler = TankSinTur.GetCommonEyeInfoFun;
         }
 
-        public override void Update ( float seconds )
+        public override void Update( float seconds )
         {
             base.Update( seconds );
             smoke.Update( seconds );
         }
 
-        public override void Draw ()
+        public override void Draw()
         {
             base.Draw();
             smoke.Draw();

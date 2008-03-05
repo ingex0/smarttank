@@ -173,7 +173,7 @@ namespace TankEngine2D.Graphics
         }
 
         /// <summary>
-        /// Çå³þ»º³å
+        /// Çå³ý»º³å
         /// </summary>
         public void ClearCache()
         {
