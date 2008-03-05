@@ -51,7 +51,6 @@ namespace InterRules.FindPath
 
         void orderServer_onBorderObjUpdated ( EyeableBorderObjInfo[] borderObjInfos )
         {
-            int x = 0;
         }
 
         #endregion
@@ -109,10 +108,10 @@ namespace InterRules.FindPath
             naviMap = orderServer.CalNavigateMap(
                 delegate( EyeableBorderObjInfo obj )
                 {
-                    if (((SceneCommonObjInfo)(obj.EyeableInfo.ObjInfo.SceneInfo)).isTankObstacle)
+                    //if (((SceneCommonObjInfo)(obj.EyeableInfo.ObjInfo.SceneInfo)).isTankObstacle)
                         return true;
-                    else
-                        return false;
+                    //else
+                        //return false;
                 }, commonServer.MapBorder, 5 );
             //}
 
@@ -121,7 +120,7 @@ namespace InterRules.FindPath
             itemDisappeared = false;
             foreach (EyeableBorderObjInfo borderObjInfo in orderServer.EyeableBorderObjInfos)
             {
-                if (borderObjInfo.EyeableInfo.ObjInfo.Name == "Item")
+                if (borderObjInfo.EyeableInfo.ObjInfo.ObjClass == "Item")
                 {
                     if (borderObjInfo.IsDisappeared)
                         itemDisappeared = true;
@@ -131,7 +130,7 @@ namespace InterRules.FindPath
             seeItem = false;
             foreach (IEyeableInfo eyeableInfo in orderServer.GetEyeableInfo())
             {
-                if (eyeableInfo.ObjInfo.Name == "Item")
+                if (eyeableInfo.ObjInfo.ObjClass == "Item")
                 {
                     seeItem = true;
                 }

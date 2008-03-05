@@ -72,7 +72,7 @@ namespace InterRules.Duel
             List<IEyeableInfo> eyeableInfos = orderServer.GetEyeableInfo();
             if (eyeableInfos.Count != 0)
             {
-                if (eyeableInfos[0].ObjInfo.Name == "DuelTank" && eyeableInfos[0] is TankSinTur.TankCommonEyeableInfo)
+                if (eyeableInfos[0].ObjInfo.ObjClass == "DuelTank" && eyeableInfos[0] is TankSinTur.TankCommonEyeableInfo)
                 {
                     // 可获得目标坦克的信息，如下：
                     Vector2 enemyPos = ((TankSinTur.TankCommonEyeableInfo)eyeableInfos[0]).Pos;
@@ -115,15 +115,15 @@ namespace InterRules.Duel
         void CollideHandler ( CollisionResult result, GameObjInfo objB )
         {
             // 通过objB的信息确定碰撞物的种类。
-            if (objB.Name == "Border")
+            if (objB.ObjClass == "Border")
             {
                 // 添加自己的处理函数
             }
-            else if (objB.Name == "ShellNormal")
+            else if (objB.ObjClass == "ShellNormal")
             {
                 // 添加自己的处理函数
             }
-            else if (objB.Name == "DuelTank")
+            else if (objB.ObjClass == "DuelTank")
             {
                 // 添加自己的处理函数
             }

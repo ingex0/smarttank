@@ -34,7 +34,7 @@ namespace SmartTank.PhiCol
         /// <param name="minY">边界的最小Y坐标</param>
         /// <param name="maxX">边界的最大X坐标</param>
         /// <param name="maxY">边界的最大Y坐标</param>
-        public Border ( float minX, float minY, float maxX, float maxY )
+        public Border( float minX, float minY, float maxX, float maxY )
             : this( new Rectanglef( minX, minY, maxX - minX, maxY - minY ) )
         {
         }
@@ -43,7 +43,7 @@ namespace SmartTank.PhiCol
         /// 
         /// </summary>
         /// <param name="borderRect">边界矩形</param>
-        public Border ( Rectanglef borderRect )
+        public Border( Rectanglef borderRect )
         {
             this.borderRect = borderRect;
             colChecker = new BorderChecker( borderRect );
@@ -90,7 +90,7 @@ namespace SmartTank.PhiCol
 
         #region IUpdater 成员
 
-        public void Update ( float seconds )
+        public void Update( float seconds )
         {
 
         }
@@ -99,9 +99,20 @@ namespace SmartTank.PhiCol
 
         #region IDrawableObj 成员
 
-        public void Draw ()
+        public void Draw()
         {
 
+        }
+
+        #endregion
+
+
+
+        #region IGameObj 成员
+
+        public string Name
+        {
+            get { return "Border"; }
         }
 
         #endregion
@@ -121,7 +132,7 @@ namespace SmartTank.PhiCol
         /// </summary>
         /// <param name="colB"></param>
         /// <returns></returns>
-        public CollisionResult CheckCollision ( IColMethod colB )
+        public CollisionResult CheckCollision( IColMethod colB )
         {
             return colB.CheckCollisionWithBorder( this );
         }
@@ -131,7 +142,7 @@ namespace SmartTank.PhiCol
         /// </summary>
         /// <param name="spriteChecker"></param>
         /// <returns></returns>
-        public CollisionResult CheckCollisionWithSprites ( SpriteColMethod spriteChecker )
+        public CollisionResult CheckCollisionWithSprites( SpriteColMethod spriteChecker )
         {
 
             foreach (Sprite sprite in spriteChecker.ColSprites)
@@ -168,7 +179,7 @@ namespace SmartTank.PhiCol
         /// </summary>
         /// <param name="Border"></param>
         /// <returns></returns>
-        public CollisionResult CheckCollisionWithBorder ( BorderMethod Border )
+        public CollisionResult CheckCollisionWithBorder( BorderMethod Border )
         {
             throw new Exception( "The method or operation is not implemented." );
         }
@@ -179,7 +190,7 @@ namespace SmartTank.PhiCol
         /// 
         /// </summary>
         /// <param name="borderRect">边界矩形</param>
-        public BorderMethod ( Rectanglef borderRect )
+        public BorderMethod( Rectanglef borderRect )
         {
             this.borderRect = borderRect;
         }
@@ -208,7 +219,7 @@ namespace SmartTank.PhiCol
         /// </summary>
         /// <param name="result"></param>
         /// <param name="objB"></param>
-        public void HandleCollision ( CollisionResult result, ICollideObj objB )
+        public void HandleCollision( CollisionResult result, ICollideObj objB )
         {
 
         }
@@ -218,7 +229,7 @@ namespace SmartTank.PhiCol
         /// </summary>
         /// <param name="result"></param>
         /// <param name="objB"></param>
-        public void HandleOverlap ( CollisionResult result, ICollideObj objB )
+        public void HandleOverlap( CollisionResult result, ICollideObj objB )
         {
 
         }
@@ -226,7 +237,7 @@ namespace SmartTank.PhiCol
         /// <summary>
         /// 撤销下一个物理状态，空函数
         /// </summary>
-        public void ClearNextStatus ()
+        public void ClearNextStatus()
         {
 
         }
@@ -237,7 +248,7 @@ namespace SmartTank.PhiCol
         /// 
         /// </summary>
         /// <param name="borderRect">边界矩形</param>
-        public BorderChecker ( Rectanglef borderRect )
+        public BorderChecker( Rectanglef borderRect )
         {
             method = new BorderMethod( borderRect );
         }

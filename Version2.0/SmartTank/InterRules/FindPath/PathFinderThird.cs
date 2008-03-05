@@ -50,7 +50,7 @@ namespace InterRules.FindPath
 
         #region Draw
 
-        public void Draw ()
+        public void Draw()
         {
             if (naviMap != null)
             {
@@ -103,7 +103,7 @@ namespace InterRules.FindPath
         NaviPoint[] path;
         int curPathIndex = 0;
 
-        public void Update ( float seconds )
+        public void Update( float seconds )
         {
             CheckOrder();
             CheckOrderFinish();
@@ -111,9 +111,9 @@ namespace InterRules.FindPath
             action.Update( seconds );
         }
 
-        private void CheckOrder ()
+        private void CheckOrder()
         {
-            if (InputHandler.MouseJustPressRight)
+            if (InputHandler.CurMouseRightDown)
             {
                 if (mapSize.Contains( InputHandler.GetCurMousePosInLogic( BaseGame.RenderEngine ) ))
                 {
@@ -134,7 +134,7 @@ namespace InterRules.FindPath
             }
         }
 
-        private void MoveToNextKeyPoint ()
+        private void MoveToNextKeyPoint()
         {
             if (curPathIndex < path.Length)
             {
@@ -152,7 +152,7 @@ namespace InterRules.FindPath
             }
         }
 
-        private void CheckOrderFinish ()
+        private void CheckOrderFinish()
         {
             if (hasOrder)
             {
@@ -171,7 +171,7 @@ namespace InterRules.FindPath
             }
         }
 
-        void OnBorderObjUpdated ( EyeableBorderObjInfo[] borderObjInfos )
+        void OnBorderObjUpdated( EyeableBorderObjInfo[] borderObjInfos )
         {
             UpdateNaviMap();
 
@@ -468,7 +468,7 @@ namespace InterRules.FindPath
         //    }
         //}
 
-        private void UpdateNaviMap ()
+        private void UpdateNaviMap()
         {
             this.naviMap = orderServer.CalNavigateMap( new NaviMapConsiderObj(
                 delegate( EyeableBorderObjInfo obj )

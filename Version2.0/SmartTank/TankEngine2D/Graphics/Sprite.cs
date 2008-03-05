@@ -25,7 +25,7 @@ namespace TankEngine2D.Graphics
         #region Statics
 
         /// <summary>
-        /// 一个计算碰撞法向量时用到的参数，表示计算法向量时将取碰撞处附近的多少点进行效果的平均
+        /// 一个计算冲突法向量时用到的参数，表示计算法向量时将取冲突处附近的多少点进行效果的平均
         /// </summary>
         public static readonly int DefaultAverageSum = 5;
 
@@ -188,7 +188,7 @@ namespace TankEngine2D.Graphics
         #region LoadTexture Functions
 
         /// <summary>
-        /// 检查贴图的是否能建立边界，如果建立边界失败，将抛出异常。
+        /// 检查贴图的是否能建立边界，如果建立边界失败，将抛出异常。成功时则返回所建的边界。
         /// 在检测贴图是否能被正常的建立边界的情况下使用。
         /// </summary>
         /// <param name="tex"></param>

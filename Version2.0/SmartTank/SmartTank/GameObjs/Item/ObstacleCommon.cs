@@ -49,6 +49,7 @@ namespace SmartTank.GameObjs.Item
         public event OnCollidedEventHandler OnCollided;
         public event OnCollidedEventHandler OnOverLap;
 
+        string name;
         GameObjInfo objInfo;
         Vector2 pos;
         float azi;
@@ -57,9 +58,10 @@ namespace SmartTank.GameObjs.Item
         Vector2[] keyPoints;
 
 
-        public ObstacleCommon ( GameObjInfo objInfo, Vector2 pos, float azi,
+        public ObstacleCommon( string name, GameObjInfo objInfo, Vector2 pos, float azi,
             string texAssetPath, Vector2 origin, float scale, Color color, float layerDepth, Vector2[] keyPoints )
         {
+            this.name = name;
             this.objInfo = objInfo;
             this.pos = pos;
             this.azi = azi;
@@ -97,7 +99,7 @@ namespace SmartTank.GameObjs.Item
 
         #region IUpdater 成员
 
-        public void Update ( float seconds )
+        public void Update( float seconds )
         {
             sprite.UpdateTransformBounding();
         }
@@ -106,7 +108,7 @@ namespace SmartTank.GameObjs.Item
 
         #region IDrawableObj 成员
 
-        public void Draw ()
+        public void Draw()
         {
             sprite.Draw();
         }
@@ -177,18 +179,18 @@ namespace SmartTank.GameObjs.Item
             get { return colMethod; }
         }
 
-        public void HandleCollision ( CollisionResult result, ICollideObj objB )
+        public void HandleCollision( CollisionResult result, ICollideObj objB )
         {
             if (OnCollided != null)
                 OnCollided( this, result, (objB as IGameObj).ObjInfo );
         }
 
-        public void ClearNextStatus ()
+        public void ClearNextStatus()
         {
 
         }
 
-        public void HandleOverlap ( CollisionResult result, ICollideObj objB )
+        public void HandleOverlap( CollisionResult result, ICollideObj objB )
         {
             if (OnOverLap != null)
                 OnOverLap( this, result, (objB as IGameObj).ObjInfo );
@@ -196,5 +198,15 @@ namespace SmartTank.GameObjs.Item
 
         #endregion
 
+
+
+        #region IGameObj 成员
+
+        public string Name
+        {
+            get { return name; }
+        }
+
+        #endregion
     }
 }

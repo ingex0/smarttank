@@ -23,12 +23,13 @@ namespace SmartTank.GameObjs.Tank
          * 
          * */
 
-        public delegate void ShootEventHandler ( Tank sender, Vector2 turretEnd, float azi );
+        public delegate void ShootEventHandler( Tank sender, Vector2 turretEnd, float azi );
 
         #endregion
 
         #region Variables
 
+        protected string name;
 
         protected GameObjInfo objInfo;
 
@@ -67,7 +68,7 @@ namespace SmartTank.GameObjs.Tank
 
         #region IUpdater 成员
 
-        public virtual void Update ( float seconds )
+        public virtual void Update( float seconds )
         {
             if (!isDead && tankAI != null)
                 tankAI.Update( seconds );
@@ -77,7 +78,7 @@ namespace SmartTank.GameObjs.Tank
 
         #region IDrawable 成员
 
-        public virtual void Draw ()
+        public virtual void Draw()
         {
             tankAI.Draw();
         }
@@ -105,7 +106,7 @@ namespace SmartTank.GameObjs.Tank
 
         #region SetTankAI
 
-        public void SetTankAI ( IAI tankAI )
+        public void SetTankAI( IAI tankAI )
         {
             if (tankAI == null)
                 throw new NullReferenceException( "tankAI is null!" );
@@ -116,7 +117,7 @@ namespace SmartTank.GameObjs.Tank
 
         #region Dead
 
-        public virtual void Dead ()
+        public virtual void Dead()
         {
             isDead = true;
         }
@@ -144,5 +145,14 @@ namespace SmartTank.GameObjs.Tank
         #endregion
 
 
+
+        #region IGameObj 成员
+
+        public string Name
+        {
+            get { return name; }
+        }
+
+        #endregion
     }
 }

@@ -71,13 +71,13 @@ namespace InterRules.Duel
 
         void CollideHandler ( CollisionResult result, GameObjInfo objB )
         {
-            if (objB.Name == "Border")
+            if (objB.ObjClass == "Border")
             {
             }
-            else if (objB.Name == "ShellNormal")
+            else if (objB.ObjClass == "ShellNormal")
             {
             }
-            else if (objB.Name == "DuelTank")
+            else if (objB.ObjClass == "DuelTank")
             {
             }
 

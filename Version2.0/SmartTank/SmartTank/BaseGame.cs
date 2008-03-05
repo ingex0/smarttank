@@ -48,6 +48,7 @@ namespace SmartTank
         public static RenderEngine RenderEngine
         {
             get { return renderEngine; }
+            set { renderEngine = value; }
         }
 
         public static CoordinMgr CoordinMgr
@@ -146,10 +147,6 @@ namespace SmartTank
         {
             get { return ClientRec.Height; }
         }
-
-
-
-
 
         #endregion
 

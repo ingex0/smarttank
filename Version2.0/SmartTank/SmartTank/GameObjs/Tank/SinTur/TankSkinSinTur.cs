@@ -7,6 +7,7 @@ using System.IO;
 using Microsoft.Xna.Framework.Graphics;
 using TankEngine2D.Helpers;
 using SmartTank.Draw;
+using TankEngine2D;
 
 namespace SmartTank.GameObjs.Tank.SinTur
 {

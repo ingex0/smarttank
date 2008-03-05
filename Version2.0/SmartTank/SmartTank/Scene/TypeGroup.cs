@@ -16,16 +16,16 @@ namespace SmartTank.Scene
         {
         }
 
-        public abstract bool AddObj ( newIGameObj obj );
+        public abstract bool AddObj ( IGameObj obj );
         public abstract bool DelObj ( string name );
-        public abstract bool DelObj ( newIGameObj obj );
-        public abstract newIGameObj GetObj ( string name );
+        public abstract bool DelObj ( IGameObj obj );
+        public abstract IGameObj GetObj ( string name );
 
         public abstract IEnumerable<CopyType> GetEnumerableCopy<CopyType> () where CopyType : class;
     }
 
     public class TypeGroup<T> : TypeGroup
-        where T : class, newIGameObj
+        where T : class, IGameObj
     {
         protected MultiList<T> objs;
 
@@ -71,17 +71,17 @@ namespace SmartTank.Scene
             return objs.Remove( objName );
         }
 
-        public override bool DelObj ( newIGameObj obj )
+        public override bool DelObj ( IGameObj obj )
         {
             return DelObj( obj.Name );
         }
 
-        public override bool AddObj ( newIGameObj obj )
+        public override bool AddObj ( IGameObj obj )
         {
             return AddObj( (T)obj );
         }
 
-        public override newIGameObj GetObj ( string name )
+        public override IGameObj GetObj ( string name )
         {
             return objs[name];
         }

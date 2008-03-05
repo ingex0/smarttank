@@ -15,7 +15,7 @@ namespace SmartTank.Scene
 
         void RegistShelter ( ShelterMgr manager );
 
-        void RegistDrawables ( DrawManager manager );
+        void RegistDrawables ( DrawMgr manager );
 
         void RegistUpdaters ( UpdateMgr manager );
 

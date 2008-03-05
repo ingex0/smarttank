@@ -57,7 +57,7 @@ namespace InterRules.FindPath
 
         #endregion
 
-        public FindPathRule ()
+        public FindPathRule()
         {
             BaseGame.ShowMouse = true;
 
@@ -79,26 +79,26 @@ namespace InterRules.FindPath
             btn.OnClick += new EventHandler( btn_OnClick );
         }
 
-        void btn_OnClick ( object sender, EventArgs e )
+        void btn_OnClick( object sender, EventArgs e )
         {
             GameManager.AddGameScreen( new FindPathGameScreen( aiLoader.GetAIInstance( selectIndex ) ) );
         }
 
-        void AIList_OnChangeSelection ( object sender, EventArgs e )
+        void AIList_OnChangeSelection( object sender, EventArgs e )
         {
             selectIndex = aiList.currentIndex;
         }
 
         #region IGameScreen 成员
 
-        public void Render ()
+        public void Render()
         {
             BaseGame.Device.Clear( Color.BurlyWood );
             aiList.Draw( BaseGame.SpriteMgr.alphaSprite, 1f );
             btn.Draw( BaseGame.SpriteMgr.alphaSprite, 1f );
         }
 
-        public bool Update ( float second )
+        public bool Update( float second )
         {
             aiList.Update();
             btn.Update();
@@ -132,7 +132,7 @@ namespace InterRules.FindPath
         Compass compass;
         VergeTileGround backGround;
 
-        SceneKeeperCommon sceneKeeper;
+        SceneMgr sceneMgr;
 
 
         AICommonServer commonServer;
@@ -145,7 +145,7 @@ namespace InterRules.FindPath
 
         Ball ball;
 
-        public FindPathGameScreen ( IAI tankAI )
+        public FindPathGameScreen( IAI tankAI )
         {
             BaseGame.CoordinMgr.SetScreenViewRect( scrnRect );
             camera = new Camera( 2, cameraStartPos, 0f );
@@ -163,12 +163,12 @@ namespace InterRules.FindPath
             GameTimer timer = new GameTimer( 5,
                 delegate()
                 {
-                    TextEffect.AddRiseFadeInScrnCoordin( "test FadeUp in Scrn!", new Vector2( 100, 100 ), 1f, Color.Black, LayerDepth.Text, GameFonts.Lucida, 300, 0.5f );
-                    TextEffect.AddRiseFade( "test FadeUp in Login!", new Vector2( 100, 100 ), 1f, Color.White, LayerDepth.Text, GameFonts.Lucida, 300, 0.5f );
+                    TextEffectMgr.AddRiseFadeInScrnCoordin( "test FadeUp in Scrn!", new Vector2( 100, 100 ), 1f, Color.Black, LayerDepth.Text, GameFonts.Lucida, 300, 0.5f );
+                    TextEffectMgr.AddRiseFade( "test FadeUp in Login!", new Vector2( 100, 100 ), 1f, Color.White, LayerDepth.Text, GameFonts.Lucida, 300, 0.5f );
                 } );
         }
 
-        private void InitialAI ( IAI tankAI )
+        private void InitialAI( IAI tankAI )
         {
             commonServer = new AICommonServer( mapSize );
             tank.SetTankAI( tankAI );
@@ -178,47 +178,53 @@ namespace InterRules.FindPath
             GameManager.ObjMemoryMgr.AddSingle( tank );
         }
 
-        private void InitialScene ()
+        private void InitialScene()
         {
-            sceneKeeper = new SceneKeeperCommon();
+            sceneMgr = new SceneMgr();
 
-            tank = new TankSinTur( new GameObjInfo( "Tank", string.Empty ),
+            tank = new TankSinTur( "tank", new GameObjInfo( "Tank", string.Empty ),
                 TankSinTur.M60TexPath, TankSinTur.M60Data,
                 tankRaderDepth, tankRaderAng, Color.Wheat,
                 tankMaxForwardSpd, tankMaxBackwardSpd, tankMaxRotaSpd, tankMaxRotaTurretSpd, tankMaxRotaRaderSpd,
                 0.3f, tankStartPos, tankStartAzi );
 
-            wall1 = new ObstacleCommon( new GameObjInfo( "wall", string.Empty ), new Vector2( 100, 50 ), 0,
+            wall1 = new ObstacleCommon( "wall1", new GameObjInfo( "wall", string.Empty ), new Vector2( 100, 50 ), 0,
                 Path.Combine( Directories.ContentDirectory, "GameObjs\\wall" ),
                 new Vector2( 90, 15 ), 1f, Color.White, LayerDepth.GroundObj, new Vector2[] { new Vector2( 90, 15 ) } );
+            wall1.GetEyeableInfoHandler = EyeableInfo.GetEyeableInfoHandler;
 
-            wall2 = new ObstacleCommon( new GameObjInfo( "wall", string.Empty ), new Vector2( 250, 150 ), MathHelper.PiOver2,
+            wall2 = new ObstacleCommon( "wall2", new GameObjInfo( "wall", string.Empty ), new Vector2( 250, 150 ), MathHelper.PiOver2,
                             Path.Combine( Directories.ContentDirectory, "GameObjs\\wall" ),
                             new Vector2( 90, 15 ), 1f, Color.White, LayerDepth.GroundObj, new Vector2[] { new Vector2( 90, 15 ) } );
+            wall2.GetEyeableInfoHandler = EyeableInfo.GetEyeableInfoHandler;
 
-            wall3 = new ObstacleCommon( new GameObjInfo( "wall", string.Empty ), new Vector2( 100, 100 ), 0,
+            wall3 = new ObstacleCommon( "wall3", new GameObjInfo( "wall", string.Empty ), new Vector2( 100, 100 ), 0,
                 Path.Combine( Directories.ContentDirectory, "GameObjs\\wall" ),
                 new Vector2( 90, 15 ), 1f, Color.White, LayerDepth.GroundObj, new Vector2[] { new Vector2( 90, 15 ) } );
+            wall3.GetEyeableInfoHandler = EyeableInfo.GetEyeableInfoHandler;
 
 
-            //ball = new ItemCommon("Item", string.Empty,
-            //    Path.Combine(Directories.ContentDirectory, "GameObjs\\scorpion"), new Vector2(128, 128), 0.3f, new Vector2[] { new Vector2(128, 128) },
-            //    new Vector2(300, 250), 0, new Vector2(5, 5), 0);
-            ball = new Ball( 0.3f, new Vector2( 300, 250 ), 0, new Vector2( 5, 5 ), 0 );
+            ball = new Ball( "ball", 0.3f, new Vector2( 300, 250 ), 0, new Vector2( 5, 5 ), 0 );
 
+            sceneMgr.AddGroup( "", new TypeGroup<TankSinTur>( "tank" ) );
+            sceneMgr.AddGroup( "", new Group( "obstacle" ) );
+            sceneMgr.AddGroup( "obstacle", new TypeGroup<ObstacleCommon>( "wall" ) );
+            sceneMgr.AddGroup( "obstacle", new TypeGroup<Ball>( "ball" ) );
+            sceneMgr.AddGroup( "obstacle", new TypeGroup<SmartTank.PhiCol.Border>( "border" ) );
+            sceneMgr.AddColMulGroups( "tank", "obstacle" );
+            sceneMgr.PhiGroups.AddRange( new string[] { "tank", "obstacle\\ball" } );
+            sceneMgr.AddShelterMulGroups( "tank", "obstacle\\wall" );
+            sceneMgr.VisionGroups.Add( new SceneMgr.MulPair( "tank", new List<string>( new string[] { "obstacle\\ball", "obstacle\\wall" } ) ) );
 
-            sceneKeeper.AddGameObj( tank, true, false, true, SceneKeeperCommon.GameObjLayer.HighBulge );
-
-            sceneKeeper.AddGameObj( wall1, false, true, false, SceneKeeperCommon.GameObjLayer.HighBulge, EyeableInfo.GetEyeableInfoHandler );
-            sceneKeeper.AddGameObj( wall2, false, true, false, SceneKeeperCommon.GameObjLayer.HighBulge, EyeableInfo.GetEyeableInfoHandler );
-            sceneKeeper.AddGameObj( wall3, false, true, false, SceneKeeperCommon.GameObjLayer.HighBulge, EyeableInfo.GetEyeableInfoHandler );
-
-            sceneKeeper.AddGameObj( ball, true, false, false, SceneKeeperCommon.GameObjLayer.HighBulge, EyeableInfo.GetEyeableInfoHandler );
-            sceneKeeper.SetBorder( mapSize );
-            GameManager.LoadScene( sceneKeeper );
+            sceneMgr.AddGameObj( "tank", tank );
+            sceneMgr.AddGameObj( "obstacle\\wall", wall1, wall2, wall3 );
+            sceneMgr.AddGameObj( "obstacle\\ball", ball );
+            sceneMgr.AddGameObj( "obstacle\\border", new SmartTank.PhiCol.Border( mapSize ) );
+            
+            GameManager.LoadScene( sceneMgr );
         }
 
-        private void InitialBackGround ()
+        private void InitialBackGround()
         {
             VergeTileData data = new VergeTileData();
             data.gridWidth = 50;
@@ -238,7 +244,7 @@ namespace InterRules.FindPath
 
         #region IGameScreen 成员
 
-        public void Render ()
+        public void Render()
         {
             BaseGame.Device.Clear( Color.Blue );
 
@@ -261,7 +267,7 @@ namespace InterRules.FindPath
 
         }
 
-        public bool Update ( float second )
+        public bool Update( float second )
         {
             camera.Update( second );
             compass.Update();

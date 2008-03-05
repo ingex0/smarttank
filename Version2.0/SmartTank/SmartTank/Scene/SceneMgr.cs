@@ -37,7 +37,7 @@ namespace SmartTank.Scene
         /// <param name="stream"></param>
         /// <param name="sceneMgr"></param>
         /// <returns></returns>
-        public static bool Save ( Stream stream, SceneMgr sceneMgr )
+        public static bool Save( Stream stream, SceneMgr sceneMgr )
         {
             try
             {
@@ -56,7 +56,7 @@ namespace SmartTank.Scene
         /// </summary>
         /// <param name="sceneFilePath"></param>
         /// <returns></returns>
-        public static SceneMgr Load ( string sceneFilePath )
+        public static SceneMgr Load( string sceneFilePath )
         {
             try
             {
@@ -77,7 +77,7 @@ namespace SmartTank.Scene
         /// <summary>
         /// 默认构造函数
         /// </summary>
-        public SceneMgr ()
+        public SceneMgr()
         {
             phiGroups = new List<string>();
             colSinGroups = new List<string>();
@@ -85,7 +85,8 @@ namespace SmartTank.Scene
             colPairGroups = new List<Pair>();
             lapPairGroups = new List<Pair>();
             shelterGroups = new List<MulPair>();
-            visionGroups = new List<Pair>();
+            visionGroups = new List<MulPair>();
+            groups = new Group( "" );
         }
 
         #region Groups and Objs
@@ -97,7 +98,7 @@ namespace SmartTank.Scene
         /// </summary>
         /// <param name="groupPath"></param>
         /// <returns></returns>
-        public Group GetGroup ( string groupPath )
+        public Group GetGroup( string groupPath )
         {
             return FindGroup( groupPath );
         }
@@ -108,7 +109,7 @@ namespace SmartTank.Scene
         /// <typeparam name="T"></typeparam>
         /// <param name="groupPath"></param>
         /// <returns></returns>
-        public TypeGroup<T> GetTypeGroup<T> ( string groupPath ) where T : class, newIGameObj
+        public TypeGroup<T> GetTypeGroup<T>( string groupPath ) where T : class, IGameObj
         {
             Group result = FindGroup( groupPath );
             if (result != null && result is TypeGroup<T>)
@@ -122,7 +123,7 @@ namespace SmartTank.Scene
         /// </summary>
         /// <param name="objPath">物体的场景路径</param>
         /// <returns></returns>
-        public newIGameObj GetGameObj ( string objPath )
+        public IGameObj GetGameObj( string objPath )
         {
             return FindObj( objPath );
         }
@@ -133,7 +134,7 @@ namespace SmartTank.Scene
         /// <param name="fatherPath">添加到的父组的路径，空则表示添加到根组下</param>
         /// <param name="group">要添加的组</param>
         /// <returns></returns>
-        public bool AddGroup ( string fatherPath, Group group )
+        public bool AddGroup( string fatherPath, Group group )
         {
             Group fatherGroup = FindGroup( fatherPath );
             if (fatherGroup != null)
@@ -150,7 +151,7 @@ namespace SmartTank.Scene
         /// <param name="groupPath">要添加到的组的路径，该组必须为TypeGroup</param>
         /// <param name="obj"></param>
         /// <returns></returns>
-        public bool AddGameObj ( string groupPath, newIGameObj obj )
+        public bool AddGameObj( string groupPath, IGameObj obj )
         {
             Group fatherGroup = FindGroup( groupPath );
             if (fatherGroup != null && fatherGroup is TypeGroup)
@@ -160,13 +161,28 @@ namespace SmartTank.Scene
             else
                 return false;
         }
+        /// <summary>
+        /// 同时添加多个同组物体
+        /// </summary>
+        /// <param name="groupPath"></param>
+        /// <param name="objs"></param>
+        /// <returns></returns>
+        public bool AddGameObj( string groupPath, params IGameObj[] objs )
+        {
+            bool success = true;
+            foreach (IGameObj obj in objs)
+            {
+                success = success && AddGameObj( groupPath, obj );
+            }
+            return success;
+        }
 
         /// <summary>
         /// 删除物体
         /// </summary>
         /// <param name="objPath">物体的路径</param>
         /// <returns></returns>
-        public bool DelGameObj ( string objPath )
+        public bool DelGameObj( string objPath )
         {
             int i;
             for (i = objPath.Length - 1; i >= 0; i--)
@@ -188,7 +204,7 @@ namespace SmartTank.Scene
         /// <param name="groupPath">物体所在组的路径</param>
         /// <param name="objName">物体的名称</param>
         /// <returns></returns>
-        public bool DelGameObj ( string groupPath, string objName )
+        public bool DelGameObj( string groupPath, string objName )
         {
             Group fatherGroup = FindGroup( groupPath );
             if (fatherGroup != null && fatherGroup is TypeGroup)
@@ -209,7 +225,7 @@ namespace SmartTank.Scene
             public string groupPath1;
             public string groupPath2;
 
-            public Pair ( string groupPath1, string groupPath2 )
+            public Pair( string groupPath1, string groupPath2 )
             {
                 this.groupPath1 = groupPath1;
                 this.groupPath2 = groupPath2;
@@ -223,7 +239,7 @@ namespace SmartTank.Scene
             public string groupPath;
             public List<string> groupPaths;
 
-            public MulPair ( string groupPath, List<string> groupPaths )
+            public MulPair( string groupPath, List<string> groupPaths )
             {
                 this.groupPath = groupPath;
                 this.groupPaths = groupPaths;
@@ -238,7 +254,7 @@ namespace SmartTank.Scene
 
         private List<MulPair> shelterGroups;
 
-        private List<Pair> visionGroups;
+        private List<MulPair> visionGroups;
 
         /// <summary>
         /// 将注册的物理更新组
@@ -285,16 +301,62 @@ namespace SmartTank.Scene
         /// <summary>
         /// 将注册的可视关系
         /// </summary>
-        public List<Pair> VisionGroups
+        public List<MulPair> VisionGroups
         {
             get { return visionGroups; }
         }
 
         /// <summary>
-        /// 注册物理更新
+        /// 注册几个互相有碰撞关系的组
+        /// </summary>
+        /// <param name="groups"></param>
+        public void AddColMulGroups( params string[] groups )
+        {
+            for (int i = 0; i < groups.Length - 1; i++)
+            {
+                for (int j = i + 1; j < groups.Length; j++)
+                {
+                    ForEachTypeGroup( FindGroup( groups[i] ), new ForEachTypeGroupHandler(
+                        delegate( TypeGroup typeGroup1 )
+                        {
+                            ForEachTypeGroup( FindGroup( groups[j] ), new ForEachTypeGroupHandler(
+                                delegate( TypeGroup typeGroup2 )
+                                {
+                                    colPairGroups.Add( new Pair( typeGroup1.Path, typeGroup2.Path ) );
+                                } ) );
+                        } ) );
+                }
+            }
+        }
+        /// <summary>
+        /// 注册几个互相有重叠关系的组
+        /// </summary>
+        /// <param name="groups"></param>
+        public void AddLapMulGroups( params string[] groups )
+        {
+            for (int i = 0; i < groups.Length - 1; i++)
+            {
+                for (int j = i + 1; j < groups.Length; j++)
+                {
+                    lapPairGroups.Add( new Pair( groups[i], groups[j] ) );
+                }
+            }
+        }
+        /// <summary>
+        /// 注册遮挡关系
+        /// </summary>
+        /// <param name="raderOwnerGroup"></param>
+        /// <param name="shelterGroups"></param>
+        public void AddShelterMulGroups( string raderOwnerGroup, params string[] shelterGroups )
+        {
+            this.shelterGroups.Add( new MulPair( raderOwnerGroup, new List<string>( shelterGroups ) ) );
+        }
+
+        /// <summary>
+        /// 往平台组件中注册物理更新
         /// </summary>
         /// <param name="manager"></param>
-        public void RegistPhiCol ( SmartTank.PhiCol.PhiColMgr manager )
+        public void RegistPhiCol( SmartTank.PhiCol.PhiColMgr manager )
         {
             foreach (string groupPath in phiGroups)
             {
@@ -370,10 +432,10 @@ namespace SmartTank.Scene
             }
         }
         /// <summary>
-        /// 注册遮挡关系
+        /// 往平台组件中注册遮挡关系
         /// </summary>
         /// <param name="manager"></param>
-        public void RegistShelter ( SmartTank.Shelter.ShelterMgr manager )
+        public void RegistShelter( SmartTank.Shelter.ShelterMgr manager )
         {
             foreach (MulPair pair in shelterGroups)
             {
@@ -400,10 +462,10 @@ namespace SmartTank.Scene
             }
         }
         /// <summary>
-        /// 注册可绘制组
+        /// 往平台组件中注册可绘制组
         /// </summary>
         /// <param name="manager"></param>
-        public void RegistDrawables ( SmartTank.Draw.DrawManager manager )
+        public void RegistDrawables( SmartTank.Draw.DrawMgr manager )
         {
             ForEachTypeGroup( groups, new ForEachTypeGroupHandler(
                 delegate( TypeGroup typeGroup )
@@ -412,10 +474,10 @@ namespace SmartTank.Scene
                 } ) );
         }
         /// <summary>
-        /// 注册可更新组
+        /// 往平台组件中注册可更新组
         /// </summary>
         /// <param name="manager"></param>
-        public void RegistUpdaters ( SmartTank.Update.UpdateMgr manager )
+        public void RegistUpdaters( SmartTank.Update.UpdateMgr manager )
         {
             ForEachTypeGroup( groups, new ForEachTypeGroupHandler(
                 delegate( TypeGroup typeGroup )
@@ -424,41 +486,51 @@ namespace SmartTank.Scene
                 } ) );
         }
         /// <summary>
-        /// 注册可视关系
+        /// 往平台组件中注册可视关系
         /// </summary>
         /// <param name="manager"></param>
-        public void RegistVision ( SmartTank.Senses.Vision.VisionMgr manager )
+        public void RegistVision( SmartTank.Senses.Vision.VisionMgr manager )
         {
-            foreach (Pair pair in visionGroups)
+            foreach (MulPair pair in visionGroups)
             {
                 try
                 {
-                    TypeGroup group1 = FindGroup( pair.groupPath1 ) as TypeGroup;
-                    TypeGroup group2 = FindGroup( pair.groupPath2 ) as TypeGroup;
+                    //TypeGroup group1 = FindGroup( pair.groupPath ) as TypeGroup;
+                    //TypeGroup group2 = FindGroup( pair.groupPath2 ) as TypeGroup;
+                    //manager.AddVisionGroup(
+                    //    group1.GetEnumerableCopy<IRaderOwner>(),
+                    //    group2.GetEnumerableCopy<IEyeableObj>() );
+                    List<IEnumerable<IEyeableObj>> EyeableGroups = new List<IEnumerable<IEyeableObj>>();
+
+                    foreach (string eyeGroupPath in pair.groupPaths)
+                    {
+                        TypeGroup shelGroup = FindGroup( eyeGroupPath ) as TypeGroup;
+                        EyeableGroups.Add( shelGroup.GetEnumerableCopy<IEyeableObj>() );
+                    }
+
+                    TypeGroup group = FindGroup( pair.groupPath ) as TypeGroup;
+
                     manager.AddVisionGroup(
-                        group1.GetEnumerableCopy<IRaderOwner>(),
-                        group2.GetEnumerableCopy<IEyeableObj>() );
+                        group.GetEnumerableCopy<IRaderOwner>(),
+                        EyeableGroups.ToArray() );
                 }
                 catch (Exception ex)
                 {
-                    Log.Write( "RegistVisionGroup error: " + pair.groupPath1 + ", " +
-                        pair.groupPath2 + ", " + ex.Message );
+                    Log.Write( "RegistVisionGroup error: " + pair.groupPath + ", " +
+                        pair.groupPath.ToString() + ", " + ex.Message );
                 }
             }
         }
 
         #endregion
 
-        #region BackGround
-
-
-
-        #endregion
-
         #region Prviate Methods
 
-        private Group FindGroup ( string groupPath )
+        private Group FindGroup( string groupPath )
         {
+            if (groupPath == string.Empty)
+                return this.groups;
+
             Group curGroup = this.groups;
             string[] paths;
             paths = groupPath.Split( '\\' );
@@ -474,7 +546,7 @@ namespace SmartTank.Scene
             return curGroup;
         }
 
-        private newIGameObj FindObj ( string objPath )
+        private IGameObj FindObj( string objPath )
         {
             Group curGroup = this.groups;
             string[] paths;
@@ -495,9 +567,9 @@ namespace SmartTank.Scene
             return null;
         }
 
-        private delegate void ForEachTypeGroupHandler ( TypeGroup group );
+        private delegate void ForEachTypeGroupHandler( TypeGroup group );
 
-        private static void ForEachTypeGroup ( Group group, ForEachTypeGroupHandler handler )
+        private static void ForEachTypeGroup( Group group, ForEachTypeGroupHandler handler )
         {
             if (group is TypeGroup)
                 handler( group as TypeGroup );

@@ -55,7 +55,6 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ShootTheBall\AutoShootAI.cs" />
     <Compile Include="ShootTheBall\ShootTheBallRule.cs" />
-    <Compile Include="TestNewSceneMgrRule\TestSceneMgrRule.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

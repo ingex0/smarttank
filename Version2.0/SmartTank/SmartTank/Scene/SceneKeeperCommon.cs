@@ -230,8 +230,8 @@ namespace SmartTank.Scene
             assignedID++;
             obj.ObjInfo.SetID( assignedID );
 
-            bool isTankObstacle = layer == GameObjLayer.HighBulge || layer == GameObjLayer.Convace || layer == GameObjLayer.LowBulge;
-            obj.ObjInfo.SetSceneInfo( new SceneCommonObjInfo( asShe, isTankObstacle ) );
+            //bool isTankObstacle = layer == GameObjLayer.HighBulge || layer == GameObjLayer.Convace || layer == GameObjLayer.LowBulge;
+            //obj.ObjInfo.SetSceneInfo( new SceneCommonObjInfo( asShe, isTankObstacle ) );
 
         }
 

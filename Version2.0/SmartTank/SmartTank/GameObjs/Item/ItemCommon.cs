@@ -20,6 +20,7 @@ namespace SmartTank.GameObjs.Item
         public event OnCollidedEventHandler OnCollided;
         public event OnCollidedEventHandler OnOverlap;
 
+        string name;
 
         GameObjInfo objInfo;
 
@@ -28,6 +29,11 @@ namespace SmartTank.GameObjs.Item
         Sprite sprite;
 
         Vector2[] keyPoints;
+
+        public string Name
+        {
+            get { return name; }
+        }
 
         public float Scale
         {
@@ -54,13 +60,15 @@ namespace SmartTank.GameObjs.Item
         }
 
 
+
         #endregion
 
-        public ItemCommon ( string name, string script,
+        public ItemCommon( string name, string objClass, string script,
             string texPath, Vector2 texOrigin, float scale, Vector2[] keyPoints,
             Vector2 pos, float azi, Vector2 vel, float rotaVel )
         {
-            objInfo = new GameObjInfo( name, script );
+            this.name = name;
+            objInfo = new GameObjInfo( objClass, script );
             sprite = new Sprite( BaseGame.RenderEngine, texPath, true );
             sprite.SetParameters( texOrigin, pos, scale, azi, Color.White, LayerDepth.GroundObj, SpriteBlendMode.AlphaBlend );
             sprite.UpdateTransformBounding();
@@ -71,22 +79,26 @@ namespace SmartTank.GameObjs.Item
             phiUpdater.OnOverlap += new OnCollidedEventHandler( phiUpdater_OnOverlap );
         }
 
-        public ItemCommon ( string name, string script, string dataPath, GameObjData data, float scale, Vector2 pos, float azi, Vector2 vel, float rotaVel )
-            : this( name, script, Path.Combine( dataPath, data.baseNode.texPaths[0] ),
+        public ItemCommon( string name, string objClass, string script, string dataPath, GameObjData data, float scale, Vector2 pos, float azi, Vector2 vel, float rotaVel )
+            : this( name, objClass, script, Path.Combine( dataPath, data.baseNode.texPaths[0] ),
             data.baseNode.structKeyPoints[0], scale, data.baseNode.visiKeyPoints.ToArray(),
             pos, azi, vel, rotaVel )
         {
 
         }
 
+        public void LoadResource( TankEngine2D.RenderEngine renderEngine )
+        {
 
-        void phiUpdater_OnOverlap ( IGameObj sender, CollisionResult result, GameObjInfo objB )
+        }
+
+        void phiUpdater_OnOverlap( IGameObj sender, CollisionResult result, GameObjInfo objB )
         {
             if (OnOverlap != null)
                 OnOverlap( this, result, objB );
         }
 
-        void phiUpdater_OnCollied ( IGameObj sender, CollisionResult result, GameObjInfo objB )
+        void phiUpdater_OnCollied( IGameObj sender, CollisionResult result, GameObjInfo objB )
         {
             if (OnCollided != null)
                 OnCollided( this, result, objB );
@@ -104,7 +116,7 @@ namespace SmartTank.GameObjs.Item
 
         #region IUpdater 成员
 
-        public void Update ( float seconds )
+        public void Update( float seconds )
         {
             sprite.UpdateTransformBounding();
         }
@@ -113,7 +125,7 @@ namespace SmartTank.GameObjs.Item
 
         #region IDrawableObj 成员
 
-        public void Draw ()
+        public void Draw()
         {
             sprite.Pos = phiUpdater.Pos;
             sprite.Rata = phiUpdater.Azi;
@@ -185,6 +197,13 @@ namespace SmartTank.GameObjs.Item
                 getEyeableInfoHandler = value;
             }
         }
+
+        #endregion
+
+
+        #region IGameObj 成员
+
+
 
         #endregion
     }
