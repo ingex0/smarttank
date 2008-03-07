@@ -18,8 +18,8 @@ namespace AssetRegister
         readonly string rulesPath = "Rule";
         readonly string rulesListPath = "Rule\\List.xml";
 
-        readonly string AIPath = "AI";
-        readonly string AIListPath = "AI\\List.xml";
+        readonly string AIPath = "AIs";
+        readonly string AIListPath = "AIs\\List.xml";
 
         AssetList rulelist;
         AssetList AIlist;
