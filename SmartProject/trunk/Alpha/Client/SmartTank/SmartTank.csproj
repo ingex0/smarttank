@@ -162,6 +162,8 @@
     <Compile Include="GameManager.cs">
       <Name>GameManager</Name>
     </Compile>
+    <Compile Include="net\InfoRePath.cs" />
+    <Compile Include="net\RuleSupNet.cs" />
     <Compile Include="PhiCol\Border.cs">
       <Name>Border</Name>
     </Compile>
