@@ -5,10 +5,10 @@ using System.Text;
 
 namespace SmartTank.net
 {
-    static class InfoRePath
+    static public class InfoRePath
     {
         static bool isMainHost;
-        static bool IsMainHost
+        static public bool IsMainHost
         {
             get { return isMainHost; }
             set { isMainHost = value; }
