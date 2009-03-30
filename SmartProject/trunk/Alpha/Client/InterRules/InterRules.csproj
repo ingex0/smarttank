@@ -47,6 +47,7 @@
     <Compile Include="Duel\Considers.cs" />
     <Compile Include="Duel\DuelAIModel.cs" />
     <Compile Include="Duel\DuelerNoFirst.cs" />
+    <Compile Include="Duel\DuelNet.cs" />
     <Compile Include="Duel\DuelRule.cs" />
     <Compile Include="FindPath\FindPathRule.cs" />
     <Compile Include="FindPath\PathFinderFirst.cs" />
