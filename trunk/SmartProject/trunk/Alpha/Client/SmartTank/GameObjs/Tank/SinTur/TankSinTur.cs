@@ -254,8 +254,10 @@ namespace SmartTank.GameObjs.Tank.SinTur
 
         void controller_onShoot( object sender, EventArgs e )
         {
+            Type typex =  typeof(ShootEventHandler);
+
             if (onShoot != null)
-                onShoot( this, skin.GetTurretEndPos( controller.Pos, controller.Azi, controller.turretAzi ), controller.Azi + controller.turretAzi );
+                SmartTank.net.InfoRePath.CallEvent(onShoot, this, skin.GetTurretEndPos(controller.Pos, controller.Azi, controller.turretAzi), controller.Azi + controller.turretAzi);
 
             skin.BeginRecoil();
         }
