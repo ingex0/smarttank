@@ -1,0 +1,516 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<document version="2.6">
+    <doc-setting>
+        <eConLineJumpCode>7</eConLineJumpCode>
+        <eConLineJumpStyle>3</eConLineJumpStyle>
+        <eJumpDirX>1</eJumpDirX>
+        <eJumpDirY>2</eJumpDirY>
+        <fJumpSize>6</fJumpSize>
+        <uDrawFlags>0</uDrawFlags>
+        <uSnapFlags>767</uSnapFlags>
+        <bShowGrid>1</bShowGrid>
+        <bShowRuler>1</bShowRuler>
+    </doc-setting>
+    <page width="1188" height="840" name="页-1" class="10145" bk-clr="#FFFFFF" zoom="1" paper-index="13" orient="landscape" unit="mm" id="10142">
+        <defs id="10143">
+            <style id="10145">
+                <fill type="double-color-gradient" start-color="#EDF0F7" end-color="#A6BED0" gradient-style="4" opcity="1" />
+                <fill-rule>nonzero</fill-rule>
+                <stroke type="solid-color" color="#3C5C74" opcity="1" />
+                <stroke-width>1</stroke-width>
+                <stroke-linecap>butt</stroke-linecap>
+                <stroke-linejoin>miter</stroke-linejoin>
+                <stroke-miterlimit>4</stroke-miterlimit>
+                <stroke-dash>1</stroke-dash>
+                <stroke-dashoffset>0</stroke-dashoffset>
+                <marker-start size="4">0</marker-start>
+                <marker-end size="4">0</marker-end>
+                <shadow mode="0" type="solid-color" color="#808080" opcity="1" />
+            </style>
+            <style id="10147">
+                <fill opcity="1" />
+                <fill-rule>nonzero</fill-rule>
+                <stroke opcity="1" />
+                <stroke-width>1</stroke-width>
+                <stroke-linecap>butt</stroke-linecap>
+                <stroke-linejoin>miter</stroke-linejoin>
+                <stroke-miterlimit>4</stroke-miterlimit>
+                <stroke-dash>1</stroke-dash>
+                <stroke-dashoffset>0</stroke-dashoffset>
+                <marker-start size="4">0</marker-start>
+                <marker-end size="4">0</marker-end>
+                <shadow mode="0" type="solid-color" color="#808080" opcity="1" />
+            </style>
+        </defs>
+        <layer name="background" id="10148" />
+        <layer name="图层-1" id="10149">
+            <shape type="shape" class="10145" gpinx="800" gpiny="560" lpinx="width*0.5" lpiny="height*0.5" width="100" height="60" angle="0" protection="0" misc="0" flipx="false" flipy="false" id="10224">
+                <path nofill="false" noline="false" path-closed="true" noshow="false">
+                    <move-to x="width" y="height" joint-type="0" />
+                    <line-to x="width*1" y="height*0" joint-type="0" />
+                    <line-to x="width*0" y="height*0" joint-type="0" />
+                    <line-to x="width*0" y="height*1" joint-type="0" />
+                    <line-to x="width*1" y="height*1" joint-type="0" />
+                </path>
+                <control-list />
+                <variable-list />
+                <anchor-list>
+                    <anchor x="width*0.5" y="height*1" />
+                    <anchor x="width*0.5" y="height*0" />
+                    <anchor x="width*1" y="height*0.5" />
+                    <anchor x="width*0" y="height*0.5" />
+                    <anchor x="width*0.5" y="height*0.5" />
+                </anchor-list>
+                <action-list />
+                <hyperlink-list />
+                <events eventdrop="0" />
+                <miscellaneous hidetext="0" invisible="0" />
+                <property-sheet>
+                    <property label="Cost" type="currency" format="0.00 USD" formattype="3" value="" visible="1" description="" />
+                    <property label="Duration" type="lastdate" format="[h]:[mm]" formattype="5" value="0" visible="1" description="" />
+                    <property label="Resources" type="string" format="" formattype="0" value="" visible="1" description="" />
+                </property-sheet>
+                <text rtf="{\rtf1\ansi\ansicpg936\deff0\deflang1033\deflangfe2052{\fonttbl{\f0\fswiss\fprq2\fcharset134 \&apos;cb\&apos;ce\&apos;cc\&apos;e5;}}&#x0D;&#x0A;\viewkind4\uc1\pard\qc\lang2052\f0\fs20\&apos;b5\&apos;c7\&apos;c2\&apos;bc\par&#x0D;&#x0A;}" gpinx="parent.width*0.5" gpiny="parent.height*0.5" lpinx="width*0.5" lpiny="height*0.5" width="hyp(parent.width*1,parent.height*0)" height="hyp(parent.width*0,parent.height*1)" angle="0" protection="0" misc="0" format="" text-extendmode="0" id="10226">
+                    <text-style>
+                        <font-family>宋体</font-family>
+                        <font-weight>400</font-weight>
+                        <font-height>10</font-height>
+                        <font-italic>false</font-italic>
+                        <font-underline>false</font-underline>
+                        <font-strikeout>false</font-strikeout>
+                        <align-horizontal>center</align-horizontal>
+                        <align-vertical>center</align-vertical>
+                        <color>#000000</color>
+                        <font-offset>0</font-offset>
+                    </text-style>
+                </text>
+            </shape>
+            <shape type="shape" class="10145" gpinx="541.5" gpiny="540" lpinx="width*0.5" lpiny="height*0.5" width="197" height="22" angle="0" protection="0" misc="0" flipx="false" flipy="false" id="10153">
+                <path nofill="false" noline="false" path-closed="true" noshow="false">
+                    <move-to x="width" y="height" joint-type="0" />
+                    <line-to x="width*1" y="height*0" joint-type="0" />
+                    <line-to x="width*0" y="height*0" joint-type="0" />
+                    <line-to x="width*0" y="height*1" joint-type="0" />
+                    <line-to x="width*1" y="height*1" joint-type="0" />
+                </path>
+                <control-list />
+                <variable-list />
+                <anchor-list>
+                    <anchor x="width*0.5" y="height*1" />
+                    <anchor x="width*0.5" y="height*0" />
+                    <anchor x="width*1" y="height*0.5" />
+                    <anchor x="width*0" y="height*0.5" />
+                    <anchor x="width*0.5" y="height*0.5" />
+                </anchor-list>
+                <action-list />
+                <hyperlink-list />
+                <events eventdrop="0" />
+                <miscellaneous hidetext="0" invisible="0" />
+                <property-sheet>
+                    <property label="Cost" type="currency" format="0.00 USD" formattype="3" value="" visible="1" description="" />
+                    <property label="Duration" type="lastdate" format="[h]:[mm]" formattype="5" value="0" visible="1" description="" />
+                    <property label="Resources" type="string" format="" formattype="0" value="" visible="1" description="" />
+                </property-sheet>
+                <text rtf="{\rtf1\ansi\ansicpg936\deff0\deflang1033\deflangfe2052{\fonttbl{\f0\fswiss\fprq2\fcharset134 \&apos;cb\&apos;ce\&apos;cc\&apos;e5;}}&#x0D;&#x0A;\viewkind4\uc1\pard\qc\lang2052\f0\fs20\&apos;d5\&apos;ca\&apos;ba\&apos;c5\par&#x0D;&#x0A;}" gpinx="parent.width*0.5" gpiny="parent.height*0.5" lpinx="width*0.5" lpiny="height*0.5" width="hyp(parent.width*1,parent.height*0)" height="hyp(parent.width*0,parent.height*1)" angle="0" protection="0" misc="0" format="" text-extendmode="0" id="10155">
+                    <text-style>
+                        <font-family>宋体</font-family>
+                        <font-weight>400</font-weight>
+                        <font-height>10</font-height>
+                        <font-italic>false</font-italic>
+                        <font-underline>false</font-underline>
+                        <font-strikeout>false</font-strikeout>
+                        <align-horizontal>center</align-horizontal>
+                        <align-vertical>center</align-vertical>
+                        <color>#000000</color>
+                        <font-offset>0</font-offset>
+                    </text-style>
+                </text>
+            </shape>
+            <shape type="shape" class="10145" gpinx="541.5" gpiny="580" lpinx="width*0.5" lpiny="height*0.5" width="200" height="22" angle="0" protection="0" misc="0" flipx="false" flipy="false" id="10157">
+                <path nofill="false" noline="false" path-closed="true" noshow="false">
+                    <move-to x="width" y="height" joint-type="0" />
+                    <line-to x="width*1" y="height*0" joint-type="0" />
+                    <line-to x="width*0" y="height*0" joint-type="0" />
+                    <line-to x="width*0" y="height*1" joint-type="0" />
+                    <line-to x="width*1" y="height*1" joint-type="0" />
+                </path>
+                <control-list />
+                <variable-list />
+                <anchor-list>
+                    <anchor x="width*0.5" y="height*1" />
+                    <anchor x="width*0.5" y="height*0" />
+                    <anchor x="width*1" y="height*0.5" />
+                    <anchor x="width*0" y="height*0.5" />
+                    <anchor x="width*0.5" y="height*0.5" />
+                </anchor-list>
+                <action-list />
+                <hyperlink-list />
+                <events eventdrop="0" />
+                <miscellaneous hidetext="0" invisible="0" />
+                <property-sheet>
+                    <property label="Cost" type="currency" format="0.00 USD" formattype="3" value="" visible="1" description="" />
+                    <property label="Duration" type="lastdate" format="[h]:[mm]" formattype="5" value="0" visible="1" description="" />
+                    <property label="Resources" type="string" format="" formattype="0" value="" visible="1" description="" />
+                </property-sheet>
+                <text rtf="{\rtf1\ansi\ansicpg936\deff0\deflang1033\deflangfe2052{\fonttbl{\f0\fswiss\fprq2\fcharset134 \&apos;cb\&apos;ce\&apos;cc\&apos;e5;}}&#x0D;&#x0A;\viewkind4\uc1\pard\qc\lang2052\f0\fs20\&apos;c3\&apos;dc\&apos;c2\&apos;eb\par&#x0D;&#x0A;}" gpinx="parent.width*0.5" gpiny="parent.height*0.5" lpinx="width*0.5" lpiny="height*0.5" width="hyp(parent.width*1,parent.height*0)" height="hyp(parent.width*0,parent.height*1)" angle="0" protection="0" misc="0" format="" text-extendmode="0" id="10159">
+                    <text-style>
+                        <font-family>宋体</font-family>
+                        <font-weight>400</font-weight>
+                        <font-height>10</font-height>
+                        <font-italic>false</font-italic>
+                        <font-underline>false</font-underline>
+                        <font-strikeout>false</font-strikeout>
+                        <align-horizontal>center</align-horizontal>
+                        <align-vertical>center</align-vertical>
+                        <color>#000000</color>
+                        <font-offset>0</font-offset>
+                    </text-style>
+                </text>
+            </shape>
+            <shape type="shape" class="10145" gpinx="582" gpiny="354" lpinx="width*0.5" lpiny="height*0.5" width="716" height="292" angle="0" protection="0" misc="0" flipx="false" flipy="false" id="10161">
+                <path nofill="false" noline="false" path-closed="true" noshow="false">
+                    <move-to x="width" y="height" joint-type="0" />
+                    <line-to x="width*1" y="height*0" joint-type="0" />
+                    <line-to x="width*0" y="height*0" joint-type="0" />
+                    <line-to x="width*0" y="height*1" joint-type="0" />
+                    <line-to x="width*1" y="height*1" joint-type="0" />
+                </path>
+                <control-list />
+                <variable-list />
+                <anchor-list>
+                    <anchor x="width*0.5" y="height*1" />
+                    <anchor x="width*0.5" y="height*0" />
+                    <anchor x="width*1" y="height*0.5" />
+                    <anchor x="width*0" y="height*0.5" />
+                    <anchor x="width*0.5" y="height*0.5" />
+                </anchor-list>
+                <action-list />
+                <hyperlink-list />
+                <events eventdrop="0" />
+                <miscellaneous hidetext="0" invisible="0" />
+                <property-sheet>
+                    <property label="Cost" type="currency" format="0.00 USD" formattype="3" value="" visible="1" description="" />
+                    <property label="Duration" type="lastdate" format="[h]:[mm]" formattype="5" value="0" visible="1" description="" />
+                    <property label="Resources" type="string" format="" formattype="0" value="" visible="1" description="" />
+                </property-sheet>
+                <text rtf="{\rtf1\ansi\ansicpg936\deff0\deflang1033\deflangfe2052{\fonttbl{\f0\fswiss\fprq2\fcharset134 \&apos;cb\&apos;ce\&apos;cc\&apos;e5;}}&#x0D;&#x0A;\viewkind4\uc1\pard\qc\lang2052\f0\fs20\&apos;b1\&apos;b3\&apos;be\&apos;b0\&apos;a3\&apos;a8\&apos;c1\&apos;bd\&apos;d5\&apos;c5\&apos;bf\&apos;c9\&apos;bd\&apos;bb\&apos;cc\&apos;e6\&apos;b1\&apos;e4\&apos;bb\&apos;bb\&apos;a3\&apos;a9\par&#x0D;&#x0A;}" gpinx="parent.width*0.5" gpiny="parent.height*0.5" lpinx="width*0.5" lpiny="height*0.5" width="hyp(parent.width*1,parent.height*0)" height="hyp(parent.width*0,parent.height*1)" angle="0" protection="0" misc="0" format="" text-extendmode="0" id="10163">
+                    <text-style>
+                        <font-family>宋体</font-family>
+                        <font-weight>400</font-weight>
+                        <font-height>10</font-height>
+                        <font-italic>false</font-italic>
+                        <font-underline>false</font-underline>
+                        <font-strikeout>false</font-strikeout>
+                        <align-horizontal>center</align-horizontal>
+                        <align-vertical>center</align-vertical>
+                        <color>#000000</color>
+                        <font-offset>0</font-offset>
+                    </text-style>
+                </text>
+            </shape>
+            <shape type="shape" class="10145" gpinx="249.574" gpiny="212.565" lpinx="width*0.5" lpiny="height*0.5" width="160.527" height="66.8017" angle="-15" protection="0" misc="0" flipx="false" flipy="false" id="10016">
+                <path nofill="false" noline="false" path-closed="true" noshow="false">
+                    <move-to x="width*0.5" y="height*1" joint-type="0" />
+                    <line-to x="width*1" y="height*0.5" joint-type="0" />
+                    <line-to x="width*0.5" y="height*0" joint-type="0" />
+                    <line-to x="width*0" y="height*0.5" joint-type="0" />
+                    <line-to x="width*0.5" y="height*1" joint-type="0" />
+                </path>
+                <control-list />
+                <variable-list />
+                <anchor-list>
+                    <anchor x="width*0.5" y="height*1" />
+                    <anchor x="width*0.5" y="height*0" />
+                    <anchor x="width*1" y="height*0.5" />
+                    <anchor x="width*0" y="height*0.5" />
+                    <anchor x="width*0.5" y="height*0.5" />
+                </anchor-list>
+                <action-list />
+                <hyperlink-list />
+                <events eventdrop="0" />
+                <miscellaneous hidetext="0" invisible="0" />
+                <property-sheet>
+                    <property label="Cost" type="currency" format="0.00 USD" formattype="3" value="" visible="1" description="" />
+                    <property label="Duration" type="lastdate" format="[h]:[mm]" formattype="5" value="0" visible="1" description="" />
+                    <property label="Resources" type="string" format="" formattype="0" value="" visible="1" description="" />
+                </property-sheet>
+                <text rtf="{\rtf1\ansi\ansicpg936\deff0\deflang1033\deflangfe2052{\fonttbl{\f0\fswiss\fprq2\fcharset134 \&apos;cb\&apos;ce\&apos;cc\&apos;e5;}}&#x0D;&#x0A;\viewkind4\uc1\pard\qc\lang2052\f0\fs20\&apos;b7\&apos;c9\&apos;bb\&apos;fa\&apos;c5\&apos;e7\&apos;c9\&apos;e4\&apos;c6\&apos;f7\&apos;a3\&apos;a8\&apos;ce\&apos;b2\&apos;b2\&apos;bf\&apos;a3\&apos;a9\par&#x0D;&#x0A;}" gpinx="parent.width*0.5" gpiny="parent.height*0.5" lpinx="width*0.5" lpiny="height*0.5" width="hyp(parent.width*1,parent.height*0)" height="hyp(parent.width*0,parent.height*1)" angle="0" protection="0" misc="0" format="" text-extendmode="0" id="10018">
+                    <text-style>
+                        <font-family>宋体</font-family>
+                        <font-weight>400</font-weight>
+                        <font-height>10</font-height>
+                        <font-italic>false</font-italic>
+                        <font-underline>false</font-underline>
+                        <font-strikeout>false</font-strikeout>
+                        <align-horizontal>center</align-horizontal>
+                        <align-vertical>center</align-vertical>
+                        <color>#000000</color>
+                        <font-offset>0</font-offset>
+                    </text-style>
+                </text>
+            </shape>
+            <shape type="shape" class="10145" gpinx="938.665" gpiny="211.384" lpinx="width*0.5" lpiny="height*0.5" width="166.851" height="60" angle="30" protection="0" misc="0" flipx="false" flipy="false" id="10167">
+                <path nofill="false" noline="false" path-closed="true" noshow="false">
+                    <move-to x="width*0.5" y="height*1" joint-type="0" />
+                    <line-to x="width*1" y="height*0.5" joint-type="0" />
+                    <line-to x="width*0.5" y="height*0" joint-type="0" />
+                    <line-to x="width*0" y="height*0.5" joint-type="0" />
+                    <line-to x="width*0.5" y="height*1" joint-type="0" />
+                </path>
+                <control-list />
+                <variable-list />
+                <anchor-list>
+                    <anchor x="width*0.5" y="height*1" />
+                    <anchor x="width*0.5" y="height*0" />
+                    <anchor x="width*1" y="height*0.5" />
+                    <anchor x="width*0" y="height*0.5" />
+                    <anchor x="width*0.5" y="height*0.5" />
+                </anchor-list>
+                <action-list />
+                <hyperlink-list />
+                <events eventdrop="0" />
+                <miscellaneous hidetext="0" invisible="0" />
+                <property-sheet>
+                    <property label="Cost" type="currency" format="0.00 USD" formattype="3" value="" visible="1" description="" />
+                    <property label="Duration" type="lastdate" format="[h]:[mm]" formattype="5" value="0" visible="1" description="" />
+                    <property label="Resources" type="string" format="" formattype="0" value="" visible="1" description="" />
+                </property-sheet>
+                <text rtf="{\rtf1\ansi\ansicpg936\deff0\deflang1033\deflangfe2052{\fonttbl{\f0\fswiss\fprq2\fcharset134 \&apos;cb\&apos;ce\&apos;cc\&apos;e5;}}&#x0D;&#x0A;\viewkind4\uc1\pard\qc\lang2052\f0\fs20\&apos;b7\&apos;c9\&apos;bb\&apos;fa\&apos;cd\&apos;b7\&apos;b2\&apos;bf\&apos;a3\&apos;ac\&apos;cd\&apos;b9\&apos;cf\&apos;d4\&apos;c5\&apos;da\&apos;cd\&apos;b2\par&#x0D;&#x0A;}" gpinx="parent.width*0.5" gpiny="parent.height*0.5" lpinx="width*0.5" lpiny="height*0.5" width="hyp(parent.width*1,parent.height*0)" height="hyp(parent.width*0,parent.height*1)" angle="0" protection="0" misc="0" format="" text-extendmode="0" id="10169">
+                    <text-style>
+                        <font-family>宋体</font-family>
+                        <font-weight>400</font-weight>
+                        <font-height>10</font-height>
+                        <font-italic>false</font-italic>
+                        <font-underline>false</font-underline>
+                        <font-strikeout>false</font-strikeout>
+                        <align-horizontal>center</align-horizontal>
+                        <align-vertical>center</align-vertical>
+                        <color>#000000</color>
+                        <font-offset>0</font-offset>
+                    </text-style>
+                </text>
+            </shape>
+            <shape type="shape" class="10145" gpinx="500" gpiny="614" lpinx="width*0.5" lpiny="height*0.5" width="106" height="12" angle="0" protection="0" misc="0" flipx="false" flipy="false" id="10171">
+                <path nofill="false" noline="false" path-closed="true" noshow="false">
+                    <move-to x="width" y="height" joint-type="0" />
+                    <line-to x="width*1" y="height*0" joint-type="0" />
+                    <line-to x="width*0" y="height*0" joint-type="0" />
+                    <line-to x="width*0" y="height*1" joint-type="0" />
+                    <line-to x="width*1" y="height*1" joint-type="0" />
+                </path>
+                <control-list />
+                <variable-list />
+                <anchor-list>
+                    <anchor x="width*0.5" y="height*1" />
+                    <anchor x="width*0.5" y="height*0" />
+                    <anchor x="width*1" y="height*0.5" />
+                    <anchor x="width*0" y="height*0.5" />
+                    <anchor x="width*0.5" y="height*0.5" />
+                </anchor-list>
+                <action-list />
+                <hyperlink-list />
+                <events eventdrop="0" />
+                <miscellaneous hidetext="0" invisible="0" />
+                <property-sheet>
+                    <property label="Cost" type="currency" format="0.00 USD" formattype="3" value="" visible="1" description="" />
+                    <property label="Duration" type="lastdate" format="[h]:[mm]" formattype="5" value="0" visible="1" description="" />
+                    <property label="Resources" type="string" format="" formattype="0" value="" visible="1" description="" />
+                </property-sheet>
+                <text rtf="{\rtf1\ansi\ansicpg936\deff0\deflang1033\deflangfe2052{\fonttbl{\f0\fswiss\fprq2\fcharset134 \&apos;cb\&apos;ce\&apos;cc\&apos;e5;}}&#x0D;&#x0A;\viewkind4\uc1\pard\qc\lang2052\f0\fs20\&apos;bc\&apos;c7\&apos;d7\&apos;a1\&apos;d5\&apos;ca\&apos;ba\&apos;c5\par&#x0D;&#x0A;}" gpinx="parent.width*0.5" gpiny="parent.height*0.5" lpinx="width*0.5" lpiny="height*0.5" width="hyp(parent.width*1,parent.height*0)" height="hyp(parent.width*0,parent.height*1)" angle="0" protection="0" misc="0" format="" text-extendmode="0" id="10173">
+                    <text-style>
+                        <font-family>宋体</font-family>
+                        <font-weight>400</font-weight>
+                        <font-height>10</font-height>
+                        <font-italic>false</font-italic>
+                        <font-underline>false</font-underline>
+                        <font-strikeout>false</font-strikeout>
+                        <align-horizontal>center</align-horizontal>
+                        <align-vertical>center</align-vertical>
+                        <color>#000000</color>
+                        <font-offset>0</font-offset>
+                    </text-style>
+                </text>
+            </shape>
+            <shape type="shape" class="10145" gpinx="500" gpiny="641.5" lpinx="width*0.5" lpiny="height*0.5" width="102.5" height="13" angle="0" protection="0" misc="0" flipx="false" flipy="false" id="10175">
+                <path nofill="false" noline="false" path-closed="true" noshow="false">
+                    <move-to x="width" y="height" joint-type="0" />
+                    <line-to x="width*1" y="height*0" joint-type="0" />
+                    <line-to x="width*0" y="height*0" joint-type="0" />
+                    <line-to x="width*0" y="height*1" joint-type="0" />
+                    <line-to x="width*1" y="height*1" joint-type="0" />
+                </path>
+                <control-list />
+                <variable-list />
+                <anchor-list>
+                    <anchor x="width*0.5" y="height*1" />
+                    <anchor x="width*0.5" y="height*0" />
+                    <anchor x="width*1" y="height*0.5" />
+                    <anchor x="width*0" y="height*0.5" />
+                    <anchor x="width*0.5" y="height*0.5" />
+                </anchor-list>
+                <action-list />
+                <hyperlink-list />
+                <events eventdrop="0" />
+                <miscellaneous hidetext="0" invisible="0" />
+                <property-sheet>
+                    <property label="Cost" type="currency" format="0.00 USD" formattype="3" value="" visible="1" description="" />
+                    <property label="Duration" type="lastdate" format="[h]:[mm]" formattype="5" value="0" visible="1" description="" />
+                    <property label="Resources" type="string" format="" formattype="0" value="" visible="1" description="" />
+                </property-sheet>
+                <text rtf="{\rtf1\ansi\ansicpg936\deff0\deflang1033\deflangfe2052{\fonttbl{\f0\fswiss\fprq2\fcharset134 \&apos;cb\&apos;ce\&apos;cc\&apos;e5;}}&#x0D;&#x0A;\viewkind4\uc1\pard\qc\lang2052\f0\fs20\&apos;bc\&apos;c7\&apos;d7\&apos;a1\&apos;c3\&apos;dc\&apos;c2\&apos;eb\par&#x0D;&#x0A;}" gpinx="parent.width*0.5" gpiny="parent.height*0.5" lpinx="width*0.5" lpiny="height*0.5" width="hyp(parent.width*1,parent.height*0)" height="hyp(parent.width*0,parent.height*1)" angle="0" protection="0" misc="0" format="" text-extendmode="0" id="10177">
+                    <text-style>
+                        <font-family>宋体</font-family>
+                        <font-weight>400</font-weight>
+                        <font-height>10</font-height>
+                        <font-italic>false</font-italic>
+                        <font-underline>false</font-underline>
+                        <font-strikeout>false</font-strikeout>
+                        <align-horizontal>center</align-horizontal>
+                        <align-vertical>center</align-vertical>
+                        <color>#000000</color>
+                        <font-offset>0</font-offset>
+                    </text-style>
+                </text>
+            </shape>
+            <shape type="shape" class="10145" gpinx="582" gpiny="614" lpinx="width*0.5" lpiny="height*0.5" width="18" height="24" angle="0" protection="0" misc="0" flipx="false" flipy="false" id="10179">
+                <path nofill="false" noline="false" path-closed="true" noshow="false">
+                    <move-to x="width" y="height" joint-type="0" />
+                    <line-to x="width*1" y="height*0" joint-type="0" />
+                    <line-to x="width*0" y="height*0" joint-type="0" />
+                    <line-to x="width*0" y="height*1" joint-type="0" />
+                    <line-to x="width*1" y="height*1" joint-type="0" />
+                </path>
+                <control-list />
+                <variable-list />
+                <anchor-list>
+                    <anchor x="width*0.5" y="height*1" />
+                    <anchor x="width*0.5" y="height*0" />
+                    <anchor x="width*1" y="height*0.5" />
+                    <anchor x="width*0" y="height*0.5" />
+                    <anchor x="width*0.5" y="height*0.5" />
+                </anchor-list>
+                <action-list />
+                <hyperlink-list />
+                <events eventdrop="0" />
+                <miscellaneous hidetext="0" invisible="0" />
+                <property-sheet>
+                    <property label="Cost" type="currency" format="0.00 USD" formattype="3" value="" visible="1" description="" />
+                    <property label="Duration" type="lastdate" format="[h]:[mm]" formattype="5" value="0" visible="1" description="" />
+                    <property label="Resources" type="string" format="" formattype="0" value="" visible="1" description="" />
+                </property-sheet>
+                <text rtf="" gpinx="parent.width*0.5" gpiny="parent.height*0.5" lpinx="width*0.5" lpiny="height*0.5" width="hyp(parent.width*1,parent.height*0)" height="hyp(parent.width*0,parent.height*1)" angle="0" protection="0" misc="0" format="" text-extendmode="0" id="10181" />
+            </shape>
+            <shape type="shape" class="10145" gpinx="582" gpiny="641.5" lpinx="width*0.5" lpiny="height*0.5" width="20" height="21" angle="0" protection="0" misc="0" flipx="false" flipy="false" id="10183">
+                <path nofill="false" noline="false" path-closed="true" noshow="false">
+                    <move-to x="width" y="height" joint-type="0" />
+                    <line-to x="width*1" y="height*0" joint-type="0" />
+                    <line-to x="width*0" y="height*0" joint-type="0" />
+                    <line-to x="width*0" y="height*1" joint-type="0" />
+                    <line-to x="width*1" y="height*1" joint-type="0" />
+                </path>
+                <control-list />
+                <variable-list />
+                <anchor-list>
+                    <anchor x="width*0.5" y="height*1" />
+                    <anchor x="width*0.5" y="height*0" />
+                    <anchor x="width*1" y="height*0.5" />
+                    <anchor x="width*0" y="height*0.5" />
+                    <anchor x="width*0.5" y="height*0.5" />
+                </anchor-list>
+                <action-list />
+                <hyperlink-list />
+                <events eventdrop="0" />
+                <miscellaneous hidetext="0" invisible="0" />
+                <property-sheet>
+                    <property label="Cost" type="currency" format="0.00 USD" formattype="3" value="" visible="1" description="" />
+                    <property label="Duration" type="lastdate" format="[h]:[mm]" formattype="5" value="0" visible="1" description="" />
+                    <property label="Resources" type="string" format="" formattype="0" value="" visible="1" description="" />
+                </property-sheet>
+                <text rtf="" gpinx="parent.width*0.5" gpiny="parent.height*0.5" lpinx="width*0.5" lpiny="height*0.5" width="hyp(parent.width*1,parent.height*0)" height="hyp(parent.width*0,parent.height*1)" angle="0" protection="0" misc="0" format="" text-extendmode="0" id="10185" />
+            </shape>
+            <shape type="shape" class="10145" gpinx="805" gpiny="631.75" lpinx="width*0.5" lpiny="height*0.5" width="110" height="40.5" angle="0" protection="0" misc="0" flipx="false" flipy="false" id="10187">
+                <path nofill="false" noline="false" path-closed="true" noshow="false">
+                    <move-to x="width" y="height" joint-type="0" />
+                    <line-to x="width*1" y="height*0" joint-type="0" />
+                    <line-to x="width*0" y="height*0" joint-type="0" />
+                    <line-to x="width*0" y="height*1" joint-type="0" />
+                    <line-to x="width*1" y="height*1" joint-type="0" />
+                </path>
+                <control-list />
+                <variable-list />
+                <anchor-list>
+                    <anchor x="width*0.5" y="height*1" />
+                    <anchor x="width*0.5" y="height*0" />
+                    <anchor x="width*1" y="height*0.5" />
+                    <anchor x="width*0" y="height*0.5" />
+                    <anchor x="width*0.5" y="height*0.5" />
+                </anchor-list>
+                <action-list />
+                <hyperlink-list />
+                <events eventdrop="0" />
+                <miscellaneous hidetext="0" invisible="0" />
+                <property-sheet>
+                    <property label="Cost" type="currency" format="0.00 USD" formattype="3" value="" visible="1" description="" />
+                    <property label="Duration" type="lastdate" format="[h]:[mm]" formattype="5" value="0" visible="1" description="" />
+                    <property label="Resources" type="string" format="" formattype="0" value="" visible="1" description="" />
+                </property-sheet>
+                <text rtf="{\rtf1\ansi\ansicpg936\deff0\deflang1033\deflangfe2052{\fonttbl{\f0\fswiss\fprq2\fcharset134 \&apos;cb\&apos;ce\&apos;cc\&apos;e5;}}&#x0D;&#x0A;\viewkind4\uc1\pard\qc\lang2052\f0\fs20\&apos;d7\&apos;a2\&apos;b2\&apos;e1\par&#x0D;&#x0A;}" gpinx="parent.width*0.5" gpiny="parent.height*0.5" lpinx="width*0.5" lpiny="height*0.5" width="hyp(parent.width*1,parent.height*0)" height="hyp(parent.width*0,parent.height*1)" angle="0" protection="0" misc="0" format="" text-extendmode="0" id="10189">
+                    <text-style>
+                        <font-family>宋体</font-family>
+                        <font-weight>400</font-weight>
+                        <font-height>10</font-height>
+                        <font-italic>false</font-italic>
+                        <font-underline>false</font-underline>
+                        <font-strikeout>false</font-strikeout>
+                        <align-horizontal>center</align-horizontal>
+                        <align-vertical>center</align-vertical>
+                        <color>#000000</color>
+                        <font-offset>0</font-offset>
+                    </text-style>
+                </text>
+            </shape>
+            <shape type="shape" class="10145" gpinx="924" gpiny="590.5" lpinx="width*0.5" lpiny="height*0.5" width="112" height="99" angle="0" protection="0" misc="0" flipx="false" flipy="false" id="10191">
+                <path nofill="false" noline="false" path-closed="true" noshow="false">
+                    <move-to x="width" y="height" joint-type="0" />
+                    <line-to x="width*1" y="height*0" joint-type="0" />
+                    <line-to x="width*0" y="height*0" joint-type="0" />
+                    <line-to x="width*0" y="height*1" joint-type="0" />
+                    <line-to x="width*1" y="height*1" joint-type="0" />
+                </path>
+                <control-list />
+                <variable-list />
+                <anchor-list>
+                    <anchor x="width*0.5" y="height*1" />
+                    <anchor x="width*0.5" y="height*0" />
+                    <anchor x="width*1" y="height*0.5" />
+                    <anchor x="width*0" y="height*0.5" />
+                    <anchor x="width*0.5" y="height*0.5" />
+                </anchor-list>
+                <action-list />
+                <hyperlink-list />
+                <events eventdrop="0" />
+                <miscellaneous hidetext="0" invisible="0" />
+                <property-sheet>
+                    <property label="Cost" type="currency" format="0.00 USD" formattype="3" value="" visible="1" description="" />
+                    <property label="Duration" type="lastdate" format="[h]:[mm]" formattype="5" value="0" visible="1" description="" />
+                    <property label="Resources" type="string" format="" formattype="0" value="" visible="1" description="" />
+                </property-sheet>
+                <text rtf="{\rtf1\ansi\ansicpg936\deff0\deflang1033\deflangfe2052{\fonttbl{\f0\fswiss\fprq2\fcharset134 \&apos;cb\&apos;ce\&apos;cc\&apos;e5;}}&#x0D;&#x0A;\viewkind4\uc1\pard\qc\lang2052\f0\fs20\&apos;cd\&apos;cb\&apos;b3\&apos;f6\par&#x0D;&#x0A;}" gpinx="parent.width*0.5" gpiny="parent.height*0.5" lpinx="width*0.5" lpiny="height*0.5" width="hyp(parent.width*1,parent.height*0)" height="hyp(parent.width*0,parent.height*1)" angle="0" protection="0" misc="0" format="" text-extendmode="0" id="10193">
+                    <text-style>
+                        <font-family>宋体</font-family>
+                        <font-weight>400</font-weight>
+                        <font-height>10</font-height>
+                        <font-italic>false</font-italic>
+                        <font-underline>false</font-underline>
+                        <font-strikeout>false</font-strikeout>
+                        <align-horizontal>center</align-horizontal>
+                        <align-vertical>center</align-vertical>
+                        <color>#000000</color>
+                        <font-offset>0</font-offset>
+                    </text-style>
+                </text>
+            </shape>
+        </layer>
+    </page>
+    <preview-image>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</preview-image>
+</document>
