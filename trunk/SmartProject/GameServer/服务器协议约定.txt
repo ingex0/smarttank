@@ -1,0 +1,26 @@
+
+/* 服务器基本配置 */
+#define IP "192.168.35.225"
+#define PORT 9999
+#define MAXCLIENT 100
+
+/* 协议配置 */
+#define HEART_BEAT   0    // 心跳包(系统消息包)
+#define CHAT         1    // 聊天消息包(系统消息包)
+#define LOGIN  10    // 登录
+#define REGIST 11    // 注册帐号户
+#define DELETE 12    // 删除帐号
+
+#define USER_JOIN 20    // 玩家加入
+#define USER_EXIT 21    // 玩家退出
+#define USER_LIST 22    // 列举房间用户信息
+
+#define USER_DATA 100   // 游戏数据：正常游戏时的数据交换
+
+#define PACKSIZE 1024
+typedef struct _Packet_Target
+{
+    int  iStyle ;        //      
+    char data[PACKSIZE]; // msg
+}Packet, *PPacket;
+#define SIZEOFPACKET sizeof(Packet)
