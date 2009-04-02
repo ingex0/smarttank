@@ -12,7 +12,7 @@ namespace SmartTank.GameObjs.Tank
 {
     public abstract class Tank : IGameObj, ICollideObj, IPhisicalObj
     {
-        #region EventHandlers
+        
 
         /*
          * 坦克类将设计场景交互方面的事件交给游戏规则类来处理。
@@ -22,8 +22,9 @@ namespace SmartTank.GameObjs.Tank
          * 更多的事件有待添加。
          * 
          * */
+        #region EventHandlers
 
-        public delegate void ShootEventHandler( Tank sender, Vector2 turretEnd, float azi );
+        public delegate void ShootEventHandler(Tank sender, Vector2 turretEnd, float azi);
 
         #endregion
 
@@ -60,6 +61,11 @@ namespace SmartTank.GameObjs.Tank
             get { return objInfo; }
         }
 
+        public string Name
+        {
+            get { return name; }
+        }
+
         public abstract Vector2 Pos { get;set;}
 
         public abstract float Azi { get;set;}
@@ -73,7 +79,7 @@ namespace SmartTank.GameObjs.Tank
             if (!isDead && tankAI != null)
                 tankAI.Update( seconds );
         }
-
+        
         #endregion
 
         #region IDrawable 成员
@@ -144,15 +150,5 @@ namespace SmartTank.GameObjs.Tank
 
         #endregion
 
-
-
-        #region IGameObj 成员
-
-        public string Name
-        {
-            get { return name; }
-        }
-
-        #endregion
     }
 }

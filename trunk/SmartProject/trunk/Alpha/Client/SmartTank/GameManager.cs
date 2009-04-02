@@ -27,6 +27,8 @@ namespace SmartTank
 
     public class GameManager : BaseGame
     {
+        public static event EventHandler OnExiting;
+
         #region Variables
 
         protected static Stack<IGameScreen> gameScreens = new Stack<IGameScreen>();
@@ -103,6 +105,8 @@ namespace SmartTank
             visionMgr = new VisionMgr();
             objMemoryMananger = new ObjMemoryMgr();
 
+            this.Exiting += new EventHandler(GameManager_Exiting);
+
             Sound.Initial();
 
             // 在此处将主界面压入堆栈。
@@ -114,6 +118,12 @@ namespace SmartTank
 
             //
 
+        }
+
+        void GameManager_Exiting(object sender, EventArgs e)
+        {
+            if (OnExiting != null)
+                OnExiting(sender, e);
         }
 
         #endregion

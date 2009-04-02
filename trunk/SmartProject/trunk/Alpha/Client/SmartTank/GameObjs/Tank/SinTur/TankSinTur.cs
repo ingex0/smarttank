@@ -13,6 +13,7 @@ using TankEngine2D.Graphics;
 using SmartTank.Senses.Memory;
 using TankEngine2D.Helpers;
 using SmartTank.Helpers;
+using SmartTank.net;
 
 namespace SmartTank.GameObjs.Tank.SinTur
 {
@@ -321,6 +322,7 @@ namespace SmartTank.GameObjs.Tank.SinTur
             set
             {
                 controller.ForwardSpeed = value;
+                SyncCasheWriter.SubmitNewStatus(this.Name, "ForwardSpeed", SyncImportant.MidFrequency, value);
             }
         }
 
@@ -333,6 +335,7 @@ namespace SmartTank.GameObjs.Tank.SinTur
             set
             {
                 controller.TurnRightSpeed = value;
+                SyncCasheWriter.SubmitNewStatus(this.Name, "TurnRightSpeed", SyncImportant.MidFrequency, value);
             }
         }
 
@@ -345,6 +348,7 @@ namespace SmartTank.GameObjs.Tank.SinTur
             set
             {
                 controller.TurnTurretWiseSpeed = value;
+                SyncCasheWriter.SubmitNewStatus(this.Name, "TurnTurretWiseSpeed", SyncImportant.MidFrequency, value);
             }
         }
 
@@ -362,6 +366,7 @@ namespace SmartTank.GameObjs.Tank.SinTur
             set
             {
                 controller.TurnRaderWiseSpeed = value;
+                SyncCasheWriter.SubmitNewStatus(this.Name, "TurnRaderWiseSpeed", SyncImportant.MidFrequency, value);
             }
         }
 
@@ -493,12 +498,6 @@ namespace SmartTank.GameObjs.Tank.SinTur
 
         #endregion
 
-        #region IAIOrderServer ≥…‘±
-
-
-
-
-        #endregion
 
 
 

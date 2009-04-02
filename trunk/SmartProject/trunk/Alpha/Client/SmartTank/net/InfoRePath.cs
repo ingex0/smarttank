@@ -7,18 +7,11 @@ namespace SmartTank.net
 {
     static public class InfoRePath
     {
-        static bool isMainHost;
-        static public bool IsMainHost
-        {
-            get { return isMainHost; }
-            set { isMainHost = value; }
-        }
-
-
+        
 
         static public void CallEvent(MulticastDelegate delgt, params object[] evenetParams)
         {
-            if (isMainHost)
+            if (PurviewMgr.IsMainHost)
                 delgt.DynamicInvoke(evenetParams);
             else
             {

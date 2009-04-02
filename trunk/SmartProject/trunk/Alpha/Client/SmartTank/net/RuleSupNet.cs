@@ -3,37 +3,44 @@ using System.Collections.Generic;
 using System.Text;
 using SmartTank.Rule;
 using SmartTank.Effects.SceneEffects;
+using SmartTank.Screens;
 
 namespace SmartTank.net
 {
-    class RuleSupNet: IGameRule
+    public class RuleSupNet: IGameScreen
     {
-        bool isMainHost;
-        public bool IsMainHost
+        SyncCashe inputCashe;
+        SyncCashe outputCashe;
+
+        public RuleSupNet()
         {
-            get { return isMainHost; }
-            set { isMainHost = value; }
+            GameManager.OnExiting += new EventHandler(GameManager_OnExiting);
+            inputCashe = new SyncCashe();
+            outputCashe = new SyncCashe();
+            SyncCasheWriter.OutPutCashe = outputCashe;
+            SyncCasheReader.InputCashe = inputCashe;
+
+            //temp 
+            PurviewMgr.IsMainHost = true;
+
+            SocketMgr.Initial();
+            SocketMgr.ConnectToServer();
+
+            SocketMgr.StartReceiveThread(inputCashe);
+
         }
 
-        #region IGameRule 成员
-
-        public string RuleName
+        void GameManager_OnExiting(object sender, EventArgs e)
         {
-            get { throw new Exception("The method or operation is not implemented."); }
+            SocketMgr.CloseConnect();
+            //SocketMgr.CloseThread();
         }
-
-        public string RuleIntroduction
-        {
-            get { throw new Exception("The method or operation is not implemented."); }
-        }
-
-        #endregion
 
         #region IGameScreen 成员
 
-        public bool Update(float second)
+        public virtual bool Update(float second)
         {
-            if (isMainHost)
+            if (PurviewMgr.IsMainHost)
             {
                 /* 1.更新场景物体
                  * 2.处理消息缓冲区
@@ -41,6 +48,7 @@ namespace SmartTank.net
                  * 4.广播同步消息
                  * */
                 GameManager.UpdateMgr.Update(second);
+
                 // TODO : 处理消息缓冲区
                 GameManager.PhiColManager.Update(second);
                 GameManager.ShelterMgr.Update();
@@ -48,6 +56,8 @@ namespace SmartTank.net
                 GameManager.ObjMemoryMgr.Update();
                 EffectsMgr.Update(second);
 
+                outputCashe.SendPackage();
+                SyncCasheWriter.Update(second);
                 // TODO : 广播同步消息
             }
             else
@@ -61,12 +71,14 @@ namespace SmartTank.net
                 GameManager.UpdataComponent(second);
                 // TODO : 处理消息缓冲区
                 // TODO : 发送同步消息
+                outputCashe.SendPackage();
+                SyncCasheWriter.Update(second);
             }
 
             return false;
         }
 
-        public void Render()
+        public virtual void Render()
         {
             
         }

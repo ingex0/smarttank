@@ -81,7 +81,7 @@ namespace InterRules.Duel
             aiLoader.AddInterAI(typeof(ManualControl));
             aiLoader.AddInterAI(typeof(DuelAIModel));
             aiLoader.AddInterAI(typeof(AutoShootAI));
-            aiLoader.InitialCompatibleAIs(typeof(DuelAIOrderServer), typeof(AICommonServer));
+            aiLoader.InitialCompatibleAIs(typeof(IDuelAIOrderServer), typeof(AICommonServer));
             foreach (string name in aiLoader.GetAIList())
             {
                 AIListForTank1.AddItem(name);
@@ -143,7 +143,7 @@ namespace InterRules.Duel
 
     }
 
-    class DuelNetGameScreen : IGameScreen
+    class DuelNetGameScreen :RuleSupNet, IGameScreen
     {
         #region Constants
         readonly Rectangle scrnViewRect = new Rectangle(30, 30, 740, 540);
@@ -196,7 +196,6 @@ namespace InterRules.Duel
 
             InitialStartTimer();
 
-            InfoRePath.IsMainHost = true;
         }
 
         private void AIInitial(IAI tankAI1, IAI tankAI2)
@@ -415,7 +414,7 @@ namespace InterRules.Duel
 
         #region IGameScreen ≥…‘±
 
-        public bool Update(float seconds)
+        public override bool Update(float seconds)
         {
             if (InputHandler.JustPressKey(Microsoft.Xna.Framework.Input.Keys.Escape))
             {
@@ -426,7 +425,7 @@ namespace InterRules.Duel
             if (!gameStart)
                 return false;
 
-            GameManager.UpdataComponent(seconds);
+            base.Update(seconds);
 
             if (InputHandler.IsKeyDown(Microsoft.Xna.Framework.Input.Keys.Left))
                 camera.Move(new Vector2(-5, 0));
@@ -450,13 +449,14 @@ namespace InterRules.Duel
             if (gameOver)
             {
                 GameManager.ComponentReset();
+
                 return true;
             }
 
             return false;
         }
 
-        public void Render()
+        public override void Render()
         {
             vergeGround.Draw();
 

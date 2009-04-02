@@ -13,7 +13,7 @@ namespace InterRules.Duel
     [AIAttribute( "Dueler No.1", "Wufei", "", 2007, 11, 7 )]
     class DuelerNoFirst : IDuelAI
     {
-        DuelAIOrderServer orderServer;
+        IDuelAIOrderServer orderServer;
         AICommonServer commonServer;
 
         AIActionHelper action;
@@ -43,7 +43,7 @@ namespace InterRules.Duel
         {
             set
             {
-                orderServer = (DuelAIOrderServer)value;
+                orderServer = (IDuelAIOrderServer)value;
                 orderServer.OnCollide += new OnCollidedEventHandlerAI( CollideHandler );
                 action = new AIActionHelper( orderServer );
 

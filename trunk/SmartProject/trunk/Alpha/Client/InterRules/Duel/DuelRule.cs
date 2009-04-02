@@ -80,7 +80,7 @@ namespace InterRules.Duel
             aiLoader.AddInterAI( typeof( ManualControl ) );
             aiLoader.AddInterAI( typeof( DuelAIModel ) );
             aiLoader.AddInterAI( typeof( AutoShootAI ) );
-            aiLoader.InitialCompatibleAIs( typeof( DuelAIOrderServer ), typeof( AICommonServer ) );
+            aiLoader.InitialCompatibleAIs( typeof( IDuelAIOrderServer ), typeof( AICommonServer ) );
             foreach (string name in aiLoader.GetAIList())
             {
                 AIListForTank1.AddItem( name );
@@ -479,7 +479,7 @@ namespace InterRules.Duel
 
     #region class Define
 
-    public interface DuelAIOrderServer : IAIOrderServerSinTur
+    public interface IDuelAIOrderServer : IAIOrderServerSinTur
     {
         float Live { get;}
     }
@@ -487,14 +487,14 @@ namespace InterRules.Duel
     /// <summary>
     /// 写本规则的AI，请继承该接口。
     /// </summary>
-    [IAIAttribute( typeof( DuelAIOrderServer ), typeof( IAICommonServer ) )]
+    [IAIAttribute( typeof( IDuelAIOrderServer ), typeof( IAICommonServer ) )]
     public interface IDuelAI : IAISinTur
     {
 
     }
 
 
-    class DuelTank : TankSinTur, DuelAIOrderServer
+    class DuelTank : TankSinTur, IDuelAIOrderServer
     {
         float live;
 

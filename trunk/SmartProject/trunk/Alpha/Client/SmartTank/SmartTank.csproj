@@ -163,7 +163,12 @@
       <Name>GameManager</Name>
     </Compile>
     <Compile Include="net\InfoRePath.cs" />
+    <Compile Include="net\PurviewMgr.cs" />
     <Compile Include="net\RuleSupNet.cs" />
+    <Compile Include="net\SocketMgr.cs" />
+    <Compile Include="net\SyncCashe.cs" />
+    <Compile Include="net\SyncCasheReader.cs" />
+    <Compile Include="net\SyncCasheWriter.cs" />
     <Compile Include="PhiCol\Border.cs">
       <Name>Border</Name>
     </Compile>

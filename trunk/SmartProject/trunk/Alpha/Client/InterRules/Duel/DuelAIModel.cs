@@ -15,7 +15,7 @@ namespace InterRules.Duel
     [AIAttribute( "DuelAIModel", "SmartTank Team", "A Model for DuelAI", 2007, 11, 6 )]
     public class DuelAIModel : IDuelAI
     {
-        DuelAIOrderServer orderServer;
+        IDuelAIOrderServer orderServer;
         AICommonServer commonServer;
 
         // 可以使用该类提供的高层接口
@@ -45,7 +45,7 @@ namespace InterRules.Duel
         {
             set
             {
-                orderServer = (DuelAIOrderServer)value;
+                orderServer = (IDuelAIOrderServer)value;
                 // 可以添加事件处理
                 orderServer.OnCollide += new OnCollidedEventHandlerAI( CollideHandler );
 
