@@ -5,7 +5,7 @@
 #define MAXCLIENT 100
 
 /* 协议配置 */
-#define HEART_BEAT   0    // 心跳包(系统消息包)
+#define HEART_BEAT   0    // 心跳包
 #define CHAT         1    // 聊天消息包(系统消息包)
 #define LOGIN  10    // 登录
 #define REGIST 11    // 注册帐号户
