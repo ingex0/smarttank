@@ -14,7 +14,6 @@
 #define USER_JOIN 20    // 玩家加入
 #define USER_EXIT 21    // 玩家退出
 #define USER_LIST 22    // 列举房间用户信息
-
 #define USER_DATA 100   // 游戏数据：正常游戏时的数据交换
 
 #define PACKSIZE 1024
