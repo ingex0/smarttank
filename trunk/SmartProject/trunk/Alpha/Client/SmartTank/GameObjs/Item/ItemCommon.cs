@@ -206,5 +206,22 @@ namespace SmartTank.GameObjs.Item
 
 
         #endregion
+
+        #region IGameObj ≥…‘±
+
+        string mgPath;
+        public string MgPath
+        {
+            get
+            {
+                return mgPath;
+            }
+            set
+            {
+                mgPath = value;
+            }
+        }
+
+        #endregion
     }
 }
