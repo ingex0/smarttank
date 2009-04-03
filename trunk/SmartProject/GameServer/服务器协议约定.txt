@@ -19,7 +19,8 @@
 #define PACKSIZE 1024
 typedef struct _Packet_Target
 {
-    int  iStyle ;        //      
+    int  iStyle ;        //    
+    int  leng;  
     char data[PACKSIZE]; // msg
 }Packet, *PPacket;
 #define SIZEOFPACKET sizeof(Packet)
