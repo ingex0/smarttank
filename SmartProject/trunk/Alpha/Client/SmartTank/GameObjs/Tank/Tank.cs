@@ -12,7 +12,7 @@ namespace SmartTank.GameObjs.Tank
 {
     public abstract class Tank : IGameObj, ICollideObj, IPhisicalObj
     {
-        
+
 
         /*
          * 坦克类将设计场景交互方面的事件交给游戏规则类来处理。
@@ -44,6 +44,7 @@ namespace SmartTank.GameObjs.Tank
 
         protected bool isDead;
 
+
         #endregion
 
         #region Properties
@@ -66,7 +67,7 @@ namespace SmartTank.GameObjs.Tank
             get { return name; }
         }
 
-        public abstract Vector2 Pos { get;set;}
+        public abstract Vector2 Pos {get;set;}
 
         public abstract float Azi { get;set;}
 
@@ -74,19 +75,20 @@ namespace SmartTank.GameObjs.Tank
 
         #region IUpdater 成员
 
-        public virtual void Update( float seconds )
+        public virtual void Update(float seconds)
         {
             if (!isDead && tankAI != null)
-                tankAI.Update( seconds );
+                tankAI.Update(seconds);
         }
-        
+
         #endregion
 
         #region IDrawable 成员
 
         public virtual void Draw()
         {
-            tankAI.Draw();
+            if (tankAI != null)
+                tankAI.Draw();
         }
 
         #endregion
@@ -112,10 +114,10 @@ namespace SmartTank.GameObjs.Tank
 
         #region SetTankAI
 
-        public void SetTankAI( IAI tankAI )
+        public void SetTankAI(IAI tankAI)
         {
             if (tankAI == null)
-                throw new NullReferenceException( "tankAI is null!" );
+                throw new NullReferenceException("tankAI is null!");
             this.tankAI = tankAI;
         }
 
@@ -150,5 +152,22 @@ namespace SmartTank.GameObjs.Tank
 
         #endregion
 
+
+        #region IGameObj 成员
+
+        string mgPath;
+        public string MgPath
+        {
+            get
+            {
+                return mgPath;
+            }
+            set
+            {
+                mgPath = value;
+            }
+        }
+
+        #endregion
     }
 }

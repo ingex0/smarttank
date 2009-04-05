@@ -9,6 +9,9 @@ namespace SmartTank.PhiCol
 {
     public class NonInertiasPhiUpdater : IPhisicalUpdater
     {
+        public delegate void PosAziChangedEventHandler();
+        public event PosAziChangedEventHandler posAziChanged;
+
         GameObjInfo objInfo;
 
         public Vector2 Vel;
@@ -48,6 +51,8 @@ namespace SmartTank.PhiCol
         {
             Pos = nextPos;
             Azi = nextAzi;
+            if (posAziChanged != null)
+                posAziChanged();
         }
 
         public GameObjInfo ObjInfo

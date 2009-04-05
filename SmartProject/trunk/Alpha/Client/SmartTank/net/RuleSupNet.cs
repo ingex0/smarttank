@@ -4,17 +4,20 @@ using System.Text;
 using SmartTank.Rule;
 using SmartTank.Effects.SceneEffects;
 using SmartTank.Screens;
+using System.Threading;
+using SmartTank.Scene;
 
 namespace SmartTank.net
 {
-    public class RuleSupNet: IGameScreen
+    public class RuleSupNet : IGameScreen
     {
         SyncCashe inputCashe;
         SyncCashe outputCashe;
 
+        protected SceneMgr sceneMgr;
+
         public RuleSupNet()
         {
-            GameManager.OnExiting += new EventHandler(GameManager_OnExiting);
             inputCashe = new SyncCashe();
             outputCashe = new SyncCashe();
             SyncCasheWriter.OutPutCashe = outputCashe;
@@ -30,12 +33,6 @@ namespace SmartTank.net
 
         }
 
-        void GameManager_OnExiting(object sender, EventArgs e)
-        {
-            SocketMgr.CloseConnect();
-            //SocketMgr.CloseThread();
-        }
-
         #region IGameScreen 成员
 
         public virtual bool Update(float second)
@@ -49,16 +46,19 @@ namespace SmartTank.net
                  * */
                 GameManager.UpdateMgr.Update(second);
 
-                // TODO : 处理消息缓冲区
+                // 处理消息缓冲区
+                SyncCasheReader.ReadCashe(sceneMgr);
+
                 GameManager.PhiColManager.Update(second);
                 GameManager.ShelterMgr.Update();
                 GameManager.VisionMgr.Update();
                 GameManager.ObjMemoryMgr.Update();
                 EffectsMgr.Update(second);
 
+                // 广播同步消息
                 outputCashe.SendPackage();
                 SyncCasheWriter.Update(second);
-                // TODO : 广播同步消息
+
             }
             else
             {
@@ -69,8 +69,9 @@ namespace SmartTank.net
                  * */
 
                 GameManager.UpdataComponent(second);
-                // TODO : 处理消息缓冲区
-                // TODO : 发送同步消息
+                // 处理消息缓冲区
+                SyncCasheReader.ReadCashe(sceneMgr);
+                // 发送同步消息
                 outputCashe.SendPackage();
                 SyncCasheWriter.Update(second);
             }
@@ -80,7 +81,13 @@ namespace SmartTank.net
 
         public virtual void Render()
         {
-            
+
+        }
+
+        public void OnClose()
+        {
+            SocketMgr.Close();
+            PurviewMgr.Close();
         }
 
         #endregion

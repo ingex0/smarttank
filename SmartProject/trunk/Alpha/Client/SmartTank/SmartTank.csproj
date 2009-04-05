@@ -163,6 +163,7 @@
       <Name>GameManager</Name>
     </Compile>
     <Compile Include="net\InfoRePath.cs" />
+    <Compile Include="net\Protocol.cs" />
     <Compile Include="net\PurviewMgr.cs" />
     <Compile Include="net\RuleSupNet.cs" />
     <Compile Include="net\SocketMgr.cs" />

@@ -71,6 +71,11 @@ namespace SmartTank.Screens
             btn.Draw( BaseGame.SpriteMgr.alphaSprite, 1 );
         }
 
+        public void OnClose()
+        {
+            
+        }
+
         #endregion
     }
 }

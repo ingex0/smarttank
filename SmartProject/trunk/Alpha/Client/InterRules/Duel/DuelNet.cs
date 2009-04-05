@@ -42,7 +42,7 @@ namespace InterRules.Duel
 
         Combo AIListForTank1;
         Combo AIListForTank2;
-
+        SmartTank.Draw.UI.Controls.Checkbox CheckBoxIsHost;
         TextButton btn;
 
         int selectIndexTank1;
@@ -76,6 +76,8 @@ namespace InterRules.Duel
             AIListForTank1.OnChangeSelection += new EventHandler(AIListForTank1_OnChangeSelection);
             AIListForTank2.OnChangeSelection += new EventHandler(AIListForTank2_OnChangeSelection);
 
+            CheckBoxIsHost = new Checkbox("CheckBoxIsHost", new Vector2(100, 500), "IsHost", false);
+
             aiLoader = new AILoader();
             aiLoader.AddInterAI(typeof(DuelerNoFirst));
             aiLoader.AddInterAI(typeof(ManualControl));
@@ -101,7 +103,7 @@ namespace InterRules.Duel
 
         void btn_OnPress(object sender, EventArgs e)
         {
-            GameManager.AddGameScreen(new DuelNetGameScreen(aiLoader.GetAIInstance(selectIndexTank1), aiLoader.GetAIInstance(selectIndexTank2)));
+            GameManager.AddGameScreen(new DuelNetGameScreen(aiLoader.GetAIInstance(selectIndexTank1), aiLoader.GetAIInstance(selectIndexTank2), CheckBoxIsHost.bchecked));
         }
 
         void AIListForTank1_OnChangeSelection(object sender, EventArgs e)
@@ -123,6 +125,7 @@ namespace InterRules.Duel
             AIListForTank1.Draw(BaseGame.SpriteMgr.alphaSprite, 1);
             AIListForTank2.Draw(BaseGame.SpriteMgr.alphaSprite, 1);
             btn.Draw(BaseGame.SpriteMgr.alphaSprite, 1);
+            CheckBoxIsHost.Draw(BaseGame.SpriteMgr.alphaSprite, 1);
         }
 
         public bool Update(float second)
@@ -132,6 +135,7 @@ namespace InterRules.Duel
             AIListForTank1.Update();
             AIListForTank2.Update();
             btn.Update();
+            CheckBoxIsHost.Update();
 
             if (InputHandler.JustPressKey(Microsoft.Xna.Framework.Input.Keys.Escape))
                 return true;
@@ -141,9 +145,18 @@ namespace InterRules.Duel
 
         #endregion
 
+
+        #region IGameScreen ≥…‘±
+
+        public void OnClose()
+        {
+
+        }
+
+        #endregion
     }
 
-    class DuelNetGameScreen :RuleSupNet, IGameScreen
+    class DuelNetGameScreen : RuleSupNet, IGameScreen
     {
         #region Constants
         readonly Rectangle scrnViewRect = new Rectangle(30, 30, 740, 540);
@@ -156,7 +169,6 @@ namespace InterRules.Duel
 
         #region Variables
 
-        SceneMgr sceneMgr;
         Camera camera;
 
         VergeTileGround vergeGround;
@@ -173,7 +185,7 @@ namespace InterRules.Duel
 
         #region Construction
 
-        public DuelNetGameScreen(IAI TankAI1, IAI TankAI2)
+        public DuelNetGameScreen(IAI TankAI1, IAI TankAI2, bool IsMainHost)
         {
             BaseGame.CoordinMgr.SetScreenViewRect(scrnViewRect);
 
@@ -188,6 +200,8 @@ namespace InterRules.Duel
             SceneInitial();
             GameManager.LoadScene(sceneMgr);
 
+            InitialPurview(IsMainHost);
+
             RuleInitial();
 
             AIInitial(TankAI1, TankAI2);
@@ -196,19 +210,32 @@ namespace InterRules.Duel
 
             InitialStartTimer();
 
+
+        }
+
+        private void InitialPurview(bool IsMainHost)
+        {
+            PurviewMgr.IsMainHost = IsMainHost;
+            PurviewMgr.RegistSlaveMgObj(tank2.MgPath);
         }
 
         private void AIInitial(IAI tankAI1, IAI tankAI2)
         {
             commonServer = new AICommonServer(mapRect);
 
-            tankAI1.CommonServer = commonServer;
-            tankAI1.OrderServer = tank1;
-            tank1.SetTankAI(tankAI1);
-
-            tankAI2.CommonServer = commonServer;
-            tankAI2.OrderServer = tank2;
-            tank2.SetTankAI(tankAI2);
+            
+            if (PurviewMgr.IsMainHost)
+            {
+                tankAI1.CommonServer = commonServer;
+                tankAI1.OrderServer = tank1;
+                tank1.SetTankAI(tankAI1);
+            }
+            else
+            {
+                tankAI2.CommonServer = commonServer;
+                tankAI2.OrderServer = tank2;
+                tank2.SetTankAI(tankAI2);
+            }
 
             //GameManager.ObjMemoryMgr.AddSingle( tank1 );
             //GameManager.ObjMemoryMgr.AddSingle( tank2 );
@@ -216,36 +243,41 @@ namespace InterRules.Duel
 
         private void InitialDrawMgr(IAI tankAI1, IAI tankAI2)
         {
-            if (tankAI1 is ManualControl)
-            {
-                DrawMgr.SetCondition(
-                    delegate(IDrawableObj obj)
-                    {
-                        if (tank1.IsDead)
-                            return true;
+            DrawMgr.SetCondition(
+                delegate(IDrawableObj obj)
+                {
+                    return true;
+                });
+            //if (tankAI1 is ManualControl)
+            //{
+            //    DrawMgr.SetCondition(
+            //        delegate(IDrawableObj obj)
+            //        {
+            //            if (tank1.IsDead)
+            //                return true;
 
-                        if (tank1.Rader.PointInRader(obj.Pos) || obj == tank1 ||
-                            ((obj is ShellNormal) && ((ShellNormal)obj).Firer == tank1))
-                            return true;
-                        else
-                            return false;
-                    });
-            }
-            if (tankAI2 is ManualControl)
-            {
-                DrawMgr.SetCondition(
-                    delegate(IDrawableObj obj)
-                    {
-                        if (tank2.IsDead)
-                            return true;
+            //            if (tank1.Rader.PointInRader(obj.Pos) || obj == tank1 ||
+            //                ((obj is ShellNormal) && ((ShellNormal)obj).Firer == tank1))
+            //                return true;
+            //            else
+            //                return false;
+            //        });
+            //}
+            //if (tankAI2 is ManualControl)
+            //{
+            //    DrawMgr.SetCondition(
+            //        delegate(IDrawableObj obj)
+            //        {
+            //            if (tank2.IsDead)
+            //                return true;
 
-                        if (tank2.Rader.PointInRader(obj.Pos) || obj == tank2 ||
-                            ((obj is ShellNormal) && ((ShellNormal)obj).Firer == tank2))
-                            return true;
-                        else
-                            return false;
-                    });
-            }
+            //            if (tank2.Rader.PointInRader(obj.Pos) || obj == tank2 ||
+            //                ((obj is ShellNormal) && ((ShellNormal)obj).Firer == tank2))
+            //                return true;
+            //            else
+            //                return false;
+            //        });
+            //}
         }
 
         private void InitialBackGround()
@@ -480,5 +512,5 @@ namespace InterRules.Duel
         #endregion
     }
 
-    
+
 }

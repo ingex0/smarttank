@@ -156,6 +156,7 @@ namespace SmartTank.Scene
             Group fatherGroup = FindGroup( groupPath );
             if (fatherGroup != null && fatherGroup is TypeGroup)
             {
+                obj.MgPath = groupPath + "\\" + obj.Name;
                 return (fatherGroup as TypeGroup).AddObj( obj );
             }
             else

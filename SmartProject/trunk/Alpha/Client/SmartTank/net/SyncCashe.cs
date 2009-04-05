@@ -12,14 +12,16 @@ namespace SmartTank.net
      * */
     struct ObjStatusSyncInfo
     {
-        public string objName;
+        public string objMgPath;
         public string statusName;
         public object[] values;
     };
 
     struct ObjEventSyncInfo
     {
-
+        public string objMgPath;
+        public string EventName;
+        public object[] values;
     };
 
     struct ObjMgSyncInfo
@@ -45,12 +47,15 @@ namespace SmartTank.net
         {
             get { return objMgInfoList; }
         }
-        
+
         bool IsCasheEmpty
         {
-            get { return objStaInfoList.Count == 0 
-                && objEventInfoList.Count == 0 
-                && objMgInfoList.Count == 0; }
+            get
+            {
+                return objStaInfoList.Count == 0
+              && objEventInfoList.Count == 0
+              && objMgInfoList.Count == 0;
+            }
         }
 
 
@@ -64,13 +69,22 @@ namespace SmartTank.net
 
         }
 
-        internal void AddObjStatusSyncInfo(string objName, string statueName, object[] values)
+        internal void AddObjStatusSyncInfo(string objMgPath, string statueName, object[] values)
         {
             ObjStatusSyncInfo newStatus;
-            newStatus.objName = objName;
+            newStatus.objMgPath = objMgPath;
             newStatus.statusName = statueName;
             newStatus.values = values;
             objStaInfoList.Add(newStatus);
+        }
+
+        internal void AddObjEventSyncInfo(string objMgPath, string EventName, object[] values)
+        {
+            ObjEventSyncInfo newEvent;
+            newEvent.objMgPath = objMgPath;
+            newEvent.EventName = EventName;
+            newEvent.values = values;
+            objEventInfoList.Add(newEvent);
         }
 
         internal void SendPackage()
@@ -88,5 +102,9 @@ namespace SmartTank.net
             objEventInfoList.Clear();
             objMgInfoList.Clear();
         }
+
+
+
+
     }
 }
