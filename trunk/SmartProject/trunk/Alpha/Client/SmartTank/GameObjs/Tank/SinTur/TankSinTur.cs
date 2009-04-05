@@ -214,7 +214,7 @@ namespace SmartTank.GameObjs.Tank.SinTur
         private void controller_OnPosAziChanged()
         {
             SyncCasheWriter.SubmitNewStatus(this.MgPath, "Pos", SyncImportant.MidFrequency, this.Pos);
-            SyncCasheWriter.SubmitNewStatus(this.MgPath, "Pos", SyncImportant.MidFrequency, this.Azi);
+            SyncCasheWriter.SubmitNewStatus(this.MgPath, "Azi", SyncImportant.MidFrequency, this.Azi);
         }
 
         #endregion
@@ -262,30 +262,43 @@ namespace SmartTank.GameObjs.Tank.SinTur
 
         void controller_onShoot(object sender, EventArgs e)
         {
-            Type typex = typeof(ShootEventHandler);
-
             if (onShoot != null)
-                SmartTank.net.InfoRePath.CallEvent(onShoot, this, skin.GetTurretEndPos(controller.Pos, controller.Azi, controller.turretAzi), controller.Azi + controller.turretAzi);
+                InfoRePath.CallEvent(this.MgPath, "onShoot", onShoot, false, this, skin.GetTurretEndPos(controller.Pos, controller.Azi, controller.turretAzi), controller.Azi + controller.turretAzi);
 
             skin.BeginRecoil();
+        }
+
+        /// <summary>
+        /// 为了让远端的事件传递过来，必须添加 “Call”+ 事件名的函数
+        /// 将来最好用元数据机制实现
+        /// </summary>
+        /// <param name="args"></param>
+        public void CallonShoot(Tank tank, Vector2 turretEnd, float azi)
+        {
+            if (onShoot != null)
+                onShoot(tank, turretEnd, azi);
         }
 
         void controller_OnOverlap(IGameObj Sender, CollisionResult result, GameObjInfo objB)
         {
             if (onOverLap != null)
-                onOverLap(this, result, objB);
+                //onOverLap(this, result, objB);
+                InfoRePath.CallEvent(this.MgPath, "onOverLap", onOverLap, true, this, result, objB);
 
             if (OnOverLap != null)
-                OnOverLap(result, objB);
+                //OnOverLap(result, objB);
+                InfoRePath.CallEvent(this.MgPath, "OnOverLap", OnOverLap, true, result, objB);
         }
 
         void controller_OnCollied(IGameObj Sender, CollisionResult result, GameObjInfo objB)
         {
             if (onCollide != null)
-                onCollide(this, result, objB);
+                //onCollide(this, result, objB);
+                InfoRePath.CallEvent(this.MgPath, "onCollide", onCollide, true, this, result, objB);
 
             if (OnCollide != null)
-                OnCollide(result, objB);
+                //OnCollide(result, objB);
+                InfoRePath.CallEvent(this.MgPath, "OnCollide", OnCollide, true, result, objB);
         }
 
         #endregion

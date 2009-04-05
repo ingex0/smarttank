@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Net.Sockets;
+using SmartTank.GameObjs;
 
 namespace SmartTank.net
 {
@@ -26,7 +27,20 @@ namespace SmartTank.net
 
     struct ObjMgSyncInfo
     {
+        public string objPath;
+        public string objType;
+        public int objMgKind;
+        public object[] args;
+    };
 
+    struct GameObjSyncInfo
+    {
+        public string MgPath;
+
+        public GameObjSyncInfo(string mgPath)
+        {
+            this.MgPath = mgPath;
+        }
     };
 
 
@@ -48,7 +62,7 @@ namespace SmartTank.net
             get { return objMgInfoList; }
         }
 
-        bool IsCasheEmpty
+        public bool IsCasheEmpty
         {
             get
             {
@@ -56,17 +70,6 @@ namespace SmartTank.net
               && objEventInfoList.Count == 0
               && objMgInfoList.Count == 0;
             }
-        }
-
-
-        public void AddObjEventSyncInfo()
-        {
-
-        }
-
-        public void AddObjMgSyncInfo()
-        {
-
         }
 
         internal void AddObjStatusSyncInfo(string objMgPath, string statueName, object[] values)
@@ -87,6 +90,42 @@ namespace SmartTank.net
             objEventInfoList.Add(newEvent);
         }
 
+        internal void AddObjMgCreateSyncInfo(string objPath, Type objType, object[] args)
+        {
+            ObjMgSyncInfo newObjMg;
+            newObjMg.objPath = objPath;
+            newObjMg.objType = objType.ToString();
+            newObjMg.objMgKind = (int)ObjMgKind.Create;
+
+            object[] newparams = new object[args.Length];
+
+            for (int i = 0; i < args.Length; i++)
+            {
+                if (args[i] is IGameObj)
+                {
+                    newparams[i] = new GameObjSyncInfo(((IGameObj)args[i]).MgPath);
+                }
+                else
+                {
+                    newparams[i] = args[i];
+                }
+
+            }
+
+            newObjMg.args = newparams;
+            objMgInfoList.Add(newObjMg);
+        }
+
+        internal void AddObjMgDeleteSyncInfo(string objPath)
+        {
+            ObjMgSyncInfo newObjMg;
+            newObjMg.objPath = objPath;
+            newObjMg.objMgKind = (int)ObjMgKind.Delete;
+            newObjMg.objType = null;
+            newObjMg.args = new object[0];
+            objMgInfoList.Add(newObjMg);
+        }
+
         internal void SendPackage()
         {
             if (!IsCasheEmpty)
@@ -102,6 +141,10 @@ namespace SmartTank.net
             objEventInfoList.Clear();
             objMgInfoList.Clear();
         }
+
+
+
+
 
 
 

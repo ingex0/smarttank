@@ -23,5 +23,9 @@ namespace SmartTank.Scene
         void RegistVision ( VisionMgr manager );
 
         IGameObj GetGameObj(string objPath);
+
+        bool AddGameObj(string groupPath, IGameObj obj);
+
+        bool DelGameObj(string objPath);
     }
 }
