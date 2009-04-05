@@ -1,0 +1,963 @@
+﻿
+/// Session started at: 2009-3-30 13:31:08
+/// TankEngine2D
+
+
+/// Session started at: 2009-3-30 13:32:27
+/// TankEngine2D
+
+
+/// Session started at: 2009-3-30 13:33:41
+/// TankEngine2D
+
+
+/// Session started at: 2009-3-30 16:05:13
+/// TankEngine2D
+
+
+/// Session started at: 2009-3-30 16:09:20
+/// TankEngine2D
+
+
+/// Session started at: 2009-3-30 16:15:49
+/// TankEngine2D
+
+
+/// Session started at: 2009-3-30 16:19:19
+/// TankEngine2D
+
+
+/// Session started at: 2009-3-30 16:20:18
+/// TankEngine2D
+
+
+/// Session started at: 2009-3-30 17:47:22
+/// TankEngine2D
+
+
+/// Session started at: 2009-3-30 18:05:23
+/// TankEngine2D
+
+
+/// Session started at: 2009-3-30 18:09:11
+/// TankEngine2D
+
+
+/// Session started at: 2009-3-31 8:52:29
+/// TankEngine2D
+
+
+/// Session started at: 2009-3-31 9:12:32
+/// TankEngine2D
+
+
+/// Session started at: 2009-3-31 9:43:10
+/// TankEngine2D
+
+
+/// Session started at: 2009-3-31 10:44:57
+/// TankEngine2D
+
+
+/// Session started at: 2009-3-31 11:52:25
+/// TankEngine2D
+
+
+/// Session started at: 2009-3-31 11:53:06
+/// TankEngine2D
+
+
+/// Session started at: 2009-4-1 19:48:11
+/// TankEngine2D
+
+
+/// Session started at: 2009-4-1 19:52:39
+/// TankEngine2D
+
+
+/// Session started at: 2009-4-1 19:54:28
+/// TankEngine2D
+
+
+/// Session started at: 2009-4-1 20:00:05
+/// TankEngine2D
+
+
+/// Session started at: 2009-4-1 20:00:28
+/// TankEngine2D
+
+
+/// Session started at: 2009-4-1 20:01:49
+/// TankEngine2D
+
+
+/// Session started at: 2009-4-1 20:03:54
+/// TankEngine2D
+
+
+/// Session started at: 2009-4-1 20:04:49
+/// TankEngine2D
+
+
+/// Session started at: 2009-4-1 20:08:25
+/// TankEngine2D
+
+
+/// Session started at: 2009-4-1 20:17:12
+/// TankEngine2D
+
+
+/// Session started at: 2009-4-1 20:18:03
+/// TankEngine2D
+
+
+/// Session started at: 2009-4-1 20:20:12
+/// TankEngine2D
+
+
+/// Session started at: 2009-4-1 20:20:36
+/// TankEngine2D
+
+
+/// Session started at: 2009-4-1 20:21:03
+/// TankEngine2D
+
+
+/// Session started at: 2009-4-1 20:21:37
+/// TankEngine2D
+
+
+/// Session started at: 2009-4-1 20:23:23
+/// TankEngine2D
+
+
+/// Session started at: 2009-4-1 20:26:27
+/// TankEngine2D
+
+
+/// Session started at: 2009-4-1 20:26:42
+/// TankEngine2D
+
+
+/// Session started at: 2009-4-1 20:27:05
+/// TankEngine2D
+
+
+/// Session started at: 2009-4-1 20:27:38
+/// TankEngine2D
+
+
+/// Session started at: 2009-4-1 20:28:03
+/// TankEngine2D
+
+
+/// Session started at: 2009-4-1 20:32:02
+/// TankEngine2D
+
+
+/// Session started at: 2009-4-1 20:36:38
+/// TankEngine2D
+
+
+/// Session started at: 2009-4-1 20:37:46
+/// TankEngine2D
+
+
+/// Session started at: 2009-4-1 20:39:41
+/// TankEngine2D
+
+
+/// Session started at: 2009-4-2 9:37:07
+/// TankEngine2D
+
+
+/// Session started at: 2009-4-2 9:38:09
+/// TankEngine2D
+
+
+/// Session started at: 2009-4-2 9:49:55
+/// TankEngine2D
+
+
+/// Session started at: 2009-4-2 9:52:24
+/// TankEngine2D
+
+
+/// Session started at: 2009-4-2 10:18:46
+/// TankEngine2D
+
+
+/// Session started at: 2009-4-2 10:21:16
+/// TankEngine2D
+
+
+/// Session started at: 2009-4-2 11:11:20
+/// TankEngine2D
+
+
+/// Session started at: 2009-4-2 11:11:58
+/// TankEngine2D
+
+
+/// Session started at: 2009-4-2 11:16:02
+/// TankEngine2D
+
+
+/// Session started at: 2009-4-2 11:17:39
+/// TankEngine2D
+
+
+/// Session started at: 2009-4-2 11:18:46
+/// TankEngine2D
+
+
+/// Session started at: 2009-4-2 11:26:03
+/// TankEngine2D
+
+
+/// Session started at: 2009-4-2 11:26:59
+/// TankEngine2D
+
+
+/// Session started at: 2009-4-2 11:34:20
+/// TankEngine2D
+
+
+/// Session started at: 2009-4-2 11:46:24
+/// TankEngine2D
+
+
+/// Session started at: 2009-4-2 11:47:49
+/// TankEngine2D
+
+
+/// Session started at: 2009-4-2 11:49:47
+/// TankEngine2D
+
+
+/// Session started at: 2009-4-2 11:51:50
+/// TankEngine2D
+
+
+/// Session started at: 2009-4-2 11:54:19
+/// TankEngine2D
+
+
+/// Session started at: 2009-4-2 11:54:46
+/// TankEngine2D
+
+
+/// Session started at: 2009-4-2 11:56:37
+/// TankEngine2D
+
+
+/// Session started at: 2009-4-2 11:57:41
+/// TankEngine2D
+
+
+/// Session started at: 2009-4-2 11:57:49
+/// TankEngine2D
+
+
+/// Session started at: 2009-4-2 12:05:36
+/// TankEngine2D
+
+
+/// Session started at: 2009-4-2 12:07:32
+/// TankEngine2D
+
+
+/// Session started at: 2009-4-2 13:19:02
+/// TankEngine2D
+
+
+/// Session started at: 2009-4-2 13:20:13
+/// TankEngine2D
+
+
+/// Session started at: 2009-4-2 13:22:29
+/// TankEngine2D
+
+
+/// Session started at: 2009-4-2 13:24:00
+/// TankEngine2D
+
+
+/// Session started at: 2009-4-2 13:27:57
+/// TankEngine2D
+
+
+/// Session started at: 2009-4-2 13:35:13
+/// TankEngine2D
+
+
+/// Session started at: 2009-4-2 13:35:22
+/// TankEngine2D
+
+
+/// Session started at: 2009-4-2 13:40:59
+/// TankEngine2D
+
+
+/// Session started at: 2009-4-2 13:44:37
+/// TankEngine2D
+
+
+/// Session started at: 2009-4-2 13:52:45
+/// TankEngine2D
+
+[13:52:48] Load Type error : InterRules.Duel.DuelNetRule create unsucceed!调用的目标发生了异常。
+[13:52:48] Load GameRule error!
+[13:52:52] Load Type error : InterRules.Duel.DuelNetRule create unsucceed!调用的目标发生了异常。
+[13:52:52] Load GameRule error!
+[13:52:55] Load Type error : InterRules.Duel.DuelNetRule create unsucceed!调用的目标发生了异常。
+[13:52:55] Load GameRule error!
+[13:53:47] Load Type error : InterRules.Duel.DuelNetRule create unsucceed!调用的目标发生了异常。
+[13:53:47] Load GameRule error!
+[13:53:48] Load Type error : InterRules.Duel.DuelNetRule create unsucceed!调用的目标发生了异常。
+[13:53:48] Load GameRule error!
+[13:53:48] Load Type error : InterRules.Duel.DuelNetRule create unsucceed!调用的目标发生了异常。
+[13:53:48] Load GameRule error!
+[13:53:48] Load Type error : InterRules.Duel.DuelNetRule create unsucceed!调用的目标发生了异常。
+[13:53:48] Load GameRule error!
+[13:53:49] Load Type error : InterRules.Duel.DuelNetRule create unsucceed!调用的目标发生了异常。
+[13:53:49] Load GameRule error!
+[13:53:49] Load Type error : InterRules.Duel.DuelNetRule create unsucceed!调用的目标发生了异常。
+[13:53:49] Load GameRule error!
+[13:55:03] Load Type error : InterRules.Duel.DuelNetRule create unsucceed!调用的目标发生了异常。
+
+/// Session started at: 2009-4-2 13:56:53
+/// TankEngine2D
+
+
+/// Session started at: 2009-4-2 13:59:54
+/// TankEngine2D
+
+
+/// Session started at: 2009-4-2 14:08:57
+/// TankEngine2D
+
+
+/// Session started at: 2009-4-2 14:10:27
+/// TankEngine2D
+
+
+/// Session started at: 2009-4-2 14:12:12
+/// TankEngine2D
+
+
+/// Session started at: 2009-4-2 14:12:58
+/// TankEngine2D
+
+
+/// Session started at: 2009-4-2 14:14:50
+/// TankEngine2D
+
+
+/// Session started at: 2009-4-2 14:16:22
+/// TankEngine2D
+
+
+/// Session started at: 2009-4-2 14:16:53
+/// TankEngine2D
+
+
+/// Session started at: 2009-4-2 14:18:01
+/// TankEngine2D
+
+
+/// Session started at: 2009-4-2 14:25:28
+/// TankEngine2D
+
+
+/// Session started at: 2009-4-2 14:26:15
+/// TankEngine2D
+
+
+/// Session started at: 2009-4-2 14:28:06
+/// TankEngine2D
+
+
+/// Session started at: 2009-4-2 14:28:57
+/// TankEngine2D
+
+
+/// Session started at: 2009-4-2 14:30:01
+/// TankEngine2D
+
+
+/// Session started at: 2009-4-2 14:33:35
+/// TankEngine2D
+
+
+/// Session started at: 2009-4-2 14:35:18
+/// TankEngine2D
+
+
+/// Session started at: 2009-4-2 14:42:19
+/// TankEngine2D
+
+
+/// Session started at: 2009-4-2 14:43:27
+/// TankEngine2D
+
+
+/// Session started at: 2009-4-2 14:51:04
+/// TankEngine2D
+
+
+/// Session started at: 2009-4-2 14:52:36
+/// TankEngine2D
+
+
+/// Session started at: 2009-4-2 14:53:20
+/// TankEngine2D
+
+
+/// Session started at: 2009-4-2 14:54:14
+/// TankEngine2D
+
+
+/// Session started at: 2009-4-2 14:57:31
+/// TankEngine2D
+
+
+/// Session started at: 2009-4-2 15:10:54
+/// TankEngine2D
+
+
+/// Session started at: 2009-4-2 15:12:24
+/// TankEngine2D
+
+
+/// Session started at: 2009-4-2 15:13:27
+/// TankEngine2D
+
+
+/// Session started at: 2009-4-2 15:14:27
+/// TankEngine2D
+
+
+/// Session started at: 2009-4-2 15:44:05
+/// TankEngine2D
+
+
+/// Session started at: 2009-4-2 15:45:38
+/// TankEngine2D
+
+
+/// Session started at: 2009-4-2 15:47:20
+/// TankEngine2D
+
+
+/// Session started at: 2009-4-2 15:48:01
+/// TankEngine2D
+
+
+/// Session started at: 2009-4-2 15:50:26
+/// TankEngine2D
+
+
+/// Session started at: 2009-4-2 15:54:53
+/// TankEngine2D
+
+
+/// Session started at: 2009-4-2 15:58:57
+/// TankEngine2D
+
+
+/// Session started at: 2009-4-2 16:00:44
+/// TankEngine2D
+
+
+/// Session started at: 2009-4-2 16:03:15
+/// TankEngine2D
+
+
+/// Session started at: 2009-4-2 16:06:07
+/// TankEngine2D
+
+
+/// Session started at: 2009-4-2 16:06:31
+/// TankEngine2D
+
+
+/// Session started at: 2009-4-2 16:07:58
+/// TankEngine2D
+
+
+/// Session started at: 2009-4-2 16:08:31
+/// TankEngine2D
+
+
+/// Session started at: 2009-4-2 16:08:52
+/// TankEngine2D
+
+
+/// Session started at: 2009-4-2 16:09:56
+/// TankEngine2D
+
+
+/// Session started at: 2009-4-2 16:19:32
+/// TankEngine2D
+
+
+/// Session started at: 2009-4-2 16:20:29
+/// TankEngine2D
+
+
+/// Session started at: 2009-4-2 16:21:01
+/// TankEngine2D
+
+
+/// Session started at: 2009-4-2 16:25:02
+/// TankEngine2D
+
+
+/// Session started at: 2009-4-2 16:25:24
+/// TankEngine2D
+
+
+/// Session started at: 2009-4-2 16:26:10
+/// TankEngine2D
+
+
+/// Session started at: 2009-4-2 16:29:27
+/// TankEngine2D
+
+
+/// Session started at: 2009-4-2 16:30:49
+/// TankEngine2D
+
+
+/// Session started at: 2009-4-2 16:31:49
+/// TankEngine2D
+
+
+/// Session started at: 2009-4-2 16:53:07
+/// TankEngine2D
+
+
+/// Session started at: 2009-4-2 16:54:08
+/// TankEngine2D
+
+
+/// Session started at: 2009-4-2 16:55:27
+/// TankEngine2D
+
+
+/// Session started at: 2009-4-2 16:55:51
+/// TankEngine2D
+
+
+/// Session started at: 2009-4-2 16:58:49
+/// TankEngine2D
+
+
+/// Session started at: 2009-4-2 16:59:48
+/// TankEngine2D
+
+
+/// Session started at: 2009-4-2 17:00:25
+/// TankEngine2D
+
+
+/// Session started at: 2009-4-2 17:04:07
+/// TankEngine2D
+
+
+/// Session started at: 2009-4-2 17:36:42
+/// TankEngine2D
+
+
+/// Session started at: 2009-4-2 17:40:45
+/// TankEngine2D
+
+
+/// Session started at: 2009-4-2 19:32:23
+/// TankEngine2D
+
+
+/// Session started at: 2009-4-2 19:34:04
+/// TankEngine2D
+
+
+/// Session started at: 2009-4-2 19:35:37
+/// TankEngine2D
+
+
+/// Session started at: 2009-4-2 19:36:28
+/// TankEngine2D
+
+
+/// Session started at: 2009-4-2 19:39:12
+/// TankEngine2D
+
+
+/// Session started at: 2009-4-2 19:39:42
+/// TankEngine2D
+
+
+/// Session started at: 2009-4-2 19:42:23
+/// TankEngine2D
+
+
+/// Session started at: 2009-4-2 20:52:53
+/// TankEngine2D
+
+
+/// Session started at: 2009-4-2 20:54:30
+/// TankEngine2D
+
+
+/// Session started at: 2009-4-2 20:56:39
+/// TankEngine2D
+
+
+/// Session started at: 2009-4-3 9:15:05
+/// TankEngine2D
+
+
+/// Session started at: 2009-4-3 9:25:59
+/// TankEngine2D
+
+
+/// Session started at: 2009-4-3 11:47:56
+/// TankEngine2D
+
+
+/// Session started at: 2009-4-3 11:55:05
+/// TankEngine2D
+
+
+/// Session started at: 2009-4-3 11:58:36
+/// TankEngine2D
+
+
+/// Session started at: 2009-4-3 12:09:30
+/// TankEngine2D
+
+
+/// Session started at: 2009-4-3 12:11:56
+/// TankEngine2D
+
+
+/// Session started at: 2009-4-3 12:14:09
+/// TankEngine2D
+
+
+/// Session started at: 2009-4-3 12:15:48
+/// TankEngine2D
+
+
+/// Session started at: 2009-4-3 12:18:23
+/// TankEngine2D
+
+
+/// Session started at: 2009-4-3 13:46:37
+/// TankEngine2D
+
+
+/// Session started at: 2009-4-3 13:47:21
+/// TankEngine2D
+
+
+/// Session started at: 2009-4-3 17:17:52
+/// TankEngine2D
+
+
+/// Session started at: 2009-4-3 18:15:50
+/// TankEngine2D
+
+
+/// Session started at: 2009-4-3 18:17:01
+/// TankEngine2D
+
+
+/// Session started at: 2009-4-3 18:28:26
+/// TankEngine2D
+
+
+/// Session started at: 2009-4-3 18:34:37
+/// TankEngine2D
+
+
+/// Session started at: 2009-4-3 18:36:02
+/// TankEngine2D
+
+
+/// Session started at: 2009-4-3 18:37:15
+/// TankEngine2D
+
+
+/// Session started at: 2009-4-3 18:39:46
+/// TankEngine2D
+
+
+/// Session started at: 2009-4-3 19:56:52
+/// TankEngine2D
+
+
+/// Session started at: 2009-4-3 19:59:56
+/// TankEngine2D
+
+
+/// Session started at: 2009-4-3 20:02:18
+/// TankEngine2D
+
+
+/// Session started at: 2009-4-3 20:14:06
+/// TankEngine2D
+
+
+/// Session started at: 2009-4-3 20:24:47
+/// TankEngine2D
+
+
+/// Session started at: 2009-4-3 20:26:28
+/// TankEngine2D
+
+
+/// Session started at: 2009-4-3 20:28:37
+/// TankEngine2D
+
+
+/// Session started at: 2009-4-3 20:30:31
+/// TankEngine2D
+
+
+/// Session started at: 2009-4-3 20:34:00
+/// TankEngine2D
+
+
+/// Session started at: 2009-4-3 20:35:17
+/// TankEngine2D
+
+
+/// Session started at: 2009-4-3 20:44:05
+/// TankEngine2D
+
+
+/// Session started at: 2009-4-3 20:44:51
+/// TankEngine2D
+
+
+/// Session started at: 2009-4-3 20:46:42
+/// TankEngine2D
+
+
+/// Session started at: 2009-4-3 20:51:19
+/// TankEngine2D
+
+
+/// Session started at: 2009-4-3 20:58:40
+/// TankEngine2D
+
+
+/// Session started at: 2009-4-3 21:04:04
+/// TankEngine2D
+
+
+/// Session started at: 2009-4-3 21:28:27
+/// TankEngine2D
+
+
+/// Session started at: 2009-4-3 21:31:10
+/// TankEngine2D
+
+
+/// Session started at: 2009-4-3 21:37:24
+/// TankEngine2D
+
+
+/// Session started at: 2009-4-3 21:39:03
+/// TankEngine2D
+
+
+/// Session started at: 2009-4-3 21:50:41
+/// TankEngine2D
+
+
+/// Session started at: 2009-4-3 21:57:35
+/// TankEngine2D
+
+
+/// Session started at: 2009-4-3 21:59:15
+/// TankEngine2D
+
+
+/// Session started at: 2009-4-3 22:01:14
+/// TankEngine2D
+
+
+/// Session started at: 2009-4-3 22:02:28
+/// TankEngine2D
+
+
+/// Session started at: 2009-4-3 22:03:21
+/// TankEngine2D
+
+
+/// Session started at: 2009-4-3 22:04:21
+/// TankEngine2D
+
+
+/// Session started at: 2009-4-3 22:05:42
+/// TankEngine2D
+
+
+/// Session started at: 2009-4-3 22:06:47
+/// TankEngine2D
+
+
+/// Session started at: 2009-4-3 22:16:08
+/// TankEngine2D
+
+
+/// Session started at: 2009-4-3 22:20:17
+/// TankEngine2D
+
+
+/// Session started at: 2009-4-3 22:20:47
+/// TankEngine2D
+
+
+/// Session started at: 2009-4-3 22:22:37
+/// TankEngine2D
+
+
+/// Session started at: 2009-4-3 22:23:50
+/// TankEngine2D
+
+
+/// Session started at: 2009-4-5 10:57:39
+/// TankEngine2D
+
+
+/// Session started at: 2009-4-5 11:00:16
+/// TankEngine2D
+
+
+/// Session started at: 2009-4-5 11:05:05
+/// TankEngine2D
+
+
+/// Session started at: 2009-4-5 11:08:20
+/// TankEngine2D
+
+
+/// Session started at: 2009-4-5 11:10:08
+/// TankEngine2D
+
+
+/// Session started at: 2009-4-5 11:12:16
+/// TankEngine2D
+
+
+/// Session started at: 2009-4-5 11:17:56
+/// TankEngine2D
+
+
+/// Session started at: 2009-4-5 11:19:26
+/// TankEngine2D
+
+
+/// Session started at: 2009-4-5 11:20:36
+/// TankEngine2D
+
+
+/// Session started at: 2009-4-5 11:27:54
+/// TankEngine2D
+
+
+/// Session started at: 2009-4-5 11:31:35
+/// TankEngine2D
+
+
+/// Session started at: 2009-4-5 11:34:20
+/// TankEngine2D
+
+
+/// Session started at: 2009-4-5 11:34:48
+/// TankEngine2D
+
+
+/// Session started at: 2009-4-5 11:36:32
+/// TankEngine2D
+
+
+/// Session started at: 2009-4-5 11:42:16
+/// TankEngine2D
+
+
+/// Session started at: 2009-4-5 11:47:02
+/// TankEngine2D
+
+
+/// Session started at: 2009-4-5 11:48:01
+/// TankEngine2D
+
+
+/// Session started at: 2009-4-5 11:49:53
+/// TankEngine2D
+
+
+/// Session started at: 2009-4-5 11:53:26
+/// TankEngine2D
+
+
+/// Session started at: 2009-4-5 11:59:50
+/// TankEngine2D
+
+
+/// Session started at: 2009-4-5 12:03:54
+/// TankEngine2D
+
+
+/// Session started at: 2009-4-5 12:04:27
+/// TankEngine2D
+
+
+/// Session started at: 2009-4-5 12:05:57
+/// TankEngine2D
+
+
+/// Session started at: 2009-4-5 12:08:40
+/// TankEngine2D
+
+
+/// Session started at: 2009-4-5 12:10:02
+/// TankEngine2D
+
+
+/// Session started at: 2009-4-5 12:26:33
+/// TankEngine2D
+
+
+/// Session started at: 2009-4-5 12:27:31
+/// TankEngine2D
+
+
+/// Session started at: 2009-4-5 12:27:44
+/// TankEngine2D
+
+
+/// Session started at: 2009-4-5 12:29:15
+/// TankEngine2D
+
+
+/// Session started at: 2009-4-5 12:33:07
+/// TankEngine2D
+
+
+/// Session started at: 2009-4-5 12:34:34
+/// TankEngine2D
+
+
+/// Session started at: 2009-4-5 12:36:30
+/// TankEngine2D
+
+
+/// Session started at: 2009-4-5 12:37:36
+/// TankEngine2D
+
