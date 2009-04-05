@@ -12,6 +12,7 @@ using SmartTank.GameObjs;
 using TankEngine2D.DataStructure;
 using SmartTank.Helpers;
 using SmartTank.Draw;
+using SmartTank.net;
 
 namespace SmartTank.GameObjs.Shell
 {
@@ -24,7 +25,7 @@ namespace SmartTank.GameObjs.Shell
 
         string name;
 
-        GameObjInfo objInfo = new GameObjInfo( "ShellNormal", string.Empty );
+        GameObjInfo objInfo = new GameObjInfo("ShellNormal", string.Empty);
 
         IGameObj firer;
 
@@ -42,32 +43,29 @@ namespace SmartTank.GameObjs.Shell
             get { return firer; }
         }
 
-        public ShellNormal( string name, IGameObj firer, Vector2 startPos, float startAzi, float speed )
+        public ShellNormal(string name, IGameObj firer, Vector2 startPos, float startAzi, float speed)
         {
             this.name = name;
             this.firer = firer;
-            sprite = new Sprite( BaseGame.RenderEngine, BaseGame.ContentMgr, Path.Combine( Directories.ContentDirectory, texPath ), true );
-            sprite.SetParameters( new Vector2( 5, 0 ), startPos, 0.08f, startAzi, Color.White, LayerDepth.Shell, SpriteBlendMode.AlphaBlend );
-            phiUpdater = new NonInertiasColUpdater( ObjInfo, startPos, MathTools.NormalVectorFromAzi( startAzi ) * speed, startAzi, 0f, new Sprite[] { sprite } );
-            phiUpdater.OnOverlap += new OnCollidedEventHandler( phiUpdater_OnOverlap );
-            phiUpdater.OnCollied += new OnCollidedEventHandler( phiUpdater_OnCollied );
+            sprite = new Sprite(BaseGame.RenderEngine, BaseGame.ContentMgr, Path.Combine(Directories.ContentDirectory, texPath), true);
+            sprite.SetParameters(new Vector2(5, 0), startPos, 0.08f, startAzi, Color.White, LayerDepth.Shell, SpriteBlendMode.AlphaBlend);
+            phiUpdater = new NonInertiasColUpdater(ObjInfo, startPos, MathTools.NormalVectorFromAzi(startAzi) * speed, startAzi, 0f, new Sprite[] { sprite });
+            phiUpdater.OnOverlap += new OnCollidedEventHandler(phiUpdater_OnOverlap);
+            phiUpdater.OnCollied += new OnCollidedEventHandler(phiUpdater_OnCollied);
         }
 
-        void phiUpdater_OnCollied( IGameObj Sender, CollisionResult result, GameObjInfo objB )
+        void phiUpdater_OnCollied(IGameObj Sender, CollisionResult result, GameObjInfo objB)
         {
             if (onCollided != null)
-                onCollided( this, result, objB );
+                //onCollided( this, result, objB );
+                InfoRePath.CallEvent(this.MgPath, "onCollided", onCollided, true, this, result, objB);
         }
 
-        void phiUpdater_OnOverlap( IGameObj Sender, CollisionResult result, GameObjInfo objB )
+        void phiUpdater_OnOverlap(IGameObj Sender, CollisionResult result, GameObjInfo objB)
         {
-            //if (objB.ObjClass == "Border")
-            //{
-            //    ((SceneKeeperCommon)(GameManager.CurSceneKeeper)).RemoveGameObj( this, true, false, false, false, SceneKeeperCommon.GameObjLayer.lowFlying );
-            //}
-
             if (onOverlap != null)
-                onOverlap( this, result, objB );
+                //onOverlap( this, result, objB );
+                InfoRePath.CallEvent(this.MgPath, "onOverlap", onOverlap, true, this, result, objB);
         }
 
 
@@ -87,7 +85,7 @@ namespace SmartTank.GameObjs.Shell
 
         #region IUpdater ≥…‘±
 
-        public void Update( float seconds )
+        public void Update(float seconds)
         {
 
         }

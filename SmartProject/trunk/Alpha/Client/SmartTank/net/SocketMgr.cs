@@ -7,6 +7,7 @@ using System.Net.Sockets;
 using System.Net;
 using System.Threading;
 using System.Runtime.InteropServices;
+using Microsoft.Xna.Framework;
 
 namespace SmartTank.net
 {
@@ -125,6 +126,7 @@ namespace SmartTank.net
                     // Data
                     SW.WriteLine("Fuck server!");
 
+                    // 状态同步数据
                     SW.WriteLine(cash.ObjStaInfoList.Count);
                     foreach (ObjStatusSyncInfo info in cash.ObjStaInfoList)
                     {
@@ -133,18 +135,34 @@ namespace SmartTank.net
                         SW.WriteLine(info.values.Length);
                         foreach (object obj in info.values)
                         {
-                            SW.WriteLine(obj.GetType().ToString());
-                            switch (obj.GetType().ToString())
-                            {
-                                case "Microsoft.Xna.Framework.Vector2":
-                                    SW.WriteLine(((Microsoft.Xna.Framework.Vector2)obj).X);
-                                    SW.WriteLine(((Microsoft.Xna.Framework.Vector2)obj).Y);
-                                    break;
-                                default:
-                                    SW.WriteLine(obj);
-                                    break;
-                            }
-                            
+                            WriteObjToStream(SW, obj);
+                        }
+                    }
+
+                    // 事件同步数据
+                    SW.WriteLine(cash.ObjEventInfoList.Count);
+                    foreach (ObjEventSyncInfo info in cash.ObjEventInfoList)
+                    {
+                        SW.WriteLine(info.objMgPath);
+                        SW.WriteLine(info.EventName);
+                        SW.WriteLine(info.values.Length);
+                        foreach (object obj in info.values)
+                        {
+                            WriteObjToStream(SW, obj);
+                        }
+                    }
+
+                    // 物体管理同步数据
+                    SW.WriteLine(cash.ObjMgInfoList.Count);
+                    foreach (ObjMgSyncInfo info in cash.ObjMgInfoList)
+                    {
+                        SW.WriteLine(info.objPath);
+                        SW.WriteLine(info.objMgKind);
+                        SW.WriteLine(info.objType);
+                        SW.WriteLine(info.args.Length);
+                        foreach (object obj in info.args)
+                        {
+                            WriteObjToStream(SW, obj);
                         }
                     }
 
@@ -154,7 +172,7 @@ namespace SmartTank.net
                     netStream.Write(StructToBytes(pkg), 0, stPakage.Size);
                     MStream.WriteTo(netStream);
 
-                    Console.WriteLine("Send "+ pkg.dataSize);
+                    Console.WriteLine("Send " + pkg.dataSize);
                 }
             }
             catch (Exception ex)
@@ -163,6 +181,8 @@ namespace SmartTank.net
                 return;
             }
         }
+
+
 
         static public void ReceivePackge(object obj)
         {
@@ -206,6 +226,8 @@ namespace SmartTank.net
                                 string temp = SR.ReadLine();
                                 //Console.WriteLine("Begin: " + temp);
 
+
+                                // 物体状态同步数据
                                 temp = SR.ReadLine();
                                 //Console.WriteLine("StaCount: " + temp);
                                 int StaCount = int.Parse(temp);
@@ -233,33 +255,7 @@ namespace SmartTank.net
                                     info.values = new object[valueCount];
                                     for (int j = 0; j < valueCount; j++)
                                     {
-                                        temp = SR.ReadLine();
-                                        //Console.WriteLine("TypeName: " + temp);
-                                        switch (temp)
-                                        {
-                                            case "System.String":
-                                                temp = SR.ReadLine();
-                                                //Console.WriteLine("StringValue: " + temp);
-                                                info.values[j] = temp;
-
-                                                break;
-                                            case "System.Single":
-                                                temp = SR.ReadLine();
-                                                //Console.WriteLine("FloatValue: " + temp);
-                                                info.values[j] = float.Parse(temp);
-                                                break;
-                                            case "Microsoft.Xna.Framework.Vector2":
-                                                temp = SR.ReadLine();
-                                                float x = float.Parse(temp);
-                                                temp = SR.ReadLine();
-                                                float y = float.Parse(temp);
-                                                info.values[j] = new Microsoft.Xna.Framework.Vector2(x,y);
-                                                break;
-                                            default:
-                                                Console.WriteLine(temp);
-                                                throw new Exception("某个格式的数据没有被解析");
-                                                break;
-                                        }
+                                        info.values[j] = ReadObjFromStream(SR);
                                     }
 
                                     // 添加Info到缓冲区
@@ -269,6 +265,73 @@ namespace SmartTank.net
 
                                     //Console.WriteLine("Read Pkg Success!");
                                 }
+
+                                // 事件同步数据
+                                temp = SR.ReadLine();
+                                int EventCount = int.Parse(temp);
+                                for (int i = 0; i < EventCount; i++)
+                                {
+                                    ObjEventSyncInfo info = new ObjEventSyncInfo();
+
+                                    temp = SR.ReadLine();
+                                    info.objMgPath = temp;
+
+
+                                    temp = SR.ReadLine();
+                                    info.EventName = temp;
+
+
+                                    temp = SR.ReadLine();
+                                    int valueCount = int.Parse(temp);
+
+                                    info.values = new object[valueCount];
+                                    for (int j = 0; j < valueCount; j++)
+                                    {
+                                        info.values[j] = ReadObjFromStream(SR);
+                                    }
+
+                                    // 添加Info到缓冲区
+                                    Monitor.Enter(cashe);
+                                    cashe.ObjEventInfoList.Add(info);
+                                    Monitor.Exit(cashe);
+
+                                }
+
+                                // 物体管理同步数据
+
+                                temp = SR.ReadLine();
+                                int ObjMgCount = int.Parse(temp);
+                                for (int i = 0; i < ObjMgCount; i++)
+                                {
+                                    ObjMgSyncInfo info = new ObjMgSyncInfo();
+
+                                    temp = SR.ReadLine();
+                                    info.objPath = temp;
+
+
+                                    temp = SR.ReadLine();
+                                    info.objMgKind = int.Parse(temp);
+
+
+                                    temp = SR.ReadLine();
+                                    info.objType = temp;
+
+                                    temp = SR.ReadLine();
+                                    int valueCount = int.Parse(temp);
+
+                                    info.args = new object[valueCount];
+                                    for (int j = 0; j < valueCount; j++)
+                                    {
+                                        info.args[j] = ReadObjFromStream(SR);
+                                    }
+
+                                    // 添加Info到缓冲区
+                                    Monitor.Enter(cashe);
+                                    cashe.ObjMgInfoList.Add(info);
+                                    Monitor.Exit(cashe);
+
+                                }
+
                             }
                             catch (Exception ex)
                             {
@@ -311,6 +374,8 @@ namespace SmartTank.net
             }
         }
 
+
+
         static public void StartReceiveThread(SyncCashe cash)
         {
             if (client.Connected)
@@ -343,6 +408,89 @@ namespace SmartTank.net
             //    sckt.Close();
             //}
         }
+
+        private static void WriteObjToStream(StreamWriter SW, object obj)
+        {
+            if (obj == null)
+            {
+                SW.WriteLine("null");
+                return;
+            }
+
+            SW.WriteLine(obj.GetType().ToString());
+            switch (obj.GetType().ToString())
+            {
+                case "Microsoft.Xna.Framework.Vector2":
+                    SW.WriteLine(((Microsoft.Xna.Framework.Vector2)obj).X);
+                    SW.WriteLine(((Microsoft.Xna.Framework.Vector2)obj).Y);
+                    break;
+                case "SmarTank.net.GameObjSyncInfo":
+                    SW.WriteLine(((GameObjSyncInfo)obj).MgPath);
+                    break;
+                case "TankEngine2D.Graphics.CollisionResult":
+                    TankEngine2D.Graphics.CollisionResult result = obj as TankEngine2D.Graphics.CollisionResult;
+                    WriteObjToStream(SW, result.InterPos);
+                    WriteObjToStream(SW, result.NormalVector);
+                    WriteObjToStream(SW, result.IsCollided);
+                    break;
+                case "SmartTank.GameObjs.GameObjInfo":
+                    SmartTank.GameObjs.GameObjInfo objInfo = obj as SmartTank.GameObjs.GameObjInfo;
+                    SW.WriteLine(objInfo.ObjClass);
+                    SW.WriteLine(objInfo.Script);
+                    break;
+                default:
+                    SW.WriteLine(obj);
+                    break;
+            }
+        }
+
+        private static object ReadObjFromStream(StreamReader SR)
+        {
+            string temp;
+
+            temp = SR.ReadLine();
+            //Console.WriteLine("TypeName: " + temp);
+
+            if (temp == "null")
+                return null;
+
+            switch (temp)
+            {
+                case "System.String":
+                    temp = SR.ReadLine();
+                    //Console.WriteLine("StringValue: " + temp);
+                    return temp;
+                case "System.Single":
+                    temp = SR.ReadLine();
+                    //Console.WriteLine("FloatValue: " + temp);
+                    return float.Parse(temp);
+                case "Microsoft.Xna.Framework.Vector2":
+                    temp = SR.ReadLine();
+                    float x = float.Parse(temp);
+                    temp = SR.ReadLine();
+                    float y = float.Parse(temp);
+                    return new Microsoft.Xna.Framework.Vector2(x, y);
+                case "SmartTank.net.GameObjSyncInfo":
+                    temp = SR.ReadLine();
+                    return new GameObjSyncInfo(temp);
+                case "TankEngine2D.Graphics.CollisionResult":
+                    Vector2 InterPos = (Vector2)ReadObjFromStream(SR);
+                    Vector2 NormalVector = (Vector2)ReadObjFromStream(SR);
+                    bool IsCollided = (bool)ReadObjFromStream(SR);
+                    return new TankEngine2D.Graphics.CollisionResult(IsCollided, InterPos, NormalVector);
+                case "System.Boolean":
+                    temp = SR.ReadLine();
+                    return bool.Parse(temp);
+                case "SmartTank.GameObjs.GameObjInfo":
+                    string objClass = SR.ReadLine();
+                    string script = SR.ReadLine();
+                    return new SmartTank.GameObjs.GameObjInfo(objClass, script);
+                default:
+                    Console.WriteLine(temp);
+                    throw new Exception("某个格式的数据没有被解析");
+            }
+        }
+
 
         /// <summary>
         /// 结构体转byte数组

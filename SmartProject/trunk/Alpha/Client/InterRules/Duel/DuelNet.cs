@@ -223,7 +223,7 @@ namespace InterRules.Duel
         {
             commonServer = new AICommonServer(mapRect);
 
-            
+
             if (PurviewMgr.IsMainHost)
             {
                 tankAI1.CommonServer = commonServer;
@@ -381,6 +381,9 @@ namespace InterRules.Duel
             shell.onCollided += new OnCollidedEventHandler(shell_onCollided);
             shellSum++;
             sceneMgr.AddGameObj("shell", shell);
+            SyncCasheWriter.SubmitCreateObjMg("shell", typeof(ShellNormal), shell.Name, sender, turretEnd, azi, shellSpeed);
+
+            //　TODO 效果逻辑不要放到规则逻辑中，这样会无法在客户端之间同步
             Sound.PlayCue("CANNON1");
         }
 
@@ -435,6 +438,8 @@ namespace InterRules.Duel
         void shell_onCollided(IGameObj Sender, CollisionResult result, GameObjInfo objB)
         {
             sceneMgr.DelGameObj("shell", Sender.Name);
+            SyncCasheWriter.SubmitDeleteObjMg("shell\\" + Sender.Name);
+
             new ShellExplodeBeta(Sender.Pos, ((ShellNormal)Sender).Azi);
 
             Quake.BeginQuake(10, 50);
