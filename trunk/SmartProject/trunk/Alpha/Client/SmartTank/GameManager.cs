@@ -27,7 +27,7 @@ namespace SmartTank
 
     public class GameManager : BaseGame
     {
-        public static event EventHandler OnExiting;
+        public static event EventHandler OnExit;
 
         #region Variables
 
@@ -122,8 +122,13 @@ namespace SmartTank
 
         void GameManager_Exiting(object sender, EventArgs e)
         {
-            if (OnExiting != null)
-                OnExiting(sender, e);
+            if (OnExit != null)
+                OnExit(sender, e);
+
+            while (gameScreens.Count != 0)
+            {
+                gameScreens.Pop().OnClose();
+            }
         }
 
         #endregion
@@ -147,6 +152,7 @@ namespace SmartTank
 
             if (gameScreens.Peek().Update( elapsedSeconds ))
             {
+                gameScreens.Peek().OnClose();
                 gameScreens.Pop();
             }
         }

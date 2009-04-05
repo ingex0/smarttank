@@ -30,42 +30,55 @@ namespace SmartTank.net
             set { outPutCashe = value; }
         }
 
-        static public void SubmitNewStatus(string objName, string statueName, SyncImportant improtant, params object[] values)
+        // 此函数由场景物体类调用，因此函数中要判断主从关系，发包频率
+        static public void SubmitNewStatus(string objMgPath, string statueName, SyncImportant improtant, params object[] values)
         {
-            switch (improtant)
+            if ((PurviewMgr.IsMainHost && !PurviewMgr.IsSlaveMgObj(objMgPath))
+                || (!PurviewMgr.IsMainHost && PurviewMgr.IsSlaveMgObj(objMgPath)))
             {
-                case SyncImportant.Immediate:
-                    PushNewStatus(objName, statueName, values);
-                    break;
-                case SyncImportant.HighFrequency:
-                    if (highTimer > 0)
-                    {
-                        PushNewStatus(objName, statueName, values);
-                        highTimer = -highSpace;
-                    }
-                    break;
-                case SyncImportant.MidFrequency:
-                    if (midTimer > 0)
-                    {
-                        PushNewStatus(objName, statueName, values);
-                        highTimer = -midSpace;
-                    }
-                    break;
-                case SyncImportant.LowFrequency:
-                    if (lowTimer > 0)
-                    {
-                        PushNewStatus(objName, statueName, values);
-                        lowTimer = -lowSpace;
-                    }
-                    break;
-                default:
-                    break;
+                switch (improtant)
+                {
+                    case SyncImportant.Immediate:
+                        PushNewStatus(objMgPath, statueName, values);
+                        break;
+                    case SyncImportant.HighFrequency:
+                        if (highTimer > 0)
+                        {
+                            PushNewStatus(objMgPath, statueName, values);
+                            highTimer = -highSpace;
+                        }
+                        break;
+                    case SyncImportant.MidFrequency:
+                        if (midTimer > 0)
+                        {
+                            PushNewStatus(objMgPath, statueName, values);
+                            highTimer = -midSpace;
+                        }
+                        break;
+                    case SyncImportant.LowFrequency:
+                        if (lowTimer > 0)
+                        {
+                            PushNewStatus(objMgPath, statueName, values);
+                            lowTimer = -lowSpace;
+                        }
+                        break;
+                    default:
+                        break;
+                }
             }
         }
 
-        static void PushNewStatus(string objName, string statueName, object[] values)
+        static public void SubmitNewEvent(string objMgPath, string EventName, params object[] values)
         {
-            outPutCashe.AddObjStatusSyncInfo(objName, statueName, values);
+            if (!PurviewMgr.IsMainHost && PurviewMgr.IsSlaveMgObj(objMgPath))
+            {
+                outPutCashe.AddObjEventSyncInfo(objMgPath, EventName, values);
+            }
+        }
+
+        static void PushNewStatus(string objMgPath, string statueName, object[] values)
+        {
+            outPutCashe.AddObjStatusSyncInfo(objMgPath, statueName, values);
         }
 
         static public void Update(float seconds)

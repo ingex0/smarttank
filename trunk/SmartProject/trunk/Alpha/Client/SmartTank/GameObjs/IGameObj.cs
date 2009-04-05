@@ -17,6 +17,7 @@ namespace SmartTank.GameObjs
     public interface IGameObj : IUpdater, IDrawableObj
     {
         string Name { get;}
+        string MgPath { get; set;}
         GameObjInfo ObjInfo { get;}
         new Vector2 Pos { get;set;}
         float Azi { get;}

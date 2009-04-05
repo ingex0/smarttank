@@ -14,5 +14,10 @@ namespace SmartTank.Screens
         bool Update ( float second );
 
         void Render ();
+
+        /// <summary>
+        /// 当从该规则中退出前该方法被调用
+        /// </summary>
+        void OnClose();
     }
 }

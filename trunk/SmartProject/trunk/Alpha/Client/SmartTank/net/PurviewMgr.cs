@@ -4,7 +4,7 @@ using System.Text;
 
 namespace SmartTank.net
 {
-    static class PurviewMgr
+    static public class PurviewMgr
     {
         static bool isMainHost;
         static public bool IsMainHost
@@ -17,6 +17,35 @@ namespace SmartTank.net
         static public String ServerAddress
         {
             get { return serverAddress; }
+        }
+
+        //static Dictionary<string, object> MainHostMgObjList = new Dictionary<string, object>();
+        static Dictionary<string, object> SlaveMgList = new Dictionary<string, object>();
+
+
+        //static public void RegistMainMgObj(string objMgPath)
+        //{
+        //    MainHostMgObjList.Add(objMgPath, null);
+        //}
+
+        static public void RegistSlaveMgObj(string objMgPath)
+        {
+            SlaveMgList.Add(objMgPath, null);
+        }
+
+        //internal static bool IsMainHostMgObj(string objMgPath)
+        //{
+        //    return MainHostMgObjList.ContainsKey(objMgPath);
+        //}
+
+        internal static bool IsSlaveMgObj(string objMgPath)
+        {
+            return SlaveMgList.ContainsKey(objMgPath);
+        }
+
+        internal static void Close()
+        {
+            SlaveMgList.Clear();
         }
     }
 }

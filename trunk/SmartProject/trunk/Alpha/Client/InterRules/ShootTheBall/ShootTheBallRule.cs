@@ -489,6 +489,15 @@ namespace InterRules.ShootTheBall
         #endregion
 
 
+
+        #region IGameScreen ≥…‘±
+
+        public void OnClose()
+        {
+            
+        }
+
+        #endregion
     }
 
     class ItemEyeableInfo : IEyeableInfo

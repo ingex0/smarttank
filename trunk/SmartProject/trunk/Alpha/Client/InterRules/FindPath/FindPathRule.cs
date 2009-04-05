@@ -109,6 +109,15 @@ namespace InterRules.FindPath
         }
 
         #endregion
+
+        #region IGameScreen 成员
+
+        public void OnClose()
+        {
+            
+        }
+
+        #endregion
     }
 
     class FindPathGameScreen : IGameScreen
@@ -277,6 +286,14 @@ namespace InterRules.FindPath
             if (InputHandler.JustPressKey( Microsoft.Xna.Framework.Input.Keys.Escape ))
                 return true;
             return false;
+        }
+
+        #endregion
+
+        #region IGameScreen 成员
+
+        public void OnClose()
+        {
         }
 
         #endregion

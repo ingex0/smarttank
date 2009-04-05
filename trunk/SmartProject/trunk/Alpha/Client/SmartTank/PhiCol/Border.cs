@@ -116,6 +116,23 @@ namespace SmartTank.PhiCol
         }
 
         #endregion
+
+        #region IGameObj ≥…‘±
+
+        string mgPath;
+        public string MgPath
+        {
+            get
+            {
+                return mgPath;
+            }
+            set
+            {
+                mgPath = value;
+            }
+        }
+
+        #endregion
     }
 
     /// <summary>

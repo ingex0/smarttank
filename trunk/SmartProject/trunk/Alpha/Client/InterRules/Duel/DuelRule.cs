@@ -138,8 +138,12 @@ namespace InterRules.Duel
             return false;
         }
 
-        #endregion
+       
+        public void OnClose()
+        {
+        }
 
+        #endregion
     }
 
     class DuelGameScreen : IGameScreen
@@ -472,6 +476,15 @@ namespace InterRules.Duel
             //    BasicGraphics.DrawPoint( Vector2.Transform( visiPoint, tank2.TransMatrix ), 0.4f, Color.Blue, 0f );
             //}
 
+        }
+
+        #endregion
+
+        #region IGameScreen ≥…‘±
+
+        public void OnClose()
+        {
+            
         }
 
         #endregion

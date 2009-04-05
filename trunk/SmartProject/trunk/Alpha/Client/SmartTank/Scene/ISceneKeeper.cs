@@ -6,6 +6,7 @@ using SmartTank.Shelter;
 using SmartTank.Draw;
 using SmartTank.Update;
 using SmartTank.Senses.Vision;
+using SmartTank.GameObjs;
 
 namespace SmartTank.Scene
 {
@@ -20,5 +21,7 @@ namespace SmartTank.Scene
         void RegistUpdaters ( UpdateMgr manager );
 
         void RegistVision ( VisionMgr manager );
+
+        IGameObj GetGameObj(string objPath);
     }
 }
