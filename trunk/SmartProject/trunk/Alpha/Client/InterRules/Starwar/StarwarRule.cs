@@ -13,7 +13,7 @@ namespace InterRules.Starwar
 
         public string RuleIntroduction
         {
-            get { return "编写组成员：xxx"; }
+            get { return "20090328~20090417:编写组成员：..."; }
         }
 
         public string RuleName
