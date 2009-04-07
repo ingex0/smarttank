@@ -67,8 +67,8 @@ namespace SmartTank.net
             get
             {
                 return objStaInfoList.Count == 0
-              && objEventInfoList.Count == 0
-              && objMgInfoList.Count == 0;
+                    && objEventInfoList.Count == 0
+                    && objMgInfoList.Count == 0;
             }
         }
 

@@ -377,13 +377,15 @@ namespace InterRules.Duel
         int shellSum = 0;
         void tank_onShoot(Tank sender, Vector2 turretEnd, float azi)
         {
-            ShellNormal shell = new ShellNormal("shell" + shellSum.ToString(), sender, turretEnd, azi, shellSpeed);
-            shell.onCollided += new OnCollidedEventHandler(shell_onCollided);
-            shellSum++;
-            sceneMgr.AddGameObj("shell", shell);
-            SyncCasheWriter.SubmitCreateObjMg("shell", typeof(ShellNormal), shell.Name, sender, turretEnd, azi, shellSpeed);
+            if (PurviewMgr.IsMainHost)
+            {
+                ShellNormal shell = new ShellNormal("shell" + shellSum.ToString(), sender, turretEnd, azi, shellSpeed);
+                shell.onCollided += new OnCollidedEventHandler(shell_onCollided);
+                shellSum++;
+                sceneMgr.AddGameObj("shell", shell);
+                SyncCasheWriter.SubmitCreateObjMg("shell", typeof(ShellNormal), shell.Name, sender, turretEnd, azi, shellSpeed);
+            }
 
-            //　TODO 效果逻辑不要放到规则逻辑中，这样会无法在客户端之间同步
             Sound.PlayCue("CANNON1");
         }
 
@@ -437,8 +439,11 @@ namespace InterRules.Duel
 
         void shell_onCollided(IGameObj Sender, CollisionResult result, GameObjInfo objB)
         {
-            sceneMgr.DelGameObj("shell", Sender.Name);
-            SyncCasheWriter.SubmitDeleteObjMg("shell\\" + Sender.Name);
+            if (PurviewMgr.IsMainHost)
+            {
+                sceneMgr.DelGameObj("shell", Sender.Name);
+                SyncCasheWriter.SubmitDeleteObjMg("shell\\" + Sender.Name);
+            }
 
             new ShellExplodeBeta(Sender.Pos, ((ShellNormal)Sender).Azi);
 

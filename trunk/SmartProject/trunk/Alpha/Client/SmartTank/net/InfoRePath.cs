@@ -10,11 +10,10 @@ namespace SmartTank.net
     {
 
 
-        static public void CallEvent(string objMgPath, string eventName, MulticastDelegate delgt, bool SlaveConceal, params object[] eventParams)
+        static public void CallEvent(string objMgPath, string eventName, MulticastDelegate delgt, params object[] eventParams)
         {
-            if (PurviewMgr.IsMainHost)
-                delgt.DynamicInvoke(eventParams);
-            else if (!SlaveConceal)
+            delgt.DynamicInvoke(eventParams);
+            if (!PurviewMgr.IsMainHost)
             {
                 object[] newparams = new object[eventParams.Length];
 
