@@ -58,14 +58,14 @@ namespace SmartTank.GameObjs.Shell
         {
             if (onCollided != null)
                 //onCollided( this, result, objB );
-                InfoRePath.CallEvent(this.MgPath, "onCollided", onCollided, true, this, result, objB);
+                InfoRePath.CallEvent(this.MgPath, "onCollided", onCollided, this, result, objB);
         }
 
         void phiUpdater_OnOverlap(IGameObj Sender, CollisionResult result, GameObjInfo objB)
         {
             if (onOverlap != null)
                 //onOverlap( this, result, objB );
-                InfoRePath.CallEvent(this.MgPath, "onOverlap", onOverlap, true, this, result, objB);
+                InfoRePath.CallEvent(this.MgPath, "onOverlap", onOverlap, this, result, objB);
         }
 
 

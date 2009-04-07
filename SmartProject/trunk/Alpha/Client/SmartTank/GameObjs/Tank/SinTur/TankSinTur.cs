@@ -283,22 +283,22 @@ namespace SmartTank.GameObjs.Tank.SinTur
         {
             if (onOverLap != null)
                 //onOverLap(this, result, objB);
-                InfoRePath.CallEvent(this.MgPath, "onOverLap", onOverLap, true, this, result, objB);
+                InfoRePath.CallEvent(this.MgPath, "onOverLap", onOverLap, this, result, objB);
 
             if (OnOverLap != null)
                 //OnOverLap(result, objB);
-                InfoRePath.CallEvent(this.MgPath, "OnOverLap", OnOverLap, true, result, objB);
+                InfoRePath.CallEvent(this.MgPath, "OnOverLap", OnOverLap,  result, objB);
         }
 
         void controller_OnCollied(IGameObj Sender, CollisionResult result, GameObjInfo objB)
         {
             if (onCollide != null)
                 //onCollide(this, result, objB);
-                InfoRePath.CallEvent(this.MgPath, "onCollide", onCollide, true, this, result, objB);
+                InfoRePath.CallEvent(this.MgPath, "onCollide", onCollide,  this, result, objB);
 
             if (OnCollide != null)
                 //OnCollide(result, objB);
-                InfoRePath.CallEvent(this.MgPath, "OnCollide", OnCollide, true, result, objB);
+                InfoRePath.CallEvent(this.MgPath, "OnCollide", OnCollide, result, objB);
         }
 
         #endregion
