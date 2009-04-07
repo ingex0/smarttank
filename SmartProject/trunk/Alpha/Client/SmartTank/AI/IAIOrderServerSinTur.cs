@@ -23,7 +23,7 @@ namespace SmartTank.AI
 
         float FireLeftCDTime { get;}
 
-        void Fire ();
+        void Fire();
 
         event BorderObjUpdatedEventHandler onBorderObjUpdated;
     }

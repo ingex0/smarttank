@@ -37,5 +37,16 @@ namespace SmartTank.Helpers.DependInject
         {
             return Activator.CreateInstance( type );
         }
+
+        internal static Type GetType(string typepath)
+        {
+            string[] path = typepath.Split('.');
+            if (path[0] == "SmartTank")
+            {
+                Assembly assembly = Assembly.Load("SmartTank, Version=1.0.0.0, Culture=neutral, PublicKeyToToken=null");
+                return assembly.GetType(typepath);
+            }
+            return null;
+        }
     }
 }

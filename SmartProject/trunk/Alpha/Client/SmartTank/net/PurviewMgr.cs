@@ -38,7 +38,7 @@ namespace SmartTank.net
         //    return MainHostMgObjList.ContainsKey(objMgPath);
         //}
 
-        internal static bool IsSlaveMgObj(string objMgPath)
+        public static bool IsSlaveMgObj(string objMgPath)
         {
             return SlaveMgList.ContainsKey(objMgPath);
         }

@@ -4,10 +4,11 @@ using System.Text;
 using System.Threading;
 using SmartTank.GameObjs;
 using System.Reflection;
+using SmartTank.Helpers.DependInject;
 
 namespace SmartTank.net
 {
-    static class SyncCasheReader
+    public static class SyncCasheReader
     {
 
         static SyncCashe inputCashe;
@@ -17,7 +18,10 @@ namespace SmartTank.net
             set { inputCashe = value; }
         }
 
-        // 还没经过测试
+        public delegate void CreateObjInfoHandler(IGameObj obj);
+        public static event CreateObjInfoHandler onCreateObj;
+
+
         internal static void ReadCashe(SmartTank.Scene.ISceneKeeper sceneMgr)
         {
             Monitor.Enter(inputCashe);
@@ -71,6 +75,8 @@ namespace SmartTank.net
                     {
                         if (info.objMgKind == (int)ObjMgKind.Create)
                         {
+                            object[] newArgs = new object[info.args.Length];
+
                             Type[] argTypes = new Type[info.args.Length];
                             for (int i = 0; i < info.args.Length; i++)
                             {
@@ -80,12 +86,25 @@ namespace SmartTank.net
                                 }
                                 else
                                 {
-                                    argTypes[i] = info.args[i].GetType();
+                                    if (info.args[i] is GameObjSyncInfo)
+                                    {
+                                        IGameObj gameobj = sceneMgr.GetGameObj(((GameObjSyncInfo)info.args[i]).MgPath);
+                                        argTypes[i] = gameobj.GetType();
+                                        newArgs[i] = gameobj;
+                                    }
+                                    else
+                                    {
+                                        argTypes[i] = info.args[i].GetType();
+                                        newArgs[i] = info.args[i];
+                                    }
                                 }
                             }
 
-                            //object newObj = info.objType.GetConstructor(argTypes).Invoke(info.args);
-                            //sceneMgr.AddGameObj(info.objPath, (IGameObj)newObj);
+                            Type newObjType = DIHelper.GetType(info.objType);
+                            object newObj = newObjType.GetConstructor(argTypes).Invoke(newArgs);
+                            sceneMgr.AddGameObj(info.objPath, (IGameObj)newObj);
+                            if (onCreateObj != null)
+                                onCreateObj((IGameObj)newObj);
                         }
                         else if (info.objMgKind == (int)ObjMgKind.Delete)
                         {
