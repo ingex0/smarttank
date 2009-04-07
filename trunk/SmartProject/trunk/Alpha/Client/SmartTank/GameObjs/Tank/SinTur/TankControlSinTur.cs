@@ -169,7 +169,7 @@ namespace SmartTank.GameObjs.Tank.SinTur
                 return;
 
             turretAzi += turretAngVel * seconds;
-            raderAzi += raderAngVel*seconds;
+            raderAzi += raderAngVel * seconds;
             fireLeftCDTime = Math.Max( 0, fireLeftCDTime - seconds );
 
             if (fireOnNextSpare && fireLeftCDTime == 0 )

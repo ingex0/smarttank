@@ -217,6 +217,15 @@ namespace InterRules.Duel
         {
             PurviewMgr.IsMainHost = IsMainHost;
             PurviewMgr.RegistSlaveMgObj(tank2.MgPath);
+
+            if (PurviewMgr.IsMainHost)
+            {
+                camera.Focus(tank1, true);
+            }
+            else
+            {
+                camera.Focus(tank2, true);
+            }
         }
 
         private void AIInitial(IAI tankAI1, IAI tankAI2)
@@ -311,7 +320,7 @@ namespace InterRules.Duel
             tank1.ShellSpeed = shellSpeed;
             tank2.ShellSpeed = shellSpeed;
 
-            camera.Focus(tank1, true);
+            
 
             sceneMgr.AddGroup("", new TypeGroup<DuelTank>("tank"));
             sceneMgr.AddGroup("", new TypeGroup<SmartTank.PhiCol.Border>("border"));
@@ -367,7 +376,10 @@ namespace InterRules.Duel
 
             tank1.onCollide += new OnCollidedEventHandler(tank_onCollide);
             tank2.onCollide += new OnCollidedEventHandler(tank_onCollide);
+
+            SyncCasheReader.onCreateObj += new SyncCasheReader.CreateObjInfoHandler(SyncCasheReader_onCreateObj);
         }
+
 
 
         #endregion
@@ -380,14 +392,26 @@ namespace InterRules.Duel
             if (PurviewMgr.IsMainHost)
             {
                 ShellNormal shell = new ShellNormal("shell" + shellSum.ToString(), sender, turretEnd, azi, shellSpeed);
+                sceneMgr.AddGameObj("shell", shell);
+
                 shell.onCollided += new OnCollidedEventHandler(shell_onCollided);
                 shellSum++;
-                sceneMgr.AddGameObj("shell", shell);
                 SyncCasheWriter.SubmitCreateObjMg("shell", typeof(ShellNormal), shell.Name, sender, turretEnd, azi, shellSpeed);
             }
 
             Sound.PlayCue("CANNON1");
         }
+
+        void SyncCasheReader_onCreateObj(IGameObj obj)
+        {
+            if (obj is ShellNormal)
+            {
+                ShellNormal shell = obj as ShellNormal;
+                shell.onCollided += new OnCollidedEventHandler(shell_onCollided);
+                shellSum++;
+            }
+        }
+
 
         void tank_onCollide(IGameObj Sender, CollisionResult result, GameObjInfo objB)
         {
@@ -439,11 +463,7 @@ namespace InterRules.Duel
 
         void shell_onCollided(IGameObj Sender, CollisionResult result, GameObjInfo objB)
         {
-            if (PurviewMgr.IsMainHost)
-            {
-                sceneMgr.DelGameObj("shell", Sender.Name);
-                SyncCasheWriter.SubmitDeleteObjMg("shell\\" + Sender.Name);
-            }
+            sceneMgr.DelGameObj("shell", Sender.Name);
 
             new ShellExplodeBeta(Sender.Pos, ((ShellNormal)Sender).Azi);
 

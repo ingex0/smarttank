@@ -20,12 +20,8 @@ namespace SmartTank.net
 
     static public class SyncCasheWriter
     {
-        static float highTimer = -highSpace;
-        static float midTimer = -midSpace;
-        static float lowTimer = -lowSpace;
-
-        const float highSpace = 0.1f;
-        const float midSpace = 0.1f;
+        const float highSpace = 0.0001f;
+        const float midSpace = 0.0001f;
         const float lowSpace = 1.0f;
 
         static public SyncCashe outPutCashe;

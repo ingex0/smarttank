@@ -49,11 +49,7 @@ namespace SmartTank.net
                 // 处理消息缓冲区
                 SyncCasheReader.ReadCashe(sceneMgr);
 
-                GameManager.PhiColManager.Update(second);
-                GameManager.ShelterMgr.Update();
-                GameManager.VisionMgr.Update();
-                GameManager.ObjMemoryMgr.Update();
-                EffectsMgr.Update(second);
+                GameManager.UpdataComponent(second);
 
                 // 广播同步消息
                 outputCashe.SendPackage();
@@ -67,7 +63,7 @@ namespace SmartTank.net
                  * 2.更新其他组件
                  * 3.发送同步消息
                  * */
-
+                GameManager.UpdateMgr.Update(second);
                 GameManager.UpdataComponent(second);
                 // 处理消息缓冲区
                 SyncCasheReader.ReadCashe(sceneMgr);

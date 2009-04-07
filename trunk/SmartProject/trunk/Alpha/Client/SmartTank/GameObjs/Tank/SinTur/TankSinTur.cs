@@ -97,6 +97,7 @@ namespace SmartTank.GameObjs.Tank.SinTur
         public float TurretAzi
         {
             get { return controller.turretAzi; }
+            set { controller.turretAzi = value; }
         }
 
         public float RaderRadius
@@ -118,6 +119,7 @@ namespace SmartTank.GameObjs.Tank.SinTur
         public float RaderAzi
         {
             get { return controller.raderAzi; }
+            set { controller.raderAzi = value; }
         }
 
         public float RaderAimAzi
@@ -226,6 +228,11 @@ namespace SmartTank.GameObjs.Tank.SinTur
             base.Update(seconds);
             controller.Update(seconds);
             skin.Update(seconds);
+
+            SyncCasheWriter.SubmitNewStatus(this.MgPath, "TurnTurretWiseSpeed", SyncImportant.MidFrequency, this.TurnTurretWiseSpeed);
+            SyncCasheWriter.SubmitNewStatus(this.MgPath, "TurnRaderWiseSpeed", SyncImportant.MidFrequency, this.TurnRaderWiseSpeed);
+            SyncCasheWriter.SubmitNewStatus(this.MgPath, "TurretAzi", SyncImportant.MidFrequency, this.TurretAzi);
+            SyncCasheWriter.SubmitNewStatus(this.MgPath, "RaderAzi", SyncImportant.MidFrequency, this.RaderAzi);
         }
 
 

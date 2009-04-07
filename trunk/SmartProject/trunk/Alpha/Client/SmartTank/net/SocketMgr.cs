@@ -116,63 +116,67 @@ namespace SmartTank.net
                 {
                     Stream netStream = client.GetStream();
 
-                    // Head
-                    stPakage pkg = new stPakage();
-                    pkg.iSytle = (int)PACKAGE_SYTLE.DATA;
-
-                    MemoryStream MStream = new MemoryStream();
-                    StreamWriter SW = new StreamWriter(MStream);
-
-                    // Data
-                    SW.WriteLine("Fuck server!");
-
-                    // 状态同步数据
-                    SW.WriteLine(cash.ObjStaInfoList.Count);
-                    foreach (ObjStatusSyncInfo info in cash.ObjStaInfoList)
+                    if (netStream.CanWrite)
                     {
-                        SW.WriteLine(info.objMgPath);
-                        SW.WriteLine(info.statusName);
-                        SW.WriteLine(info.values.Length);
-                        foreach (object obj in info.values)
+
+                        // Head
+                        stPakage pkg = new stPakage();
+                        pkg.iSytle = (int)PACKAGE_SYTLE.DATA;
+
+                        MemoryStream MStream = new MemoryStream();
+                        StreamWriter SW = new StreamWriter(MStream);
+
+                        // Data
+                        SW.WriteLine("Fuck server!");
+
+                        // 状态同步数据
+                        SW.WriteLine(cash.ObjStaInfoList.Count);
+                        foreach (ObjStatusSyncInfo info in cash.ObjStaInfoList)
                         {
-                            WriteObjToStream(SW, obj);
+                            SW.WriteLine(info.objMgPath);
+                            SW.WriteLine(info.statusName);
+                            SW.WriteLine(info.values.Length);
+                            foreach (object obj in info.values)
+                            {
+                                WriteObjToStream(SW, obj);
+                            }
                         }
-                    }
 
-                    // 事件同步数据
-                    SW.WriteLine(cash.ObjEventInfoList.Count);
-                    foreach (ObjEventSyncInfo info in cash.ObjEventInfoList)
-                    {
-                        SW.WriteLine(info.objMgPath);
-                        SW.WriteLine(info.EventName);
-                        SW.WriteLine(info.values.Length);
-                        foreach (object obj in info.values)
+                        // 事件同步数据
+                        SW.WriteLine(cash.ObjEventInfoList.Count);
+                        foreach (ObjEventSyncInfo info in cash.ObjEventInfoList)
                         {
-                            WriteObjToStream(SW, obj);
+                            SW.WriteLine(info.objMgPath);
+                            SW.WriteLine(info.EventName);
+                            SW.WriteLine(info.values.Length);
+                            foreach (object obj in info.values)
+                            {
+                                WriteObjToStream(SW, obj);
+                            }
                         }
-                    }
 
-                    // 物体管理同步数据
-                    SW.WriteLine(cash.ObjMgInfoList.Count);
-                    foreach (ObjMgSyncInfo info in cash.ObjMgInfoList)
-                    {
-                        SW.WriteLine(info.objPath);
-                        SW.WriteLine(info.objMgKind);
-                        SW.WriteLine(info.objType);
-                        SW.WriteLine(info.args.Length);
-                        foreach (object obj in info.args)
+                        // 物体管理同步数据
+                        SW.WriteLine(cash.ObjMgInfoList.Count);
+                        foreach (ObjMgSyncInfo info in cash.ObjMgInfoList)
                         {
-                            WriteObjToStream(SW, obj);
+                            SW.WriteLine(info.objPath);
+                            SW.WriteLine(info.objMgKind);
+                            SW.WriteLine(info.objType);
+                            SW.WriteLine(info.args.Length);
+                            foreach (object obj in info.args)
+                            {
+                                WriteObjToStream(SW, obj);
+                            }
                         }
+
+                        SW.Flush();
+                        int dataLength = (int)SW.BaseStream.Length;
+                        pkg.dataSize = dataLength;
+                        netStream.Write(StructToBytes(pkg), 0, stPakage.Size);
+                        MStream.WriteTo(netStream);
+
+                        Console.WriteLine("Send " + pkg.dataSize);
                     }
-
-                    SW.Flush();
-                    int dataLength = (int)SW.BaseStream.Length;
-                    pkg.dataSize = dataLength;
-                    netStream.Write(StructToBytes(pkg), 0, stPakage.Size);
-                    MStream.WriteTo(netStream);
-
-                    Console.WriteLine("Send " + pkg.dataSize);
                 }
             }
             catch (Exception ex)
@@ -424,7 +428,7 @@ namespace SmartTank.net
                     SW.WriteLine(((Microsoft.Xna.Framework.Vector2)obj).X);
                     SW.WriteLine(((Microsoft.Xna.Framework.Vector2)obj).Y);
                     break;
-                case "SmarTank.net.GameObjSyncInfo":
+                case "SmartTank.net.GameObjSyncInfo":
                     SW.WriteLine(((GameObjSyncInfo)obj).MgPath);
                     break;
                 case "TankEngine2D.Graphics.CollisionResult":
