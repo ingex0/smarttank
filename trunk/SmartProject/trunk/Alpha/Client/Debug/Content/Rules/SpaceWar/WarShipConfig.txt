@@ -1,3 +1,7 @@
+//配置文件说明：数据行不允许存在空格、注释。
+//整数类型的属性不允许存在小数点
+
+//飞船属性
 SpeedMax=128
 SpeedAccel=100
 SpeedDecay=0.5
@@ -9,4 +13,8 @@ HitbyObjDamage=150
 StillTime=2
 WTFTime=3
 ScoreByHit=6
-ShootEndDest=20
+ShootEndDest=30
+
+//炮弹属性
+ShellSpeed=192
+ShellLiveTime=10
