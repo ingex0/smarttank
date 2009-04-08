@@ -41,7 +41,7 @@ namespace TankEngine2D.Graphics
             animates.Clear();
         }
 
-        internal void Add ( IAnimated animatedSprite )
+        public void Add ( IAnimated animatedSprite )
         {
             animates.Add( animatedSprite );
         }

@@ -29,6 +29,15 @@ namespace InterRules.Starwar
             InitializePhisical(pos, azi);
             this.Pos = pos;
             this.Azi = azi;
+            this.OnDead += new WarShipDeadEventHandler(WarShip_OnDead);
+        }
+
+        void WarShip_OnDead(WarShip sender)
+        {
+            destoryAnimate.SetSpritesParameters(new Vector2(48, 48), this.Pos, 1f, this.Azi, Color.White, LayerDepth.TankBase, SpriteBlendMode.AlphaBlend);
+            destoryAnimate.Interval = 5;
+            destoryAnimate.Start(0, 6, true);
+            GameManager.AnimatedMgr.Add(destoryAnimate);
         }
 
         #region Logic
@@ -47,6 +56,10 @@ namespace InterRules.Starwar
         protected float shootTimer = 0;
 
 
+        public int HP
+        {
+            get { return curHP; }
+        }
 
         public delegate void WarShipShootEventHandler(WarShip firer, Vector2 endPoint, float azi);
         public delegate void WarShipDeadEventHandler(WarShip sender);
@@ -356,7 +369,7 @@ namespace InterRules.Starwar
         Sprite normalSprite;
         Sprite hitingSprite;
 
-        //AnimatedSpriteSeries 
+        AnimatedSpriteSeries destoryAnimate;
 
         private void InitializeTex(Vector2 pos, float azi)
         {
@@ -367,11 +380,18 @@ namespace InterRules.Starwar
             hitingSprite = new Sprite(BaseGame.RenderEngine);
             hitingSprite.LoadTextureFromFile(Path.Combine(Directories.ContentDirectory, "Rules\\SpaceWar\\image\\field_spaceship_002.png"), true);
             hitingSprite.SetParameters(new Vector2(16, 16), pos, 1f, azi, Color.White, LayerDepth.TankBase, SpriteBlendMode.AlphaBlend);
+
+            destoryAnimate = new AnimatedSpriteSeries(BaseGame.RenderEngine);
+            destoryAnimate.LoadSeriesFromFiles(BaseGame.RenderEngine, Path.Combine(Directories.ContentDirectory, "Rules\\SpaceWar\\image"), "field_burst_00", ".png", 1, 6, false);
         }
 
         public void Draw()
         {
-            if (stillTimer >= 0)
+            if (isDead)
+            {
+                
+            }
+            else if (stillTimer >= 0)
             {
                 normalSprite.Draw();
             }

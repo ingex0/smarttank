@@ -106,6 +106,7 @@ namespace InterRules.Starwar
             ships[0] = new WarShip("ship" + 0, new Vector2(500, 500), 0, true);
             ships[0].OnCollied += new OnCollidedEventHandler(WarShip_OnCollied);
             ships[0].OnShoot += new WarShip.WarShipShootEventHandler(WarShip_OnShoot);
+            ships[0].OnDead += new WarShip.WarShipDeadEventHandler(Warship_OnDead);
 
             sceneMgr = new SceneMgr();
 
@@ -124,6 +125,11 @@ namespace InterRules.Starwar
             GameManager.LoadScene(sceneMgr);
 
             camera.Focus(ships[0], false);
+        }
+
+        void Warship_OnDead(WarShip sender)
+        {
+            sceneMgr.DelGameObj(sender.MgPath);
         }
 
         void WarShip_OnShoot(WarShip firer, Vector2 endPoint, float azi)
@@ -164,7 +170,9 @@ namespace InterRules.Starwar
         {
             if (objB.ObjClass == "WarShipShell")
             {
-                ((WarShip)Sender).BeginStill();
+                WarShip ship = (WarShip)Sender;
+                ship.BeginStill();
+                ship.HitByShell();
             }
         }
 
@@ -192,6 +200,8 @@ namespace InterRules.Starwar
             GameManager.DrawManager.Draw();
             BaseGame.BasicGraphics.DrawRectangle(mapRect, 3, Color.Red, 0f);
 
+
+            GameManager.RenderEngine.FontMgr.DrawInScrnCoord("Ship1 Live: " + ships[0].HP, new Vector2(10, 500), 1.0f, Color.White, LayerDepth.Text, GameFonts.Comic);
         }
 
         bool IGameScreen.Update(float second)
@@ -202,7 +212,13 @@ namespace InterRules.Starwar
 
             DeleteOutDateShells();
 
-            return false;
+            if (InputHandler.IsKeyDown(Microsoft.Xna.Framework.Input.Keys.Escape))
+            {
+                GameManager.ComponentReset();
+                return true;
+            }
+            else
+                return false;
         }
 
         private void DeleteOutDateShells()
