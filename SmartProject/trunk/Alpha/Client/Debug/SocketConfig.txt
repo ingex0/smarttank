@@ -1,2 +1,2 @@
-ServerIP=172.25.40.255
+ServerIP=127.0.0.1
 ServerPort=9999
