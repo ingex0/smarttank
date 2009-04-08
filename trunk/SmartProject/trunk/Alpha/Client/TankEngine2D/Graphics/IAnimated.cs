@@ -7,7 +7,7 @@ namespace TankEngine2D.Graphics
     /// <summary>
     /// 定义可切帧对象
     /// </summary>
-    interface IAnimated
+    public interface IAnimated
     {
         /// <summary>
         /// 获取是否已经开始显示

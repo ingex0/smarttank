@@ -38,11 +38,6 @@ namespace SmartTank.net
 
         public virtual bool Update(float second)
         {
-            if (InputHandler.JustPressKey(Microsoft.Xna.Framework.Input.Keys.Escape))
-            {
-                GameManager.ComponentReset();
-                return true;
-            }
             if (PurviewMgr.IsMainHost)
             {
                 /* 1.更新场景物体
