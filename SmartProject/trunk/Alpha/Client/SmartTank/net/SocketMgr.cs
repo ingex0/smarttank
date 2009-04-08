@@ -360,7 +360,9 @@ namespace SmartTank.net
                             }
                             else
                             {
-                                throw new Exception("包头有问题啊，我日");
+                                Log.Write("包头有问题: type: " + pkg.iSytle + " , size: " + pkg.dataSize);
+                                Console.WriteLine("包头有问题: type: " + pkg.iSytle + " , size: " + pkg.dataSize);
+                                //throw new Exception("包头有问题啊，我日");
                                 // 包头很可能有问题
                             }
                         }

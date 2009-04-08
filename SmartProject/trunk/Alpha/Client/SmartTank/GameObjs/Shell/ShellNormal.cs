@@ -18,14 +18,12 @@ namespace SmartTank.GameObjs.Shell
 {
     public class ShellNormal : IGameObj, ICollideObj, IPhisicalObj
     {
-        readonly string texPath = "GameObjs\\ShellNormal";
-
         public event OnCollidedEventHandler onCollided;
         public event OnCollidedEventHandler onOverlap;
 
         string name;
 
-        GameObjInfo objInfo = new GameObjInfo("ShellNormal", string.Empty);
+        protected GameObjInfo objInfo = new GameObjInfo("ShellNormal", string.Empty);
 
         IGameObj firer;
 
@@ -43,15 +41,28 @@ namespace SmartTank.GameObjs.Shell
             get { return firer; }
         }
 
-        public ShellNormal(string name, IGameObj firer, Vector2 startPos, float startAzi, float speed)
+        public ShellNormal(string name, IGameObj firer, Vector2 startPos, float startAzi, float speed, string texPath, bool fromContent, Vector2 texOrignPos, float texScale)
         {
             this.name = name;
             this.firer = firer;
-            sprite = new Sprite(BaseGame.RenderEngine, BaseGame.ContentMgr, Path.Combine(Directories.ContentDirectory, texPath), true);
-            sprite.SetParameters(new Vector2(5, 0), startPos, 0.08f, startAzi, Color.White, LayerDepth.Shell, SpriteBlendMode.AlphaBlend);
+
+            if (fromContent)
+            {
+                sprite = new Sprite(BaseGame.RenderEngine, BaseGame.ContentMgr, texPath, true);
+            }
+            else
+            {
+                sprite = new Sprite(BaseGame.RenderEngine, texPath, true);
+            }
+            sprite.SetParameters(texOrignPos, startPos, texScale, startAzi, Color.White, LayerDepth.Shell, SpriteBlendMode.AlphaBlend);
             phiUpdater = new NonInertiasColUpdater(ObjInfo, startPos, MathTools.NormalVectorFromAzi(startAzi) * speed, startAzi, 0f, new Sprite[] { sprite });
             phiUpdater.OnOverlap += new OnCollidedEventHandler(phiUpdater_OnOverlap);
             phiUpdater.OnCollied += new OnCollidedEventHandler(phiUpdater_OnCollied);
+        }
+
+        public ShellNormal(string name, IGameObj firer, Vector2 startPos, float startAzi, float speed)
+            : this(name, firer, startPos, startAzi, speed, "GameObjs\\ShellNormal", true, new Vector2(5, 0), 0.08f)
+        {
         }
 
         void phiUpdater_OnCollied(IGameObj Sender, CollisionResult result, GameObjInfo objB)
@@ -85,7 +96,7 @@ namespace SmartTank.GameObjs.Shell
 
         #region IUpdater ≥…‘±
 
-        public void Update(float seconds)
+        public virtual void Update(float seconds)
         {
 
         }
