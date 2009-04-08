@@ -56,7 +56,13 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ShootTheBall\AutoShootAI.cs" />
     <Compile Include="ShootTheBall\ShootTheBallRule.cs" />
+    <Compile Include="Starwar\SpaceWarConfig.cs" />
     <Compile Include="Starwar\StarwarRule.cs" />
+    <Compile Include="Starwar\WarShip.cs" />
+    <Compile Include="Starwar\WarShipShell.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="ClassDiagram1.cd" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using SmartTank.GameObjs;
+using TankEngine2D.Helpers;
 
 namespace SmartTank.net
 {
@@ -12,26 +13,33 @@ namespace SmartTank.net
 
         static public void CallEvent(string objMgPath, string eventName, MulticastDelegate delgt, params object[] eventParams)
         {
-            delgt.DynamicInvoke(eventParams);
-            if (!PurviewMgr.IsMainHost)
+            try
             {
-                object[] newparams = new object[eventParams.Length];
-
-                for (int i = 0; i < eventParams.Length; i++)
+                delgt.DynamicInvoke(eventParams);
+                if (!PurviewMgr.IsMainHost)
                 {
-                    if (eventParams[i] is IGameObj)
+                    object[] newparams = new object[eventParams.Length];
+
+                    for (int i = 0; i < eventParams.Length; i++)
                     {
-                        newparams[i] = new GameObjSyncInfo(((IGameObj)eventParams[i]).MgPath);
-                    }
-                    else
-                    {
-                        newparams[i] = eventParams[i];
+                        if (eventParams[i] is IGameObj)
+                        {
+                            newparams[i] = new GameObjSyncInfo(((IGameObj)eventParams[i]).MgPath);
+                        }
+                        else
+                        {
+                            newparams[i] = eventParams[i];
+                        }
+
                     }
 
+                    // 通过网络协议传递给主机
+                    SyncCasheWriter.SubmitNewEvent(objMgPath, eventName, newparams);
                 }
-
-                // 通过网络协议传递给主机
-                SyncCasheWriter.SubmitNewEvent(objMgPath, eventName, newparams);
+            }
+            catch (Exception ex)
+            {
+                Log.Write(ex.ToString());
             }
         }
     }

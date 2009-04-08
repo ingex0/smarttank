@@ -21,7 +21,7 @@ namespace SmartTank.net
     static public class SyncCasheWriter
     {
         const float highSpace = 0.01f;
-        const float midSpace = 0.01f;
+        const float midSpace = 0.05f;
         const float lowSpace = 1.0f;
 
         static public SyncCashe outPutCashe;
