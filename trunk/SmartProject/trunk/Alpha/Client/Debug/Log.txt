@@ -1489,3 +1489,92 @@
 /// Session started at: 2009-4-8 16:03:38
 /// TankEngine2D
 
+
+/// Session started at: 2009-4-8 16:22:13
+/// TankEngine2D
+
+
+/// Session started at: 2009-4-8 16:23:27
+/// TankEngine2D
+
+
+/// Session started at: 2009-4-8 16:37:27
+/// TankEngine2D
+
+
+/// Session started at: 2009-4-8 16:48:57
+/// TankEngine2D
+
+
+/// Session started at: 2009-4-8 16:50:17
+/// TankEngine2D
+
+
+/// Session started at: 2009-4-8 16:50:57
+/// TankEngine2D
+
+
+/// Session started at: 2009-4-8 17:01:09
+/// TankEngine2D
+
+
+/// Session started at: 2009-4-8 17:02:29
+/// TankEngine2D
+
+[17:02:38] System.Reflection.TargetInvocationException: 调用的目标发生了异常。 ---> System.NullReferenceException: 未将对象引用设置到对象的实例。
+   在 InterRules.Starwar.StarwarLogic.WarShip_OnCollied(IGameObj Sender, CollisionResult result, GameObjInfo objB) 位置 D:\SmartTankSource080307\svn\truck\SmartProject\trunk\Alpha\Client\InterRules\Starwar\StarwarRule.cs:行号 150
+   --- 内部异常堆栈跟踪的结尾 ---
+   在 System.RuntimeMethodHandle._InvokeMethodFast(Object target, Object[] arguments, SignatureStruct& sig, MethodAttributes methodAttributes, RuntimeTypeHandle typeOwner)
+   在 System.RuntimeMethodHandle.InvokeMethodFast(Object target, Object[] arguments, Signature sig, MethodAttributes methodAttributes, RuntimeTypeHandle typeOwner)
+   在 System.Reflection.RuntimeMethodInfo.Invoke(Object obj, BindingFlags invokeAttr, Binder binder, Object[] parameters, CultureInfo culture, Boolean skipVisibilityChecks)
+   在 System.Delegate.DynamicInvokeImpl(Object[] args)
+   在 System.Delegate.DynamicInvoke(Object[] args)
+   在 SmartTank.net.InfoRePath.CallEvent(String objMgPath, String eventName, MulticastDelegate delgt, Object[] eventParams) 位置 D:\SmartTankSource080307\svn\truck\SmartProject\trunk\Alpha\Client\SmartTank\net\InfoRePath.cs:行号 18
+[17:03:10] System.Reflection.TargetInvocationException: 调用的目标发生了异常。 ---> System.NullReferenceException: 未将对象引用设置到对象的实例。
+   在 InterRules.Starwar.StarwarLogic.WarShip_OnCollied(IGameObj Sender, CollisionResult result, GameObjInfo objB) 位置 D:\SmartTankSource080307\svn\truck\SmartProject\trunk\Alpha\Client\InterRules\Starwar\StarwarRule.cs:行号 150
+   --- 内部异常堆栈跟踪的结尾 ---
+   在 System.RuntimeMethodHandle._InvokeMethodFast(Object target, Object[] arguments, SignatureStruct& sig, MethodAttributes methodAttributes, RuntimeTypeHandle typeOwner)
+   在 System.RuntimeMethodHandle.InvokeMethodFast(Object target, Object[] arguments, Signature sig, MethodAttributes methodAttributes, RuntimeTypeHandle typeOwner)
+   在 System.Reflection.RuntimeMethodInfo.Invoke(Object obj, BindingFlags invokeAttr, Binder binder, Object[] parameters, CultureInfo culture, Boolean skipVisibilityChecks)
+   在 System.Delegate.DynamicInvokeImpl(Object[] args)
+   在 System.Delegate.DynamicInvoke(Object[] args)
+   在 SmartTank.net.InfoRePath.CallEvent(String objMgPath, String eventName, MulticastDelegate delgt, Object[] eventParams) 位置 D:\SmartTankSource080307\svn\truck\SmartProject\trunk\Alpha\Client\SmartTank\net\InfoRePath.cs:行号 18
+[17:05:08] System.Reflection.TargetInvocationException: 调用的目标发生了异常。 ---> System.NullReferenceException: 未将对象引用设置到对象的实例。
+   在 InterRules.Starwar.StarwarLogic.WarShip_OnCollied(IGameObj Sender, CollisionResult result, GameObjInfo objB) 位置 D:\SmartTankSource080307\svn\truck\SmartProject\trunk\Alpha\Client\InterRules\Starwar\StarwarRule.cs:行号 150
+   --- 内部异常堆栈跟踪的结尾 ---
+   在 System.RuntimeMethodHandle._InvokeMethodFast(Object target, Object[] arguments, SignatureStruct& sig, MethodAttributes methodAttributes, RuntimeTypeHandle typeOwner)
+   在 System.RuntimeMethodHandle.InvokeMethodFast(Object target, Object[] arguments, Signature sig, MethodAttributes methodAttributes, RuntimeTypeHandle typeOwner)
+   在 System.Reflection.RuntimeMethodInfo.Invoke(Object obj, BindingFlags invokeAttr, Binder binder, Object[] parameters, CultureInfo culture, Boolean skipVisibilityChecks)
+   在 System.Delegate.DynamicInvokeImpl(Object[] args)
+   在 System.Delegate.DynamicInvoke(Object[] args)
+   在 SmartTank.net.InfoRePath.CallEvent(String objMgPath, String eventName, MulticastDelegate delgt, Object[] eventParams) 位置 D:\SmartTankSource080307\svn\truck\SmartProject\trunk\Alpha\Client\SmartTank\net\InfoRePath.cs:行号 18
+[17:05:19] System.Reflection.TargetInvocationException: 调用的目标发生了异常。 ---> System.NullReferenceException: 未将对象引用设置到对象的实例。
+   在 InterRules.Starwar.StarwarLogic.WarShip_OnCollied(IGameObj Sender, CollisionResult result, GameObjInfo objB) 位置 D:\SmartTankSource080307\svn\truck\SmartProject\trunk\Alpha\Client\InterRules\Starwar\StarwarRule.cs:行号 150
+   --- 内部异常堆栈跟踪的结尾 ---
+   在 System.RuntimeMethodHandle._InvokeMethodFast(Object target, Object[] arguments, SignatureStruct& sig, MethodAttributes methodAttributes, RuntimeTypeHandle typeOwner)
+   在 System.RuntimeMethodHandle.InvokeMethodFast(Object target, Object[] arguments, Signature sig, MethodAttributes methodAttributes, RuntimeTypeHandle typeOwner)
+   在 System.Reflection.RuntimeMethodInfo.Invoke(Object obj, BindingFlags invokeAttr, Binder binder, Object[] parameters, CultureInfo culture, Boolean skipVisibilityChecks)
+   在 System.Delegate.DynamicInvokeImpl(Object[] args)
+   在 System.Delegate.DynamicInvoke(Object[] args)
+   在 SmartTank.net.InfoRePath.CallEvent(String objMgPath, String eventName, MulticastDelegate delgt, Object[] eventParams) 位置 D:\SmartTankSource080307\svn\truck\SmartProject\trunk\Alpha\Client\SmartTank\net\InfoRePath.cs:行号 18
+[17:06:02] System.Reflection.TargetInvocationException: 调用的目标发生了异常。 ---> System.NullReferenceException: 未将对象引用设置到对象的实例。
+   在 InterRules.Starwar.StarwarLogic.WarShip_OnCollied(IGameObj Sender, CollisionResult result, GameObjInfo objB) 位置 D:\SmartTankSource080307\svn\truck\SmartProject\trunk\Alpha\Client\InterRules\Starwar\StarwarRule.cs:行号 150
+   --- 内部异常堆栈跟踪的结尾 ---
+   在 System.RuntimeMethodHandle._InvokeMethodFast(Object target, Object[] arguments, SignatureStruct& sig, MethodAttributes methodAttributes, RuntimeTypeHandle typeOwner)
+   在 System.RuntimeMethodHandle.InvokeMethodFast(Object target, Object[] arguments, Signature sig, MethodAttributes methodAttributes, RuntimeTypeHandle typeOwner)
+   在 System.Reflection.RuntimeMethodInfo.Invoke(Object obj, BindingFlags invokeAttr, Binder binder, Object[] parameters, CultureInfo culture, Boolean skipVisibilityChecks)
+   在 System.Delegate.DynamicInvokeImpl(Object[] args)
+   在 System.Delegate.DynamicInvoke(Object[] args)
+   在 SmartTank.net.InfoRePath.CallEvent(String objMgPath, String eventName, MulticastDelegate delgt, Object[] eventParams) 位置 D:\SmartTankSource080307\svn\truck\SmartProject\trunk\Alpha\Client\SmartTank\net\InfoRePath.cs:行号 18
+
+/// Session started at: 2009-4-8 17:07:39
+/// TankEngine2D
+
+
+/// Session started at: 2009-4-8 17:08:06
+/// TankEngine2D
+
+
+/// Session started at: 2009-4-8 17:08:12
+/// TankEngine2D
+
