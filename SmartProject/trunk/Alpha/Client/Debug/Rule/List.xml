@@ -5,6 +5,10 @@
       <DLLName>InterRules, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null</DLLName>
       <names>
         <NameAndTypeName>
+          <name>Starwar</name>
+          <typeNames>InterRules.Starwar.StarwarRule</typeNames>
+        </NameAndTypeName>
+        <NameAndTypeName>
           <name>FindPath</name>
           <typeNames>InterRules.FindPath.FindPathRule</typeNames>
         </NameAndTypeName>
