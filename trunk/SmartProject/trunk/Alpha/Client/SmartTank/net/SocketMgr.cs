@@ -6,8 +6,8 @@ using TankEngine2D.Helpers;
 using System.Net.Sockets;
 using System.Net;
 using System.Threading;
-using System.Runtime.InteropServices;
 using Microsoft.Xna.Framework;
+using System.Runtime.InteropServices;
 
 namespace SmartTank.net
 {
