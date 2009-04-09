@@ -18,3 +18,7 @@ ShootEndDest=30
 //ÅÚµ¯ÊôĞÔ
 ShellSpeed=192
 ShellLiveTime=10
+
+//½ğ±ÒÊôĞÔ
+GoldScore=12
+GoldLiveTime=30

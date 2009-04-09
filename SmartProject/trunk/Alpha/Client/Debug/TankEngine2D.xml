@@ -261,6 +261,11 @@
             绘制当前帧，由继承类重载后实现
             </summary>
         </member>
+        <member name="M:TankEngine2D.Graphics.AnimatedSprite.Stop">
+            <summary>
+            停止播放，并从管理器中删除
+            </summary>
+        </member>
         <member name="E:TankEngine2D.Graphics.AnimatedSprite.OnStop">
             <summary>
             当动画结束时引发这个事件
