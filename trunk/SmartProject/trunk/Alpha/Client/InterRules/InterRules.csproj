@@ -59,6 +59,7 @@
     <Compile Include="Starwar\Gold.cs" />
     <Compile Include="Starwar\Rock.cs" />
     <Compile Include="Starwar\SpaceWarConfig.cs" />
+    <Compile Include="Starwar\StarwarLogic.cs" />
     <Compile Include="Starwar\StarwarRule.cs" />
     <Compile Include="Starwar\WarShip.cs" />
     <Compile Include="Starwar\WarShipShell.cs" />
