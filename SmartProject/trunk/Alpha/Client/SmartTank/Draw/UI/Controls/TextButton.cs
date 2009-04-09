@@ -144,9 +144,10 @@ namespace SmartTank.Draw.UI.Controls
         {
             Color dynamicColor = Color.White;
 
-            if (!bMouseOver && !bPressed)
-                dynamicColor = new Color( new Vector4( color.ToVector3().X * 0.95f, color.ToVector3().Y * 0.95f, color.ToVector3().Z * 0.95f, alpha ) );
-            else if (bPressed)
+            //if (!bMouseOver && !bPressed)
+            //    dynamicColor = new Color( new Vector4( color.ToVector3().X * 0.95f, color.ToVector3().Y * 0.95f, color.ToVector3().Z * 0.95f, alpha ) );
+            //else
+            if (bPressed)
                 dynamicColor = new Color( new Vector4( color.ToVector3().X * 0.9f, color.ToVector3().Y * 0.9f, color.ToVector3().Z * 0.9f, alpha ) );
             else if (bMouseOver)
                 dynamicColor = new Color( new Vector4( color.ToVector3().X * 1.5f, color.ToVector3().Y * 1.5f, color.ToVector3().Z * 1.5f, alpha ) );

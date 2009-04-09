@@ -41,7 +41,7 @@ namespace SmartTank.Draw.UI.Controls
         List<Keys> pressedKeys;
         public bool bNumerical = false;
 
-        Timer keyTimer;
+        Timer keyTimerLong, keyTimerShort;
 
         int cursorPos = 0;
         bool bInputKeyDown = false;
@@ -51,8 +51,12 @@ namespace SmartTank.Draw.UI.Controls
         bool bDeleteKey = false;
         bool bHomeKey = false;
         bool bEndKey = false;
+        bool bInputEnable = true;
+        string starText;
 
         Timer cursorTimer;
+
+
         bool bCursorVisible = false;
 
         int characterWidth = 9;
@@ -67,7 +71,7 @@ namespace SmartTank.Draw.UI.Controls
         #endregion
 
         #region Construction
-        public Textbox( string name, Vector2 position, float width, string text, bool bNumerical )//, Font font, Form.Style style)        
+        public Textbox( string name, Vector2 position, float width, string text, bool bNumerical)//, Font font, Form.Style style)        
         {
             this.Type = ControlType.Textbox;
             this.name = name;
@@ -101,8 +105,11 @@ namespace SmartTank.Draw.UI.Controls
             cursorTimer = new Timer( 500 );
             cursorTimer.Elapsed += new ElapsedEventHandler( cursorTimer_Tick );
 
-            keyTimer = new Timer( 1000 );
-            keyTimer.Elapsed += new ElapsedEventHandler( keyTimer_Tick );
+            keyTimerLong = new Timer( 500 );
+            keyTimerLong.Elapsed += new ElapsedEventHandler( keyTimerLong_Tick );
+
+            keyTimerShort = new Timer(50);
+            keyTimerShort.Elapsed += new ElapsedEventHandler(keyTimerShort_Tick);
         }
         #endregion
 
@@ -112,9 +119,18 @@ namespace SmartTank.Draw.UI.Controls
             bCursorVisible = !bCursorVisible;
         }
 
-        private void keyTimer_Tick( Object obj, ElapsedEventArgs e )
+        private void keyTimerLong_Tick( Object obj, ElapsedEventArgs e )
         {
 
+            bInputEnable = true;
+            keyTimerLong.Stop();
+        }
+
+        private void keyTimerShort_Tick(Object obj, ElapsedEventArgs e)
+        {
+
+            bInputEnable = true;
+            keyTimerShort.Stop();
         }
 
         public override void Update()// Vector2 formPosition, Vector2 formSize )
@@ -167,37 +183,73 @@ namespace SmartTank.Draw.UI.Controls
             if (bHasFocus)
             {
                 ks = Keyboard.GetState();
-
+               
                 //Text keys
                 bool bFoundKey = false;
+                bInputKeyDown = false;
+                bool NoPress = true;
                 foreach (Keys thisKey in textKeys)
                 {
+                    bFoundKey = false;
+                    for (int i = 0; i < pressedKeys.Count; i++)
+                    {
+                        if (pressedKeys[i] == thisKey)
+                            bFoundKey = true;
+                    }
+                    
                     if (ks.IsKeyDown( thisKey ))
                     {
-                        for (int i = 0; i < pressedKeys.Count; i++)
-                        {
-                            if (pressedKeys[i] == thisKey)
-                                bFoundKey = true;
-                        }
+
 
                         if (!bFoundKey)
                         {
+                            bInputEnable = false;
+                            keyTimerLong.Start();
+
                             bInputKeyDown = true;
-                            OnKeyPress( thisKey, null );
+                            OnKeyPress(thisKey, null);
                         }
+                        else
+                        {
+                            if (bInputEnable)
+                            {
+                                bInputEnable = false;
+                                keyTimerShort.Start();
+
+                                bInputKeyDown = true;
+                                OnKeyPress(thisKey, null);
+                            }
+                        }
+                        NoPress = false;
                     }
                     else
                     {
-                        for (int i = 0; i < pressedKeys.Count; i++)
+                        if (bFoundKey)
                         {
-                            if (thisKey == pressedKeys[i])
-                                pressedKeys.RemoveAt( i );
+                            bInputEnable = false;
+                            keyTimerLong.Start();
+
+                            for (int i = 0; i < pressedKeys.Count; i++)
+                            {
+                                if (thisKey == pressedKeys[i])
+                                    pressedKeys.RemoveAt(i);
+                            }
                         }
+                        
+
                     }
                 }
-
-                if (!bFoundKey && bInputKeyDown)
+                if (NoPress)
+                {
+                    
                     bInputKeyDown = false;
+
+                    if (!bBackspaceDown && !bDeleteKey && !bLeftKey && !bRightKey)
+                    {
+                        bInputEnable = true;
+                    }
+                }
+                
 
                 //Backspace
                 if (ks.IsKeyDown( Keys.Back ))
@@ -206,32 +258,67 @@ namespace SmartTank.Draw.UI.Controls
                     if (!bBackspaceDown)
                     {
                         bBackspaceDown = true;
+
+                        bInputEnable = false;
+                        keyTimerLong.Start();
                         if (cursorPos > 0 && cursorPos < text.Length + 1)
                         {
                             Backspace();
                         }
                     }
+                    else
+                    {
+                        if (bInputEnable)
+                        {
+                            bInputEnable = false;
+                            keyTimerShort.Start();
+                            if (cursorPos > 0 && cursorPos < text.Length + 1)
+                            {
+                                Backspace();
+                            }
+                        }
+                    }
                 }
-                else if (ks.IsKeyUp( Keys.Back ) && bBackspaceDown)
+                else if (ks.IsKeyUp(Keys.Back) && bBackspaceDown)
+                {
                     bBackspaceDown = false;
+                    bInputEnable = true;
+                }
 
                 //Delete
                 if (ks.IsKeyDown( Keys.Delete ))
                 {
                     if (!bDeleteKey)
                     {
+                        bInputEnable = false;
+                        keyTimerLong.Start();
                         bDeleteKey = true;
                         if (cursorPos < text.Length)
                             Remove();
                     }
+                    else
+                    {
+                        if (bInputEnable)
+                        {
+                            bInputEnable = false;
+                            keyTimerShort.Start();
+                            if (cursorPos < text.Length)
+                                Remove();                            
+                        }
+                    }
                 }
                 else if (bDeleteKey)
+                {
+                    bInputEnable = true;
                     bDeleteKey = false;
+                }
 
-                if (ks.IsKeyUp( Keys.Left ))
+                if (ks.IsKeyDown( Keys.Left ))
                 {
                     if (!bLeftKey)
                     {
+                        bInputEnable = false;
+                        keyTimerLong.Start();
                         bLeftKey = true;
                         if (cursorPos > 0)
                         {
@@ -241,14 +328,35 @@ namespace SmartTank.Draw.UI.Controls
                             bCursorVisible = true;
                         }
                     }
+                    else
+                    {
+                        if (bInputEnable)
+                        {
+                            bInputEnable = false;
+                            keyTimerShort.Start();
+                            if (cursorPos > 0)
+                            {
+                                cursorPos -= 1;
+                                if (cursorPos == startIndex - 1 && startIndex > 0)
+                                    startIndex -= 1;
+                                bCursorVisible = true;
+                            }
+                        }
+                    
+                    }
                 }
                 else if (bLeftKey)
+                {
+                    bInputEnable = true;
                     bLeftKey = false;
+                }
 
-                if (ks.IsKeyUp( Keys.Right ))
+                if (ks.IsKeyDown( Keys.Right ))
                 {
                     if (!bRightKey)
                     {
+                        bInputEnable = false;
+                        keyTimerLong.Start();
                         bRightKey = true;
                         if (cursorPos < text.Length)
                         {
@@ -258,9 +366,27 @@ namespace SmartTank.Draw.UI.Controls
                             bCursorVisible = true;
                         }
                     }
+                    else
+                    {
+                        if (bInputEnable)
+                        {
+                            bInputEnable = false;
+                            keyTimerShort.Start();
+                            if (cursorPos < text.Length)
+                            {
+                                cursorPos += 1;
+                                if (cursorPos > startIndex + visibleChar)
+                                    startIndex += 1;
+                                bCursorVisible = true;
+                            }
+                        }
+                    }
                 }
                 else if (bRightKey)
+                {
+                    bInputEnable = true;
                     bRightKey = false;
+                }
 
                 if (ks.IsKeyDown( Keys.Home ))
                 {
@@ -304,15 +430,15 @@ namespace SmartTank.Draw.UI.Controls
         {
             if (obj != null)
             {
-                bInputKeyDown = true;
+                //bInputKeyDown = true;
                 Keys currentKey = (Keys)obj;
 
-                bool bNewKey = true;
-                for (int i = 0; i < pressedKeys.Count; i++)
-                    if (currentKey == pressedKeys[i])
-                        bNewKey = false;
+                //bool bNewKey = true;
+                //for (int i = 0; i < pressedKeys.Count; i++)
+                //    if (currentKey == pressedKeys[i])
+                //        bNewKey = false;
 
-                if (bNewKey)
+                //if (bNewKey)
                 {
                     pressedKeys.Add( currentKey );
                     string[] strSplit = new string[2];
@@ -414,9 +540,13 @@ namespace SmartTank.Draw.UI.Controls
             Color dynamicColor = new Color( new Vector4( color.ToVector3().X, color.ToVector3().Y, color.ToVector3().Z, alpha ) );
             Color dynamicTextColor = new Color( new Vector4( textColor.ToVector3().X, textColor.ToVector3().Y, textColor.ToVector3().Z, alpha ) );
 
-            spriteBatch.Draw( parts[0], position, dynamicColor );
-            spriteBatch.Draw( parts[1], middlePartRect, dynamicColor );
-            spriteBatch.Draw( parts[2], position + new Vector2( parts[0].Width + middlePartRect.Width, 0f ), dynamicColor );
+            //spriteBatch.Draw( parts[0], position, dynamicColor );
+            //spriteBatch.Draw( parts[1], middlePartRect, dynamicColor );
+            //spriteBatch.Draw( parts[2], position + new Vector2( parts[0].Width + middlePartRect.Width, 0f ), dynamicColor );
+            spriteBatch.Draw(parts[0], position, new Rectangle(0, 0, parts[0].Width, parts[0].Height), dynamicColor, 0, Vector2.Zero, 1, SpriteEffects.None, LayerDepth.UI);
+            spriteBatch.Draw(parts[1], position + new Vector2(parts[0].Width, 0), new Rectangle(0, 0, middlePartRect.Width, middlePartRect.Height), dynamicColor, 0, Vector2.Zero, 1, SpriteEffects.None, LayerDepth.UI);
+            spriteBatch.Draw(parts[2], position + new Vector2(parts[0].Width + middlePartRect.Width, 0f), new Rectangle(0, 0, parts[2].Width, parts[2].Height), dynamicColor, 0, Vector2.Zero, 1, SpriteEffects.None, LayerDepth.UI);
+
 
             if (text.Length >= visibleChar)
             {
@@ -429,24 +559,27 @@ namespace SmartTank.Draw.UI.Controls
                 startIndex = 0;
                 endIndex = text.Length;
             }
-
+            //BaseGame.FontMgr.DrawInScrnCoord(
             string visibleText = text.Substring( startIndex, endIndex );
             if (BaseGame.FontMgr.LengthOfString( visibleText, Control.fontScale, Control.fontName ) > width)
                 visibleText = text.Substring( startIndex, endIndex - 1 );
 
             //font.Draw( text.Substring( startIndex, endIndex ), position + new Vector2( 5f, 4f ), 1f, dynamicTextColor, spriteBatch );
-            BaseGame.FontMgr.DrawInScrnCoord( text.Substring( startIndex, endIndex ), position + new Vector2( 5f, 4f ), Control.fontScale, dynamicTextColor, 0f, Control.fontName );
 
+
+            {
+                BaseGame.FontMgr.DrawInScrnCoord(text.Substring(startIndex, endIndex), position + new Vector2(5f, 1f), Control.fontScale, dynamicTextColor, 0f, Control.fontName);
+            }
             if (bHasFocus)
             {
                 if (bCursorVisible)
                 {
                     if (cursorPos - startIndex >= 0 && cursorPos - startIndex <= text.Length)
                         //    font.Draw( "|", position + new Vector2( font.Measure( text.Substring( startIndex, cursorPos - startIndex ), 1f ), 3f ), 1f, dynamicTextColor, spriteBatch );
-                        BaseGame.FontMgr.DrawInScrnCoord( "|", position + new Vector2( BaseGame.FontMgr.LengthOfString( text.Substring( startIndex, cursorPos - startIndex ), Control.fontScale, Control.fontName ) + 5f, 3f ), 0.7f, dynamicTextColor, 0f, Control.fontName );
+                        BaseGame.FontMgr.DrawInScrnCoord( "|", position + new Vector2( BaseGame.FontMgr.LengthOfString( text.Substring( startIndex, cursorPos - startIndex ), Control.fontScale, Control.fontName ) + 5f, -3f ), 0.7f, dynamicTextColor, 0f, Control.fontName );
                     else
                         //    font.Draw( "|", position + new Vector2( 0f, 3f ), 1f, dynamicTextColor, spriteBatch );
-                        BaseGame.FontMgr.DrawInScrnCoord( "|", position + new Vector2( 0f, 3f ), Control.fontScale, dynamicTextColor, 0f, Control.fontName );
+                        BaseGame.FontMgr.DrawInScrnCoord( "|", position + new Vector2( 0f, -3f ), Control.fontScale, dynamicTextColor, 0f, Control.fontName );
                 }
             }
 
