@@ -31,6 +31,11 @@ namespace SmartTank.Helpers
             get { return Path.Combine( ContentDirectory, "Font" ); }
         }
 
+        public static string BgContent
+        {
+            get { return Path.Combine(ContentDirectory, "BackGround"); }
+        }
+
         public static string UIContent
         {
             get { return Path.Combine( ContentDirectory, "UI" ); }
