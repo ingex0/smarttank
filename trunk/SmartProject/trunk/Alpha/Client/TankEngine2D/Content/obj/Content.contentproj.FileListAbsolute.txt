@@ -1,1 +1,2 @@
 D:\myProgram\AI_Tank\AI_Tank2.0\SmartTank2.0\svn\Version2.0\SmartTank\TankEngine2D\Content\obj\x86\Debug\ResolveAssemblyReference.cache
+F:\Documents and Settings\seekyao\My Documents\SVN\trunk\Alpha\Client\TankEngine2D\Content\obj\x86\Debug\ResolveAssemblyReference.cache
