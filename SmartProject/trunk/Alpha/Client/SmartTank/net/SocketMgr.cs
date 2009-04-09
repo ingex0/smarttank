@@ -19,14 +19,14 @@ namespace SmartTank.net
 
 
     [StructLayoutAttribute(LayoutKind.Sequential, CharSet = CharSet.Ansi, Pack = 1)]
-    struct stPakage
+    public struct stPkgHead
     {
         static public int Size = 8;
-        static public int MaxDataSize = 1028;
-        static public int TotolSize
-        {
-            get { return Size + MaxDataSize; }
-        }
+        //static public int MaxDataSize = 1028;
+        //static public int TotolSize
+        //{
+        //    get { return Size + MaxDataSize; }
+        //}
 
 
         public int iSytle;
@@ -108,7 +108,7 @@ namespace SmartTank.net
             }
         }
 
-        static public void SendPackge(SyncCashe cash)
+        static public void SendGameLogicPackge(SyncCashe cash)
         {
             try
             {
@@ -120,8 +120,8 @@ namespace SmartTank.net
                     {
 
                         // Head
-                        stPakage pkg = new stPakage();
-                        pkg.iSytle = (int)PACKAGE_SYTLE.DATA;
+                        stPkgHead head = new stPkgHead();
+                        head.iSytle = (int)PACKAGE_SYTLE.DATA;
 
                         MemoryStream MStream = new MemoryStream();
                         StreamWriter SW = new StreamWriter(MStream);
@@ -171,11 +171,43 @@ namespace SmartTank.net
 
                         SW.Flush();
                         int dataLength = (int)SW.BaseStream.Length;
-                        pkg.dataSize = dataLength;
-                        netStream.Write(StructToBytes(pkg), 0, stPakage.Size);
+                        head.dataSize = dataLength;
+                        netStream.Write(StructToBytes(head), 0, stPkgHead.Size);
                         MStream.WriteTo(netStream);
 
-                        Console.WriteLine("Send " + pkg.dataSize);
+                        // 释放资源
+                        SW.Close();
+                        MStream.Close();
+
+                        Console.WriteLine("Send " + head.iSytle + " " + head.dataSize);
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.ToString());
+                return;
+            }
+
+        }
+
+        static public void SendCommonPackeg(stPkgHead head, MemoryStream data)
+        {
+            if (head.dataSize != 0 && (data == null || head.dataSize != data.Length))
+                throw new Exception("发送的包头有误");
+
+            try
+            {
+                if (client.Connected)
+                {
+                    Stream netStream = client.GetStream();
+
+                    if (netStream.CanWrite)
+                    {
+                        netStream.Write(StructToBytes(head), 0, stPkgHead.Size);
+                        data.WriteTo(netStream);
+
+                        Console.WriteLine("Send " + head.iSytle + " " + head.dataSize);
                     }
                 }
             }
@@ -187,7 +219,6 @@ namespace SmartTank.net
         }
 
 
-
         static public void ReceivePackge(object obj)
         {
             SyncCashe cashe = (SyncCashe)obj;
@@ -197,12 +228,12 @@ namespace SmartTank.net
                 {
                     if (client.Connected)
                     {
-                        byte[] buffer = new byte[stPakage.Size];
+                        byte[] buffer = new byte[stPkgHead.Size];
                         Stream netStream = client.GetStream();
 
                         // 这里要确保每次读一个整包
-                        netStream.Read(buffer, 0, stPakage.Size);
-                        stPakage pkg = (stPakage)BytesToStuct(buffer, typeof(stPakage));
+                        netStream.Read(buffer, 0, stPkgHead.Size);
+                        stPkgHead pkg = (stPkgHead)BytesToStuct(buffer, typeof(stPkgHead));
 
                         Console.WriteLine("ReceiveDataPkg:");
                         Console.WriteLine("Sytle : " + pkg.iSytle);
@@ -395,9 +426,9 @@ namespace SmartTank.net
         {
             if (client.Connected)
             {
-                stPakage pkg = new stPakage();
+                stPkgHead pkg = new stPkgHead();
                 pkg.iSytle = (int)PACKAGE_SYTLE.EXIT;
-                client.GetStream().Write(StructToBytes(pkg), 0, stPakage.Size);
+                client.GetStream().Write(StructToBytes(pkg), 0, stPkgHead.Size);
             }
             return true;
         }

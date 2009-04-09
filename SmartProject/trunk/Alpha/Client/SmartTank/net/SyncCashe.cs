@@ -130,7 +130,7 @@ namespace SmartTank.net
         {
             if (!IsCasheEmpty)
             {
-                SocketMgr.SendPackge(this);
+                SocketMgr.SendGameLogicPackge(this);
                 ClearAllList();
             }
         }
