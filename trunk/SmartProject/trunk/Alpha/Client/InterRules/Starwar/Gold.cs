@@ -5,118 +5,41 @@ using SmartTank.GameObjs;
 using SmartTank.PhiCol;
 using TankEngine2D.Graphics;
 using Microsoft.Xna.Framework;
+using SmartTank.GameObjs.Item;
+using SmartTank;
+using SmartTank.Helpers;
+using System.IO;
 
 namespace InterRules.Starwar
 {
-    class ItemStatic : IGameObj, ICollideObj, IColChecker
+    class Gold : ItemStatic
     {
-        public event OnCollidedEventHandler OnCollide;
-        public event OnCollidedEventHandler OnOverLap;
+        AnimatedSpriteSeries animate;
 
-        protected SpriteColMethod colMethod;
-        protected Sprite sprite;
-
-        protected void Initialize()
+        public Gold(string name,Vector2 pos,float azi)
         {
+            this.name = name;
+            this.objInfo = new GameObjInfo("Gold", "");
+            this.pos = pos;
+            this.azi = azi;
 
+            LoadResource(pos, azi);
         }
 
-        #region ICollideObj 成员
-
-        public IColChecker ColChecker
+        private void LoadResource(Vector2 pos, float azi)
         {
-            get { return this; }
+            animate = new AnimatedSpriteSeries(BaseGame.RenderEngine);
+            animate.LoadSeriesFromFiles(BaseGame.RenderEngine,Path.Combine( Directories.ContentDirectory ,"Rules\\SpaceWar\\image"),"field_coin_001",".png",
         }
 
-        #endregion
-
-        #region IGameObj 成员
-
-        protected float azi;
-        public float Azi
-        {
-            get { return azi; }
-        }
-
-        protected string mgPath;
-        public string MgPath
-        {
-            get
-            {
-                return mgPath;
-            }
-            set
-            {
-                mgPath = value;
-            }
-        }
-
-        protected string name;
-        public string Name
-        {
-            get { return name; }
-        }
-
-        protected GameObjInfo objInfo;
-        public GameObjInfo ObjInfo
-        {
-            get { return objInfo; }
-        }
-
-        protected Vector2 pos;
-        public Microsoft.Xna.Framework.Vector2 Pos
-        {
-            get
-            {
-                return pos;
-            }
-            set
-            {
-                pos = value;
-            }
-        }
-
-        #endregion
-
-        #region IUpdater 成员
-
-        public void Update(float seconds)
+        public override void Update(float seconds)
         {
         }
 
-        #endregion
-
-        #region IDrawableObj 成员
-
-        public void Draw()
+        public override void Draw()
         {
+            
         }
 
-        #endregion
-
-        #region IColChecker 成员
-
-        public void ClearNextStatus()
-        {
-        }
-
-        public IColMethod CollideMethod
-        {
-            get { return colMethod; }
-        }
-
-        public void HandleCollision(TankEngine2D.Graphics.CollisionResult result, ICollideObj objB)
-        {
-            if (OnCollide != null)
-                OnCollide(this, result, (objB as IGameObj).ObjInfo);
-        }
-
-        public void HandleOverlap(TankEngine2D.Graphics.CollisionResult result, ICollideObj objB)
-        {
-            if (OnOverLap != null)
-                OnOverLap(this, result, (objB as IGameObj).ObjInfo);
-        }
-
-        #endregion
     }
 }

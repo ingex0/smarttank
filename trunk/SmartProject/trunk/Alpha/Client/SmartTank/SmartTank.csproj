@@ -162,6 +162,7 @@
     <Compile Include="GameManager.cs">
       <Name>GameManager</Name>
     </Compile>
+    <Compile Include="GameObjs\Item\ItemStatic.cs" />
     <Compile Include="net\InfoRePath.cs" />
     <Compile Include="net\Protocol.cs" />
     <Compile Include="net\PurviewMgr.cs" />

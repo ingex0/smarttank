@@ -170,7 +170,8 @@ namespace SmartTank.net
                         }
 
                         SW.Flush();
-                        int dataLength = (int)SW.BaseStream.Length;
+                        int dataLength = (int)MStream.Length;
+                        //int dataLength = (int)SW.BaseStream.Length;
                         head.dataSize = dataLength;
                         netStream.Write(StructToBytes(head), 0, stPkgHead.Size);
                         MStream.WriteTo(netStream);
