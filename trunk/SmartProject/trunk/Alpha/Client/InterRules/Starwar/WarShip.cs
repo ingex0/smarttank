@@ -44,7 +44,7 @@ namespace InterRules.Starwar
 
         public readonly float cRootTwoDivideTwo = (float)(Math.Sqrt(2) * 0.5f);
 
-        protected Vector2 curSpeed = new Vector2(0, 0);
+        //protected Vector2 curSpeed = new Vector2(0, 0);
 
         protected int curHP = SpaceWarConfig.IniHP;
         protected bool isDead = false;
@@ -54,7 +54,19 @@ namespace InterRules.Starwar
         protected float stillTimer = 0;
         protected float wtfTimer = 0;
         protected float shootTimer = 0;
+        protected int score = 0;
 
+        public int Score
+        {
+            get { return score; }
+            set { score = value; }
+        }
+
+        public Vector2 Vel
+        {
+            get { return phisicalUpdater.Vel; }
+            set { phisicalUpdater.Vel = value; }
+        }
 
         public int HP
         {
@@ -204,13 +216,13 @@ namespace InterRules.Starwar
 
                 if (!noInput)
                 {
-                    phisicalUpdater.Azi = MathTools.AziFromRefPos(curSpeed);
+                    phisicalUpdater.Azi = MathTools.AziFromRefPos(Vel);
                     deltaSpeed *= seconds * accel;
-                    curSpeed += deltaSpeed;
-                    float SpeedAbs = curSpeed.Length();
+                    Vel += deltaSpeed;
+                    float SpeedAbs = Vel.Length();
                     if (SpeedAbs > maxSpeed)
                     {
-                        curSpeed *= maxSpeed / SpeedAbs;
+                        Vel *= maxSpeed / SpeedAbs;
                     }
                 }
                 else // 衰减
@@ -218,10 +230,10 @@ namespace InterRules.Starwar
                     // 假设时间间隔是均匀的，并且间隔很小。
                     if (SpaceWarConfig.SpeedDecay * seconds < 1)
                     {
-                        curSpeed *= (1 - SpaceWarConfig.SpeedDecay * seconds);
+                        Vel *= (1 - SpaceWarConfig.SpeedDecay * seconds);
                     }
                 }
-                phisicalUpdater.Vel = curSpeed;
+                phisicalUpdater.Vel = Vel;
             }
         }
 
@@ -389,7 +401,7 @@ namespace InterRules.Starwar
         {
             if (isDead)
             {
-                
+
             }
             else if (stillTimer >= 0)
             {
