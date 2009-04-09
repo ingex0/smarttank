@@ -84,6 +84,9 @@ namespace SmartTank.net
 
         static public bool ConnectToServer()
         {
+            if (client != null && client.Connected == true)
+                return true;
+
             try
             {
                 IPAddress IPAdd = IPAddress.Parse(config.ServerIP);
@@ -199,7 +202,7 @@ namespace SmartTank.net
 
             try
             {
-                if (client.Connected)
+                if (client != null && client.Connected)
                 {
                     Stream netStream = client.GetStream();
 
