@@ -22,3 +22,9 @@ ShellLiveTime=10
 //金币属性
 GoldScore=12
 GoldLiveTime=30
+
+//场景物体属性
+RockCreateTime=4
+RockMinSpeed=50
+RockMaxSpeed=200
+RockMaxAziSpeed=3.14

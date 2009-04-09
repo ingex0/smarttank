@@ -25,6 +25,14 @@ namespace InterRules.Starwar
         public static int ShellSpeed;
         public static int ShellLiveTime;
 
+        public static int GoldScore;
+        public static float GoldLiveTime;
+
+        public static float RockCreateTime;
+        public static float RockMinSpeed;
+        public static float RockMaxSpeed;
+        public static float RockMaxAziSpeed;
+
         static public void LoadConfig()
         {
             FileStream confile = File.OpenRead("Content\\Rules\\SpaceWar\\WarShipConfig.txt");
@@ -50,7 +58,13 @@ namespace InterRules.Starwar
                     else if (line.StartsWith("ShootEndDest=")) SpaceWarConfig.ShootEndDest = int.Parse(line.Substring(13));
                     else if (line.StartsWith("ShellSpeed=")) SpaceWarConfig.ShellSpeed = int.Parse(line.Substring(11));
                     else if (line.StartsWith("ShellLiveTime=")) SpaceWarConfig.ShellLiveTime = int.Parse(line.Substring(14));
-
+                    else if (line.StartsWith("GoldScore=")) SpaceWarConfig.GoldScore = int.Parse(line.Substring(10));
+                    else if (line.StartsWith("GoldLiveTime=")) SpaceWarConfig.GoldLiveTime = float.Parse(line.Substring(13));
+                    else if (line.StartsWith("RockCreateTime=")) SpaceWarConfig.RockCreateTime = float.Parse(line.Substring(15));
+                    else if (line.StartsWith("RockMinSpeed=")) SpaceWarConfig.RockMinSpeed = float.Parse(line.Substring(13));
+                    else if (line.StartsWith("RockMaxSpeed=")) SpaceWarConfig.RockMaxSpeed = float.Parse(line.Substring(13));
+                    else if (line.StartsWith("RockMaxAziSpeed=")) SpaceWarConfig.RockMaxAziSpeed = float.Parse(line.Substring(16));
+                    
                 }
             }
             catch (Exception ex)

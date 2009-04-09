@@ -57,6 +57,7 @@
     <Compile Include="ShootTheBall\AutoShootAI.cs" />
     <Compile Include="ShootTheBall\ShootTheBallRule.cs" />
     <Compile Include="Starwar\Gold.cs" />
+    <Compile Include="Starwar\Rock.cs" />
     <Compile Include="Starwar\SpaceWarConfig.cs" />
     <Compile Include="Starwar\StarwarRule.cs" />
     <Compile Include="Starwar\WarShip.cs" />

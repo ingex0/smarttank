@@ -200,13 +200,6 @@ namespace SmartTank.GameObjs.Item
 
         #endregion
 
-
-        #region IGameObj 成员
-
-
-
-        #endregion
-
         #region IGameObj 成员
 
         string mgPath;

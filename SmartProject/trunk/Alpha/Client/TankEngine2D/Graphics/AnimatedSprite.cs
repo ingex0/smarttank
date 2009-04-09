@@ -162,7 +162,10 @@ namespace TankEngine2D.Graphics
 
         #region StopShow
 
-        private void Stop ()
+        /// <summary>
+        /// 停止播放，并从管理器中删除
+        /// </summary>
+        public void Stop ()
         {
             mShowedFrame = 0;
             mCurFrameIndex = 0;
