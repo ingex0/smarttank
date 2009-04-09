@@ -22,14 +22,27 @@ using TankEngine2D.DataStructure;
 using SmartTank.Effects.SceneEffects;
 using SmartTank.Effects;
 using SmartTank.Sounds;
+using SmartTank.Draw.UI.Controls;
+using SmartTank.net;
+using System.Runtime.InteropServices;
 
 namespace InterRules.Starwar
 {
     [RuleAttribute("Starwar", "支持多人联机的空战规则", "编写组成员：...", 2009, 4, 8)]
-    public class StarwarRule : IGameRule
-    {
-        #region IGameRule 成员
 
+
+
+    class StarwarRule : IGameRule
+    {
+        [StructLayoutAttribute(LayoutKind.Sequential, CharSet = CharSet.Ansi, Pack = 1)]
+        struct LoginData
+        {
+            [MarshalAs(UnmanagedType.ByValArray, SizeConst = 21)]
+            public string Name;
+            [MarshalAs(UnmanagedType.ByValArray, SizeConst = 21)]
+            public string Password;
+        }
+        
         public string RuleIntroduction
         {
             get { return "20090328~20090417:编写组成员：..."; }
@@ -40,28 +53,98 @@ namespace InterRules.Starwar
             get { return "Starwar"; }
         }
 
-        #endregion
+        Texture2D bgTexture;
+
+        Rectangle bgRect;
+
+        SpriteBatch spriteBatch;
+
+        Textbox namebox, passbox;
+
+        TextButton btnOK;
+
+        int selectIndex = -1;
+
+        public StarwarRule()
+        {
+            BaseGame.ShowMouse = true;
+
+
+            bgTexture = BaseGame.ContentMgr.Load<Texture2D>(Path.Combine(Directories.BgContent, "login"));
+
+            bgRect = new Rectangle(0, 0, 800, 600);
+
+            
+
+            namebox = new Textbox("namebox", new Vector2(100, 200), 100, "", false);
+
+            passbox = new Textbox("namebox", new Vector2(100, 300), 100, "", false);
+
+
+            btnOK = new TextButton("OkBtn", new Vector2(700, 500), "Begin", 0, Color.Blue);
+            btnOK.OnClick += new EventHandler(btnOK_OnPress);
+        }
+
+        void btnOK_OnPress(object sender, EventArgs e)
+        {
+
+
+
+            LoginData data;
+
+            data.Name = namebox.text;
+            data.Password = passbox.text;
+
+
+
+
+        }
 
         #region IGameScreen 成员
 
-        public void OnClose()
-        {
-        }
-
-        public void Render()
-        {
-
-        }
-
         public bool Update(float second)
         {
-            if (InputHandler.IsKeyDown(Keys.L))
-                GameManager.AddGameScreen(new StarwarLogic());
+            
+            namebox.Update();
+            passbox.Update();
+            btnOK.Update();
+
+            //if (InputHandler.IsKeyDown(Keys.L))
+            //    GameManager.AddGameScreen(new StarwarLogic());
 
             if (InputHandler.IsKeyDown(Keys.Escape))
                 return true;
 
             return false;
+        }
+
+        public void Render()
+        {
+            //Color dynamicColor = new Color(new Vector4(color.ToVector3().X, color.ToVector3().Y, color.ToVector3().Z, alpha));
+            
+            BaseGame.Device.Clear(Color.LightSkyBlue);
+
+            spriteBatch = (SpriteBatch)BaseGame.SpriteMgr.alphaSprite;
+
+            spriteBatch.Draw(bgTexture, Vector2.Zero, bgRect, Color.White, 0, Vector2.Zero, 1, SpriteEffects.None, LayerDepth.BackGround); 
+
+            //spriteBatch.Draw(bgTexture, Vector2.Zero, Color.White);
+            //spriteBatch.Draw( parts[1], middlePartRect, dynamicColor );
+            //spriteBatch.Draw( parts[2], position + new Vector2( parts[0].Width + middlePartRect.Width, 0f ), dynamicColor );
+            
+            //spriteBatch.Draw(bgTexture, Vector2.Zero, 
+            //spriteBatch.Draw(
+            
+            //spriteBatch.Draw(bgTexture, Vector2.Zero, bgRect, Color.White, Vector2.Zero, new Vector2(0, 0), SpriteEffects.None, LayerDepth.BackGround);
+            //spriteBatch.Draw(bgTexture, bgRect, bgRect, Color.White, 0, Vector2.Zero, SpriteEffects.None, LayerDepth.BackGround);
+            namebox.Draw(BaseGame.SpriteMgr.alphaSprite, 1);
+            passbox.Draw(BaseGame.SpriteMgr.alphaSprite, 1);
+            btnOK.Draw(BaseGame.SpriteMgr.alphaSprite, 1);
+        }
+
+        public void OnClose()
+        {
+
         }
 
         #endregion
@@ -71,9 +154,6 @@ namespace InterRules.Starwar
     class StarwarLogic : RuleSupNet, IGameScreen
     {
         WarShip[] ships = new WarShip[6];
-        Gold gold;
-        List<Rock> rocks = new List<Rock>();
-        int rockCount = 0;
 
         Rectanglef mapRect = new Rectanglef(0, 0, 1600, 1200);
         Camera camera;
@@ -82,13 +162,6 @@ namespace InterRules.Starwar
 
         int shellcount = 0;
 
-        Rectanglef RockCreateRect = new Rectanglef(-100, -100, 1800, 1400);
-        float rockTimer = 0;
-
-        public Vector2 MapCenterPos
-        {
-            get { return new Vector2(mapRect.X + mapRect.Width / 2, mapRect.Y + mapRect.Height / 2); }
-        }
 
         public StarwarLogic()
         {
@@ -118,67 +191,23 @@ namespace InterRules.Starwar
             ships[0].OnShoot += new WarShip.WarShipShootEventHandler(WarShip_OnShoot);
             ships[0].OnDead += new WarShip.WarShipDeadEventHandler(Warship_OnDead);
 
-            gold = new Gold("gold", new Vector2(800, 600), 0);
-            gold.OnOverLap += new OnCollidedEventHandler(Gold_OnOverLap);
-            gold.OnLiveTimeOut += new Gold.GoldLiveTimeOutEventHandler(Gold_OnLiveTimeOut);
-
             sceneMgr = new SceneMgr();
-
 
             sceneMgr.AddGroup("", new TypeGroup<WarShip>("warship"));
             sceneMgr.AddGroup("", new TypeGroup<WarShipShell>("shell"));
             sceneMgr.AddGroup("", new TypeGroup<SmartTank.PhiCol.Border>("border"));
-            sceneMgr.AddGroup("", new TypeGroup<Gold>("gold"));
-            sceneMgr.AddGroup("", new TypeGroup<Rock>("rock"));
+
 
             sceneMgr.PhiGroups.Add("warship");
             sceneMgr.PhiGroups.Add("shell");
             sceneMgr.AddColMulGroups("warship", "shell", "border");
-            sceneMgr.AddColMulGroups("warship", "shell", "rock");
-            sceneMgr.AddColMulGroups("warship");
-            sceneMgr.AddColMulGroups("rock");
-
-            sceneMgr.AddLapMulGroups("warship", "gold");
 
             sceneMgr.AddGameObj("warship", ships[0]);
             sceneMgr.AddGameObj("border", new SmartTank.PhiCol.Border(mapRect));
-            sceneMgr.AddGameObj("gold", gold);
 
             GameManager.LoadScene(sceneMgr);
 
             camera.Focus(ships[0], false);
-        }
-
-        void Gold_OnLiveTimeOut(Gold sender)
-        {
-            SetGoldNewPos(sender);
-        }
-
-        void Gold_OnOverLap(IGameObj Sender, CollisionResult result, GameObjInfo objB)
-        {
-            SetGoldNewPos(Sender as Gold);
-        }
-
-        private void SetGoldNewPos(Gold Sender)
-        {
-            while (true)
-            {
-                Vector2 pos = RandomHelper.GetRandomVector2(0, 1);
-                pos.X *= mapRect.Width - 200;
-                pos.Y *= mapRect.Height - 200;
-                pos += new Vector2(100, 100);
-
-                if (CanAddObjAtPos(pos))
-                {
-                    Sender.Born(pos);
-                    break;
-                }
-            }
-        }
-
-        private bool CanAddObjAtPos(Vector2 pos)
-        {
-            return true;
         }
 
         void Warship_OnDead(WarShip sender)
@@ -266,8 +295,6 @@ namespace InterRules.Starwar
 
             DeleteOutDateShells();
 
-            CreateDelRock(second);
-
             if (InputHandler.IsKeyDown(Microsoft.Xna.Framework.Input.Keys.Escape))
             {
                 GameManager.ComponentReset();
@@ -276,72 +303,6 @@ namespace InterRules.Starwar
             else
                 return false;
         }
-
-        private void CreateDelRock(float second)
-        {
-            rockTimer += second;
-            if (rockTimer > SpaceWarConfig.RockCreateTime)
-            {
-                rockTimer = 0;
-
-                CreateRock();
-            }
-
-            List<Rock> delRocks = new List<Rock>();
-
-            foreach (Rock rock in rocks)
-            {
-                if (rock.Pos.X < RockCreateRect.X
-                    || rock.Pos.X > RockCreateRect.X + RockCreateRect.Width
-                    || rock.Pos.Y < RockCreateRect.Y
-                    || rock.Pos.Y > RockCreateRect.Y + RockCreateRect.Height)
-                {
-                    delRocks.Add(rock);
-                }
-            }
-
-            foreach (Rock rock in delRocks)
-            {
-                sceneMgr.DelGameObj("rock", rock.Name);
-                rocks.Remove(rock);
-            }
-        }
-
-        private void CreateRock()
-        {
-            Vector2 newPos = new Vector2();
-            while (true)
-            {
-                newPos = RandomHelper.GetRandomVector2(-100, 100);
-                if (newPos.X < 0)
-                    newPos.X -= mapRect.X;
-                else 
-                    newPos.X += mapRect.Width + mapRect.X;
-
-                if (newPos.Y < 0)
-                    newPos.Y -= mapRect.Y;
-                else
-                    newPos.Y += mapRect.Y + mapRect.Height;
-                if (CanAddObjAtPos(newPos))
-                    break;
-
-            }
-            float speed = RandomHelper.GetRandomFloat(SpaceWarConfig.RockMinSpeed, SpaceWarConfig.RockMaxSpeed);
-            Vector2 way = Vector2.Normalize(MapCenterPos - newPos);
-            Vector2 delta = RandomHelper.GetRandomVector2(-0.7f, 0.7f);
-            Vector2 Vel = Vector2.Normalize(way + delta) * speed;
-
-            float aziVel = RandomHelper.GetRandomFloat(0, SpaceWarConfig.RockMaxAziSpeed);
-            float scale = RandomHelper.GetRandomFloat(0.4f,1.4f);
-            int kind = RandomHelper.GetRandomInt(0,((int)RockTexNo.Max)-1);
-
-            Rock newRock = new Rock("Rock" + rockCount, newPos, Vel, aziVel, scale, (RockTexNo)kind);
-            sceneMgr.AddGameObj("rock", newRock);
-            rocks.Add(newRock);
-
-            rockCount++;
-        }
-
 
         private void DeleteOutDateShells()
         {
