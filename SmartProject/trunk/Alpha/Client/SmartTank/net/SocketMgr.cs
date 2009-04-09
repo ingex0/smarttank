@@ -205,7 +205,8 @@ namespace SmartTank.net
                     if (netStream.CanWrite)
                     {
                         netStream.Write(StructToBytes(head), 0, stPkgHead.Size);
-                        data.WriteTo(netStream);
+                        if (data != null)
+                            data.WriteTo(netStream);
 
                         Console.WriteLine("Send " + head.iSytle + " " + head.dataSize);
                     }
