@@ -191,7 +191,7 @@ namespace SmartTank.net
 
         }
 
-        static public void SendCommonPackeg(stPkgHead head, MemoryStream data)
+        static public void SendCommonPackge(stPkgHead head, MemoryStream data)
         {
             if (head.dataSize != 0 && (data == null || head.dataSize != data.Length))
                 throw new Exception("发送的包头有误");
