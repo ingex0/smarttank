@@ -168,7 +168,7 @@ namespace InterRules.Starwar
             rankList.Update();
 
             if (InputHandler.IsKeyDown(Keys.L))
-                GameManager.AddGameScreen(new StarwarLogic());
+                GameManager.AddGameScreen(new StarwarLogic(0));
 
             if (InputHandler.IsKeyDown(Keys.Escape))
                 return true;
