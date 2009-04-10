@@ -60,7 +60,7 @@ namespace SmartTank.net
         /// <summary>
         /// 初始化，读配置文件
         /// </summary>
-        internal static void Initial()
+        public static void Initial()
         {
             ReadConfig();
         }
