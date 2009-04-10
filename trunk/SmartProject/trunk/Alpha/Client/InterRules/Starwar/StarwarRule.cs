@@ -43,6 +43,8 @@ namespace InterRules.Starwar
             [MarshalAs(UnmanagedType.ByValArray, SizeConst = 21)]
             public char[] Password;
         }
+
+
         
         public string RuleIntroduction
         {
@@ -71,7 +73,7 @@ namespace InterRules.Starwar
             BaseGame.ShowMouse = true;
 
 
-            //bgTexture = BaseGame.ContentMgr.Load<Texture2D>(Path.Combine(Directories.BgContent, "login"));
+            bgTexture = BaseGame.ContentMgr.Load<Texture2D>(Path.Combine(Directories.BgContent, "login"));
 
             bgRect = new Rectangle(0, 0, 800, 600);
 
@@ -123,6 +125,8 @@ namespace InterRules.Starwar
             SocketMgr.ConnectToServer();
             SocketMgr.SendCommonPackge(head, Stream);
             Stream.Close();
+
+            //GameManager.AddGameScreen(new Hall());
         }
 
         #region IGameScreen ≥…‘±
@@ -135,7 +139,7 @@ namespace InterRules.Starwar
             btnOK.Update();
 
             if (InputHandler.IsKeyDown(Keys.L))
-                GameManager.AddGameScreen(new StarwarLogic());
+                GameManager.AddGameScreen(new Hall());
 
             if (InputHandler.IsKeyDown(Keys.Escape))
                 return true;
@@ -147,6 +151,7 @@ namespace InterRules.Starwar
         {   
             BaseGame.Device.Clear(Color.LightSkyBlue);
             spriteBatch = (SpriteBatch)BaseGame.SpriteMgr.alphaSprite;
+            spriteBatch.Draw(bgTexture, Vector2.Zero, bgRect, Color.White, 0, Vector2.Zero, 1, SpriteEffects.None, LayerDepth.BackGround); 
             namebox.Draw(BaseGame.SpriteMgr.alphaSprite, 1);
             passbox.Draw(BaseGame.SpriteMgr.alphaSprite, 1);
             btnOK.Draw(BaseGame.SpriteMgr.alphaSprite, 1);
