@@ -306,7 +306,7 @@ namespace InterRules.Starwar
             }
         }
 
-        const float phiSyncTime = 1;
+        const float phiSyncTime = 0.1f;
 
         private void InitialBackGround()
         {
