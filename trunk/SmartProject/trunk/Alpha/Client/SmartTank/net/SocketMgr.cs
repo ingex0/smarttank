@@ -46,6 +46,9 @@ namespace SmartTank.net
 
     static public class SocketMgr
     {
+        public delegate void ReceivePkgEventHandler(stPkgHead head, MemoryStream mStream);
+        public static event ReceivePkgEventHandler OnReceivePkg;
+
         static SocketConfig config;
         static TcpClient client;
         //static Socket sckt;
@@ -172,6 +175,19 @@ namespace SmartTank.net
                             }
                         }
 
+                        // 用户自定义数据
+                        SW.WriteLine(cash.UserDefineInfoList.Count);
+                        foreach (UserDefineInfo info in cash.UserDefineInfoList)
+                        {
+                            SW.WriteLine(info.infoName);
+                            SW.WriteLine(info.infoID);
+                            SW.WriteLine(info.args.Length);
+                            foreach (object obj in info.args)
+                            {
+                                WriteObjToStream(SW, obj);
+                            }
+                        }
+
                         SW.Flush();
                         int dataLength = (int)MStream.Length;
                         //int dataLength = (int)SW.BaseStream.Length;
@@ -222,7 +238,6 @@ namespace SmartTank.net
                 return;
             }
         }
-
 
         static public void ReceivePackge(object obj)
         {
@@ -372,6 +387,31 @@ namespace SmartTank.net
 
                                 }
 
+                                // 用户自定义数据
+                                temp = SR.ReadLine();
+                                int UserDefinCount = int.Parse(temp);
+                                for (int i = 0; i < UserDefinCount; i++)
+                                {
+                                    UserDefineInfo info = new UserDefineInfo();
+
+                                    temp = SR.ReadLine();
+                                    info.infoName = temp;
+                                    temp = SR.ReadLine();
+                                    info.infoID = temp;
+
+                                    temp = SR.ReadLine();
+                                    int valueCount = int.Parse(temp);
+
+                                    info.args = new object[valueCount];
+                                    for (int j = 0; j < valueCount; j++)
+                                    {
+                                        info.args[j] = ReadObjFromStream(SR);
+                                    }
+                                    Monitor.Enter(cashe);
+                                    cashe.UserDefineInfoList.Add(info);
+                                    Monitor.Exit(cashe);
+                                }
+
                             }
                             catch (Exception ex)
                             {
@@ -390,8 +430,14 @@ namespace SmartTank.net
                         {
                             if (pkg.dataSize < 1024 * 10 && pkg.dataSize >= 0)
                             {
+
                                 byte[] temp = new byte[pkg.dataSize];
                                 netStream.Read(temp, 0, pkg.dataSize);
+                                MemoryStream MStream = new MemoryStream(temp);
+                                if (OnReceivePkg != null)
+                                    OnReceivePkg(pkg, MStream);
+
+                                MStream.Close();
 
                             }
                             else

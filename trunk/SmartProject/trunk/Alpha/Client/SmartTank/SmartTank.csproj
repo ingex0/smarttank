@@ -243,6 +243,7 @@
     <Compile Include="PhiCol\IPhisicalObj.cs">
       <Name>IPhisicalObj</Name>
     </Compile>
+    <Compile Include="PhiCol\ISyncable.cs" />
     <Compile Include="PhiCol\PhiColMgr.cs">
       <Name>PhiColMgr</Name>
     </Compile>

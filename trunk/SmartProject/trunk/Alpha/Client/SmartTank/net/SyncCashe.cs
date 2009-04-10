@@ -33,6 +33,13 @@ namespace SmartTank.net
         public object[] args;
     };
 
+    struct UserDefineInfo
+    {
+        public string infoName;
+        public string infoID;
+        public object[] args;
+    }
+
     struct GameObjSyncInfo
     {
         public string MgPath;
@@ -49,6 +56,7 @@ namespace SmartTank.net
         List<ObjStatusSyncInfo> objStaInfoList = new List<ObjStatusSyncInfo>();
         List<ObjEventSyncInfo> objEventInfoList = new List<ObjEventSyncInfo>();
         List<ObjMgSyncInfo> objMgInfoList = new List<ObjMgSyncInfo>();
+        List<UserDefineInfo> userDefineInfoList = new List<UserDefineInfo>();
         internal List<ObjStatusSyncInfo> ObjStaInfoList
         {
             get { return objStaInfoList; }
@@ -61,6 +69,10 @@ namespace SmartTank.net
         {
             get { return objMgInfoList; }
         }
+        internal List<UserDefineInfo> UserDefineInfoList
+        {
+            get { return userDefineInfoList; }
+        }
 
         public bool IsCasheEmpty
         {
@@ -68,7 +80,8 @@ namespace SmartTank.net
             {
                 return objStaInfoList.Count == 0
                     && objEventInfoList.Count == 0
-                    && objMgInfoList.Count == 0;
+                    && objMgInfoList.Count == 0
+                    && userDefineInfoList.Count == 0;
             }
         }
 
@@ -86,7 +99,7 @@ namespace SmartTank.net
             ObjEventSyncInfo newEvent;
             newEvent.objMgPath = objMgPath;
             newEvent.EventName = EventName;
-            newEvent.values = values;
+            newEvent.values = ConvertObjArg(values);
             objEventInfoList.Add(newEvent);
         }
 
@@ -97,24 +110,13 @@ namespace SmartTank.net
             newObjMg.objType = objType.ToString();
             newObjMg.objMgKind = (int)ObjMgKind.Create;
 
-            object[] newparams = new object[args.Length];
-
-            for (int i = 0; i < args.Length; i++)
-            {
-                if (args[i] is IGameObj)
-                {
-                    newparams[i] = new GameObjSyncInfo(((IGameObj)args[i]).MgPath);
-                }
-                else
-                {
-                    newparams[i] = args[i];
-                }
-
-            }
+            object[] newparams = ConvertObjArg(args);
 
             newObjMg.args = newparams;
             objMgInfoList.Add(newObjMg);
         }
+
+
 
         internal void AddObjMgDeleteSyncInfo(string objPath)
         {
@@ -124,6 +126,15 @@ namespace SmartTank.net
             newObjMg.objType = null;
             newObjMg.args = new object[0];
             objMgInfoList.Add(newObjMg);
+        }
+
+        internal void AddUserDefineInfo(string infoName, string infoID, params object[] args)
+        {
+            UserDefineInfo info;
+            info.infoName = infoName;
+            info.infoID = infoID;
+            info.args = ConvertObjArg(args);
+            userDefineInfoList.Add(info);
         }
 
         internal void SendPackage()
@@ -140,10 +151,28 @@ namespace SmartTank.net
             objStaInfoList.Clear();
             objEventInfoList.Clear();
             objMgInfoList.Clear();
+            userDefineInfoList.Clear();
         }
 
 
+        private static object[] ConvertObjArg(object[] args)
+        {
+            object[] newparams = new object[args.Length];
 
+            for (int i = 0; i < args.Length; i++)
+            {
+                if (args[i] is IGameObj)
+                {
+                    newparams[i] = new GameObjSyncInfo(((IGameObj)args[i]).MgPath);
+                }
+                else
+                {
+                    newparams[i] = args[i];
+                }
+
+            }
+            return newparams;
+        }
 
 
 

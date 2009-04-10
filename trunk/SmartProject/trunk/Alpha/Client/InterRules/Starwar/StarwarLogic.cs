@@ -59,17 +59,38 @@ namespace InterRules.Starwar
 
         void Warship_OnDead(WarShip sender)
         {
-            sceneMgr.DelGameObj(sender.MgPath);
+            //sceneMgr.DelGameObj(sender.MgPath);
+            if (PurviewMgr.IsMainHost)
+            {
+                while (true)
+                {
+                    Vector2 newPos = RandomHelper.GetRandomVector2(0, 1);
+                    newPos.X *= mapRect.Width;
+                    newPos.X += mapRect.X;
+                    newPos.Y *= mapRect.Height;
+                    newPos.Y += mapRect.Y;
+                    if (CanAddObjAtPos(newPos))
+                    {
+                        (sender as WarShip).Born(newPos);
+                        SyncCasheWriter.SubmitUserDefineInfo("WarshipBorn", "", sender, newPos);
+                        break;
+                    }
+                }
+            }
         }
 
         void WarShip_OnShoot(WarShip firer, Vector2 endPoint, float azi)
         {
-            WarShipShell shell = new WarShipShell("shell" + shellcount, firer, endPoint, azi);
-            shell.onCollided += new OnCollidedEventHandler(Shell_onCollided);
-            shell.OnOutDate += new WarShipShell.ShellOutDateEventHandler(Shell_OnOutDate);
-            sceneMgr.AddGameObj("shell", shell);
-            shellcount++;
+            if (PurviewMgr.IsMainHost)
+            {
+                WarShipShell shell = new WarShipShell("shell" + shellcount, firer, endPoint, azi);
+                shell.onCollided += new OnCollidedEventHandler(Shell_onCollided);
+                shell.OnOutDate += new WarShipShell.ShellOutDateEventHandler(Shell_OnOutDate);
+                sceneMgr.AddGameObj("shell", shell);
+                shellcount++;
 
+                SyncCasheWriter.SubmitCreateObjMg("shell", typeof(WarShipShell), "shell" + shellcount, firer, endPoint, azi);
+            }
         }
 
         void Shell_OnOutDate(WarShipShell sender, IGameObj shooter)
@@ -163,6 +184,36 @@ namespace InterRules.Starwar
             InitialCamera();
             InitializeScene();
             InitialBackGround();
+
+            SyncCasheReader.onCreateObj += new SyncCasheReader.CreateObjInfoHandler(SyncCasheReader_onCreateObj);
+            SyncCasheReader.onUserDefineInfo += new SyncCasheReader.UserDefineInfoHandler(SyncCasheReader_onUserDefineInfo);
+        }
+
+        void SyncCasheReader_onUserDefineInfo(string infoName, string infoID, object[] args)
+        {
+            if (infoName == "WarshipBorn")
+            {
+                WarShip ship = args[0] as WarShip;
+                ship.Born((Vector2)args[1]);
+            }
+        }
+
+        void SyncCasheReader_onCreateObj(IGameObj obj)
+        {
+            if (obj is WarShipShell)
+            {
+                WarShipShell shell = obj as WarShipShell;
+                shell.onCollided += new OnCollidedEventHandler(Shell_onCollided);
+                shell.OnOutDate += new WarShipShell.ShellOutDateEventHandler(Shell_OnOutDate);
+                shellcount++;
+            }
+            else if (obj is Rock)
+            {
+                Rock newRock = obj as Rock;
+                newRock.OnCollided += new OnCollidedEventHandler(Rock_OnCollided);
+                rocks.Add(newRock);
+                rockCount++;
+            }
         }
 
         private void InitialBackGround()
@@ -217,8 +268,6 @@ namespace InterRules.Starwar
 
             camera.Focus(ships[0], false);
         }
-
-
 
         private void InitialCamera()
         {
@@ -284,7 +333,13 @@ namespace InterRules.Starwar
 
 
             GameManager.RenderEngine.FontMgr.DrawInScrnCoord("Ship1 Live: " + ships[0].HP + "  Score: " + ships[0].Score, new Vector2(10, 500), 1.0f, Color.White, LayerDepth.Text, GameFonts.Comic);
+            //GameManager.RenderEngine.BasicGrahpics.DrawPoint(serPos, 1.0f, Color.Yellow, LayerDepth.Mouse);
+            //GameManager.RenderEngine.BasicGrahpics.DrawLine(serPos, serVel + serPos, 5, Color.Yellow, LayerDepth.Mouse, SpriteBlendMode.AlphaBlend);
+
         }
+
+        //Vector2 serPos = new Vector2(400, 400);
+        //Vector2 serVel = new Vector2(100, 0);
 
         bool IGameScreen.Update(float second)
         {
@@ -295,6 +350,12 @@ namespace InterRules.Starwar
             DeleteOutDateShells();
 
             CreateDelRock(second);
+
+            //if (InputHandler.IsKeyDown(Keys.U))
+            //{
+            //    ((NonInertiasPhiUpdater)ships[0].PhisicalUpdater).SetServerStatue(serPos, serVel, 0, 0, 10);
+
+            //}
 
             if (InputHandler.IsKeyDown(Microsoft.Xna.Framework.Input.Keys.Escape))
             {
@@ -337,69 +398,70 @@ namespace InterRules.Starwar
 
         private void CreateRock()
         {
-            Vector2 newPos = new Vector2();
-            while (true)
+            if (PurviewMgr.IsMainHost)
             {
-                newPos = RandomHelper.GetRandomVector2(-100, 100);
-
-                int posType = RandomHelper.GetRandomInt(0, 2);
-
-                if (posType == 0)
+                Vector2 newPos = new Vector2();
+                while (true)
                 {
-                    if (newPos.X < 0)
-                        newPos.X -= mapRect.X + AddObjSpace;
-                    else
-                        newPos.X += mapRect.Width + mapRect.X + AddObjSpace;
+                    newPos = RandomHelper.GetRandomVector2(-100, 100);
 
-                    if (newPos.Y < 0)
-                        newPos.Y -= mapRect.Y + AddObjSpace;
-                    else
-                        newPos.Y += mapRect.Y + mapRect.Height + AddObjSpace;
+                    int posType = RandomHelper.GetRandomInt(0, 2);
+
+                    if (posType == 0)
+                    {
+                        if (newPos.X < 0)
+                            newPos.X -= mapRect.X + AddObjSpace;
+                        else
+                            newPos.X += mapRect.Width + mapRect.X + AddObjSpace;
+
+                        if (newPos.Y < 0)
+                            newPos.Y -= mapRect.Y + AddObjSpace;
+                        else
+                            newPos.Y += mapRect.Y + mapRect.Height + AddObjSpace;
+                    }
+                    else if (posType == 1)
+                    {
+                        newPos.X *= mapRect.Width / 200;
+                        newPos.X += mapRect.Width / 2 + mapRect.X;
+
+                        if (newPos.Y < 0)
+                            newPos.Y -= mapRect.Y + AddObjSpace;
+                        else
+                            newPos.Y += mapRect.Y + mapRect.Height + AddObjSpace;
+                    }
+                    else if (posType == 2)
+                    {
+                        newPos.Y *= mapRect.Height / 200;
+                        newPos.Y += mapRect.Y + mapRect.Height / 2;
+
+                        if (newPos.X < 0)
+                            newPos.X -= mapRect.X + AddObjSpace;
+                        else
+                            newPos.X += mapRect.Width + mapRect.X + AddObjSpace;
+
+                    }
+                    if (CanAddObjAtPos(newPos))
+                        break;
+
                 }
-                else if (posType == 1)
-                {
-                    newPos.X *= mapRect.Width / 200;
-                    newPos.X += mapRect.Width / 2 + mapRect.X;
+                float speed = RandomHelper.GetRandomFloat(SpaceWarConfig.RockMinSpeed, SpaceWarConfig.RockMaxSpeed);
+                Vector2 way = Vector2.Normalize(MapCenterPos - newPos);
+                Vector2 delta = RandomHelper.GetRandomVector2(-0.7f, 0.7f);
+                Vector2 Vel = Vector2.Normalize(way + delta) * speed;
 
-                    if (newPos.Y < 0)
-                        newPos.Y -= mapRect.Y + AddObjSpace;
-                    else
-                        newPos.Y += mapRect.Y + mapRect.Height + AddObjSpace;
-                }
-                else if (posType == 2)
-                {
-                    newPos.Y *= mapRect.Height / 200;
-                    newPos.Y += mapRect.Y + mapRect.Height / 2;
+                float aziVel = RandomHelper.GetRandomFloat(0, SpaceWarConfig.RockMaxAziSpeed);
+                float scale = RandomHelper.GetRandomFloat(0.4f, 1.4f);
+                int kind = RandomHelper.GetRandomInt(0, ((int)RockTexNo.Max) - 1);
 
-                    if (newPos.X < 0)
-                        newPos.X -= mapRect.X + AddObjSpace;
-                    else
-                        newPos.X += mapRect.Width + mapRect.X + AddObjSpace;
+                Rock newRock = new Rock("Rock" + rockCount, newPos, Vel, aziVel, scale, (RockTexNo)kind);
 
-                }
-                if (CanAddObjAtPos(newPos))
-                    break;
+                newRock.OnCollided += new OnCollidedEventHandler(Rock_OnCollided);
+                sceneMgr.AddGameObj("rock", newRock);
+                rocks.Add(newRock);
 
+                rockCount++;
             }
-            float speed = RandomHelper.GetRandomFloat(SpaceWarConfig.RockMinSpeed, SpaceWarConfig.RockMaxSpeed);
-            Vector2 way = Vector2.Normalize(MapCenterPos - newPos);
-            Vector2 delta = RandomHelper.GetRandomVector2(-0.7f, 0.7f);
-            Vector2 Vel = Vector2.Normalize(way + delta) * speed;
-
-            float aziVel = RandomHelper.GetRandomFloat(0, SpaceWarConfig.RockMaxAziSpeed);
-            float scale = RandomHelper.GetRandomFloat(0.4f, 1.4f);
-            int kind = RandomHelper.GetRandomInt(0, ((int)RockTexNo.Max) - 1);
-
-            Rock newRock = new Rock("Rock" + rockCount, newPos, Vel, aziVel, scale, (RockTexNo)kind);
-
-            newRock.OnCollided += new OnCollidedEventHandler(Rock_OnCollided);
-            sceneMgr.AddGameObj("rock", newRock);
-            rocks.Add(newRock);
-
-            rockCount++;
         }
-
-
 
         private void DeleteOutDateShells()
         {

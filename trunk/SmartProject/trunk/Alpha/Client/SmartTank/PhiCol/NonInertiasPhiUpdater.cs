@@ -7,7 +7,7 @@ using SmartTank.PhiCol;
 
 namespace SmartTank.PhiCol
 {
-    public class NonInertiasPhiUpdater : IPhisicalUpdater
+    public class NonInertiasPhiUpdater : IPhisicalUpdater, ISyncable
     {
         public delegate void PosAziChangedEventHandler();
         public event PosAziChangedEventHandler posAziChanged;
@@ -23,12 +23,29 @@ namespace SmartTank.PhiCol
         protected Vector2 nextPos;
         protected float nextAzi;
 
-        public NonInertiasPhiUpdater ( GameObjInfo objInfo )
+        public Vector2 serPos;
+        public Vector2 serVel;
+        public float serAzi;
+        public float serAziVel;
+
+        protected Vector2 localPos;
+        protected Vector2 localVel;
+        protected float localAzi;
+        protected float localAziVel;
+
+        protected float syncTotolTime = 0;
+        protected bool startSync = false;
+        protected bool syncing = false;
+        protected float syncCurTime = 0;
+        protected float mount = 0;
+
+
+        public NonInertiasPhiUpdater(GameObjInfo objInfo)
         {
             this.objInfo = objInfo;
         }
 
-        public NonInertiasPhiUpdater ( GameObjInfo objInfo, Vector2 pos, Vector2 vel, float azi, float angVel )
+        public NonInertiasPhiUpdater(GameObjInfo objInfo, Vector2 pos, Vector2 vel, float azi, float angVel)
         {
             this.objInfo = objInfo;
             this.Pos = pos;
@@ -41,13 +58,71 @@ namespace SmartTank.PhiCol
 
         #region IPhisicalUpdater 成员
 
-        public virtual void CalNextStatus ( float seconds )
+        public virtual void CalNextStatus(float seconds)
         {
-            nextPos = Pos + Vel * seconds;
-            nextAzi = Azi + AngVel * seconds;
+            if (startSync)
+            {
+                syncCurTime = 0;
+                localPos = Pos;
+                localVel = Vel;
+                localAzi = Azi;
+                localAziVel = AngVel;
+                mount = 0;
+                startSync = false;
+            }
+
+            if (syncing)
+            {
+                syncCurTime += seconds;
+
+                float tScale = syncCurTime / syncTotolTime;
+
+                float V0 = localVel.Length();
+                float V1 = serVel.Length();
+
+                float M = (V0 + V1) * syncTotolTime / 2;
+                if (M != 0)
+                {
+                    float curV = MathHelper.Lerp(V0, V1, tScale);
+                    float w = (V0 + curV) * syncCurTime / 2;
+                    float mount = w / M;
+                    if (mount > 1)
+                    {
+                        int x = 0;
+                    }
+                    nextPos = Vector2.Hermite(localPos, localVel, serPos, serVel, mount);
+                }
+                else
+                {
+                    nextPos = (serPos - localPos) * tScale + localPos;
+                }
+
+                float MAzi = (localAziVel + serAziVel) * syncCurTime / 2;
+                if (MAzi != 0)
+                {
+                    float curAziVel = MathHelper.Lerp(localAziVel, serAziVel, tScale);
+                    float wAzi = (localAziVel + curAziVel) * syncCurTime / 2;
+                    float mountAzi = wAzi / MAzi;
+                    nextAzi = MathHelper.Hermite(localAzi, localAziVel, serAzi, serAziVel, mountAzi);
+                }
+                else
+                {
+                    nextAzi = MathHelper.Lerp(localAzi, serAziVel, tScale);
+                }
+
+                if (syncCurTime > syncTotolTime)
+                {
+                    syncing = false;
+                }
+            }
+            else
+            {
+                nextPos = Pos + Vel * seconds;
+                nextAzi = Azi + AngVel * seconds;
+            }
         }
 
-        public virtual void Validated ()
+        public virtual void Validated()
         {
             Pos = nextPos;
             Azi = nextAzi;
@@ -61,5 +136,24 @@ namespace SmartTank.PhiCol
         }
 
         #endregion
+
+        #region ISyncable 成员
+
+        public void SetServerStatue(Vector2 serPos, Vector2 serVel, float serAzi, float serAziVel, float syncTime)
+        {
+            if (syncTime == 0)
+                return;
+
+            this.serPos = serPos + serVel * syncTime;
+            this.serVel = serVel;
+            this.serAzi = serAzi + serAziVel * syncTime;
+            this.serAziVel = serAziVel;
+            this.syncTotolTime = syncTime;
+            this.startSync = true;
+            this.syncing = true;
+        }
+
+        #endregion
+
     }
 }

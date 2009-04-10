@@ -20,6 +20,9 @@ namespace SmartTank.net
 
         public delegate void CreateObjInfoHandler(IGameObj obj);
         public static event CreateObjInfoHandler onCreateObj;
+        public delegate void UserDefineInfoHandler(string infoName, string infoID, object[] args);
+        public static event UserDefineInfoHandler onUserDefineInfo;
+
 
 
         internal static void ReadCashe(SmartTank.Scene.ISceneKeeper sceneMgr)
@@ -110,6 +113,28 @@ namespace SmartTank.net
                         {
                             sceneMgr.DelGameObj(info.objPath);
                         }
+                    }
+                }
+
+                if (!PurviewMgr.IsMainHost)
+                {
+                    foreach (UserDefineInfo info in inputCashe.UserDefineInfoList)
+                    {
+                        object[] newArgs = new object[info.args.Length];
+                        for (int i = 0; i < newArgs.Length; i++)
+                        {
+                            if (info.args[i] is GameObjSyncInfo)
+                            {
+                                IGameObj gameobj = sceneMgr.GetGameObj(((GameObjSyncInfo)info.args[i]).MgPath);
+                                newArgs[i] = gameobj;
+                            }
+                            else
+                            {
+                                newArgs[i] = info.args[i];
+                            }
+                        }
+                        if (onUserDefineInfo != null)
+                            onUserDefineInfo(info.infoName, info.infoID, newArgs);
                     }
                 }
             }

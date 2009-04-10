@@ -46,6 +46,11 @@ namespace SmartTank.Helpers.DependInject
                 Assembly assembly = Assembly.Load("SmartTank, Version=1.0.0.0, Culture=neutral, PublicKeyToToken=null");
                 return assembly.GetType(typepath);
             }
+            if (path[0] == "InterRules")
+            {
+                Assembly assembly = Assembly.Load("InterRules, Version=1.0.0.0, Culture=neutral, PublicKeyToToken=null");
+                return assembly.GetType(typepath);
+            }
             return null;
         }
     }
