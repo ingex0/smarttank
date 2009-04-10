@@ -31,7 +31,7 @@ namespace InterRules.Starwar
 
 
 
-    class Hall : IGameRule
+    class Hall : IGameScreen
     {
         [StructLayoutAttribute(LayoutKind.Sequential, Size = 32, CharSet = CharSet.Ansi, Pack = 1)]
         struct RankInfo
@@ -119,6 +119,7 @@ namespace InterRules.Starwar
             {
                 RankInfo ri;
                 tmp = "";
+                char[] nm = new char[21];
                 for (int i = 0; i < head.dataSize; i += 32)
                 {
                     
@@ -126,6 +127,8 @@ namespace InterRules.Starwar
                     data.Read(rankBuffer, i, 32);
 
                     ri = (RankInfo)SocketMgr.BytesToStuct(rankBuffer, typeof(RankInfo));
+
+
                     tmp = ri.rank + "        " + ri.score;
                     rankList.AddItem(tmp);
 
@@ -140,7 +143,7 @@ namespace InterRules.Starwar
 
         void rankList_OnChangeSelection(object sender, EventArgs e)
         {
-            selectIndex = roomList.selectedIndex;
+            selectIndex = rankList.selectedIndex;
         }
 
         void btnOK_OnPress(object sender, EventArgs e)
