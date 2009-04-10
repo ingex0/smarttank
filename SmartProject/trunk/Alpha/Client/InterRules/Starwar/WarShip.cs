@@ -91,6 +91,13 @@ namespace InterRules.Starwar
             return false;
         }
 
+        internal void Born(Vector2 newPos)
+        {
+            BeginWTF();
+            this.Pos = newPos;
+            this.Vel = Vector2.Zero;
+        }
+
         public void BeginStill()
         {
             stillTimer = -SpaceWarConfig.StillTime;
@@ -414,5 +421,7 @@ namespace InterRules.Starwar
         }
 
         #endregion
+
+        
     }
 }
