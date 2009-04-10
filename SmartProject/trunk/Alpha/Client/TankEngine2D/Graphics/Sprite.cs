@@ -478,7 +478,7 @@ namespace TankEngine2D.Graphics
                     else
                     {
                         CircleListNode<BorderPoint> temp = cur.pre;
-                        while (SpriteBBlockAtPos( spriteB, oriPosInB, stepX, stepY, temp.value.p ))
+                        while (SpriteBBlockAtPos( spriteB, oriPosInB, stepX, stepY, temp.value.p ) && temp != cur)
                         {
                             temp = temp.pre;
                         }

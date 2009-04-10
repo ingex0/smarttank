@@ -27,6 +27,8 @@ namespace InterRules.Starwar
 {
     class StarwarLogic : RuleSupNet, IGameScreen
     {
+        #region Variables
+
         const float AddObjSpace = 250;
 
         WarShip[] ships = new WarShip[6];
@@ -45,12 +47,16 @@ namespace InterRules.Starwar
         Rectanglef rockDelRect = new Rectanglef(-400, -400, 2400, 2000);
         float rockTimer = 0;
 
+        int controlIndex = -1;
+
         public Vector2 MapCenterPos
         {
             get { return new Vector2(mapRect.X + mapRect.Width / 2, mapRect.Y + mapRect.Height / 2); }
         }
 
+        #endregion
 
+        #region HandlerObjEvent
 
         void Gold_OnLiveTimeOut(Gold sender)
         {
@@ -87,9 +93,10 @@ namespace InterRules.Starwar
                 shell.onCollided += new OnCollidedEventHandler(Shell_onCollided);
                 shell.OnOutDate += new WarShipShell.ShellOutDateEventHandler(Shell_OnOutDate);
                 sceneMgr.AddGameObj("shell", shell);
-                shellcount++;
+
 
                 SyncCasheWriter.SubmitCreateObjMg("shell", typeof(WarShipShell), "shell" + shellcount, firer, endPoint, azi);
+                shellcount++;
             }
         }
 
@@ -100,20 +107,25 @@ namespace InterRules.Starwar
 
         void Shell_onCollided(IGameObj Sender, CollisionResult result, GameObjInfo objB)
         {
-            if (objB.ObjClass == "WarShip")
+            if (PurviewMgr.IsMainHost)
             {
-                sceneMgr.DelGameObj("shell", Sender.Name);
-                new ShellExplodeBeta(Sender.Pos, ((ShellNormal)Sender).Azi);
+                if (objB.ObjClass == "WarShip")
+                {
+                    sceneMgr.DelGameObj("shell", Sender.Name);
+                    new ShellExplodeBeta(Sender.Pos, ((ShellNormal)Sender).Azi);
 
-                Quake.BeginQuake(10, 50);
-                Sound.PlayCue("EXPLO1");
-            }
-            else
-            {
-                WarShipShell shell = (WarShipShell)Sender;
-                shell.MirrorPath(result);
-            }
+                    Quake.BeginQuake(10, 50);
+                    Sound.PlayCue("EXPLO1");
+                }
+                else
+                {
+                    WarShipShell shell = (WarShipShell)Sender;
+                    shell.MirrorPath(result);
 
+                    //
+                    BroadcastObjPhiStatus(shell);
+                }
+            }
         }
 
         void WarShip_OnCollied(IGameObj Sender, CollisionResult result, GameObjInfo objB)
@@ -139,6 +151,8 @@ namespace InterRules.Starwar
                 ship.Vel = newVel;
                 ship.BeginStill();
             }
+
+            BroadcastObjPhiStatus(Sender);
         }
 
         void Warship_OnOverLap(IGameObj Sender, CollisionResult result, GameObjInfo objB)
@@ -167,26 +181,8 @@ namespace InterRules.Starwar
                 Vector2 newVel = CalMirrorVel((Sender as Rock).Vel, result.NormalVector);
                 (Sender as Rock).Vel = newVel;
             }
-        }
 
-        private Vector2 CalMirrorVel(Vector2 curVel, Vector2 mirrorVertical)
-        {
-            float mirVecLength = Vector2.Dot(curVel, mirrorVertical);
-            Vector2 horizVel = curVel - mirVecLength * mirrorVertical;
-            Vector2 newVel = horizVel + Math.Abs(mirVecLength) * mirrorVertical;
-            return newVel;
-        }
-
-        public StarwarLogic()
-        {
-            LoadConfig();
-
-            InitialCamera();
-            InitializeScene();
-            InitialBackGround();
-
-            SyncCasheReader.onCreateObj += new SyncCasheReader.CreateObjInfoHandler(SyncCasheReader_onCreateObj);
-            SyncCasheReader.onUserDefineInfo += new SyncCasheReader.UserDefineInfoHandler(SyncCasheReader_onUserDefineInfo);
+            BroadcastObjPhiStatus(Sender);
         }
 
         void SyncCasheReader_onUserDefineInfo(string infoName, string infoID, object[] args)
@@ -195,6 +191,11 @@ namespace InterRules.Starwar
             {
                 WarShip ship = args[0] as WarShip;
                 ship.Born((Vector2)args[1]);
+            }
+            else if (infoName == "ObjPhiStatus")
+            {
+                if (args[0] != null)
+                    ((NonInertiasPhiUpdater)((args[0] as IPhisicalObj).PhisicalUpdater)).SetServerStatue((Vector2)args[1], (Vector2)args[2], (float)args[3], (float)args[4], phiSyncTime);
             }
         }
 
@@ -216,67 +217,21 @@ namespace InterRules.Starwar
             }
         }
 
-        private void InitialBackGround()
+        private void BroadcastObjPhiStatus(IGameObj obj)
         {
-            backGround = new Sprite(GameManager.RenderEngine, Path.Combine(Directories.ContentDirectory, "Rules\\SpaceWar\\image\\field_space_001.png"), false);
-            backGround.SetParameters(new Vector2(0, 0), new Vector2(0, 0), 1.0f, 0f, Color.White, LayerDepth.BackGround, SpriteBlendMode.AlphaBlend);
-        }
-
-        private void LoadConfig()
-        {
-            SpaceWarConfig.LoadConfig();
-        }
-
-        private void InitializeScene()
-        {
-            for (int i = 0; i < 1; i++)
+            if (obj is IPhisicalObj)
             {
-                ships[i] = new WarShip("ship" + 0, new Vector2(500, 500), 0, true);
-                ships[i].OnCollied += new OnCollidedEventHandler(WarShip_OnCollied);
-                ships[i].OnOverLap += new OnCollidedEventHandler(Warship_OnOverLap);
-                ships[i].OnShoot += new WarShip.WarShipShootEventHandler(WarShip_OnShoot);
-                ships[i].OnDead += new WarShip.WarShipDeadEventHandler(Warship_OnDead);
+                NonInertiasPhiUpdater phiUpdater = (NonInertiasPhiUpdater)((IPhisicalObj)obj).PhisicalUpdater;
+                SyncCasheWriter.SubmitUserDefineInfo("ObjPhiStatus", obj.ObjInfo.ObjClass, obj, phiUpdater.Pos, phiUpdater.Vel, phiUpdater.Azi, phiUpdater.AngVel);
             }
-            gold = new Gold("gold", new Vector2(800, 600), 0);
-            gold.OnOverLap += new OnCollidedEventHandler(Gold_OnOverLap);
-            gold.OnLiveTimeOut += new Gold.GoldLiveTimeOutEventHandler(Gold_OnLiveTimeOut);
-
-            sceneMgr = new SceneMgr();
-
-
-            sceneMgr.AddGroup("", new TypeGroup<WarShip>("warship"));
-            sceneMgr.AddGroup("", new TypeGroup<WarShipShell>("shell"));
-            sceneMgr.AddGroup("", new TypeGroup<SmartTank.PhiCol.Border>("border"));
-            sceneMgr.AddGroup("", new TypeGroup<Gold>("gold"));
-            sceneMgr.AddGroup("", new TypeGroup<Rock>("rock"));
-
-            sceneMgr.PhiGroups.Add("warship");
-            sceneMgr.PhiGroups.Add("shell");
-            sceneMgr.PhiGroups.Add("rock");
-            sceneMgr.AddColMulGroups("warship", "shell", "border");
-            sceneMgr.AddColMulGroups("warship", "shell", "rock");
-            sceneMgr.ColSinGroups.Add("warship");
-            sceneMgr.ColSinGroups.Add("rock");
-
-            sceneMgr.AddLapMulGroups("warship", "gold");
-
-            sceneMgr.AddGameObj("warship", ships[0]);
-            sceneMgr.AddGameObj("border", new SmartTank.PhiCol.Border(mapRect));
-            sceneMgr.AddGameObj("gold", gold);
-
-            GameManager.LoadScene(sceneMgr);
-
-            camera.Focus(ships[0], false);
         }
 
-        private void InitialCamera()
+        private Vector2 CalMirrorVel(Vector2 curVel, Vector2 mirrorVertical)
         {
-            BaseGame.CoordinMgr.SetScreenViewRect(new Rectangle(0, 0, 800, 600));
-
-            camera = new Camera(1f, new Vector2(400, 300), 0);
-            camera.maxScale = 4.5f;
-            camera.minScale = 0.5f;
-            camera.Enable();
+            float mirVecLength = Vector2.Dot(curVel, mirrorVertical);
+            Vector2 horizVel = curVel - mirVecLength * mirrorVertical;
+            Vector2 newVel = horizVel + Math.Abs(mirVecLength) * mirrorVertical;
+            return newVel;
         }
 
         private void SetGoldNewPos(Gold Sender)
@@ -318,11 +273,115 @@ namespace InterRules.Starwar
             return true;
         }
 
+
+        #endregion
+
+        #region Initailize
+
+        public StarwarLogic(int controlIndex)
+        {
+            this.controlIndex = controlIndex;
+
+            LoadConfig();
+
+            InitialCamera();
+            InitializeScene();
+            InitialBackGround();
+
+            InitailizePurview(controlIndex);
+
+            SyncCasheReader.onCreateObj += new SyncCasheReader.CreateObjInfoHandler(SyncCasheReader_onCreateObj);
+            SyncCasheReader.onUserDefineInfo += new SyncCasheReader.UserDefineInfoHandler(SyncCasheReader_onUserDefineInfo);
+        }
+
+        private void InitailizePurview(int controlIndex)
+        {
+            if (controlIndex == 0)
+            {
+                PurviewMgr.IsMainHost = true;
+            }
+            else
+            {
+                PurviewMgr.IsMainHost = false;
+            }
+        }
+
+        const float phiSyncTime = 1;
+
+        private void InitialBackGround()
+        {
+            backGround = new Sprite(GameManager.RenderEngine, Path.Combine(Directories.ContentDirectory, "Rules\\SpaceWar\\image\\field_space_001.png"), false);
+            backGround.SetParameters(new Vector2(0, 0), new Vector2(0, 0), 1.0f, 0f, Color.White, LayerDepth.BackGround, SpriteBlendMode.AlphaBlend);
+        }
+
+        private void LoadConfig()
+        {
+            SpaceWarConfig.LoadConfig();
+        }
+
+        private void InitializeScene()
+        {
+            sceneMgr = new SceneMgr();
+
+            sceneMgr.AddGroup("", new TypeGroup<WarShip>("warship"));
+            sceneMgr.AddGroup("", new TypeGroup<WarShipShell>("shell"));
+            sceneMgr.AddGroup("", new TypeGroup<SmartTank.PhiCol.Border>("border"));
+            sceneMgr.AddGroup("", new TypeGroup<Gold>("gold"));
+            sceneMgr.AddGroup("", new TypeGroup<Rock>("rock"));
+
+            sceneMgr.PhiGroups.Add("warship");
+            sceneMgr.PhiGroups.Add("shell");
+            sceneMgr.PhiGroups.Add("rock");
+            sceneMgr.AddColMulGroups("warship", "shell", "border");
+            sceneMgr.AddColMulGroups("warship", "shell", "rock");
+            sceneMgr.ColSinGroups.Add("warship");
+            sceneMgr.ColSinGroups.Add("rock");
+
+            sceneMgr.AddLapMulGroups("warship", "gold");
+
+            for (int i = 0; i < 6; i++)
+            {
+                bool openControl = false;
+                if (i == controlIndex)
+                    openControl = true;
+
+                ships[i] = new WarShip("ship" + i, new Vector2(200 + i * 100, 500), 0, openControl);
+                ships[i].OnCollied += new OnCollidedEventHandler(WarShip_OnCollied);
+                ships[i].OnOverLap += new OnCollidedEventHandler(Warship_OnOverLap);
+                ships[i].OnShoot += new WarShip.WarShipShootEventHandler(WarShip_OnShoot);
+                ships[i].OnDead += new WarShip.WarShipDeadEventHandler(Warship_OnDead);
+                sceneMgr.AddGameObj("warship", ships[i]);
+            }
+
+            gold = new Gold("gold", new Vector2(800, 600), 0);
+            gold.OnOverLap += new OnCollidedEventHandler(Gold_OnOverLap);
+            gold.OnLiveTimeOut += new Gold.GoldLiveTimeOutEventHandler(Gold_OnLiveTimeOut);
+
+            sceneMgr.AddGameObj("border", new SmartTank.PhiCol.Border(mapRect));
+            sceneMgr.AddGameObj("gold", gold);
+
+            GameManager.LoadScene(sceneMgr);
+
+            camera.Focus(ships[controlIndex], false);
+        }
+
+        private void InitialCamera()
+        {
+            BaseGame.CoordinMgr.SetScreenViewRect(new Rectangle(0, 0, 800, 600));
+
+            camera = new Camera(1f, new Vector2(400, 300), 0);
+            camera.maxScale = 4.5f;
+            camera.minScale = 0.5f;
+            camera.Enable();
+        }
+
+        #endregion
+
         #region IGameScreen ³ÉÔ±
 
         void IGameScreen.OnClose()
         {
-
+            base.OnClose();
         }
 
         void IGameScreen.Render()
@@ -351,6 +410,7 @@ namespace InterRules.Starwar
 
             CreateDelRock(second);
 
+            SyncWarShip();
             //if (InputHandler.IsKeyDown(Keys.U))
             //{
             //    ((NonInertiasPhiUpdater)ships[0].PhisicalUpdater).SetServerStatue(serPos, serVel, 0, 0, 10);
@@ -364,6 +424,15 @@ namespace InterRules.Starwar
             }
             else
                 return false;
+        }
+
+        private void SyncWarShip()
+        {
+            if (PurviewMgr.IsMainHost)
+            {
+
+            }
+
         }
 
         private void CreateDelRock(float second)
@@ -453,13 +522,16 @@ namespace InterRules.Starwar
                 float scale = RandomHelper.GetRandomFloat(0.4f, 1.4f);
                 int kind = RandomHelper.GetRandomInt(0, ((int)RockTexNo.Max) - 1);
 
-                Rock newRock = new Rock("Rock" + rockCount, newPos, Vel, aziVel, scale, (RockTexNo)kind);
+                Rock newRock = new Rock("Rock" + rockCount, newPos, Vel, aziVel, scale, kind);
 
                 newRock.OnCollided += new OnCollidedEventHandler(Rock_OnCollided);
                 sceneMgr.AddGameObj("rock", newRock);
+
                 rocks.Add(newRock);
+                SyncCasheWriter.SubmitCreateObjMg("rock", typeof(Rock), "Rock" + rockCount, newPos, Vel, aziVel, scale, kind);
 
                 rockCount++;
+
             }
         }
 

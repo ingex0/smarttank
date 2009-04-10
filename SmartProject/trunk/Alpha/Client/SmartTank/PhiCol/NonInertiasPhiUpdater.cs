@@ -113,6 +113,8 @@ namespace SmartTank.PhiCol
                 if (syncCurTime > syncTotolTime)
                 {
                     syncing = false;
+                    Vel = serVel;
+                    AngVel = serAziVel;
                 }
             }
             else

@@ -33,10 +33,10 @@ namespace InterRules.Starwar
             new Vector2(60,45),new Vector2(50,47)};
 
 
-        public Rock(string name, Vector2 startPos, Vector2 vel, float aziVel, float scale, RockTexNo texNo)
+        public Rock(string name, Vector2 startPos, Vector2 vel, float aziVel, float scale, int texNo)
             : base(name, "Rock", "",
-            Path.Combine(Directories.ContentDirectory, "Rules\\SpaceWar\\image\\" + texPaths[(int)texNo]),
-            texOrigin[(int)texNo], scale,new Vector2[0], startPos, 0, vel, aziVel)
+            Path.Combine(Directories.ContentDirectory, "Rules\\SpaceWar\\image\\" + texPaths[texNo]),
+            texOrigin[texNo], scale,new Vector2[0], startPos, 0, vel, aziVel)
         {
         }
 
