@@ -63,6 +63,7 @@
     <Compile Include="Starwar\StarwarRule.cs" />
     <Compile Include="Starwar\WarShip.cs" />
     <Compile Include="Starwar\WarShipShell.cs" />
+    <Compile Include="Starwar\Hall.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="ClassDiagram1.cd" />
