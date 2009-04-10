@@ -256,7 +256,7 @@ int Team5_DB::GetUserList(int m, int n, UserInfo *RetPage)
 {
     int count = 0;
 
-    sprintf(buffer, "SELECT ID, Name, Password, Score FROM UserData");
+    sprintf(buffer, "SELECT ID, Name, Password, Score FROM UserData limit %d, %d", m, n);
     if (mysql_query(mysql, buffer))
     {
         printf("GetUserList Error\n");

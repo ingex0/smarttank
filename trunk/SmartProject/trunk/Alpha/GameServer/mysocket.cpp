@@ -118,19 +118,38 @@ bool MySocket::Send( char* msg, long leng)
 /************************************************************************/
 /* 发送数据包                           
 /************************************************************************/
-bool MySocket::SendPacket(Packet& pack)
-{
-    /* 直接转发 */
-    /*int realSize = pack.length + 8;
+bool MySocket::SendPacket( Packet& pack, int realSize)        
+{     
+    /* 加锁转发 */
+    int nID = m_ID;
+    LockThreadBegin
     if ( -1 == send( m_socket, (char*)&pack, realSize, MSG_NOSIGNAL) )
     {
-        perror("SendPacket");
-        cout << "Oh, 狗日的掉线了." << endl;
+        cout << errno << ":SendPacket." << endl;
+        LockThreadEnd
         return false;
-    }*/
+    }
+    LockThreadEnd
     return true;
 }
-bool MySocket::SendPacket( char *msg, long leng)
+/************************************************************************/
+/* 发送数据包头                           
+/************************************************************************/
+bool  MySocket::SendPacketHead( PacketHead& packHead) 
+{
+    /* 加锁转发 */
+    int nID = m_ID;
+    LockThreadBegin
+    if ( -1 == send( m_socket, (char*)&packHead, HEADSIZE, MSG_NOSIGNAL) )
+    {
+        cout << errno << ":SendPacketHead." << endl;
+        LockThreadEnd
+        return false;
+    }
+    LockThreadEnd
+    return true;
+}
+bool MySocket::SendPacketChat( char *msg, long leng)
 {
    /* Packet packOut;
     packOut.iStyle = CHAT;
@@ -303,14 +322,14 @@ void DestroySocket()
 {
 #ifdef WIN32
     WSACleanup();
-     for ( int i=0; i<MAXCLIENT; i++)
-     {
-         DeleteCriticalSection(&DD_ClientMgr_Mutex[i]);
-     }
+    for ( int i=0; i<MAXCLIENT; i++)
+    {
+        DeleteCriticalSection(&DD_ClientMgr_Mutex[i]);
+    }
 #else
     for ( int i=0; i<MAXCLIENT; i++)
     {
-    pthread_mutex_destroy(&DD_ClientMgr_Mutex[i]);
+        pthread_mutex_destroy(&DD_ClientMgr_Mutex[i]);
     }
 #endif
 }

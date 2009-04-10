@@ -15,13 +15,12 @@ Description:     // π‹¿ÌMySql
     #pragma comment(lib, "D:\\Program Files\\MySQL\\MySQL Server 5.1\\lib\\opt\\strings.lib")
     #pragma comment(lib, "D:\\Program Files\\MySQL\\MySQL Server 5.1\\lib\\opt\\zlib.lib")
 #endif
+
 #include <mysql.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 #include "config.h"
-
-
 
 class Team5_DB {
 private:

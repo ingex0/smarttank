@@ -10,7 +10,7 @@ pthread_mutex_t DD_ClientMgr_Mutex[MAXCLIENT];
 
 int main()
 {
-   
+  
 	/* 初始化协议 */ 
     StartSocket();
     ClientManager clientMgr;
