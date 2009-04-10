@@ -86,7 +86,7 @@ namespace InterRules.Starwar
             btnOK.OnClick += new EventHandler(btnOK_OnPress);
 
             // 连接到服务器
-            SocketMgr.ConnectToServer(); 
+            //SocketMgr.ConnectToServer(); 
         }
 
         void btnOK_OnPress(object sender, EventArgs e)
@@ -118,8 +118,10 @@ namespace InterRules.Starwar
             MemoryStream Stream = new MemoryStream();
             Stream.Write(SocketMgr.StructToBytes(data), 0, LoginData.size);
             head.dataSize = (int)Stream.Length;
+            head.iSytle = 10;
+            SocketMgr.Initial();
+            SocketMgr.ConnectToServer();
             SocketMgr.SendCommonPackge(head, Stream);
-
             Stream.Close();
         }
 
@@ -132,8 +134,8 @@ namespace InterRules.Starwar
             passbox.Update();
             btnOK.Update();
 
-            //if (InputHandler.IsKeyDown(Keys.L))
-            //    GameManager.AddGameScreen(new StarwarLogic());
+            if (InputHandler.IsKeyDown(Keys.L))
+                GameManager.AddGameScreen(new StarwarLogic());
 
             if (InputHandler.IsKeyDown(Keys.Escape))
                 return true;
@@ -142,24 +144,9 @@ namespace InterRules.Starwar
         }
 
         public void Render()
-        {
-            //Color dynamicColor = new Color(new Vector4(color.ToVector3().X, color.ToVector3().Y, color.ToVector3().Z, alpha));
-            
+        {   
             BaseGame.Device.Clear(Color.LightSkyBlue);
-
             spriteBatch = (SpriteBatch)BaseGame.SpriteMgr.alphaSprite;
-
-            //spriteBatch.Draw(bgTexture, Vector2.Zero, bgRect, Color.White, 0, Vector2.Zero, 1, SpriteEffects.None, LayerDepth.BackGround); 
-
-            //spriteBatch.Draw(bgTexture, Vector2.Zero, Color.White);
-            //spriteBatch.Draw( parts[1], middlePartRect, dynamicColor );
-            //spriteBatch.Draw( parts[2], position + new Vector2( parts[0].Width + middlePartRect.Width, 0f ), dynamicColor );
-            
-            //spriteBatch.Draw(bgTexture, Vector2.Zero, 
-            //spriteBatch.Draw(
-            
-            //spriteBatch.Draw(bgTexture, Vector2.Zero, bgRect, Color.White, Vector2.Zero, new Vector2(0, 0), SpriteEffects.None, LayerDepth.BackGround);
-            //spriteBatch.Draw(bgTexture, bgRect, bgRect, Color.White, 0, Vector2.Zero, SpriteEffects.None, LayerDepth.BackGround);
             namebox.Draw(BaseGame.SpriteMgr.alphaSprite, 1);
             passbox.Draw(BaseGame.SpriteMgr.alphaSprite, 1);
             btnOK.Draw(BaseGame.SpriteMgr.alphaSprite, 1);
