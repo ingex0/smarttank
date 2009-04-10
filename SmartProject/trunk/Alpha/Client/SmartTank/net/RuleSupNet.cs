@@ -28,9 +28,10 @@ namespace SmartTank.net
             PurviewMgr.IsMainHost = true;
 
             SocketMgr.Initial();
+            SocketMgr.SetInputCahes(inputCashe);
             SocketMgr.ConnectToServer();
 
-            SocketMgr.StartReceiveThread(inputCashe);
+            SocketMgr.StartReceiveThread();
 
         }
 

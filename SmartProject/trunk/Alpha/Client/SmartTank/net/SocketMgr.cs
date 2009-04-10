@@ -53,15 +53,21 @@ namespace SmartTank.net
         static TcpClient client;
         //static Socket sckt;
         static Thread thread;
+        static SyncCashe sInputCashe;
 
         static bool ReadOver = false;
 
         /// <summary>
         /// 初始化，读配置文件
         /// </summary>
-        static public void Initial()
+        internal static void Initial()
         {
             ReadConfig();
+        }
+
+        static public void SetInputCahes(SyncCashe inputCashe)
+        {
+            sInputCashe = inputCashe;
         }
 
         static void ReadConfig()
@@ -239,9 +245,9 @@ namespace SmartTank.net
             }
         }
 
-        static public void ReceivePackge(object obj)
+        static public void ReceivePackge()
         {
-            SyncCashe cashe = (SyncCashe)obj;
+            SyncCashe cashe = sInputCashe;
             try
             {
                 while (!ReadOver)
@@ -464,12 +470,12 @@ namespace SmartTank.net
 
 
 
-        static public void StartReceiveThread(SyncCashe cash)
+        static public void StartReceiveThread()
         {
-            if (client.Connected)
+            if (client.Connected && thread != null)
             {
                 thread = new Thread(ReceivePackge);
-                thread.Start(cash);
+                thread.Start();
             }
         }
 
@@ -630,6 +636,7 @@ namespace SmartTank.net
             //返回结构体
             return obj;
         }
+
 
     }
 }
