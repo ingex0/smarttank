@@ -57,13 +57,13 @@
     <Compile Include="ShootTheBall\AutoShootAI.cs" />
     <Compile Include="ShootTheBall\ShootTheBallRule.cs" />
     <Compile Include="Starwar\Gold.cs" />
+    <Compile Include="Starwar\Hall.cs" />
     <Compile Include="Starwar\Rock.cs" />
     <Compile Include="Starwar\SpaceWarConfig.cs" />
     <Compile Include="Starwar\StarwarLogic.cs" />
     <Compile Include="Starwar\StarwarRule.cs" />
     <Compile Include="Starwar\WarShip.cs" />
     <Compile Include="Starwar\WarShipShell.cs" />
-    <Compile Include="Starwar\Hall.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="ClassDiagram1.cd" />
