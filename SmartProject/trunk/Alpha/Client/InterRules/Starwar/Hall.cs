@@ -27,10 +27,6 @@ using System.Runtime.InteropServices;
 
 namespace InterRules.Starwar
 {
-    [RuleAttribute("Starwar", "支持多人联机的空战规则", "编写组成员：...", 2009, 4, 8)]
-
-
-
     class Hall : IGameScreen
     {
         [StructLayoutAttribute(LayoutKind.Sequential, Size = 32, CharSet = CharSet.Ansi, Pack = 1)]
@@ -42,16 +38,6 @@ namespace InterRules.Starwar
             public int score;
             [MarshalAs(UnmanagedType.ByValArray, SizeConst = 24)]
             public char[] name;
-        }
-
-        public string RuleIntroduction
-        {
-            get { return "20090328~20090417:编写组成员：..."; }
-        }
-
-        public string RuleName
-        {
-            get { return "Starwar"; }
         }
 
         Texture2D bgTexture;
