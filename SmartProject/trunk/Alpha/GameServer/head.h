@@ -3,6 +3,8 @@
 
 #include "config.h"
 #include <iostream>
+#include <iomanip>
+#include <fstream>
 using namespace std;
 
 #pragma warning( disable:  4996)

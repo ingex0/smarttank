@@ -2,20 +2,17 @@
 #include "mythread.h"
 
 long GameProtocal::m_recvPackNum = 0;
-#ifdef WIN32
-   extern CRITICAL_SECTION DD_ClientMgr_Mutex[MAXCLIENT];  
-#else
-    extern pthread_mutex_t DD_ClientMgr_Mutex[MAXCLIENT]; 
-#endif
+extern pthread_mutex_t DD_ClientMgr_Mutex[MAXCLIENT]; 
+
 
 GameProtocal::GameProtocal()
 {
-
+    outLog.open("log.txt",ios::app);
 }
 
 GameProtocal::~GameProtocal()
 {
-
+    outLog.close();
 }
 /************************************************************************/
 /* 继续收包体
@@ -55,7 +52,8 @@ bool GameProtocal::SendToOthers(MySocket* pSockClient, PacketHead &packHead)
     int realSize;
     if (-1 == (realSize = RecvPacketBody(pSockClient, packHead, pack) ) )
         return false;
-    
+    outLog.write((char*)&pack, realSize);
+    char buffLog[PACKSIZE];
     /**/int nClient = pManager->GetNum();
     for ( int i = 0; i < nClient; i++)
     {
@@ -64,13 +62,10 @@ bool GameProtocal::SendToOthers(MySocket* pSockClient, PacketHead &packHead)
             continue;
         }
         int nID = pSock->m_ID;
-        LockThreadBegin
-        if ( -1 == send(pSock->m_socket, (char*)(&pack), realSize, MSG_NOSIGNAL))
+        if ( false == pSock->SendPacket(pack, realSize) )
         {
-            cout << errno << ":聊天包." << endl;
             pManager->DelClient( pSock );
         }
-        LockThreadEnd
     } 
     
     return true;
@@ -126,14 +121,10 @@ bool GameProtocal::SendToOne(MySocket* pSockClient, PacketHead &packHead)
 /************************************************************************/ 
 bool GameProtocal::SendHead(MySocket* pSockClient, PacketHead &packHead)
 {
-   // LockThreadBegin
-    if ( -1 == send(pSockClient->m_socket, (char*)(&packHead), HEADSIZE, MSG_NOSIGNAL))
+    if (false == pSockClient->SendPacketHead(packHead) )
     {
-       // LockThreadEnd
-        cout << errno << ":SendHead." << endl;
         pManager->DelClient( pSockClient );
     }
-   // LockThreadEnd
     return true;
 }
 /************************************************************************/
@@ -141,28 +132,28 @@ bool GameProtocal::SendHead(MySocket* pSockClient, PacketHead &packHead)
 /************************************************************************/      
 bool GameProtocal::UserLogin(MySocket *pSockClient, PacketHead &packHead)
 {
-    /**/
     char buffPass[21];
     UserLoginPack sLogin;
     int realSize = 0;
     if (-1 == (realSize = recv(pSockClient->m_socket, (char*)(&sLogin), sizeof(UserLoginPack), MSG_NOSIGNAL))) 
         return false;
     packHead.length = 0;
-
-    m_SQL.GetUserPassword(sLogin.Name, buffPass);
-    if ( 0 == strcmp(buffPass, sLogin.Password) )
-    {
-        // Login success
-        packHead.iStyle = LOGIN_SUCCESS;
-    }
-    else
+    cout << pSockClient->GetIP() << "尝试登陆:" << sLogin.Name << ":" << sLogin.Password << endl;
+    /* 查询数据库 */
+    if ( -1 == m_SQL.GetUserPassword(sLogin.Name, buffPass) 
+       || 0 != strcmp(buffPass, sLogin.Password))
     {
         // Wrong user name or password.
         packHead.iStyle = LOGIN_FAIL;
         SendHead(pSockClient, packHead);
         pManager->DelClient(pSockClient);
+    }
+    else
+    { // Login success
+        pSockClient->BindName(sLogin.Name);
+        packHead.iStyle = LOGIN_SUCCESS;
+        SendHead(pSockClient, packHead);
         return false;
-
     }
 
     return true;
@@ -174,3 +165,74 @@ bool GameProtocal::UserRegist(MySocket *pSockClient, PacketHead &packHead)
 {
     return true;
 }
+/************************************************************************/
+/*  用户排行榜
+/************************************************************************/ 
+bool GameProtocal::ListRank(MySocket *pSockClient, PacketHead &packHead)
+{
+    int realSize, realPlayers, rankBegin;
+    Packet pack;
+    memset(&pack, 0, SIZEOFPACKET);
+    RankInfo  riOut[NUM_OF_RANK]; 
+
+    rankBegin = packHead.length - 1;
+    realPlayers = m_SQL.GetRankList(rankBegin, rankBegin+NUM_OF_RANK, riOut);
+    packHead.length = sizeof(RankInfo) * NUM_OF_RANK; 
+    
+    pack.length = realPlayers*sizeof(RankInfo);
+    realSize = pack.length + HEADSIZE;
+    memcpy( &pack, &packHead, HEADSIZE);
+
+    for ( int i = 0;   i < realPlayers;   i++)
+    {
+        /**/
+        memcpy( (char*)&pack + HEADSIZE + i*sizeof(RankInfo) ,
+                &riOut[i], sizeof(RankInfo));
+        cout << setw(10) << riOut[i].Name << setw(10)  
+            << riOut[i].Rank << setw(10) << riOut[i].Score << endl;
+    }
+    if ( false == pSockClient->SendPacket(pack, realSize) )
+    {
+        pManager->DelClient(pSockClient);
+    }
+    return true;
+}
+/************************************************************************/
+/*  用户列表
+/************************************************************************/ 
+bool GameProtocal::ListUser(MySocket *pSockClient, PacketHead &packHead)
+{
+    int realSize, realPlayers, rankBegin;
+    Packet pack;
+    memset(&pack, 0, SIZEOFPACKET);
+    RankInfo  riOut[NUM_OF_RANK]; 
+
+    rankBegin = packHead.length - 1;
+    realPlayers = m_SQL.GetRankList(rankBegin, rankBegin+NUM_OF_RANK, riOut);
+    packHead.length = sizeof(RankInfo) * NUM_OF_RANK; 
+
+    pack.length = realPlayers*sizeof(RankInfo);
+    realSize = pack.length + HEADSIZE;
+    memcpy( &pack, &packHead, HEADSIZE);
+
+    for ( int i = 0;   i < realPlayers;   i++)
+    {
+        /**/
+        memcpy( (char*)&pack + HEADSIZE + i*sizeof(RankInfo) ,
+            &riOut[i], sizeof(RankInfo));
+        cout << setw(10) << riOut[i].Name << setw(10)  
+            << riOut[i].Rank << setw(10) << riOut[i].Score << endl;
+    }
+    if ( false == pSockClient->SendPacket(pack, realSize) )
+    {
+        pManager->DelClient(pSockClient);
+    }
+    return true;
+}
+
+
+
+
+
+
+

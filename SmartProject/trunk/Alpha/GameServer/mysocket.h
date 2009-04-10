@@ -25,16 +25,21 @@ public:
     char* GetIP();                    // 返回IP地址
     char* GetPort(char *outPort);     // 返回端口号(字符串形式)
     long  GetPort();                  // 返回端口号
-    bool  SendPacket( Packet& pack );          // 发送数据包
-    bool  SendPacket( char *msg, long leng );  // 发送数据包
-    long  RecvPacket( Packet& pack);           // 接受数据,返回接收数据长度
+    bool  SendPacket( Packet& pack, int realSize);              // 发送数据包
+    bool  SendPacketHead( PacketHead& packHead);                // 发送数据包头
+    bool  SendPacketChat( char *msg, long leng );               // 发送chat包
+    long  RecvPacket( Packet& pack);                            // 接受数据,返回接收数据长度
 
+    void  BindName(char* name){         // 绑定name
+        strcpy( m_name, name);
+    }
 public:
-    int m_socket; // 兼容Linux Socket
-    int m_ID;     // 标示ID
+    int m_socket;    // 兼容Linux Socket
+    int m_ID;        // 标示ID
+    char m_sIP[16];  // IP address  
+    char m_name[21]; // 用户名
     struct sockaddr_in m_addr;
-    char m_sIP[16]; //IP address  
-    
+
     static int m_sinSize; // 固定大小
 
 };
