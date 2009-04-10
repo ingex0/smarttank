@@ -84,11 +84,17 @@ namespace InterRules.Starwar
             if (shootTimer >= 0)
             {
                 if (OnShoot != null)
-                    OnShoot(this, Pos + MathTools.NormalVectorFromAzi(ShootAzi) * SpaceWarConfig.ShootEndDest, ShootAzi);
+                    InfoRePath.CallEvent(this.mgPath, "OnShoot", OnShoot, this, Pos + MathTools.NormalVectorFromAzi(ShootAzi) * SpaceWarConfig.ShootEndDest, ShootAzi);
                 shootTimer -= SpaceWarConfig.ShootCD;
                 return true;
             }
             return false;
+        }
+
+        public void CallOnShoot(WarShip firer, Vector2 endPoint, float azi)
+        {
+            if (OnShoot != null)
+                OnShoot(this, Pos + MathTools.NormalVectorFromAzi(azi) * SpaceWarConfig.ShootEndDest, azi);
         }
 
         internal void Born(Vector2 newPos)
@@ -422,6 +428,6 @@ namespace InterRules.Starwar
 
         #endregion
 
-        
+
     }
 }

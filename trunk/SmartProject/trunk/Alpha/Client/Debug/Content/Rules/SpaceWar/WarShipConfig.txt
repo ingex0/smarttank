@@ -24,7 +24,7 @@ GoldScore=12
 GoldLiveTime=30
 
 //场景物体属性
-RockCreateTime=1
+RockCreateTime=100000
 RockMinSpeed=50
 RockMaxSpeed=200
 RockMaxAziSpeed=3.14

@@ -69,7 +69,10 @@ namespace TankEngine2D.DataStructure
             {
                 try
                 {
-                    return dic[name];
+                    if (dic.ContainsKey(name))
+                        return dic[name];
+                    else
+                        return null;
                 }
                 catch (Exception)
                 {

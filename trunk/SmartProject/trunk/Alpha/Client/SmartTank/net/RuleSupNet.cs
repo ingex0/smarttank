@@ -86,6 +86,7 @@ namespace SmartTank.net
         {
             SocketMgr.Close();
             PurviewMgr.Close();
+            
         }
 
         #endregion

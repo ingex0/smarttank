@@ -436,15 +436,21 @@ namespace SmartTank.net
                         {
                             if (pkg.dataSize < 1024 * 10 && pkg.dataSize >= 0)
                             {
+                                if (pkg.dataSize != 0)
+                                {
+                                    byte[] temp = new byte[pkg.dataSize];
+                                    netStream.Read(temp, 0, pkg.dataSize);
+                                    MemoryStream MStream = new MemoryStream(temp);
+                                    if (OnReceivePkg != null)
+                                        OnReceivePkg(pkg, MStream);
 
-                                byte[] temp = new byte[pkg.dataSize];
-                                netStream.Read(temp, 0, pkg.dataSize);
-                                MemoryStream MStream = new MemoryStream(temp);
-                                if (OnReceivePkg != null)
-                                    OnReceivePkg(pkg, MStream);
-
-                                MStream.Close();
-
+                                    MStream.Close();
+                                }
+                                else
+                                {
+                                    if (OnReceivePkg != null)
+                                        OnReceivePkg(pkg, null);
+                                }
                             }
                             else
                             {
@@ -486,6 +492,7 @@ namespace SmartTank.net
                 stPkgHead pkg = new stPkgHead();
                 pkg.iSytle = (int)PACKAGE_SYTLE.EXIT;
                 client.GetStream().Write(StructToBytes(pkg), 0, stPkgHead.Size);
+                thread = null;
             }
             return true;
         }
@@ -575,6 +582,9 @@ namespace SmartTank.net
                 case "System.Boolean":
                     temp = SR.ReadLine();
                     return bool.Parse(temp);
+                case "System.Int32":
+                    temp = SR.ReadLine();
+                    return int.Parse(temp);
                 case "SmartTank.GameObjs.GameObjInfo":
                     string objClass = SR.ReadLine();
                     string script = SR.ReadLine();
@@ -588,7 +598,7 @@ namespace SmartTank.net
 
         /// <summary>
         /// 结构体转byte数组
-        /// </summary>
+        /// </summaryss
         /// <param name="structObj">要转换的结构体</param>
         /// <returns>转换后的byte数组</returns>
         static public byte[] StructToBytes(object structObj)

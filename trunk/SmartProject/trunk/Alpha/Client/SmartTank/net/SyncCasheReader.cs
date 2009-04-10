@@ -147,6 +147,7 @@ namespace SmartTank.net
                 inputCashe.ObjStaInfoList.Clear();
                 inputCashe.ObjEventInfoList.Clear();
                 inputCashe.ObjMgInfoList.Clear();
+                inputCashe.UserDefineInfoList.Clear();
                 Monitor.Exit(inputCashe);
             }
         }
