@@ -51,17 +51,18 @@ namespace InterRules.Starwar
 
         Byte[] rankBuffer = new byte[400];
 
-        TextButton btnOK;
+        TextButton btnCreate, btnEnter, btnRank;
 
-        int selectIndex = -1;
+        int selectIndexRank = -1;
+        int selectIndexRoom = -1;
 
         public Hall()
         {
             BaseGame.ShowMouse = true;
 
-            roomList = new Listbox("roomlist", new Vector2(20, 50), new Point(200, 400), Color.WhiteSmoke, Color.Green);
+            roomList = new Listbox("roomlist", new Vector2(30, 100), new Point(200, 350), Color.WhiteSmoke, Color.Green);
 
-            rankList = new Listbox("roomlist", new Vector2(280, 50), new Point(400, 500), Color.WhiteSmoke, Color.Green);
+            rankList = new Listbox("ranklist", new Vector2(300, 100), new Point(450, 350), Color.WhiteSmoke, Color.Green);
 
             roomList.AddItem("Room 1");
 
@@ -71,9 +72,13 @@ namespace InterRules.Starwar
 
 
 
+            btnCreate = new TextButton("CreateBtn", new Vector2(130, 460), "Create", 0, Color.Gold);
+            btnEnter = new TextButton("EnterBtn", new Vector2(50, 460), "Enter", 0, Color.Gold);
+            btnRank = new TextButton("RankBtn", new Vector2(650, 460), "Rank List", 0, Color.Gold);
 
-            btnOK = new TextButton("OkBtn", new Vector2(700, 500), "Begin", 0, Color.Blue);
-            btnOK.OnClick += new EventHandler(btnOK_OnPress);
+            btnCreate.OnClick += new EventHandler(btnCreate_OnPress);
+            btnEnter.OnClick += new EventHandler(btnEnter_OnPress);
+            btnRank.OnClick += new EventHandler(btnRank_OnPress);
 
             rankList.OnChangeSelection += new EventHandler(rankList_OnChangeSelection);
             roomList.OnChangeSelection += new EventHandler(roomList_OnChangeSelection);
@@ -126,23 +131,26 @@ namespace InterRules.Starwar
         
         void roomList_OnChangeSelection(object sender, EventArgs e)
         {
-            selectIndex = roomList.selectedIndex;
+            selectIndexRoom = roomList.selectedIndex;
         }
 
         void rankList_OnChangeSelection(object sender, EventArgs e)
         {
-            selectIndex = rankList.selectedIndex;
+            selectIndexRank = rankList.selectedIndex;
         }
 
-        void btnOK_OnPress(object sender, EventArgs e)
+        void btnCreate_OnPress(object sender, EventArgs e)
+        {
+            
+        }
+
+        void btnEnter_OnPress(object sender, EventArgs e)
         {
 
+        }
 
-            //if (selectIndex >= 0 && selectIndex <= rulesList.Items.Count)
-            {
-                // GameManager.ComponentReset();
-                // GameManager.AddGameScreen(RuleLoader.CreateRuleInstance(selectIndex));
-            }
+        void btnRank_OnPress(object sender, EventArgs e)
+        {
 
         }
 
@@ -151,12 +159,27 @@ namespace InterRules.Starwar
         public bool Update(float second)
         {
 
-            btnOK.Update();
+            btnCreate.Update();
+            btnEnter.Update();
+            btnRank.Update();
+            
             roomList.Update();
             rankList.Update();
 
-            if (InputHandler.IsKeyDown(Keys.L))
+            if (InputHandler.IsKeyDown(Keys.F1))
                 GameManager.AddGameScreen(new StarwarLogic(0));
+            else if (InputHandler.IsKeyDown(Keys.F2))
+                GameManager.AddGameScreen(new StarwarLogic(1));
+            else if (InputHandler.IsKeyDown(Keys.PageDown))
+            {
+                SocketMgr.OnReceivePkg -= OnReceivePack;
+                GameManager.AddGameScreen(new Rank());
+            }
+            else if (InputHandler.IsKeyDown(Keys.PageUp))
+            {
+                SocketMgr.OnReceivePkg -= OnReceivePack;
+                GameManager.AddGameScreen(new Room());
+            }
 
             if (InputHandler.IsKeyDown(Keys.Escape))
                 return true;
@@ -171,8 +194,10 @@ namespace InterRules.Starwar
             spriteBatch.Draw(bgTexture, Vector2.Zero, bgRect, Color.White, 0, Vector2.Zero, 1, SpriteEffects.None, LayerDepth.BackGround);
             roomList.Draw(BaseGame.SpriteMgr.alphaSprite, 1);
             rankList.Draw(BaseGame.SpriteMgr.alphaSprite, 1);
-
-            btnOK.Draw(BaseGame.SpriteMgr.alphaSprite, 1);
+            btnEnter.Draw(BaseGame.SpriteMgr.alphaSprite, 1);
+            btnCreate.Draw(BaseGame.SpriteMgr.alphaSprite, 1);
+            btnRank.Draw(BaseGame.SpriteMgr.alphaSprite, 1);
+            
         }
 
         public void OnClose()

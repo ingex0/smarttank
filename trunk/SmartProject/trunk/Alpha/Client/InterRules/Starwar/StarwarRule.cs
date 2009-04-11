@@ -157,17 +157,22 @@ namespace InterRules.Starwar
 
         public bool Update(float second)
         {
-            
+
             namebox.Update();
             passbox.Update();
             btnLogin.Update();
             btnClear.Update();
 
-            
+
             if (InputHandler.IsKeyDown(Keys.F1))
                 GameManager.AddGameScreen(new StarwarLogic(0));
             else if (InputHandler.IsKeyDown(Keys.F2))
                 GameManager.AddGameScreen(new StarwarLogic(1));
+            else if (InputHandler.IsKeyDown(Keys.PageDown))
+            {
+                SocketMgr.OnReceivePkg -= OnReceivePack;
+                GameManager.AddGameScreen(new Hall());
+            }
             
             if (InputHandler.IsKeyDown(Keys.Escape))
                 return true;

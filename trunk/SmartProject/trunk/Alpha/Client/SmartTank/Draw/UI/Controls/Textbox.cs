@@ -217,7 +217,8 @@ namespace SmartTank.Draw.UI.Controls
                 foreach (Keys thisKey in textKeys)
                 {
                     bFoundKey = false;
-                    for (int i = 0; i < pressedKeys.Count; i++)
+                    //for (int i = 0; i < pressedKeys.Count; i++)
+                    for (int i = pressedKeys.Count - 1; i >= 0 ; i--)
                     {
                         if (pressedKeys[i] == thisKey)
                             bFoundKey = true;
@@ -262,12 +263,11 @@ namespace SmartTank.Draw.UI.Controls
                             keyTimerLong.Stop();
                             bInputEnable = false;
                             keyTimerLong.Start();
-
-                            for (int i = 0; i < pressedKeys.Count; i++)
-                            {
-                                if (thisKey == pressedKeys[i])
-                                    pressedKeys.RemoveAt(i);
-                            }
+                        }
+                        for (int i = 0; i < pressedKeys.Count; i++)
+                        {
+                            if (thisKey == pressedKeys[i])
+                                pressedKeys.RemoveAt(i);
                         }
                         
 
@@ -297,7 +297,7 @@ namespace SmartTank.Draw.UI.Controls
                         bBackspaceDown = true;
 
                         keyTimerShort.Stop();
-                        keyTimerLong.Start();
+                        keyTimerLong.Stop();
                         bInputEnable = false;
                         keyTimerLong.Start();
                         if (cursorPos > 0 && cursorPos < text.Length + 1)
@@ -310,7 +310,7 @@ namespace SmartTank.Draw.UI.Controls
                         if (bInputEnable)
                         {
                             keyTimerShort.Stop();
-                            keyTimerLong.Start();
+                            keyTimerLong.Stop();
                             bInputEnable = false;
                             keyTimerShort.Start();
                             if (cursorPos > 0 && cursorPos < text.Length + 1)
@@ -332,7 +332,7 @@ namespace SmartTank.Draw.UI.Controls
                     if (!bDeleteKey)
                     {
                         keyTimerShort.Stop();
-                        keyTimerLong.Start();
+                        keyTimerLong.Stop();
                         bInputEnable = false;
                         keyTimerLong.Start();
                         bDeleteKey = true;
@@ -344,7 +344,7 @@ namespace SmartTank.Draw.UI.Controls
                         if (bInputEnable)
                         {
                             keyTimerShort.Stop();
-                            keyTimerLong.Start();
+                            keyTimerLong.Stop();
                             bInputEnable = false;
                             keyTimerShort.Start();
                             if (cursorPos < text.Length)
@@ -363,7 +363,7 @@ namespace SmartTank.Draw.UI.Controls
                     if (!bLeftKey)
                     {
                         keyTimerShort.Stop();
-                        keyTimerLong.Start();
+                        keyTimerLong.Stop();
                         bInputEnable = false;
                         keyTimerLong.Start();
                         bLeftKey = true;
@@ -380,7 +380,7 @@ namespace SmartTank.Draw.UI.Controls
                         if (bInputEnable)
                         {
                             keyTimerShort.Stop();
-                            keyTimerLong.Start();
+                            keyTimerLong.Stop();
                             bInputEnable = false;
                             keyTimerShort.Start();
                             if (cursorPos > 0)
@@ -405,7 +405,7 @@ namespace SmartTank.Draw.UI.Controls
                     if (!bRightKey)
                     {
                         keyTimerShort.Stop();
-                        keyTimerLong.Start();
+                        keyTimerLong.Stop();
                         bInputEnable = false;
                         keyTimerLong.Start();
                         bRightKey = true;
@@ -422,7 +422,7 @@ namespace SmartTank.Draw.UI.Controls
                         if (bInputEnable)
                         {
                             keyTimerShort.Stop();
-                            keyTimerLong.Start();
+                            keyTimerLong.Stop();
                             bInputEnable = false;
                             keyTimerShort.Start();
                             if (cursorPos < text.Length)
@@ -483,17 +483,18 @@ namespace SmartTank.Draw.UI.Controls
         {
             if (obj != null)
             {
-                //bInputKeyDown = true;
+                bInputKeyDown = true;
                 Keys currentKey = (Keys)obj;
 
-                //bool bNewKey = true;
-                //for (int i = 0; i < pressedKeys.Count; i++)
-                //    if (currentKey == pressedKeys[i])
-                //        bNewKey = false;
+                bool bNewKey = true;
+                for (int i = 0; i < pressedKeys.Count; i++)
+                    if (currentKey == pressedKeys[i])
+                        bNewKey = false;
 
                 //if (bNewKey)
                 {
-                    pressedKeys.Add( currentKey );
+                    if (bNewKey)
+                        pressedKeys.Add( currentKey );
                     string[] strSplit = new string[2];
                     if (this.cursorPos < this.text.Length + 1)
                     {
