@@ -195,8 +195,20 @@ namespace SmartTank.Draw.UI.Controls
                     if (ks.IsKeyDown(thisKey))
                         PressNum++;
                 }
-                if (PressNum > 1 && !ks.IsKeyDown(Keys.RightShift) && !ks.IsKeyDown(Keys.LeftShift))
-                    return;
+                if (PressNum > 1)
+                {
+                    if (!ks.IsKeyDown(Keys.RightShift) && !ks.IsKeyDown(Keys.LeftShift))
+                    {
+                        pressedKeys.Clear();
+                        return;
+                    }
+                    else if (PressNum > 2)
+                    {
+                        pressedKeys.Clear();
+                        return;
+                    }
+                }
+
 
                 //Text keys
                 bool bFoundKey = false;

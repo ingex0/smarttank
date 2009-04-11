@@ -444,6 +444,17 @@ namespace SmartTank.net
                                     if (OnReceivePkg != null)
                                         OnReceivePkg(pkg, MStream);
 
+/*
+                                byte[] temp = new byte[pkg.dataSize];
+                                if (pkg.dataSize > 0)
+                                    netStream.Read(temp, 0, pkg.dataSize);
+                                MemoryStream MStream = new MemoryStream(temp);
+                                if (OnReceivePkg != null)
+                                    OnReceivePkg(pkg, MStream);
+
+                                MStream.Close();
+
+*/
                                     MStream.Close();
                                 }
                                 else
@@ -451,6 +462,7 @@ namespace SmartTank.net
                                     if (OnReceivePkg != null)
                                         OnReceivePkg(pkg, null);
                                 }
+
                             }
                             else
                             {
