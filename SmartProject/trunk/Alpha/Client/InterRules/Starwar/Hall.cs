@@ -99,24 +99,26 @@ namespace InterRules.Starwar
         
         void OnReceivePack(stPkgHead head, MemoryStream data)
         {
-            string tmp;
-            
             if (head.iSytle == 50)
             {
                 RankInfo ri;
-                tmp = "";
-                char[] nm = new char[21];
+                string str;
+
                 for (int i = 0; i < head.dataSize; i += 32)
                 {
-                    
-
-                    data.Read(rankBuffer, i, 32);
+   
+                    str = "";
+                    data.Read(rankBuffer, 0, 32);
 
                     ri = (RankInfo)SocketMgr.BytesToStuct(rankBuffer, typeof(RankInfo));
 
+                    for (int j = 0; ri.name[j] != '\0'; ++j)
+                    {
+                        str += ri.name[j];
+                    }
 
-                    tmp = ri.rank + "        " + ri.score;
-                    rankList.AddItem(tmp);
+
+                    rankList.AddItem(ri.rank + "        " + str + "              " + ri.score);
 
                 }
             }
