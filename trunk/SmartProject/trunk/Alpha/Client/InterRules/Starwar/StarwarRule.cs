@@ -56,6 +56,8 @@ namespace InterRules.Starwar
             get { return "Starwar"; }
         }
 
+       // Timer 
+
         Texture2D bgTexture;
 
         Rectangle bgRect;
@@ -64,9 +66,8 @@ namespace InterRules.Starwar
 
         Textbox namebox, passbox;
 
-        TextButton btnOK;
+        TextButton btnLogin, btnClear;
 
-        int selectIndex = -1;
 
         public StarwarRule()
         {
@@ -77,21 +78,43 @@ namespace InterRules.Starwar
 
             bgRect = new Rectangle(0, 0, 800, 600);
 
-            
+            namebox = new Textbox("namebox", new Vector2(300, 400), 150, "", false);
 
-            namebox = new Textbox("namebox", new Vector2(100, 200), 100, "", false);
+            passbox = new Textbox("passbox", new Vector2(300, 430), 150, "", false);
 
-            passbox = new Textbox("namebox", new Vector2(100, 300), 100, "", false);
+            passbox.bStar = true;
 
 
-            btnOK = new TextButton("OkBtn", new Vector2(700, 500), "Begin", 0, Color.Blue);
-            btnOK.OnClick += new EventHandler(btnOK_OnPress);
+            btnLogin = new TextButton("OkLogin", new Vector2(300, 480), "Login", 0, Color.Gold);
+            btnClear = new TextButton("ClearBtn", new Vector2(385, 480), "Clear", 0, Color.Gold);
+
+            SocketMgr.OnReceivePkg += new SocketMgr.ReceivePkgEventHandler(OnReceivePack);
+            //SocketMgr.OnReceivePkg -= OnReceivePack;
+
+            btnLogin.OnClick += new EventHandler(btnLogin_OnPress);
+            btnClear.OnClick += new EventHandler(btnClear_OnPress);
 
             // 连接到服务器
             //SocketMgr.ConnectToServer(); 
         }
 
-        void btnOK_OnPress(object sender, EventArgs e)
+        void OnReceivePack(stPkgHead head, MemoryStream data)
+        {
+            if (head.iSytle == 11)
+            {
+                SocketMgr.OnReceivePkg -= OnReceivePack;
+                GameManager.AddGameScreen(new Hall());
+            }
+        }
+
+        void btnClear_OnPress(object sender, EventArgs e)
+        {
+            namebox = new Textbox("namebox", new Vector2(300, 400), 150, "", false);
+            passbox = new Textbox("passbox", new Vector2(300, 430), 150, "", false);
+            passbox.bStar = true;
+        }
+
+        void btnLogin_OnPress(object sender, EventArgs e)
         {
 
 
@@ -126,6 +149,7 @@ namespace InterRules.Starwar
             SocketMgr.SendCommonPackge(head, Stream);
             Stream.Close();
 
+            SocketMgr.StartReceiveThread();
             //GameManager.AddGameScreen(new Hall());
         }
 
@@ -136,13 +160,15 @@ namespace InterRules.Starwar
             
             namebox.Update();
             passbox.Update();
-            btnOK.Update();
+            btnLogin.Update();
+            btnClear.Update();
 
+            
             if (InputHandler.IsKeyDown(Keys.F1))
                 GameManager.AddGameScreen(new StarwarLogic(0));
             else if (InputHandler.IsKeyDown(Keys.F2))
                 GameManager.AddGameScreen(new StarwarLogic(1));
-
+            
             if (InputHandler.IsKeyDown(Keys.Escape))
                 return true;
 
@@ -156,7 +182,8 @@ namespace InterRules.Starwar
             spriteBatch.Draw(bgTexture, Vector2.Zero, bgRect, Color.White, 0, Vector2.Zero, 1, SpriteEffects.None, LayerDepth.BackGround); 
             namebox.Draw(BaseGame.SpriteMgr.alphaSprite, 1);
             passbox.Draw(BaseGame.SpriteMgr.alphaSprite, 1);
-            btnOK.Draw(BaseGame.SpriteMgr.alphaSprite, 1);
+            btnLogin.Draw(BaseGame.SpriteMgr.alphaSprite, 1);
+            btnClear.Draw(BaseGame.SpriteMgr.alphaSprite, 1);
         }
 
         public void OnClose()
