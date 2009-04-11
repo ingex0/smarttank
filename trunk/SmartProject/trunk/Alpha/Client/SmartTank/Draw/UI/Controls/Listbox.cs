@@ -135,8 +135,7 @@ namespace SmartTank.Draw.UI.Controls
         #region Item Methods
         public void AddItem( string item )
         {
-            if (Contains( item ))
-                return;
+
 
             Items.Add( item );
             if (selectedIndex != -1)
