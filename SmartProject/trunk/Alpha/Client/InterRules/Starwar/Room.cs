@@ -85,7 +85,7 @@ namespace InterRules.Starwar
 
             SocketMgr.OnReceivePkg += new SocketMgr.ReceivePkgEventHandler(OnReceivePack);
 
-
+            /*
 
             stPkgHead head = new stPkgHead();
             //head.iSytle = //包头类型还没初始化
@@ -97,7 +97,7 @@ namespace InterRules.Starwar
             head.iSytle = 50;
             SocketMgr.SendCommonPackge(head, Stream);
             Stream.Close();
-
+            */
             // 连接到服务器
             //SocketMgr.ConnectToServer();
         }
