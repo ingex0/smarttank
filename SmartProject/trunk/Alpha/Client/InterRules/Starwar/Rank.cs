@@ -30,7 +30,7 @@ namespace InterRules.Starwar
     class Rank : IGameScreen
     {
         [StructLayoutAttribute(LayoutKind.Sequential, Size = 32, CharSet = CharSet.Ansi, Pack = 1)]
-        struct RankInfo
+        struct UserInfo
         {
             public const int size = 32;
 
@@ -53,6 +53,8 @@ namespace InterRules.Starwar
 
         TextButton btnOK;
 
+        bool bOK;
+
         int selectIndexRank = -1;
         int selectIndexRoom = -1;
 
@@ -60,9 +62,9 @@ namespace InterRules.Starwar
         {
             BaseGame.ShowMouse = true;
 
-            roomList = new Listbox("roomlist", new Vector2(30, 100), new Point(200, 350), Color.WhiteSmoke, Color.Green);
+            roomList = new Listbox("roomlist", new Vector2(30, 100), new Point(200, 350), Color.White, Color.Green);
 
-            rankList = new Listbox("ranklist", new Vector2(300, 100), new Point(450, 350), Color.WhiteSmoke, Color.Green);
+            rankList = new Listbox("ranklist", new Vector2(300, 100), new Point(450, 350), Color.White, Color.Green);
 
             roomList.AddItem("Room 1");
 
@@ -86,18 +88,19 @@ namespace InterRules.Starwar
             stPkgHead head = new stPkgHead();
             //head.iSytle = //包头类型还没初始化
             byte[] rankcode = new byte[4];
-            rankcode[0] = 0;
+            rankcode[0] = 1;
             rankcode[1] = 0;
             rankcode[2] = 0;
             rankcode[3] = 0;
 
             MemoryStream Stream = new MemoryStream();
-            Stream.Write(new byte[1], 0, 1);
-            head.dataSize = 1;
+            Stream.Write(rankcode, 0, 4);
+            head.dataSize = 4;
             head.iSytle = 50;
             SocketMgr.SendCommonPackge(head, Stream);
             Stream.Close();
 
+            bOK = false;
             // 连接到服务器
             //SocketMgr.ConnectToServer();
         }
@@ -110,7 +113,7 @@ namespace InterRules.Starwar
             
             if (head.iSytle == 50)
             {
-                RankInfo ri;
+                UserInfo ri;
                 string str;
 
                 for (int i = 0; i < head.dataSize; i += 32)
@@ -123,7 +126,7 @@ namespace InterRules.Starwar
                         tmpData[k] = data[i + k];
                     }
 
-                    ri = (RankInfo)SocketMgr.BytesToStuct(tmpData, typeof(RankInfo));
+                    ri = (UserInfo)SocketMgr.BytesToStuct(tmpData, typeof(UserInfo));
 
                     for (int j = 0; ri.name[j] != '\0'; ++j)
                     {
@@ -149,7 +152,7 @@ namespace InterRules.Starwar
 
         void btnOK_OnPress(object sender, EventArgs e)
         {
-            
+            bOK = true;
         }
 
         #region IGameScreen 成员
@@ -170,7 +173,8 @@ namespace InterRules.Starwar
             if (InputHandler.IsKeyDown(Keys.Escape))
                 return true;
 
-            return false;
+            return bOK;
+
         }
 
         public void Render()
@@ -186,7 +190,8 @@ namespace InterRules.Starwar
 
         public void OnClose()
         {
-
+            SocketMgr.CloseThread();
+            SocketMgr.Close();
         }
 
         #endregion

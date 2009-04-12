@@ -40,6 +40,7 @@ namespace SmartTank.Draw.UI.Controls
         Keys[] numericKeys = { Keys.NumPad0, Keys.NumPad1, Keys.NumPad2, Keys.NumPad3, Keys.NumPad4, Keys.NumPad5, Keys.NumPad6, Keys.NumPad7, Keys.NumPad8, Keys.NumPad9, Keys.Enter };
         List<Keys> pressedKeys;
         public bool bNumerical = false;
+        
 
         Timer keyTimerLong, keyTimerShort;
 
@@ -70,6 +71,7 @@ namespace SmartTank.Draw.UI.Controls
         int startIndex = 0;
         int endIndex = 0;
         int visibleChar = 0;
+        public int maxLen = 1000;
         #endregion
 
         #region Construction
@@ -195,6 +197,7 @@ namespace SmartTank.Draw.UI.Controls
                     if (ks.IsKeyDown(thisKey))
                         PressNum++;
                 }
+
                 if (PressNum > 1)
                 {
                     if (!ks.IsKeyDown(Keys.RightShift) && !ks.IsKeyDown(Keys.LeftShift))
@@ -214,33 +217,22 @@ namespace SmartTank.Draw.UI.Controls
                 bool bFoundKey = false;
                 bInputKeyDown = false;
                 bool NoPress = true;
-                foreach (Keys thisKey in textKeys)
+                if (text.Length < maxLen)
                 {
-                    bFoundKey = false;
-                    //for (int i = 0; i < pressedKeys.Count; i++)
-                    for (int i = pressedKeys.Count - 1; i >= 0 ; i--)
+                    foreach (Keys thisKey in textKeys)
                     {
-                        if (pressedKeys[i] == thisKey)
-                            bFoundKey = true;
-                        break;
-                    }
-                    
-                    if (ks.IsKeyDown( thisKey ))
-                    {
-                        if (!bFoundKey)
+                        bFoundKey = false;
+                        //for (int i = 0; i < pressedKeys.Count; i++)
+                        for (int i = pressedKeys.Count - 1; i >= 0; i--)
                         {
-
-                            bInputKeyDown = true;
-                            OnKeyPress(thisKey, null);
-
-                            keyTimerShort.Stop();
-                            keyTimerLong.Stop();
-                            bInputEnable = false;
-                            keyTimerLong.Start();
+                            if (pressedKeys[i] == thisKey)
+                                bFoundKey = true;
+                            break;
                         }
-                        else
+
+                        if (ks.IsKeyDown(thisKey))
                         {
-                            if (bInputEnable)
+                            if (!bFoundKey)
                             {
 
                                 bInputKeyDown = true;
@@ -249,33 +241,48 @@ namespace SmartTank.Draw.UI.Controls
                                 keyTimerShort.Stop();
                                 keyTimerLong.Stop();
                                 bInputEnable = false;
-                                keyTimerShort.Start();
+                                keyTimerLong.Start();
                             }
-                        }
-                        NoPress = false;
-                        break;
-                    }
-                    else
-                    {
-                        if (bFoundKey)
-                        {
-                            keyTimerShort.Stop();
-                            keyTimerLong.Stop();
-                            bInputEnable = false;
-                            keyTimerLong.Start();
-                        }
-                        for (int i = 0; i < pressedKeys.Count; i++)
-                        {
-                            if (thisKey == pressedKeys[i])
-                                pressedKeys.RemoveAt(i);
-                        }
-                        
+                            else
+                            {
+                                if (bInputEnable)
+                                {
 
+                                    bInputKeyDown = true;
+                                    OnKeyPress(thisKey, null);
+
+                                    keyTimerShort.Stop();
+                                    keyTimerLong.Stop();
+                                    bInputEnable = false;
+                                    keyTimerShort.Start();
+                                }
+                            }
+                            NoPress = false;
+                            break;
+                        }
+                        else
+                        {
+                            if (bFoundKey)
+                            {
+                                keyTimerShort.Stop();
+                                keyTimerLong.Stop();
+                                bInputEnable = false;
+                                keyTimerLong.Start();
+                            }
+                            for (int i = 0; i < pressedKeys.Count; i++)
+                            {
+                                if (thisKey == pressedKeys[i])
+                                    pressedKeys.RemoveAt(i);
+                            }
+
+
+                        }
                     }
                 }
 
                 if (NoPress)
                 {
+                    pressedKeys.Clear();
                     bInputKeyDown = false;
                 }
                 else

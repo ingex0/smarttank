@@ -20,6 +20,7 @@ namespace SmartTank.Draw.UI.Controls
         Scrollbar scrollbar;
 
         public List<string> Items;
+        public List<int> MyIDs;
         public Point size;
 
         Texture2D listBackground;
@@ -59,6 +60,7 @@ namespace SmartTank.Draw.UI.Controls
             OnChangeSelection += new EventHandler( listbox_onChangeSelection );
 
             Items = new List<string>();
+            MyIDs = new List<int>();
 
             CreateTextures();
 
@@ -136,8 +138,35 @@ namespace SmartTank.Draw.UI.Controls
         public void AddItem( string item )
         {
 
-
+            if (Contains(item))
+                return;
             Items.Add( item );
+            if (selectedIndex != -1)
+            {
+                selectedIndex++;
+                selectedItem = Items[selectedIndex];
+            }
+            if (Items.Count > visibleItems && scrollbar == null)
+                InitScrollbar();
+
+            if (scrollbar != null)
+                scrollbar.max = Items.Count - visibleItems;
+
+            if (Items.Count < visibleItems)
+                endIndex = Items.Count;
+            else
+                endIndex = startIndex + visibleItems;
+        }
+
+        public void AddItem(string item, int id)
+        {
+
+            if (MyIDs.Contains(id))
+                return;
+            if (Contains(item))
+                return;
+            Items.Add(item);
+            MyIDs.Add(id);
             if (selectedIndex != -1)
             {
                 selectedIndex++;
@@ -157,6 +186,7 @@ namespace SmartTank.Draw.UI.Controls
 
         public void RemoveItem( string item )
         {
+            MyIDs.Remove(IndexOf(item));
             Items.Remove( item );
             if (Items.Count <= visibleItems && scrollbar != null)
                 scrollbar = null;
@@ -177,6 +207,7 @@ namespace SmartTank.Draw.UI.Controls
         public void RemoveItem( int index )
         {
             Items.RemoveAt( index );
+            MyIDs.RemoveAt(index);
             if (Items.Count <= visibleItems && scrollbar != null)
                 scrollbar = null;
             if (selectedIndex == index)
@@ -196,6 +227,7 @@ namespace SmartTank.Draw.UI.Controls
         public void Clear()
         {
             Items.Clear();
+            MyIDs.Clear();
             if (scrollbar != null)
                 scrollbar = null;
             selectedIndex = -1;
@@ -204,12 +236,12 @@ namespace SmartTank.Draw.UI.Controls
             endIndex = 0;
         }
 
-        public void Sort()
-        {
-            Items.Sort();
-            selectedIndex = -1;
-            selectedItem = string.Empty;
-        }
+//        public void Sort()
+//        {
+ //           Items.Sort();
+ //           selectedIndex = -1;
+ //           selectedItem = string.Empty;
+ //       }
 
         public bool Contains( string item )
         {
@@ -399,7 +431,7 @@ namespace SmartTank.Draw.UI.Controls
         public override void Draw( SpriteBatch spriteBatch, float alpha )
         {
             Color dynamicListColor = new Color( new Vector4( backcolor.ToVector3().X, backcolor.ToVector3().Y, backcolor.ToVector3().Z, alpha ) );
-            spriteBatch.Draw( listBackground, position, null, dynamicListColor, 0, Vector2.Zero, 1, SpriteEffects.None, LayerDepth.UI );
+            spriteBatch.Draw( listBackground, position, null, dynamicListColor, 0, Vector2.Zero, 1, SpriteEffects.None, 0.2f );
 
             //Items
             int endIndex = Items.Count;
