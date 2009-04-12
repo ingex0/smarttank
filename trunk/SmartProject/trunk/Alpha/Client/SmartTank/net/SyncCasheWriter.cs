@@ -121,10 +121,7 @@ namespace SmartTank.net
 
         static public void SubmitUserDefineInfo(string infoName, string infoID, params object[] args)
         {
-            if (PurviewMgr.IsMainHost)
-            {
-                outPutCashe.AddUserDefineInfo(infoName, infoID, args);
-            }
+            outPutCashe.AddUserDefineInfo(infoName, infoID, args);
         }
 
         static void PushNewStatus(string objMgPath, string statueName, object[] values)
@@ -141,5 +138,6 @@ namespace SmartTank.net
                 Timer[Keys[i]] += seconds;
             }
         }
+
     }
 }

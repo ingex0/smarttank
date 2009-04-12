@@ -38,6 +38,9 @@ namespace SmartTank.net
                     {
                         IGameObj obj = sceneMgr.GetGameObj(info.objMgPath);
 
+                        if (obj == null)
+                            continue;
+
                         Type objType = obj.GetType();
                         objType.GetProperty(info.statusName).SetValue(obj, info.values[0], null); //暂时只处理一个值的情况
                     }
@@ -116,27 +119,26 @@ namespace SmartTank.net
                     }
                 }
 
-                if (!PurviewMgr.IsMainHost)
+
+                foreach (UserDefineInfo info in inputCashe.UserDefineInfoList)
                 {
-                    foreach (UserDefineInfo info in inputCashe.UserDefineInfoList)
+                    object[] newArgs = new object[info.args.Length];
+                    for (int i = 0; i < newArgs.Length; i++)
                     {
-                        object[] newArgs = new object[info.args.Length];
-                        for (int i = 0; i < newArgs.Length; i++)
+                        if (info.args[i] is GameObjSyncInfo)
                         {
-                            if (info.args[i] is GameObjSyncInfo)
-                            {
-                                IGameObj gameobj = sceneMgr.GetGameObj(((GameObjSyncInfo)info.args[i]).MgPath);
-                                newArgs[i] = gameobj;
-                            }
-                            else
-                            {
-                                newArgs[i] = info.args[i];
-                            }
+                            IGameObj gameobj = sceneMgr.GetGameObj(((GameObjSyncInfo)info.args[i]).MgPath);
+                            newArgs[i] = gameobj;
                         }
-                        if (onUserDefineInfo != null)
-                            onUserDefineInfo(info.infoName, info.infoID, newArgs);
+                        else
+                        {
+                            newArgs[i] = info.args[i];
+                        }
                     }
+                    if (onUserDefineInfo != null)
+                        onUserDefineInfo(info.infoName, info.infoID, newArgs);
                 }
+
             }
             catch (Exception ex)
             {
