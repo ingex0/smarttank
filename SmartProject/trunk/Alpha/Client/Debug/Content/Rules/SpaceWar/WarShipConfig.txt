@@ -16,7 +16,7 @@ ScoreByHit=6
 ShootEndDest=30
 
 //ÅÚµ¯ÊôĞÔ
-ShellSpeed=192
+ShellSpeed=250
 ShellLiveTime=10
 
 //½ğ±ÒÊôĞÔ
