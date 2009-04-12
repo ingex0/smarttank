@@ -102,8 +102,12 @@ namespace InterRules.Starwar
             //SocketMgr.ConnectToServer();
         }
         
-        void OnReceivePack(stPkgHead head, MemoryStream data)
+        void OnReceivePack(stPkgHead head, byte[] data)
         {
+            byte[] tmpData;
+
+            tmpData = new Byte[head.dataSize];
+            
             if (head.iSytle == 50)
             {
                 RankInfo ri;
@@ -113,9 +117,13 @@ namespace InterRules.Starwar
                 {
    
                     str = "";
-                    data.Read(rankBuffer, 0, 32);
 
-                    ri = (RankInfo)SocketMgr.BytesToStuct(rankBuffer, typeof(RankInfo));
+                    for (int k = 0; k < 32; k++)
+                    {
+                        tmpData[k] = data[i + k];
+                    }
+
+                    ri = (RankInfo)SocketMgr.BytesToStuct(tmpData, typeof(RankInfo));
 
                     for (int j = 0; ri.name[j] != '\0'; ++j)
                     {
