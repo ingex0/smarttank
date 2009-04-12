@@ -70,6 +70,12 @@ namespace InterRules.Starwar
 
         int wait;
 
+        stPkgHead head;
+        //head.iSytle = //包头类型还没初始化
+
+
+        MemoryStream Stream;
+
 
         public StarwarRule()
         {
@@ -86,6 +92,9 @@ namespace InterRules.Starwar
 
             passbox.bStar = true;
 
+
+            namebox.maxLen = 20;
+            passbox.maxLen = 20;
 
             btnLogin = new TextButton("OkLogin", new Vector2(300, 480), "Login", 0, Color.Gold);
             btnClear = new TextButton("ClearBtn", new Vector2(385, 480), "Clear", 0, Color.Gold);
@@ -114,6 +123,8 @@ namespace InterRules.Starwar
             namebox = new Textbox("namebox", new Vector2(300, 400), 150, "", false);
             passbox = new Textbox("passbox", new Vector2(300, 430), 150, "", false);
             passbox.bStar = true;
+            namebox.maxLen = 20;
+            passbox.maxLen = 20;
         }
 
         void btnLogin_OnPress(object sender, EventArgs e)
@@ -139,11 +150,8 @@ namespace InterRules.Starwar
                 data.Password[i] = temp[i];
             }
 
-            stPkgHead head = new stPkgHead();
-            //head.iSytle = //包头类型还没初始化
-
-
-            MemoryStream Stream = new MemoryStream();
+            head = new stPkgHead();
+            Stream = new MemoryStream();
             Stream.Write(SocketMgr.StructToBytes(data), 0, LoginData.size);
             head.dataSize = (int)Stream.Length;
             head.iSytle = 10;
@@ -196,7 +204,8 @@ namespace InterRules.Starwar
 
         public void OnClose()
         {
-
+            SocketMgr.CloseThread();
+            SocketMgr.Close();
         }
 
         #endregion
