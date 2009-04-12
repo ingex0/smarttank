@@ -7,6 +7,6 @@ namespace SmartTank.PhiCol
 {
     public interface ISyncable
     {
-        void SetServerStatue(Vector2 serPos, Vector2 serVel, float serAzi, float serAziVel, float syncTime);
+        void SetServerStatue(Vector2 serPos, Vector2 serVel, float serAzi, float serAziVel, float syncTime, bool velChangeIme);
     }
 }
