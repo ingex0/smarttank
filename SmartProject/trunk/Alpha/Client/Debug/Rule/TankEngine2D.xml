@@ -1243,6 +1243,15 @@
             <param name="layerDepth">深度，0表示最表层，1表示最深层</param>
             <param name="blenMode">混合模式</param>
         </member>
+        <member name="M:TankEngine2D.Graphics.BasicGraphics.FillRectangleInScrn(Microsoft.Xna.Framework.Rectangle,Microsoft.Xna.Framework.Graphics.Color,System.Single,Microsoft.Xna.Framework.Graphics.SpriteBlendMode)">
+            <summary>
+            在屏幕坐标中绘制一个填充的矩形
+            </summary>
+            <param name="rect">要填充的矩形</param>
+            <param name="color">颜色</param>
+            <param name="layerDepth">深度，0表示最表层，1表示最深层</param>
+            <param name="blenMode">混合模式</param>
+        </member>
         <member name="T:TankEngine2D.Helpers.MathTools">
             <summary>
             提供数学上的计算辅助
