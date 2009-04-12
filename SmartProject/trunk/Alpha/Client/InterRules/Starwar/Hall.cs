@@ -83,7 +83,8 @@ namespace InterRules.Starwar
             rankList.OnChangeSelection += new EventHandler(rankList_OnChangeSelection);
             roomList.OnChangeSelection += new EventHandler(roomList_OnChangeSelection);
 
-            SocketMgr.OnReceivePkg += new SocketMgr.ReceivePkgEventHandler(OnReceivePack);
+            // asoka 底层收包接口改了一下，直接返回byte[]。麻烦seek改一下解析包的逻辑了
+            //SocketMgr.OnReceivePkg += new SocketMgr.ReceivePkgEventHandler(OnReceivePack);
 
 
 
