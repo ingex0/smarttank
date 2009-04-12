@@ -141,11 +141,16 @@ namespace SmartTank.PhiCol
 
         #region ISyncable ≥…‘±
 
-        public void SetServerStatue(Vector2 serPos, Vector2 serVel, float serAzi, float serAziVel, float syncTime)
+        public void SetServerStatue(Vector2 serPos, Vector2 serVel, float serAzi, float serAziVel, float syncTime, bool velChangeIme)
         {
             if (syncTime == 0)
                 return;
 
+            if (velChangeIme)
+            {
+                this.Vel = serVel;
+                this.Pos = serPos;
+            }
             this.serPos = serPos + serVel * syncTime;
             this.serVel = serVel;
             this.serAzi = serAzi + serAziVel * syncTime;
