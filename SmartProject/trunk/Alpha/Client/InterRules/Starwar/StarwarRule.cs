@@ -68,6 +68,8 @@ namespace InterRules.Starwar
 
         TextButton btnLogin, btnClear;
 
+        int wait;
+
 
         public StarwarRule()
         {
@@ -78,9 +80,9 @@ namespace InterRules.Starwar
 
             bgRect = new Rectangle(0, 0, 800, 600);
 
-            namebox = new Textbox("namebox", new Vector2(300, 400), 150, "", false);
+            namebox = new Textbox("namebox", new Vector2(300, 400), 150, "dd", false);
 
-            passbox = new Textbox("passbox", new Vector2(300, 430), 150, "", false);
+            passbox = new Textbox("passbox", new Vector2(300, 430), 150, "dd", false);
 
             passbox.bStar = true;
 
@@ -89,20 +91,20 @@ namespace InterRules.Starwar
             btnClear = new TextButton("ClearBtn", new Vector2(385, 480), "Clear", 0, Color.Gold);
 
             SocketMgr.OnReceivePkg += new SocketMgr.ReceivePkgEventHandler(OnReceivePack);
-            //SocketMgr.OnReceivePkg -= OnReceivePack;
 
             btnLogin.OnClick += new EventHandler(btnLogin_OnPress);
             btnClear.OnClick += new EventHandler(btnClear_OnPress);
 
-            // 连接到服务器
-            //SocketMgr.ConnectToServer(); 
+            wait = 0;
+
         }
 
-        void OnReceivePack(stPkgHead head, MemoryStream data)
+        void OnReceivePack(stPkgHead head, Byte[] data)
         {
-            if (head.iSytle == 11)
+            if (head.iSytle == 11 && wait > 0)
             {
-                SocketMgr.OnReceivePkg -= OnReceivePack;
+                //SocketMgr.OnReceivePkg -= OnReceivePack;
+                wait--;
                 GameManager.AddGameScreen(new Hall());
             }
         }
@@ -117,7 +119,8 @@ namespace InterRules.Starwar
         void btnLogin_OnPress(object sender, EventArgs e)
         {
 
-
+            if (wait != 0)
+                return;
 
             LoginData data;
 
@@ -150,7 +153,7 @@ namespace InterRules.Starwar
             Stream.Close();
 
             SocketMgr.StartReceiveThread();
-            //GameManager.AddGameScreen(new Hall());
+            wait++;
         }
 
         #region IGameScreen 成员
@@ -170,7 +173,7 @@ namespace InterRules.Starwar
                 GameManager.AddGameScreen(new StarwarLogic(1));
             else if (InputHandler.IsKeyDown(Keys.PageDown))
             {
-                SocketMgr.OnReceivePkg -= OnReceivePack;
+                //SocketMgr.OnReceivePkg -= OnReceivePack;
                 GameManager.AddGameScreen(new Hall());
             }
             
