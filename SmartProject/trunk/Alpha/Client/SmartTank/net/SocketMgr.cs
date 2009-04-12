@@ -46,7 +46,7 @@ namespace SmartTank.net
 
     static public class SocketMgr
     {
-        public delegate void ReceivePkgEventHandler(stPkgHead head, MemoryStream mStream);
+        public delegate void ReceivePkgEventHandler(stPkgHead head, byte[] readData);
         public static event ReceivePkgEventHandler OnReceivePkg;
 
         static SocketConfig config;
@@ -107,6 +107,7 @@ namespace SmartTank.net
                 //else
                 //    return false;
                 client = new TcpClient();
+
                 client.Connect(endPoint);
                 if (client.Connected)
                     return true;
@@ -197,9 +198,16 @@ namespace SmartTank.net
                         SW.Flush();
                         int dataLength = (int)MStream.Length;
                         //int dataLength = (int)SW.BaseStream.Length;
-                        head.dataSize = dataLength;
+
+                        byte[] temp = new byte[dataLength];
+                        MStream.Position = 0;
+                        MStream.Read(temp, 0, dataLength);
+
+                        head.dataSize = temp.Length;
+
+
                         netStream.Write(StructToBytes(head), 0, stPkgHead.Size);
-                        MStream.WriteTo(netStream);
+                        netStream.Write(temp, 0, head.dataSize);
 
                         // 释放资源
                         SW.Close();
@@ -265,6 +273,17 @@ namespace SmartTank.net
                         Console.WriteLine("Sytle : " + pkg.iSytle);
                         Console.WriteLine("Size : " + pkg.dataSize);
 
+                        int recvLength = 0;
+                        byte[] readData = new byte[pkg.dataSize];
+                        while (recvLength < pkg.dataSize)
+                        {
+                            recvLength += netStream.Read(readData, recvLength, pkg.dataSize - recvLength);
+                        }
+                        if (recvLength != pkg.dataSize)
+                        {
+                            throw new Exception("危险：收到包的长度不等于实际包长");
+                        }
+
                         // 退出信号
                         if (pkg.iSytle == (int)PACKAGE_SYTLE.EXIT)
                         {
@@ -276,8 +295,8 @@ namespace SmartTank.net
                         else if (pkg.iSytle == (int)PACKAGE_SYTLE.DATA)
                         {
 
-                            byte[] readData = new byte[pkg.dataSize];
-                            netStream.Read(readData, 0, pkg.dataSize);
+                            //byte[] readData = new byte[pkg.dataSize];
+                            //netStream.Read(readData, 0, pkg.dataSize);
 
                             MemoryStream memStream = new MemoryStream(readData);
 
@@ -436,32 +455,10 @@ namespace SmartTank.net
                         {
                             if (pkg.dataSize < 1024 * 10 && pkg.dataSize >= 0)
                             {
-                                if (pkg.dataSize != 0)
-                                {
-                                    byte[] temp = new byte[pkg.dataSize];
-                                    netStream.Read(temp, 0, pkg.dataSize);
-                                    MemoryStream MStream = new MemoryStream(temp);
-                                    if (OnReceivePkg != null)
-                                        OnReceivePkg(pkg, MStream);
-
-/*
                                 byte[] temp = new byte[pkg.dataSize];
-                                if (pkg.dataSize > 0)
-                                    netStream.Read(temp, 0, pkg.dataSize);
-                                MemoryStream MStream = new MemoryStream(temp);
+                                readData.CopyTo(temp, 0);
                                 if (OnReceivePkg != null)
-                                    OnReceivePkg(pkg, MStream);
-
-                                MStream.Close();
-
-*/
-                                    MStream.Close();
-                                }
-                                else
-                                {
-                                    if (OnReceivePkg != null)
-                                        OnReceivePkg(pkg, null);
-                                }
+                                    OnReceivePkg(pkg, temp);
 
                             }
                             else
