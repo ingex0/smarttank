@@ -116,7 +116,7 @@ namespace SmartTank.GameObjs.Item
 
         #region IUpdater ≥…‘±
 
-        public void Update( float seconds )
+        public virtual void Update( float seconds )
         {
             sprite.UpdateTransformBounding();
         }

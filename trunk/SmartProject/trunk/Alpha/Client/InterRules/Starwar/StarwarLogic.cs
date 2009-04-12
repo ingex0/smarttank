@@ -107,25 +107,35 @@ namespace InterRules.Starwar
 
         void Shell_onCollided(IGameObj Sender, CollisionResult result, GameObjInfo objB)
         {
-            if (PurviewMgr.IsMainHost)
+
+            if (objB.ObjClass == "WarShip")
             {
-                if (objB.ObjClass == "WarShip")
+                if (PurviewMgr.IsMainHost)
                 {
-                    sceneMgr.DelGameObj("shell", Sender.Name);
-                    new ShellExplodeBeta(Sender.Pos, ((ShellNormal)Sender).Azi);
-
-                    Quake.BeginQuake(10, 50);
-                    Sound.PlayCue("EXPLO1");
+                    WarShipShell shell = Sender as WarShipShell;
+                    WarShip firer = shell.Firer as WarShip;
+                    if (objB.Script != firer.ObjInfo.Script)
+                    {
+                        (shell.Firer as WarShip).Score += SpaceWarConfig.ScoreByHit;
+                        SyncShipScoreHp(shell.Firer as WarShip, true);
+                    }
                 }
-                else
-                {
-                    WarShipShell shell = (WarShipShell)Sender;
-                    shell.MirrorPath(result);
 
-                    //
-                    //BroadcastObjPhiStatus(shell, true);
-                }
+                sceneMgr.DelGameObj("shell", Sender.Name);
+                new ShellExplodeBeta(Sender.Pos, ((ShellNormal)Sender).Azi);
+
+                Quake.BeginQuake(10, 50);
+                Sound.PlayCue("EXPLO1");
             }
+            else
+            {
+                WarShipShell shell = (WarShipShell)Sender;
+                shell.MirrorPath(result);
+
+                //
+                //BroadcastObjPhiStatus(shell, true);
+            }
+
         }
 
         void WarShip_OnCollied(IGameObj Sender, CollisionResult result, GameObjInfo objB)
@@ -134,8 +144,11 @@ namespace InterRules.Starwar
             {
                 WarShip ship = (WarShip)Sender;
                 ship.BeginStill();
-                ship.HitByShell();
+                if (PurviewMgr.IsMainHost)
+                    ship.HitByShell();
                 ship.Vel = result.NormalVector * SpaceWarConfig.ShellSpeed;
+
+                SyncShipScoreHp(ship, false);
             }
             else if (objB.ObjClass == "WarShip")
             {
@@ -151,8 +164,6 @@ namespace InterRules.Starwar
                 ship.Vel = newVel;
                 ship.BeginStill();
             }
-
-            //BroadcastObjPhiStatus(Sender);
         }
 
         void Warship_OnOverLap(IGameObj Sender, CollisionResult result, GameObjInfo objB)
@@ -161,6 +172,19 @@ namespace InterRules.Starwar
             {
                 WarShip ship = Sender as WarShip;
                 ship.Score += SpaceWarConfig.GoldScore;
+
+                SyncShipScoreHp(ship, true);
+            }
+        }
+
+        private void SyncShipScoreHp(WarShip ship, bool subScore)
+        {
+            if (PurviewMgr.IsMainHost)
+            {
+                if (subScore)
+                    SyncCasheWriter.SubmitUserDefineInfo("Score", "", ship, ship.Score);
+                else
+                    SyncCasheWriter.SubmitUserDefineInfo("Hp", "", ship, ship.HP);
             }
         }
 
@@ -190,6 +214,8 @@ namespace InterRules.Starwar
             if (infoName == "WarshipBorn")
             {
                 WarShip ship = args[0] as WarShip;
+                if (!PurviewMgr.IsMainHost)
+                    ship.Dead();
                 ship.Born((Vector2)args[1]);
             }
             else if (infoName == "ObjPhiCollide")
@@ -200,10 +226,33 @@ namespace InterRules.Starwar
             }
             else if (infoName == "ObjPhi")
             {
-                if (args[0] != null 
+                if (args[0] != null
                     && args[0] != ships[controlIndex])
                     ((NonInertiasPhiUpdater)((args[0] as IPhisicalObj).PhisicalUpdater))
                         .SetServerStatue((Vector2)args[1], (Vector2)args[2], (float)args[3], (float)args[4], phiSyncTime, false);
+            }
+            else if (infoName == "Score")
+            {
+                if (args[0] != null)
+                {
+                    WarShip ship = args[0] as WarShip;
+                    ship.Score = (int)args[1];
+                }
+            }
+            else if (infoName == "Hp")
+            {
+                if (args[0] != null)
+                {
+                    WarShip ship = args[0] as WarShip;
+                    ship.HP = (int)args[1];
+                }
+            }
+            else if (infoName == "GoldBorn")
+            {
+                if (args[0] != null)
+                {
+                    (args[0] as Gold).Born((Vector2)args[1]);
+                }
             }
         }
 
@@ -224,6 +273,7 @@ namespace InterRules.Starwar
                 rockCount++;
             }
         }
+
 
 
         private void SyncWarShip()
@@ -272,17 +322,21 @@ namespace InterRules.Starwar
 
         private void SetGoldNewPos(Gold Sender)
         {
-            while (true)
+            if (PurviewMgr.IsMainHost)
             {
-                Vector2 pos = RandomHelper.GetRandomVector2(0, 1);
-                pos.X *= mapRect.Width - 200;
-                pos.Y *= mapRect.Height - 200;
-                pos += new Vector2(100, 100);
-
-                if (CanAddObjAtPos(pos))
+                while (true)
                 {
-                    Sender.Born(pos);
-                    break;
+                    Vector2 pos = RandomHelper.GetRandomVector2(0, 1);
+                    pos.X *= mapRect.Width - 200;
+                    pos.Y *= mapRect.Height - 200;
+                    pos += new Vector2(100, 100);
+
+                    if (CanAddObjAtPos(pos))
+                    {
+                        Sender.Born(pos);
+                        SyncCasheWriter.SubmitUserDefineInfo("GoldBorn", "", Sender, Sender.Pos);
+                        break;
+                    }
                 }
             }
         }
@@ -430,15 +484,23 @@ namespace InterRules.Starwar
 
         void IGameScreen.Render()
         {
+            BaseGame.Device.Clear(Color.Black);
             backGround.Draw();
             GameManager.DrawManager.Draw();
-            BaseGame.BasicGraphics.DrawRectangle(mapRect, 3, Color.Red, 0f);
+            BaseGame.BasicGraphics.DrawRectangle(mapRect, 3, Color.White, LayerDepth.TankBase);
 
 
-            GameManager.RenderEngine.FontMgr.DrawInScrnCoord("Ship1 Live: " + ships[0].HP + "  Score: " + ships[0].Score, new Vector2(10, 500), 1.0f, Color.White, LayerDepth.Text, GameFonts.Comic);
-            //GameManager.RenderEngine.BasicGrahpics.DrawPoint(serPos, 1.0f, Color.Yellow, LayerDepth.Mouse);
-            //GameManager.RenderEngine.BasicGrahpics.DrawLine(serPos, serVel + serPos, 5, Color.Yellow, LayerDepth.Mouse, SpriteBlendMode.AlphaBlend);
+            DrawScore();
+        }
 
+        private void DrawScore()
+        {
+            for (int i = 0; i < ships.Length; i++)
+            {
+                //GameManager.RenderEngine.FontMgr.DrawInScrnCoord(" Live: " + ships[i].HP, new Vector2(50 + 120 * i, 500), 0.4f, Color.White, LayerDepth.Text, GameFonts.Comic);
+                GameManager.RenderEngine.FontMgr.DrawInScrnCoord("Ship" + i + " Score: " + ships[i].Score, new Vector2(50 + 120 * i, 550), 0.4f, Color.White, LayerDepth.Text, GameFonts.Comic);
+            }
+            GameManager.RenderEngine.BasicGrahpics.FillRectangleInScrn(new Rectangle(50, 50, ships[controlIndex].HP / 3, 20), Color.Red, LayerDepth.UI, SpriteBlendMode.AlphaBlend);
         }
 
         //Vector2 serPos = new Vector2(400, 400);

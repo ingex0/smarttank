@@ -5,6 +5,7 @@ using SmartTank.GameObjs.Item;
 using Microsoft.Xna.Framework;
 using System.IO;
 using SmartTank.Helpers;
+using SmartTank.net;
 
 namespace InterRules.Starwar
 {
@@ -40,6 +41,13 @@ namespace InterRules.Starwar
         {
         }
 
+        public override void Update(float seconds)
+        {
+            base.Update(seconds);
+            SyncCasheWriter.SubmitNewStatus(this.MgPath, "Pos", SyncImportant.HighFrequency, Pos);
+            SyncCasheWriter.SubmitNewStatus(this.MgPath, "Vel", SyncImportant.HighFrequency, Vel);
+            SyncCasheWriter.SubmitNewStatus(this.MgPath, "Azi", SyncImportant.HighFrequency, Azi);
+        }
         
     }
 }

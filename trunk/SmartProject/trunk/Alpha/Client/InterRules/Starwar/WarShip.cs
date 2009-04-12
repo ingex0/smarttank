@@ -20,7 +20,7 @@ namespace InterRules.Starwar
     class WarShip : IGameObj, ICollideObj, IPhisicalObj
     {
 
-        public WarShip(string name, Vector2 pos, float azi, bool openControl)
+        public WarShip(string name,Vector2 pos, float azi, bool openControl)
         {
             this.name = name;
             this.objInfo = new GameObjInfo("WarShip", name);
@@ -59,7 +59,10 @@ namespace InterRules.Starwar
         public int Score
         {
             get { return score; }
-            set { score = value; }
+            set 
+            {
+                score = value;
+            }
         }
 
         public Vector2 Vel
@@ -71,7 +74,9 @@ namespace InterRules.Starwar
         public int HP
         {
             get { return curHP; }
+            set { curHP = value; }
         }
+
 
         public delegate void WarShipShootEventHandler(WarShip firer, Vector2 endPoint, float azi);
         public delegate void WarShipDeadEventHandler(WarShip sender);
@@ -102,6 +107,8 @@ namespace InterRules.Starwar
             BeginWTF();
             this.Pos = newPos;
             this.Vel = Vector2.Zero;
+            isDead = false;
+            this.HP = SpaceWarConfig.IniHP;
         }
 
         public void BeginStill()
@@ -134,6 +141,13 @@ namespace InterRules.Starwar
                 if (OnDead != null)
                     OnDead(this);
             }
+        }
+
+        public void Dead()
+        {
+            this.isDead = true;
+            if (OnDead != null)
+                OnDead(this);
         }
 
         private void HandlerControl(float seconds)

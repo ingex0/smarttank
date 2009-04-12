@@ -259,6 +259,21 @@ namespace TankEngine2D.Graphics
             else
                 engine.SpriteMgr.alphaSprite.Draw( retangleTexture, destinRect, null, color, -engine.CoordinMgr.Rota, Vector2.Zero, SpriteEffects.None, layerDepth );
         }
+
+        /// <summary>
+        /// 在屏幕坐标中绘制一个填充的矩形
+        /// </summary>
+        /// <param name="rect">要填充的矩形</param>
+        /// <param name="color">颜色</param>
+        /// <param name="layerDepth">深度，0表示最表层，1表示最深层</param>
+        /// <param name="blenMode">混合模式</param>
+        public void FillRectangleInScrn(Rectangle rect, Color color, float layerDepth, SpriteBlendMode blendMode)
+        {
+            if (blendMode == SpriteBlendMode.Additive)
+                engine.SpriteMgr.additiveSprite.Draw(retangleTexture, rect, null, color, -engine.CoordinMgr.Rota, Vector2.Zero, SpriteEffects.None, layerDepth);
+            else
+                engine.SpriteMgr.alphaSprite.Draw(retangleTexture, rect, null, color, -engine.CoordinMgr.Rota, Vector2.Zero, SpriteEffects.None, layerDepth);
+        }
         #endregion
 
     }
