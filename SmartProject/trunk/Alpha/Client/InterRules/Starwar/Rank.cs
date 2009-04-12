@@ -85,7 +85,11 @@ namespace InterRules.Starwar
 
             stPkgHead head = new stPkgHead();
             //head.iSytle = //包头类型还没初始化
-
+            byte[] rankcode = new byte[4];
+            rankcode[0] = 0;
+            rankcode[1] = 0;
+            rankcode[2] = 0;
+            rankcode[3] = 0;
 
             MemoryStream Stream = new MemoryStream();
             Stream.Write(new byte[1], 0, 1);
