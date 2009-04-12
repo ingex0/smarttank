@@ -366,6 +366,15 @@ namespace InterRules.Starwar
             UpdateTimers(seconds);
 
             UpdateSprite();
+
+            CommitSyncInfo();
+        }
+
+        private void CommitSyncInfo()
+        {
+            SyncCasheWriter.SubmitNewStatus(this.mgPath, "Pos", SyncImportant.HighFrequency, this.Pos);
+            SyncCasheWriter.SubmitNewStatus(this.mgPath, "Vel", SyncImportant.HighFrequency, this.Vel);
+            SyncCasheWriter.SubmitNewStatus(this.mgPath, "Azi", SyncImportant.HighFrequency, this.Azi);
         }
 
         private void UpdateSprite()

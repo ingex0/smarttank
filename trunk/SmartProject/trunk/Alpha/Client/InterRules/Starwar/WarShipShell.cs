@@ -8,6 +8,7 @@ using SmartTank.GameObjs;
 using Microsoft.Xna.Framework;
 using TankEngine2D.Graphics;
 using SmartTank.Helpers;
+using SmartTank.net;
 
 namespace InterRules.Starwar
 {
@@ -17,6 +18,12 @@ namespace InterRules.Starwar
         public event ShellOutDateEventHandler OnOutDate;
 
         protected float liveTimer = -SpaceWarConfig.ShellLiveTime;
+
+        public Vector2 Vel
+        {
+            get { return ((NonInertiasPhiUpdater)PhisicalUpdater).Vel; }
+            set { ((NonInertiasPhiUpdater)PhisicalUpdater).Vel = value; }
+        }
 
         public WarShipShell(string name, IGameObj firer, Vector2 startPos, float startAzi)
             : base(name, firer, startPos, startAzi, SpaceWarConfig.ShellSpeed, 
@@ -33,7 +40,12 @@ namespace InterRules.Starwar
                 if (OnOutDate != null)
                     OnOutDate(this, Firer);
             }
+            SyncCasheWriter.SubmitNewStatus(this.MgPath, "Pos", SyncImportant.HighFrequency, this.Pos);
+            SyncCasheWriter.SubmitNewStatus(this.MgPath, "Vel", SyncImportant.HighFrequency, this.Vel);
+
         }
+
+
 
         internal void MirrorPath(CollisionResult result)
         {

@@ -123,7 +123,7 @@ namespace InterRules.Starwar
                     shell.MirrorPath(result);
 
                     //
-                    BroadcastObjPhiStatus(shell);
+                    //BroadcastObjPhiStatus(shell, true);
                 }
             }
         }
@@ -152,7 +152,7 @@ namespace InterRules.Starwar
                 ship.BeginStill();
             }
 
-            BroadcastObjPhiStatus(Sender);
+            //BroadcastObjPhiStatus(Sender);
         }
 
         void Warship_OnOverLap(IGameObj Sender, CollisionResult result, GameObjInfo objB)
@@ -182,7 +182,7 @@ namespace InterRules.Starwar
                 (Sender as Rock).Vel = newVel;
             }
 
-            BroadcastObjPhiStatus(Sender);
+            //BroadcastObjPhiStatus(Sender, true);
         }
 
         void SyncCasheReader_onUserDefineInfo(string infoName, string infoID, object[] args)
@@ -192,10 +192,18 @@ namespace InterRules.Starwar
                 WarShip ship = args[0] as WarShip;
                 ship.Born((Vector2)args[1]);
             }
-            else if (infoName == "ObjPhiStatus")
+            else if (infoName == "ObjPhiCollide")
             {
                 if (args[0] != null)
-                    ((NonInertiasPhiUpdater)((args[0] as IPhisicalObj).PhisicalUpdater)).SetServerStatue((Vector2)args[1], (Vector2)args[2], (float)args[3], (float)args[4], phiSyncTime);
+                    ((NonInertiasPhiUpdater)((args[0] as IPhisicalObj).PhisicalUpdater))
+                        .SetServerStatue((Vector2)args[1], (Vector2)args[2], (float)args[3], (float)args[4], phiSyncTime, true);
+            }
+            else if (infoName == "ObjPhi")
+            {
+                if (args[0] != null 
+                    && args[0] != ships[controlIndex])
+                    ((NonInertiasPhiUpdater)((args[0] as IPhisicalObj).PhisicalUpdater))
+                        .SetServerStatue((Vector2)args[1], (Vector2)args[2], (float)args[3], (float)args[4], phiSyncTime, false);
             }
         }
 
@@ -217,12 +225,40 @@ namespace InterRules.Starwar
             }
         }
 
-        private void BroadcastObjPhiStatus(IGameObj obj)
+
+        private void SyncWarShip()
+        {
+            if (PurviewMgr.IsMainHost)
+            {
+                for (int i = 0; i < ships.Length; i++)
+                {
+                    BroadcastObjPhiStatus(ships[i], false);
+                }
+            }
+            else
+            {
+                BroadcastObjPhiStatus(ships[controlIndex], false);
+            }
+
+
+        }
+
+        private void BroadcastObjPhiStatus(IGameObj obj, bool collide)
         {
             if (obj is IPhisicalObj)
             {
-                NonInertiasPhiUpdater phiUpdater = (NonInertiasPhiUpdater)((IPhisicalObj)obj).PhisicalUpdater;
-                SyncCasheWriter.SubmitUserDefineInfo("ObjPhiStatus", obj.ObjInfo.ObjClass, obj, phiUpdater.Pos, phiUpdater.Vel, phiUpdater.Azi, phiUpdater.AngVel);
+                if (collide)
+                {
+                    NonInertiasPhiUpdater phiUpdater = (NonInertiasPhiUpdater)((IPhisicalObj)obj).PhisicalUpdater;
+                    SyncCasheWriter.SubmitUserDefineInfo("ObjPhiCollide",
+                        obj.ObjInfo.ObjClass, obj, phiUpdater.Pos, phiUpdater.Vel, phiUpdater.Azi, phiUpdater.AngVel);
+                }
+                else
+                {
+                    NonInertiasPhiUpdater phiUpdater = (NonInertiasPhiUpdater)((IPhisicalObj)obj).PhisicalUpdater;
+                    SyncCasheWriter.SubmitUserDefineInfo("ObjPhi",
+                        obj.ObjInfo.ObjClass, obj, phiUpdater.Pos, phiUpdater.Vel, phiUpdater.Azi, phiUpdater.AngVel);
+                }
             }
         }
 
@@ -299,11 +335,19 @@ namespace InterRules.Starwar
             if (controlIndex == 0)
             {
                 PurviewMgr.IsMainHost = true;
+                for (int i = 0; i < ships.Length; i++)
+                {
+                    if (i != controlIndex)
+                        PurviewMgr.RegistSlaveMgObj(ships[i].MgPath);
+                }
             }
             else
             {
                 PurviewMgr.IsMainHost = false;
+                PurviewMgr.RegistSlaveMgObj(ships[controlIndex].MgPath);
             }
+
+
         }
 
         const float phiSyncTime = 0.1f;
@@ -410,7 +454,7 @@ namespace InterRules.Starwar
 
             CreateDelRock(second);
 
-            SyncWarShip();
+            //SyncWarShip();
             //if (InputHandler.IsKeyDown(Keys.U))
             //{
             //    ((NonInertiasPhiUpdater)ships[0].PhisicalUpdater).SetServerStatue(serPos, serVel, 0, 0, 10);
@@ -426,14 +470,6 @@ namespace InterRules.Starwar
                 return false;
         }
 
-        private void SyncWarShip()
-        {
-            if (PurviewMgr.IsMainHost)
-            {
-
-            }
-
-        }
 
         private void CreateDelRock(float second)
         {
