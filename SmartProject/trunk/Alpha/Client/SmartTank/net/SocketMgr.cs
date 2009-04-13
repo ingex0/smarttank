@@ -85,6 +85,7 @@ namespace SmartTank.net
                     line = reader.ReadLine();
                 }
                 reader.Close();
+                stream.Close();
             }
             catch (Exception ex)
             {
@@ -259,7 +260,7 @@ namespace SmartTank.net
 
         static public void ReceivePackge()
         {
-            SyncCashe cashe = sInputCashe;
+            
             try
             {
                 while (!ReadOver)
@@ -301,6 +302,7 @@ namespace SmartTank.net
 
                             //byte[] readData = new byte[pkg.dataSize];
                             //netStream.Read(readData, 0, pkg.dataSize);
+                            SyncCashe cashe = sInputCashe;
 
                             MemoryStream memStream = new MemoryStream(readData);
 
