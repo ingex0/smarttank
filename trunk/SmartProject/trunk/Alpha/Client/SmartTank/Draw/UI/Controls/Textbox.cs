@@ -1,8 +1,3 @@
-//=================================================
-// xWinForms
-// Copyright ?2007 by Eric Grossinger
-// http://psycad007.spaces.live.com/
-//=================================================
 using System;
 using System.Collections.Generic;
 using System.Text;

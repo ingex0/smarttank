@@ -24,6 +24,7 @@ using SmartTank.Effects;
 using SmartTank.Sounds;
 using SmartTank.Draw.UI.Controls;
 using System.Runtime.InteropServices;
+using System.Timers;
 
 namespace InterRules.Starwar
 {
@@ -56,7 +57,7 @@ namespace InterRules.Starwar
             get { return "Starwar"; }
         }
 
-       // Timer 
+        //Timer heartTimer;
 
         Texture2D bgTexture;
         Rectangle bgRect;
@@ -85,8 +86,20 @@ namespace InterRules.Starwar
             btnClear.OnClick += new EventHandler(btnClear_OnPress);
             wait = 0;
             bHasError = false;
+            //heartTimer = new Timer(1000);
+            //heartTimer.Elapsed += new ElapsedEventHandler(heartTimer_Tick);
         }
-
+        /*
+        private void heartTimer_Tick(Object obj, ElapsedEventArgs e)
+        {
+            stPkgHead head = new stPkgHead();
+            MemoryStream Stream = new MemoryStream();
+            head.dataSize = 0;
+            head.iSytle = 0;
+            SocketMgr.SendCommonPackge(head, Stream);
+            Stream.Close();
+        }
+        */
         void OnReceivePack(stPkgHead head, Byte[] data)
         {
             if (wait == 0)
@@ -95,6 +108,7 @@ namespace InterRules.Starwar
             if (head.iSytle == 11)
             {
                 wait--;
+                //heartTimer.Start();
                 GameManager.AddGameScreen(new Hall(namebox.text));
             }
             if (head.iSytle == 12)
@@ -201,6 +215,7 @@ namespace InterRules.Starwar
 
         public void OnClose()
         {
+            //heartTimer.Stop();
             stPkgHead head = new stPkgHead();
             MemoryStream Stream = new MemoryStream();
             head.dataSize = 0;
