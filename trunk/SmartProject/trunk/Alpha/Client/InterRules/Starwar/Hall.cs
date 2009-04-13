@@ -447,15 +447,7 @@ namespace InterRules.Starwar
 
         public void OnClose()
         {
-            headSend = new stPkgHead();
-            Stream = new MemoryStream();
-            headSend.dataSize = 0;
-            headSend.iSytle = 21;
-            SocketMgr.SendCommonPackge(headSend, Stream);
-            Stream.Close();
-            
-            SocketMgr.CloseThread();
-            SocketMgr.Close();
+
         }
 
         #endregion

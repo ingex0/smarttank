@@ -65,10 +65,9 @@ namespace InterRules.Starwar
 
             roomList = new Listbox("roomlist", new Vector2(30, 100), new Point(200, 350), Color.White, Color.Green);
             rankList = new Listbox("ranklist", new Vector2(300, 100), new Point(450, 350), Color.White, Color.Green);
-            roomList.AddItem("Room 1");
             bgTexture = BaseGame.ContentMgr.Load<Texture2D>(Path.Combine(Directories.BgContent, "login"));
             bgRect = new Rectangle(0, 0, 800, 600);
-            btnOK = new TextButton("OKBtn", new Vector2(150, 460), "OK", 0, Color.Gold);
+            btnOK = new TextButton("OKBtn", new Vector2(600, 460), "OK", 0, Color.Gold);
             btnOK.OnClick += new EventHandler(btnOK_OnPress);
             rankList.OnChangeSelection += new EventHandler(rankList_OnChangeSelection);
             roomList.OnChangeSelection += new EventHandler(roomList_OnChangeSelection);
@@ -208,15 +207,7 @@ namespace InterRules.Starwar
 
         public void OnClose()
         {
-            stPkgHead head = new stPkgHead();
-            MemoryStream Stream = new MemoryStream();
-            head.dataSize = 0;
-            head.iSytle = 21;
-            SocketMgr.SendCommonPackge(head, Stream);
-            Stream.Close();
-            
-            SocketMgr.CloseThread();
-            SocketMgr.Close();
+
         }
 
         #endregion
