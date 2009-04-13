@@ -56,8 +56,6 @@ namespace InterRules.Starwar
 
         bool bOK;
 
-        bool bWait;
-
         int selectIndexRank = -1;
         int selectIndexRoom = -1;
 
@@ -66,24 +64,14 @@ namespace InterRules.Starwar
             BaseGame.ShowMouse = true;
 
             roomList = new Listbox("roomlist", new Vector2(30, 100), new Point(200, 350), Color.White, Color.Green);
-
             rankList = new Listbox("ranklist", new Vector2(300, 100), new Point(450, 350), Color.White, Color.Green);
-
             roomList.AddItem("Room 1");
-
             bgTexture = BaseGame.ContentMgr.Load<Texture2D>(Path.Combine(Directories.BgContent, "login"));
-
             bgRect = new Rectangle(0, 0, 800, 600);
-
-
-
-            btnOK = new TextButton("OKBtn", new Vector2(650, 460), "OK", 0, Color.Gold);
-
+            btnOK = new TextButton("OKBtn", new Vector2(150, 460), "OK", 0, Color.Gold);
             btnOK.OnClick += new EventHandler(btnOK_OnPress);
-
             rankList.OnChangeSelection += new EventHandler(rankList_OnChangeSelection);
             roomList.OnChangeSelection += new EventHandler(roomList_OnChangeSelection);
-
             SocketMgr.OnReceivePkg += new SocketMgr.ReceivePkgEventHandler(OnReceivePack);
 
 
@@ -98,21 +86,33 @@ namespace InterRules.Starwar
 
             MemoryStream Stream = new MemoryStream();
             Stream.Write(rankcode, 0, 4);
-            head.dataSize = 0;
+            head.dataSize = 4;
             head.iSytle = 50;
             SocketMgr.SendCommonPackge(head, Stream);
             Stream.Close();
 
 
+            stPkgHead head2 = new stPkgHead();
+            MemoryStream Stream2 = new MemoryStream();
+            head2.dataSize = 0;
+            head2.iSytle = 40;
+            SocketMgr.SendCommonPackge(head2, Stream2);
+            Stream2.Close();
+
             head = new stPkgHead();
+            //head.iSytle = //包头类型还没初始化
+            rankcode = new byte[4];
+            rankcode[0] = 1;
+            rankcode[1] = 0;
+            rankcode[2] = 0;
+            rankcode[3] = 0;
 
             Stream = new MemoryStream();
+            Stream.Write(rankcode, 0, 4);
             head.dataSize = 4;
-            head.iSytle = 40;
+            head.iSytle = 50;
             SocketMgr.SendCommonPackge(head, Stream);
             Stream.Close();
-
-            bWait = true;
 
             bOK = false;
             // 连接到服务器
@@ -129,7 +129,6 @@ namespace InterRules.Starwar
             {
                 UserInfo ri;
                 string str;
-                bWait = false;
 
                 for (int i = 0; i < head.dataSize; i += 32)
                 {
@@ -155,7 +154,6 @@ namespace InterRules.Starwar
             }
             else if (head.iSytle == 40)
             {
-                bWait = false;
 
             }
         }
@@ -172,9 +170,8 @@ namespace InterRules.Starwar
 
         void btnOK_OnPress(object sender, EventArgs e)
         {
-            if (bWait)
-                return;
             bOK = true;
+            SocketMgr.OnReceivePkg -= OnReceivePack;
         }
 
         #region IGameScreen 成员
@@ -211,6 +208,13 @@ namespace InterRules.Starwar
 
         public void OnClose()
         {
+            stPkgHead head = new stPkgHead();
+            MemoryStream Stream = new MemoryStream();
+            head.dataSize = 0;
+            head.iSytle = 21;
+            SocketMgr.SendCommonPackge(head, Stream);
+            Stream.Close();
+            
             SocketMgr.CloseThread();
             SocketMgr.Close();
         }

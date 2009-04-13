@@ -65,13 +65,14 @@ namespace InterRules.Starwar
 
         TextButton btnCreate, btnEnter, btnRank, btnRefresh, btnStart, btnQuit;
 
-        stPkgHead head;
+        stPkgHead headSend;
         MemoryStream Stream;
 
         List<string> userNames;
 
         int selectIndexRank = -1;
         int selectIndexRoom = -1;
+        bool bHasError;
 
         bool bInRoom, bIsHost, bWaitEnter;
 
@@ -115,22 +116,26 @@ namespace InterRules.Starwar
 
 
 
-            head = new stPkgHead();
+            headSend = new stPkgHead();
             Stream = new MemoryStream();
-            head.dataSize = 0;
-            head.iSytle = 33;
-            SocketMgr.SendCommonPackge(head, Stream);
+            headSend.dataSize = 0;
+            headSend.iSytle = 33;
+            SocketMgr.SendCommonPackge(headSend, Stream);
             Stream.Close();
             userNames = new List<string>();
             bInRoom = false;
             bWaitEnter = false;
             bIsHost = false;
-
+            bHasError = false;
         }
         
         void OnReceivePack(stPkgHead head, byte[] data)
         {
-            
+
+            if (head.iSytle == 40)
+            {
+                head.iSytle = 40;
+            }
             if (head.iSytle == 33)
             {
                 //刷房间列表成功
@@ -169,19 +174,19 @@ namespace InterRules.Starwar
                 //创建房间成功
                 bWaitEnter = false;
 
-                head = new stPkgHead();
+                headSend = new stPkgHead();
                 Stream = new MemoryStream();
-                head.dataSize = 0;
-                head.iSytle = 33;
-                SocketMgr.SendCommonPackge(head, Stream);
+                headSend.dataSize = 0;
+                headSend.iSytle = 33;
+                SocketMgr.SendCommonPackge(headSend, Stream);
                 Stream.Close();
                 bInRoom = true;
 
-                head = new stPkgHead();
+                headSend = new stPkgHead();
                 Stream = new MemoryStream();
-                head.dataSize = 0;
-                head.iSytle = 34;
-                SocketMgr.SendCommonPackge(head, Stream);
+                headSend.dataSize = 0;
+                headSend.iSytle = 34;
+                SocketMgr.SendCommonPackge(headSend, Stream);
                 Stream.Close();
                 
  
@@ -198,20 +203,20 @@ namespace InterRules.Starwar
             {
                 //加入房间成功
                 bWaitEnter = false;
-                
-                head = new stPkgHead();
+
+                headSend = new stPkgHead();
                 Stream = new MemoryStream();
-                head.dataSize = 0;
-                head.iSytle = 33;
-                SocketMgr.SendCommonPackge(head, Stream);
+                headSend.dataSize = 0;
+                headSend.iSytle = 33;
+                SocketMgr.SendCommonPackge(headSend, Stream);
                 Stream.Close();
                 bInRoom = true;
 
-                head = new stPkgHead();
+                headSend = new stPkgHead();
                 Stream = new MemoryStream();
-                head.dataSize = 0;
-                head.iSytle = 34;
-                SocketMgr.SendCommonPackge(head, Stream);
+                headSend.dataSize = 0;
+                headSend.iSytle = 34;
+                SocketMgr.SendCommonPackge(headSend, Stream);
                 Stream.Close();
  
             }
@@ -293,48 +298,48 @@ namespace InterRules.Starwar
         {
             if (bInRoom || bWaitEnter)
                 return;
-            
-            head = new stPkgHead();
+
+            headSend = new stPkgHead();
             //head.iSytle = //包头类型还没初始化
 
 
             Stream = new MemoryStream();
-            head.dataSize = 0;
-            head.iSytle = 30;
-            SocketMgr.SendCommonPackge(head, Stream);
+            headSend.dataSize = 0;
+            headSend.iSytle = 30;
+            SocketMgr.SendCommonPackge(headSend, Stream);
             Stream.Close();
             bWaitEnter = true;
         }
 
         void btnStart_OnPress(object sender, EventArgs e)
         {
-            head = new stPkgHead();
+            headSend = new stPkgHead();
             Stream = new MemoryStream();
-            head.dataSize = 0;
-            head.iSytle = 70;
-            SocketMgr.SendCommonPackge(head, Stream);
+            headSend.dataSize = 0;
+            headSend.iSytle = 70;
+            SocketMgr.SendCommonPackge(headSend, Stream);
             Stream.Close();
             bWaitEnter = true;
         }
 
         void btnQuit_OnPress(object sender, EventArgs e)
         {
-            head = new stPkgHead();
+            headSend = new stPkgHead();
             Stream = new MemoryStream();
-            head.dataSize = 0;
-            head.iSytle = 39;
-            SocketMgr.SendCommonPackge(head, Stream);
+            headSend.dataSize = 0;
+            headSend.iSytle = 39;
+            SocketMgr.SendCommonPackge(headSend, Stream);
             Stream.Close();
             
             bIsHost = false;
             bInRoom = false;
 
-            head = new stPkgHead();
+            headSend = new stPkgHead();
             Stream = new MemoryStream();
-            head.dataSize = 0;
-            head.iSytle = 33;
+            headSend.dataSize = 0;
+            headSend.iSytle = 33;
             roomList.Clear();
-            SocketMgr.SendCommonPackge(head, Stream);
+            SocketMgr.SendCommonPackge(headSend, Stream);
             Stream.Close();
         }
 
@@ -347,33 +352,33 @@ namespace InterRules.Starwar
             if (roomList.selectedIndex == -1)
                 return;
 
-            head = new stPkgHead();
+            headSend = new stPkgHead();
             //byte[] roomid;
 
             //roomid = SocketMgr.StructToBytes(roomList.MyIDs[roomList.selectedIndex]);
 
-            MemoryStream Stream = new MemoryStream();
+            Stream = new MemoryStream();
             //Stream.Write(roomid, 0, 4);
             //head.dataSize = 4;
-            head.dataSize = 0;
-            head.iSytle = 31;
-            SocketMgr.SendCommonPackge(head, Stream);
+            headSend.dataSize = 0;
+            headSend.iSytle = 31;
+            SocketMgr.SendCommonPackge(headSend, Stream);
             Stream.Close();
             bWaitEnter = true;
         }
 
         void btnRefresh_OnPress(object sender, EventArgs e)
         {
-            head = new stPkgHead();
+            headSend = new stPkgHead();
             Stream = new MemoryStream();
-            head.dataSize = 0;
-            head.iSytle = 33;
-            SocketMgr.SendCommonPackge(head, Stream);
+            headSend.dataSize = 0;
+            headSend.iSytle = 33;
+            SocketMgr.SendCommonPackge(headSend, Stream);
             Stream.Close();
         }
 
         void btnRank_OnPress(object sender, EventArgs e)
-        {        
+        {
             //SocketMgr.OnReceivePkg -= OnReceivePack;
             GameManager.AddGameScreen(new Rank());
         }
@@ -442,6 +447,13 @@ namespace InterRules.Starwar
 
         public void OnClose()
         {
+            headSend = new stPkgHead();
+            Stream = new MemoryStream();
+            headSend.dataSize = 0;
+            headSend.iSytle = 21;
+            SocketMgr.SendCommonPackge(headSend, Stream);
+            Stream.Close();
+            
             SocketMgr.CloseThread();
             SocketMgr.Close();
         }
