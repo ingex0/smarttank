@@ -53,7 +53,10 @@ namespace InterRules.Starwar
 
         TextButton btnOK;
 
+
         bool bOK;
+
+        bool bWait;
 
         int selectIndexRank = -1;
         int selectIndexRoom = -1;
@@ -95,10 +98,21 @@ namespace InterRules.Starwar
 
             MemoryStream Stream = new MemoryStream();
             Stream.Write(rankcode, 0, 4);
-            head.dataSize = 4;
+            head.dataSize = 0;
             head.iSytle = 50;
             SocketMgr.SendCommonPackge(head, Stream);
             Stream.Close();
+
+
+            head = new stPkgHead();
+
+            Stream = new MemoryStream();
+            head.dataSize = 4;
+            head.iSytle = 40;
+            SocketMgr.SendCommonPackge(head, Stream);
+            Stream.Close();
+
+            bWait = true;
 
             bOK = false;
             // 连接到服务器
@@ -115,6 +129,7 @@ namespace InterRules.Starwar
             {
                 UserInfo ri;
                 string str;
+                bWait = false;
 
                 for (int i = 0; i < head.dataSize; i += 32)
                 {
@@ -138,6 +153,11 @@ namespace InterRules.Starwar
 
                 }
             }
+            else if (head.iSytle == 40)
+            {
+                bWait = false;
+
+            }
         }
         
         void roomList_OnChangeSelection(object sender, EventArgs e)
@@ -152,6 +172,8 @@ namespace InterRules.Starwar
 
         void btnOK_OnPress(object sender, EventArgs e)
         {
+            if (bWait)
+                return;
             bOK = true;
         }
 
@@ -185,7 +207,6 @@ namespace InterRules.Starwar
             roomList.Draw(BaseGame.SpriteMgr.alphaSprite, 1);
             rankList.Draw(BaseGame.SpriteMgr.alphaSprite, 1);
             btnOK.Draw(BaseGame.SpriteMgr.alphaSprite, 1);
-            
         }
 
         public void OnClose()

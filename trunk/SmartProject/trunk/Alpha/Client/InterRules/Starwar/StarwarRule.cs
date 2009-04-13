@@ -59,62 +59,50 @@ namespace InterRules.Starwar
        // Timer 
 
         Texture2D bgTexture;
-
         Rectangle bgRect;
-
         SpriteBatch spriteBatch;
-
         Textbox namebox, passbox;
-
         TextButton btnLogin, btnClear;
-
         int wait;
-
         stPkgHead head;
-        //head.iSytle = //包头类型还没初始化
-
-
         MemoryStream Stream;
-
 
         public StarwarRule()
         {
             BaseGame.ShowMouse = true;
 
-
             bgTexture = BaseGame.ContentMgr.Load<Texture2D>(Path.Combine(Directories.BgContent, "login"));
-
             bgRect = new Rectangle(0, 0, 800, 600);
-
             namebox = new Textbox("namebox", new Vector2(300, 400), 150, "dd", false);
-
             passbox = new Textbox("passbox", new Vector2(300, 430), 150, "dd", false);
-
             passbox.bStar = true;
-
-
             namebox.maxLen = 20;
             passbox.maxLen = 20;
-
             btnLogin = new TextButton("OkLogin", new Vector2(300, 480), "Login", 0, Color.Gold);
             btnClear = new TextButton("ClearBtn", new Vector2(385, 480), "Clear", 0, Color.Gold);
-
             SocketMgr.OnReceivePkg += new SocketMgr.ReceivePkgEventHandler(OnReceivePack);
-
             btnLogin.OnClick += new EventHandler(btnLogin_OnPress);
             btnClear.OnClick += new EventHandler(btnClear_OnPress);
-
             wait = 0;
-
         }
 
         void OnReceivePack(stPkgHead head, Byte[] data)
         {
             if (head.iSytle == 11 && wait > 0)
             {
-                //SocketMgr.OnReceivePkg -= OnReceivePack;
                 wait--;
-                GameManager.AddGameScreen(new Hall());
+                GameManager.AddGameScreen(new Hall(namebox.text));
+            }
+            if (head.iSytle == 12 && wait > 0)
+            {
+                wait--;
+                namebox = new Textbox("namebox", new Vector2(300, 400), 150, "", false);
+                passbox = new Textbox("passbox", new Vector2(300, 430), 150, "", false);
+                passbox.bStar = true;
+                namebox.maxLen = 20;
+                passbox.maxLen = 20;
+                SocketMgr.CloseThread();
+                SocketMgr.Close();
             }
         }
 
@@ -159,7 +147,6 @@ namespace InterRules.Starwar
             SocketMgr.ConnectToServer();
             SocketMgr.SendCommonPackge(head, Stream);
             Stream.Close();
-
             SocketMgr.StartReceiveThread();
             wait++;
         }
@@ -181,8 +168,7 @@ namespace InterRules.Starwar
                 GameManager.AddGameScreen(new StarwarLogic(1));
             else if (InputHandler.IsKeyDown(Keys.PageDown))
             {
-                //SocketMgr.OnReceivePkg -= OnReceivePack;
-                GameManager.AddGameScreen(new Hall());
+                GameManager.AddGameScreen(new Hall(namebox.text));
             }
             
             if (InputHandler.IsKeyDown(Keys.Escape))
