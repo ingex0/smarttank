@@ -73,8 +73,8 @@ namespace InterRules.Starwar
 
             bgTexture = BaseGame.ContentMgr.Load<Texture2D>(Path.Combine(Directories.BgContent, "login"));
             bgRect = new Rectangle(0, 0, 800, 600);
-            namebox = new Textbox("namebox", new Vector2(300, 400), 150, "test", false);
-            passbox = new Textbox("passbox", new Vector2(300, 430), 150, "123", false);
+            namebox = new Textbox("namebox", new Vector2(300, 400), 150, "", false);
+            passbox = new Textbox("passbox", new Vector2(300, 430), 150, "", false);
             passbox.bStar = true;
             namebox.maxLen = 20;
             passbox.maxLen = 20;
