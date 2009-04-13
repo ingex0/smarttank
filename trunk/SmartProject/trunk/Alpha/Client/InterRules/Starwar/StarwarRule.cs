@@ -64,8 +64,8 @@ namespace InterRules.Starwar
         Textbox namebox, passbox;
         TextButton btnLogin, btnClear;
         int wait;
-        stPkgHead head;
-        MemoryStream Stream;
+        bool bHasError;
+
 
         public StarwarRule()
         {
@@ -73,8 +73,8 @@ namespace InterRules.Starwar
 
             bgTexture = BaseGame.ContentMgr.Load<Texture2D>(Path.Combine(Directories.BgContent, "login"));
             bgRect = new Rectangle(0, 0, 800, 600);
-            namebox = new Textbox("namebox", new Vector2(300, 400), 150, "dd", false);
-            passbox = new Textbox("passbox", new Vector2(300, 430), 150, "dd", false);
+            namebox = new Textbox("namebox", new Vector2(300, 400), 150, "test", false);
+            passbox = new Textbox("passbox", new Vector2(300, 430), 150, "123", false);
             passbox.bStar = true;
             namebox.maxLen = 20;
             passbox.maxLen = 20;
@@ -84,16 +84,20 @@ namespace InterRules.Starwar
             btnLogin.OnClick += new EventHandler(btnLogin_OnPress);
             btnClear.OnClick += new EventHandler(btnClear_OnPress);
             wait = 0;
+            bHasError = false;
         }
 
         void OnReceivePack(stPkgHead head, Byte[] data)
         {
-            if (head.iSytle == 11 && wait > 0)
+            if (wait == 0)
+                return;
+            
+            if (head.iSytle == 11)
             {
                 wait--;
                 GameManager.AddGameScreen(new Hall(namebox.text));
             }
-            if (head.iSytle == 12 && wait > 0)
+            if (head.iSytle == 12)
             {
                 wait--;
                 namebox = new Textbox("namebox", new Vector2(300, 400), 150, "", false);
@@ -103,6 +107,10 @@ namespace InterRules.Starwar
                 passbox.maxLen = 20;
                 SocketMgr.CloseThread();
                 SocketMgr.Close();
+            }
+            else
+            {
+                bHasError = true;
             }
         }
 
@@ -137,9 +145,8 @@ namespace InterRules.Starwar
             {
                 data.Password[i] = temp[i];
             }
-
-            head = new stPkgHead();
-            Stream = new MemoryStream();
+            stPkgHead head = new stPkgHead();
+            MemoryStream Stream = new MemoryStream();
             Stream.Write(SocketMgr.StructToBytes(data), 0, LoginData.size);
             head.dataSize = (int)Stream.Length;
             head.iSytle = 10;
@@ -170,6 +177,10 @@ namespace InterRules.Starwar
             {
                 GameManager.AddGameScreen(new Hall(namebox.text));
             }
+            else if (InputHandler.IsKeyDown(Keys.PageUp))
+            {
+                GameManager.AddGameScreen(new Rank());
+            }
             
             if (InputHandler.IsKeyDown(Keys.Escape))
                 return true;
@@ -190,6 +201,12 @@ namespace InterRules.Starwar
 
         public void OnClose()
         {
+            stPkgHead head = new stPkgHead();
+            MemoryStream Stream = new MemoryStream();
+            head.dataSize = 0;
+            head.iSytle = 21;
+            SocketMgr.SendCommonPackge(head, Stream);
+            Stream.Close();
             SocketMgr.CloseThread();
             SocketMgr.Close();
         }
