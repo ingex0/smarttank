@@ -41,17 +41,19 @@ namespace InterRules.Starwar
             public char[] name;
         }
 
-        [StructLayoutAttribute(LayoutKind.Sequential, Size = 32, CharSet = CharSet.Ansi, Pack = 1)]
+        [StructLayoutAttribute(LayoutKind.Sequential, Size = 56, CharSet = CharSet.Ansi, Pack = 1)]
         struct UserInfo
         {
-            public const int size = 32;
+            public const int size = 56;
 
-            public int rank;
-            public int score;
-            [MarshalAs(UnmanagedType.ByValArray, SizeConst = 24)]
+            public int state;
+            [MarshalAs(UnmanagedType.ByValArray, SizeConst = 21)]
             public char[] name;
+            [MarshalAs(UnmanagedType.ByValArray, SizeConst = 23)]
+            public char[] pass;
+            public int score;
+            public int rank;
         }
-
         Texture2D bgTexture;
 
         Rectangle bgRect;
@@ -61,20 +63,25 @@ namespace InterRules.Starwar
         Listbox roomList;
         Listbox rankList;
 
-        TextButton btnCreate, btnEnter, btnRank, btnRefresh, btnStart;
+        TextButton btnCreate, btnEnter, btnRank, btnRefresh, btnStart, btnQuit;
 
         stPkgHead head;
         MemoryStream Stream;
 
-        List<Label> players;
+        List<string> userNames;
 
         int selectIndexRank = -1;
         int selectIndexRoom = -1;
 
-        bool bInRoom, bIsHost;
+        bool bInRoom, bIsHost, bWaitEnter;
 
-        public Hall()
+        int myRoomId;
+        string myName;
+
+        public Hall(string tmpName)
         {
+            myName = tmpName;
+            
             BaseGame.ShowMouse = true;
 
             roomList = new Listbox("roomlist", new Vector2(30, 100), new Point(200, 350), Color.White, Color.Green);
@@ -89,12 +96,14 @@ namespace InterRules.Starwar
 
             btnRefresh = new TextButton("RefreshBtn", new Vector2(130, 460), "Refresh", 0, Color.Gold);
             btnCreate = new TextButton("CreateBtn", new Vector2(310, 460), "Create a new room", 0, Color.Gold);
+            btnQuit = new TextButton("QuitBtn", new Vector2(310, 460), "Quit", 0, Color.Gold);
             btnEnter = new TextButton("EnterBtn", new Vector2(50, 460), "Enter", 0, Color.Gold);
             btnRank = new TextButton("RankBtn", new Vector2(650, 460), "Rank List", 0, Color.Gold);
             btnStart = new TextButton("StartBtn", new Vector2(550, 390), "Start", 0, Color.Gold);
 
             btnRefresh.OnClick += new EventHandler(btnRefresh_OnPress);
             btnCreate.OnClick += new EventHandler(btnCreate_OnPress);
+            btnQuit.OnClick += new EventHandler(btnQuit_OnPress);
             btnEnter.OnClick += new EventHandler(btnEnter_OnPress);
             btnRank.OnClick += new EventHandler(btnRank_OnPress);
             btnStart.OnClick += new EventHandler(btnStart_OnPress);
@@ -112,8 +121,10 @@ namespace InterRules.Starwar
             head.iSytle = 33;
             SocketMgr.SendCommonPackge(head, Stream);
             Stream.Close();
-            players = new List<Label>();
+            userNames = new List<string>();
             bInRoom = false;
+            bWaitEnter = false;
+            bIsHost = false;
 
         }
         
@@ -153,10 +164,11 @@ namespace InterRules.Starwar
 
                 }
             }
-            else if (head.iSytle == 11)
+            else if (head.iSytle == 35)
             {
                 //创建房间成功
-                players.Clear();
+                bWaitEnter = false;
+
                 head = new stPkgHead();
                 Stream = new MemoryStream();
                 head.dataSize = 0;
@@ -164,7 +176,6 @@ namespace InterRules.Starwar
                 SocketMgr.SendCommonPackge(head, Stream);
                 Stream.Close();
                 bInRoom = true;
-                bIsHost = true;
 
                 head = new stPkgHead();
                 Stream = new MemoryStream();
@@ -175,10 +186,19 @@ namespace InterRules.Starwar
                 
  
             }
+            else if (head.iSytle == 36)
+            {
+                //创建房间失败
+                bWaitEnter = false;
+
+                bInRoom = false;
+                bIsHost = false;
+            }
             else if (head.iSytle == 37)
             {
                 //加入房间成功
-                players.Clear();
+                bWaitEnter = false;
+                
                 head = new stPkgHead();
                 Stream = new MemoryStream();
                 head.dataSize = 0;
@@ -194,6 +214,15 @@ namespace InterRules.Starwar
                 SocketMgr.SendCommonPackge(head, Stream);
                 Stream.Close();
  
+            }
+            else if (head.iSytle == 38)
+            {
+                //加入房间失败
+                bWaitEnter = false;
+
+                bInRoom = false;
+                bIsHost = false;
+
             }
             else if (head.iSytle == 34)
             {
@@ -207,14 +236,15 @@ namespace InterRules.Starwar
                 
 
                 tmpData = new byte[head.dataSize];
-
-                for (int i = 0; i < head.dataSize; i += 32)
+                bIsHost = false;
+                userNames.Clear();
+                for (int i = 0; i < head.dataSize; i += 56)
                 {
 
                     str = "";
                     //data.Read(roomBuffer, 0, 32);
 
-                    for (int k = 0; k < 32; ++k)
+                    for (int k = 0; k < 56; ++k)
                     {
                         tmpData[k] = data[i + k];
                     }
@@ -225,12 +255,27 @@ namespace InterRules.Starwar
                     {
                         str += player.name[j];
                     }
+                    if (str == myName && player.state == 1)
+                        bIsHost = true;
+                    userNames.Add(str);//, Font font)
 
-                    players.Add(new Label(str, new Vector2(300, 100 + i * 20), str, Color.Black, 1));//, Font font)
 
                     //roomList.AddItem("room 1" + " ( " + room.players + " / 6 )", room.id);
 
                 }
+            }
+            else if (head.iSytle == 70)
+            {
+                //开始游戏
+                bWaitEnter = false;
+                if (bIsHost)
+                    GameManager.AddGameScreen(new StarwarLogic(0));
+                else
+                    GameManager.AddGameScreen(new StarwarLogic(1));
+            }
+            else if (head.iSytle == 71)
+            {
+                bWaitEnter = false;
             }
         }
         
@@ -246,6 +291,9 @@ namespace InterRules.Starwar
 
         void btnCreate_OnPress(object sender, EventArgs e)
         {
+            if (bInRoom || bWaitEnter)
+                return;
+            
             head = new stPkgHead();
             //head.iSytle = //包头类型还没初始化
 
@@ -255,20 +303,52 @@ namespace InterRules.Starwar
             head.iSytle = 30;
             SocketMgr.SendCommonPackge(head, Stream);
             Stream.Close();
+            bWaitEnter = true;
         }
 
         void btnStart_OnPress(object sender, EventArgs e)
         {
+            head = new stPkgHead();
+            Stream = new MemoryStream();
+            head.dataSize = 0;
+            head.iSytle = 70;
+            SocketMgr.SendCommonPackge(head, Stream);
+            Stream.Close();
+            bWaitEnter = true;
+        }
 
+        void btnQuit_OnPress(object sender, EventArgs e)
+        {
+            head = new stPkgHead();
+            Stream = new MemoryStream();
+            head.dataSize = 0;
+            head.iSytle = 39;
+            SocketMgr.SendCommonPackge(head, Stream);
+            Stream.Close();
+            
+            bIsHost = false;
+            bInRoom = false;
+
+            head = new stPkgHead();
+            Stream = new MemoryStream();
+            head.dataSize = 0;
+            head.iSytle = 33;
+            roomList.Clear();
+            SocketMgr.SendCommonPackge(head, Stream);
+            Stream.Close();
         }
 
         void btnEnter_OnPress(object sender, EventArgs e)
         {
+            if (bWaitEnter || bInRoom)
+                return;
+
+
             if (roomList.selectedIndex == -1)
                 return;
 
             head = new stPkgHead();
-            byte[] roomid;
+            //byte[] roomid;
 
             //roomid = SocketMgr.StructToBytes(roomList.MyIDs[roomList.selectedIndex]);
 
@@ -279,6 +359,7 @@ namespace InterRules.Starwar
             head.iSytle = 31;
             SocketMgr.SendCommonPackge(head, Stream);
             Stream.Close();
+            bWaitEnter = true;
         }
 
         void btnRefresh_OnPress(object sender, EventArgs e)
@@ -292,7 +373,7 @@ namespace InterRules.Starwar
         }
 
         void btnRank_OnPress(object sender, EventArgs e)
-        {
+        {        
             //SocketMgr.OnReceivePkg -= OnReceivePack;
             GameManager.AddGameScreen(new Rank());
         }
@@ -302,7 +383,10 @@ namespace InterRules.Starwar
         public bool Update(float second)
         {
             btnRefresh.Update();
-            btnCreate.Update();
+            if (bInRoom)
+                btnQuit.Update();
+            else
+                btnCreate.Update();
             btnEnter.Update();
             btnRank.Update();
             if (bInRoom && bIsHost)
@@ -336,14 +420,17 @@ namespace InterRules.Starwar
             roomList.Draw(BaseGame.SpriteMgr.alphaSprite, 1);
             rankList.Draw(BaseGame.SpriteMgr.alphaSprite, 1);
             btnEnter.Draw(BaseGame.SpriteMgr.alphaSprite, 1);
-            btnCreate.Draw(BaseGame.SpriteMgr.alphaSprite, 1);
+            if (bInRoom)
+                btnQuit.Draw(BaseGame.SpriteMgr.alphaSprite, 1);
+            else
+                btnCreate.Draw(BaseGame.SpriteMgr.alphaSprite, 1);
             btnRank.Draw(BaseGame.SpriteMgr.alphaSprite, 1);
             btnRefresh.Draw(BaseGame.SpriteMgr.alphaSprite, 1);
             if (bInRoom)
             {
-                for (int i = 0; i < players.Count; i++)
+                for (int i = 0; i < userNames.Count; i++)
                 {
-                    players[i].Draw(BaseGame.SpriteMgr.alphaSprite, 1);
+                    BaseGame.FontMgr.DrawInScrnCoord(userNames[i], new Vector2(310, 100 + i * 30), Control.fontScale, Color.Black, 0f, Control.fontName);
                 }
             }
 
