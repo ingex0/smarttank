@@ -86,9 +86,9 @@ namespace InterRules.Starwar
             
             BaseGame.ShowMouse = true;
 
-            roomList = new Listbox2("roomlist", new Vector2(50, 120), new Point(200, 350), Color.White, Color.Green);
+            roomList = new Listbox("roomlist", new Vector2(50, 120), new Point(200, 350), Color.White, Color.Green);
 
-            rankList = new Listbox2("ranklist", new Vector2(300, 120), new Point(450, 350), Color.White, Color.Green);
+            rankList = new Listbox("ranklist", new Vector2(300, 120), new Point(450, 350), Color.White, Color.Green);
 
 
             bgTexture = BaseGame.ContentMgr.Load<Texture2D>(Path.Combine(Directories.BgContent, "login"));

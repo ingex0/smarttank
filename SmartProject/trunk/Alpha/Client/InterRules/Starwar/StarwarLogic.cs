@@ -29,16 +29,16 @@ namespace InterRules.Starwar
 {
     class StarwarLogic : RuleSupNet, IGameScreen
     {
-        [StructLayoutAttribute(LayoutKind.Sequential, Size = 29, CharSet = CharSet.Ansi, Pack = 1)]
+        [StructLayoutAttribute(LayoutKind.Sequential, Size = 32, CharSet = CharSet.Ansi, Pack = 1)]
         struct RankInfo
         {
             public int Rank;
             public int Score;
-            [MarshalAs(UnmanagedType.ByValArray, SizeConst = 21)]
+            [MarshalAs(UnmanagedType.ByValArray, SizeConst = 24)]
             public char[] Name;
 
-            public const int TotolLength = 29;
-            public const int NameLength = 21;
+            public const int TotolLength = 32;
+            public const int NameLength = 24;
         };
 
 
@@ -278,7 +278,7 @@ namespace InterRules.Starwar
             }
             else if (infoName == "Over")
             {
-                GameOver();
+                isSendOver = true;
             }
         }
 
@@ -559,6 +559,12 @@ namespace InterRules.Starwar
 
             CreateDelRock(second);
 
+            if (isSendOver)
+            {
+                GameOver();
+                isSendOver = false;
+            }
+
             UpdateTimer(second);
 
             //SyncWarShip();
@@ -567,6 +573,7 @@ namespace InterRules.Starwar
             //    ((NonInertiasPhiUpdater)ships[0].PhisicalUpdater).SetServerStatue(serPos, serVel, 0, 0, 10);
 
             //}
+
 
             if (InputHandler.IsKeyDown(Microsoft.Xna.Framework.Input.Keys.Escape))
             {
@@ -577,15 +584,18 @@ namespace InterRules.Starwar
                 return false;
         }
 
+        bool isSendOver = false;
+
         private void UpdateTimer(float second)
         {
             if (gameTotolTime > 0)
                 gameTotolTime -= second;
             if (gameTotolTime <= 0 && PurviewMgr.IsMainHost)
             {
-                SendOverRankInfo();
                 SyncCasheWriter.SubmitUserDefineInfo("Over", "");
-                GameOver();
+                SendOverRankInfo();
+                isSendOver = true;
+                //GameOver();
             }
         }
 
@@ -760,8 +770,8 @@ namespace InterRules.Starwar
                 camera.Zoom(0.2f);
             if (InputHandler.IsKeyDown(Keys.T))
                 camera.Rota(0.1f);
-            if ( InputHandler.IsKeyDown(Keys.R) )
-                camera.Rota (-0.1f);
+            if (InputHandler.IsKeyDown(Keys.R))
+                camera.Rota(-0.1f);
             camera.Update(second);
         }
 
@@ -771,27 +781,44 @@ namespace InterRules.Starwar
 
     class ScoreScreen : IGameScreen
     {
-        Listbox nameList = new Listbox("listboxName", new Vector2 (100, 100 ), new Point(200, 500), Color.White, Color .Green);
-        Listbox scoreList = new Listbox("listboxName", new Vector2(500, 100), new Point(200, 500), Color.White, Color.Green);
-        Button btn = new Button("btnExit", "Exit", new Vector2(700, 550), Color.Gold);
+        //Listbox nameList = new Listbox("listboxName", new Vector2(100, 100), new Point(200, 300), Color.White, Color.Green);
+        //Listbox scoreList = new Listbox("listboxName", new Vector2(500, 100), new Point(200, 300), Color.White, Color.Green);
+        TextButton btn = new TextButton("btnExit", new Vector2(650, 500), "Exit", 0, Color.Gold);
+        string[] names;
+        int[] scores;
 
         bool close = false;
 
+        Color[] colors;
+        Texture2D bgTexture;
+
         public ScoreScreen(string[] names, int[] scores)
         {
-            foreach (string name in names)
-            {
-                nameList.AddItem(name);
-            }
-            foreach (int score in scores)
-            {
-                scoreList.AddItem(score.ToString());
-            }
+            //foreach (string name in names)
+            //{
+            //    nameList.AddItem(name);
+            //}
+            //foreach (int score in scores)
+            //{
+            //    scoreList.AddItem(score.ToString());
+            //}
+            this.names = names;
+            this.scores = scores;
 
-            btn.OnMouseRelease += new EventHandler(btn_OnMouseRelease);
+            colors = new Color[6];
+            colors[0] = Color.Gold;
+            colors[1] = Color.Silver;
+            colors[2] = Color.Chocolate;
+            colors[3] = Color.DarkSalmon;
+            colors[4] = Color.DeepPink;
+            colors[5] = Color.DeepSkyBlue;
+
+            bgTexture = BaseGame.ContentMgr.Load<Texture2D>(Path.Combine(Directories.BgContent, "login"));
+
+            btn.OnClick += new EventHandler(btn_OnClick);
         }
 
-        void btn_OnMouseRelease(object sender, EventArgs e)
+        void btn_OnClick(object sender, EventArgs e)
         {
             close = true;
         }
@@ -804,9 +831,20 @@ namespace InterRules.Starwar
 
         public void Render()
         {
-            nameList.Draw(BaseGame.SpriteMgr.alphaSprite, 1.0f);
-            scoreList.Draw(BaseGame.SpriteMgr.alphaSprite, 1.0f);
+            //nameList.Draw(BaseGame.SpriteMgr.alphaSprite, 1.0f);
+            //scoreList.Draw(BaseGame.SpriteMgr.alphaSprite, 1.0f);
+            //BaseGame.SpriteMgr.alphaSprite.Draw(bgTexture, new Rectangle(0, 0, 800, 600), null, Color.White, 0, new Vector2(0, 0), SpriteEffects.None, LayerDepth.BackGround);
+
+            BaseGame.RenderEngine.FontMgr.DrawInScrnCoord("µÃ·Ö°ñ", new Vector2(270, 50), 3.0f, Color.Red, LayerDepth.UI, GameFonts.HDZB);
+
+
+            for (int i = 0; i < names.Length; i++)
+            {
+                BaseGame.RenderEngine.FontMgr.DrawInScrnCoord(names[i], new Vector2(200, 200 + i * 30), 1.0f, colors[i], LayerDepth.UI, GameFonts.Comic);
+                BaseGame.RenderEngine.FontMgr.DrawInScrnCoord(scores[i].ToString(), new Vector2(550, 200 + i * 30), 1.0f, colors[i], LayerDepth.UI, GameFonts.Comic);
+            }
             btn.Draw(BaseGame.SpriteMgr.alphaSprite, 1.0f);
+
         }
 
         public bool Update(float second)
