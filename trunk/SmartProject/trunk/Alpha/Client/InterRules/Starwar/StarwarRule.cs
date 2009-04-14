@@ -59,7 +59,7 @@ namespace InterRules.Starwar
 
         //Timer heartTimer;
 
-        Texture2D bgTexture;
+        Texture2D bgTexture, npTexture;
         Rectangle bgRect;
         SpriteBatch spriteBatch;
         Textbox namebox, passbox;
@@ -72,15 +72,16 @@ namespace InterRules.Starwar
         {
             BaseGame.ShowMouse = true;
 
-            bgTexture = BaseGame.ContentMgr.Load<Texture2D>(Path.Combine(Directories.BgContent, "login"));
+            bgTexture = BaseGame.ContentMgr.Load<Texture2D>(Path.Combine(Directories.BgContent, "bg"));
+            npTexture = BaseGame.ContentMgr.Load<Texture2D>(Path.Combine(Directories.UIContent, "namepass"));
             bgRect = new Rectangle(0, 0, 800, 600);
-            namebox = new Textbox("namebox", new Vector2(300, 400), 150, "", false);
-            passbox = new Textbox("passbox", new Vector2(300, 430), 150, "", false);
+            namebox = new Textbox("namebox", new Vector2(320, 400), 150, "", false);
+            passbox = new Textbox("passbox", new Vector2(320, 430), 150, "", false);
             passbox.bStar = true;
             namebox.maxLen = 20;
             passbox.maxLen = 20;
-            btnLogin = new TextButton("OkLogin", new Vector2(300, 480), "Login", 0, Color.Gold);
-            btnClear = new TextButton("ClearBtn", new Vector2(385, 480), "Clear", 0, Color.Gold);
+            btnLogin = new TextButton("OkLogin", new Vector2(320, 480), "Login", 0, Color.Gold);
+            btnClear = new TextButton("ClearBtn", new Vector2(405, 480), "Clear", 0, Color.Gold);
             SocketMgr.OnReceivePkg += new SocketMgr.ReceivePkgEventHandler(OnReceivePack);
             btnLogin.OnClick += new EventHandler(btnLogin_OnPress);
             btnClear.OnClick += new EventHandler(btnClear_OnPress);
@@ -117,8 +118,8 @@ namespace InterRules.Starwar
             if (head.iSytle == 12)
             {
                 wait--;
-                namebox = new Textbox("namebox", new Vector2(300, 400), 150, "", false);
-                passbox = new Textbox("passbox", new Vector2(300, 430), 150, "", false);
+                namebox = new Textbox("namebox", new Vector2(320, 400), 150, "", false);
+                passbox = new Textbox("passbox", new Vector2(320, 430), 150, "", false);
                 passbox.bStar = true;
                 namebox.maxLen = 20;
                 passbox.maxLen = 20;
@@ -133,8 +134,8 @@ namespace InterRules.Starwar
 
         void btnClear_OnPress(object sender, EventArgs e)
         {
-            namebox = new Textbox("namebox", new Vector2(300, 400), 150, "", false);
-            passbox = new Textbox("passbox", new Vector2(300, 430), 150, "", false);
+            namebox = new Textbox("namebox", new Vector2(320, 400), 150, "", false);
+            passbox = new Textbox("passbox", new Vector2(320, 430), 150, "", false);
             passbox.bStar = true;
             namebox.maxLen = 20;
             passbox.maxLen = 20;
@@ -189,7 +190,7 @@ namespace InterRules.Starwar
 
             if (InputHandler.IsKeyDown(Keys.PageDown))
             {
-                GameManager.AddGameScreen(new Hall(namebox.text));
+                GameManager.AddGameScreen(new Hall2(namebox.text));
             }
             else if (InputHandler.IsKeyDown(Keys.PageUp))
             {
@@ -206,7 +207,8 @@ namespace InterRules.Starwar
         {   
             BaseGame.Device.Clear(Color.LightSkyBlue);
             spriteBatch = (SpriteBatch)BaseGame.SpriteMgr.alphaSprite;
-            spriteBatch.Draw(bgTexture, Vector2.Zero, bgRect, Color.White, 0, Vector2.Zero, 1, SpriteEffects.None, LayerDepth.BackGround); 
+            spriteBatch.Draw(bgTexture, Vector2.Zero, bgRect, Color.White, 0, Vector2.Zero, 1, SpriteEffects.None, LayerDepth.BackGround);
+            spriteBatch.Draw(npTexture, new Vector2(230, 401), new Rectangle(0, 0, 88, 46), Color.White, 0, Vector2.Zero, 1, SpriteEffects.None, 0f); 
             namebox.Draw(BaseGame.SpriteMgr.alphaSprite, 1);
             passbox.Draw(BaseGame.SpriteMgr.alphaSprite, 1);
             btnLogin.Draw(BaseGame.SpriteMgr.alphaSprite, 1);

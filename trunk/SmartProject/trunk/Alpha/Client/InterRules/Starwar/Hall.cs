@@ -54,7 +54,10 @@ namespace InterRules.Starwar
             public int score;
             public int rank;
         }
-        Texture2D bgTexture;
+        Texture2D bgTexture, rlTexture, riTexture;
+        List<Texture2D> heads;
+        List<int> ranks;
+        List<int> scores;
 
         Rectangle bgRect;
 
@@ -83,6 +86,10 @@ namespace InterRules.Starwar
         public Hall(string tmpName)
         {
             myName = tmpName;
+
+            heads = new List<Texture2D>();
+            ranks = new List<int>();
+            scores = new List<int>();
             
             BaseGame.ShowMouse = true;
 
@@ -91,7 +98,9 @@ namespace InterRules.Starwar
             rankList = new Listbox("ranklist", new Vector2(300, 120), new Point(450, 350), Color.White, Color.Green);
 
 
-            bgTexture = BaseGame.ContentMgr.Load<Texture2D>(Path.Combine(Directories.BgContent, "login"));
+            bgTexture = BaseGame.ContentMgr.Load<Texture2D>(Path.Combine(Directories.BgContent, "bg"));
+            rlTexture = BaseGame.ContentMgr.Load<Texture2D>(Path.Combine(Directories.UIContent, "roomlist"));
+            riTexture = BaseGame.ContentMgr.Load<Texture2D>(Path.Combine(Directories.UIContent, "roominfo"));
 
             bgRect = new Rectangle(0, 0, 800, 600);
 
@@ -165,7 +174,7 @@ namespace InterRules.Starwar
                     }
 
 
-                    roomList.AddItem("room 1" + " ( " + room.players + " / 6 )", room.id);
+                    roomList.AddItem(" " + str + " ( " + room.players + " / 2 )", room.id);
 
                 }
             }
@@ -238,6 +247,10 @@ namespace InterRules.Starwar
                 UserInfo player;
                 byte[] tmpData;
 
+                heads.Clear();
+                ranks.Clear();
+                scores.Clear();
+
                 
 
                 tmpData = new byte[head.dataSize];
@@ -264,7 +277,9 @@ namespace InterRules.Starwar
                     if (str == myName && player.state == 1)
                         bIsHost = true;
                     tmpNames[playerCount] = str;//, Font font)
-
+                    ranks.Add(player.rank);
+                    scores.Add(player.score);
+                    heads.Add(BaseGame.ContentMgr.Load<Texture2D>(Path.Combine(Directories.UIContent, "head")));
                     playerCount++;
 
                     //roomList.AddItem("room 1" + " ( " + room.players + " / 6 )", room.id);
@@ -276,6 +291,13 @@ namespace InterRules.Starwar
                 {
                     userNames[i] = tmpNames[i];
                 }
+
+                headSend = new stPkgHead();
+                Stream = new MemoryStream();
+                headSend.dataSize = 0;
+                headSend.iSytle = 33;
+                SocketMgr.SendCommonPackge(headSend, Stream);
+                Stream.Close();
             }
             else if (head.iSytle == 70)
             {
@@ -432,6 +454,9 @@ namespace InterRules.Starwar
             BaseGame.Device.Clear(Color.LightSkyBlue);
             spriteBatch = (SpriteBatch)BaseGame.SpriteMgr.alphaSprite;
             spriteBatch.Draw(bgTexture, Vector2.Zero, bgRect, Color.White, 0, Vector2.Zero, 1, SpriteEffects.None, LayerDepth.BackGround);
+            spriteBatch.Draw(rlTexture, new Vector2(50, 102), new Rectangle(0, 0, 79, 18), Color.White, 0, Vector2.Zero, 1, SpriteEffects.None, 0f);
+            spriteBatch.Draw(riTexture, new Vector2(300, 102), new Rectangle(0, 0, 145, 18), Color.White, 0, Vector2.Zero, 1, SpriteEffects.None, 0f);
+
             //roomList.Clear();
             roomList.Draw(BaseGame.SpriteMgr.alphaSprite, 1);
             rankList.Draw(BaseGame.SpriteMgr.alphaSprite, 1);
@@ -445,9 +470,13 @@ namespace InterRules.Starwar
             btnRefresh.Draw(BaseGame.SpriteMgr.alphaSprite, 1);
             if (bInRoom)
             {
+                
                 for (int i = 0; i < playerCount; i++)
                 {
-                    BaseGame.FontMgr.DrawInScrnCoord(userNames[i], new Vector2(310, 100 + i * 30), Control.fontScale, Color.Black, 0f, Control.fontName);
+                    spriteBatch.Draw(heads[i], new Vector2(334, 167 + i * 160), new Rectangle(0, 0, 70, 70), Color.White, 0, Vector2.Zero, 1, SpriteEffects.None, LayerDepth.UI - 0.1f);
+                    BaseGame.FontMgr.DrawInScrnCoord("Name: " + userNames[i], new Vector2(335, 240 + i * 160), Control.fontScale, Color.Black, 0f, Control.fontName);
+                    BaseGame.FontMgr.DrawInScrnCoord("Score: " + scores[i], new Vector2(335, 255 + i * 160), Control.fontScale, Color.Black, 0f, Control.fontName);
+                    BaseGame.FontMgr.DrawInScrnCoord("Rank: " + ranks[i], new Vector2(335, 270 + i * 160), Control.fontScale, Color.Black, 0f, Control.fontName);
                 }
             }
 

@@ -123,6 +123,8 @@
     <Compile Include="Draw\UI\Compass.cs">
       <Name>Compass</Name>
     </Compile>
+    <Compile Include="Draw\UI\Controls\Listbox2.cs" />
+    <Compile Include="Draw\UI\Controls\TextButton2.cs" />
     <Compile Include="Effects\Particles\Particle.cs">
       <Name>Particle</Name>
     </Compile>
