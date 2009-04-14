@@ -56,6 +56,14 @@ namespace InterRules.Starwar
         protected float shootTimer = 0;
         protected int score = 0;
 
+        string playerName;
+
+        public string PlayerName
+        {
+            get { return playerName; }
+            set { playerName = value; }
+        }
+
         public int Score
         {
             get { return score; }

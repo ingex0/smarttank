@@ -33,6 +33,8 @@ namespace InterRules.Starwar
         public static float RockMaxSpeed;
         public static float RockMaxAziSpeed;
 
+        public static float GameTotolTime;
+
         static public void LoadConfig()
         {
             FileStream confile = File.OpenRead("Content\\Rules\\SpaceWar\\WarShipConfig.txt");
@@ -64,6 +66,7 @@ namespace InterRules.Starwar
                     else if (line.StartsWith("RockMinSpeed=")) SpaceWarConfig.RockMinSpeed = float.Parse(line.Substring(13));
                     else if (line.StartsWith("RockMaxSpeed=")) SpaceWarConfig.RockMaxSpeed = float.Parse(line.Substring(13));
                     else if (line.StartsWith("RockMaxAziSpeed=")) SpaceWarConfig.RockMaxAziSpeed = float.Parse(line.Substring(16));
+                    else if (line.StartsWith("GameTotolTime=")) SpaceWarConfig.GameTotolTime = float.Parse(line.Substring(14));
                     
                 }
             }
