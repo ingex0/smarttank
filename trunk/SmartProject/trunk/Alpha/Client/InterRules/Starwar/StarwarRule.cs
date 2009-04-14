@@ -86,6 +86,9 @@ namespace InterRules.Starwar
             btnClear.OnClick += new EventHandler(btnClear_OnPress);
             wait = 0;
             bHasError = false;
+
+            SocketMgr.Initial();
+
             //heartTimer = new Timer(1000);
             //heartTimer.Elapsed += new ElapsedEventHandler(heartTimer_Tick);
         }
@@ -119,8 +122,8 @@ namespace InterRules.Starwar
                 passbox.bStar = true;
                 namebox.maxLen = 20;
                 passbox.maxLen = 20;
-                SocketMgr.CloseThread();
                 SocketMgr.Close();
+                System.Windows.Forms.MessageBox.Show("用户名密码错误或重登陆！");
             }
             else
             {
@@ -164,11 +167,12 @@ namespace InterRules.Starwar
             Stream.Write(SocketMgr.StructToBytes(data), 0, LoginData.size);
             head.dataSize = (int)Stream.Length;
             head.iSytle = 10;
-            SocketMgr.Initial();
+            
             SocketMgr.ConnectToServer();
+            SocketMgr.StartReceiveThread();
             SocketMgr.SendCommonPackge(head, Stream);
             Stream.Close();
-            SocketMgr.StartReceiveThread();
+            
             wait++;
         }
 
@@ -216,13 +220,12 @@ namespace InterRules.Starwar
         public void OnClose()
         {
             //heartTimer.Stop();
-            stPkgHead head = new stPkgHead();
-            MemoryStream Stream = new MemoryStream();
-            head.dataSize = 0;
-            head.iSytle = 21;
-            SocketMgr.SendCommonPackge(head, Stream);
-            Stream.Close();
-            SocketMgr.CloseThread();
+            //stPkgHead head = new stPkgHead();
+            //MemoryStream Stream = new MemoryStream();
+            //head.dataSize = 0;
+            //head.iSytle = 21;
+            //SocketMgr.SendCommonPackge(head, Stream);
+            //Stream.Close();
             SocketMgr.Close();
         }
 
