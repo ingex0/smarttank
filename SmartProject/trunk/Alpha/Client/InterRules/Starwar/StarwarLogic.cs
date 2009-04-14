@@ -43,7 +43,7 @@ namespace InterRules.Starwar
 
         const float AddObjSpace = 250;
 
-        WarShip[] ships = new WarShip[6];
+        WarShip[] ships;
         Gold gold;
         List<Rock> rocks = new List<Rock>();
         int rockCount = 0;
@@ -68,6 +68,7 @@ namespace InterRules.Starwar
             get { return new Vector2(mapRect.X + mapRect.Width / 2, mapRect.Y + mapRect.Height / 2); }
         }
 
+        string[] playerNames;
 
         #endregion
 
@@ -387,6 +388,8 @@ namespace InterRules.Starwar
         {
             this.controlIndex = controlIndex;
 
+            this.playerNames = playerNames;
+
             LoadConfig();
 
             StartTimer();
@@ -394,7 +397,6 @@ namespace InterRules.Starwar
             InitialCamera();
             InitializeScene();
             InitialBackGround();
-
             InitailizePurview(controlIndex);
 
             SyncCasheReader.onCreateObj += new SyncCasheReader.CreateObjInfoHandler(SyncCasheReader_onCreateObj);
@@ -459,7 +461,8 @@ namespace InterRules.Starwar
 
             sceneMgr.AddLapMulGroups("warship", "gold");
 
-            for (int i = 0; i < 6; i++)
+            ships = new WarShip[playerNames.Length];
+            for (int i = 0; i < playerNames.Length; i++)
             {
                 bool openControl = false;
                 if (i == controlIndex)
@@ -470,6 +473,7 @@ namespace InterRules.Starwar
                 ships[i].OnOverLap += new OnCollidedEventHandler(Warship_OnOverLap);
                 ships[i].OnShoot += new WarShip.WarShipShootEventHandler(WarShip_OnShoot);
                 ships[i].OnDead += new WarShip.WarShipDeadEventHandler(Warship_OnDead);
+                ships[i].PlayerName = playerNames[i];
                 sceneMgr.AddGameObj("warship", ships[i]);
             }
 
@@ -520,7 +524,7 @@ namespace InterRules.Starwar
             for (int i = 0; i < ships.Length; i++)
             {
                 //GameManager.RenderEngine.FontMgr.DrawInScrnCoord(" Live: " + ships[i].HP, new Vector2(50 + 120 * i, 500), 0.4f, Color.White, LayerDepth.Text, GameFonts.Comic);
-                GameManager.RenderEngine.FontMgr.DrawInScrnCoord("Ship" + i + " Score: " + ships[i].Score, new Vector2(50 + 120 * i, 550), 0.4f, Color.White, LayerDepth.Text, GameFonts.Comic);
+                GameManager.RenderEngine.FontMgr.DrawInScrnCoord(ships[i].PlayerName + " Score: " + ships[i].Score, new Vector2(50 + 120 * i, 550), 0.4f, Color.White, LayerDepth.Text, GameFonts.Comic);
             }
             GameManager.RenderEngine.BasicGrahpics.FillRectangleInScrn(new Rectangle(50, 50, ships[controlIndex].HP / 3, 20), Color.Red, LayerDepth.UI, SpriteBlendMode.AlphaBlend);
         }
@@ -570,7 +574,7 @@ namespace InterRules.Starwar
         {
             stPkgHead head = new stPkgHead();
             head.iSytle = 80;
-            
+
             //for(int i = 0; i < )
         }
 
