@@ -283,12 +283,15 @@ namespace InterRules.Starwar
                 bWaitEnter = false;
                 if (bIsHost)
                     GameManager.AddGameScreen(new StarwarLogic(0, userNames));
-                int tmp = 0;
-                for (int i = 0; i < playerCount; i++)
+                else
                 {
-                    tmp++;
-                    if (userNames[i] == myName)
-                        GameManager.AddGameScreen(new StarwarLogic(tmp, userNames));
+                    int tmp = 0;
+                    for (int i = 0; i < playerCount; i++)
+                    {
+                        tmp++;
+                        if (userNames[i] == myName)
+                            GameManager.AddGameScreen(new StarwarLogic(tmp, userNames));
+                    }
                 }
             }
             else if (head.iSytle == 71)
