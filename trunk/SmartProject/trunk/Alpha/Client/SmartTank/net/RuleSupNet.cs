@@ -27,11 +27,12 @@ namespace SmartTank.net
             //temp 
             PurviewMgr.IsMainHost = true;
 
-            SocketMgr.Initial();
+            // SocketMgr 的管理交给UI控制
+            //SocketMgr.Initial(); 
             SocketMgr.SetInputCahes(inputCashe);
-            SocketMgr.ConnectToServer();
+            //SocketMgr.ConnectToServer();
 
-            SocketMgr.StartReceiveThread();
+            //SocketMgr.StartReceiveThread();
 
         }
 
@@ -84,7 +85,7 @@ namespace SmartTank.net
 
         public void OnClose()
         {
-            SocketMgr.Close();
+            //SocketMgr.Close();
             PurviewMgr.Close();
             
         }
