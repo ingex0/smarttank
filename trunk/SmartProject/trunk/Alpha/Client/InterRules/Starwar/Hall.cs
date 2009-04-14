@@ -62,13 +62,14 @@ namespace InterRules.Starwar
 
         Listbox roomList;
         Listbox rankList;
+        int playerCount;
 
         TextButton btnCreate, btnEnter, btnRank, btnRefresh, btnStart, btnQuit;
 
         stPkgHead headSend;
         MemoryStream Stream;
 
-        List<string> userNames;
+        string[] userNames;
 
         int selectIndexRank = -1;
         int selectIndexRoom = -1;
@@ -85,9 +86,9 @@ namespace InterRules.Starwar
             
             BaseGame.ShowMouse = true;
 
-            roomList = new Listbox("roomlist", new Vector2(30, 100), new Point(200, 350), Color.White, Color.Green);
+            roomList = new Listbox("roomlist", new Vector2(30, 120), new Point(200, 350), Color.White, Color.Green);
 
-            rankList = new Listbox("ranklist", new Vector2(300, 100), new Point(450, 350), Color.White, Color.Green);
+            rankList = new Listbox("ranklist", new Vector2(300, 120), new Point(450, 350), Color.White, Color.Green);
 
 
             bgTexture = BaseGame.ContentMgr.Load<Texture2D>(Path.Combine(Directories.BgContent, "login"));
@@ -95,12 +96,12 @@ namespace InterRules.Starwar
             bgRect = new Rectangle(0, 0, 800, 600);
 
 
-            btnRefresh = new TextButton("RefreshBtn", new Vector2(130, 460), "Refresh", 0, Color.Gold);
-            btnCreate = new TextButton("CreateBtn", new Vector2(310, 460), "Create a new room", 0, Color.Gold);
-            btnQuit = new TextButton("QuitBtn", new Vector2(310, 460), "Quit", 0, Color.Gold);
-            btnEnter = new TextButton("EnterBtn", new Vector2(50, 460), "Enter", 0, Color.Gold);
-            btnRank = new TextButton("RankBtn", new Vector2(650, 460), "Rank List", 0, Color.Gold);
-            btnStart = new TextButton("StartBtn", new Vector2(550, 390), "Start", 0, Color.Gold);
+            btnRefresh = new TextButton("RefreshBtn", new Vector2(130, 480), "Refresh", 0, Color.Gold);
+            btnCreate = new TextButton("CreateBtn", new Vector2(310, 480), "Create a new room", 0, Color.Gold);
+            btnQuit = new TextButton("QuitBtn", new Vector2(310, 480), "Quit", 0, Color.Gold);
+            btnEnter = new TextButton("EnterBtn", new Vector2(50, 480), "Enter", 0, Color.Gold);
+            btnRank = new TextButton("RankBtn", new Vector2(650, 480), "Rank List", 0, Color.Gold);
+            btnStart = new TextButton("StartBtn", new Vector2(550, 410), "Start", 0, Color.Gold);
 
             btnRefresh.OnClick += new EventHandler(btnRefresh_OnPress);
             btnCreate.OnClick += new EventHandler(btnCreate_OnPress);
@@ -122,7 +123,6 @@ namespace InterRules.Starwar
             headSend.iSytle = 33;
             SocketMgr.SendCommonPackge(headSend, Stream);
             Stream.Close();
-            userNames = new List<string>();
             bInRoom = false;
             bWaitEnter = false;
             bIsHost = false;
@@ -242,7 +242,8 @@ namespace InterRules.Starwar
 
                 tmpData = new byte[head.dataSize];
                 bIsHost = false;
-                userNames.Clear();
+                string[] tmpNames = new string[6];
+                playerCount = 0;
                 for (int i = 0; i < head.dataSize; i += 56)
                 {
 
@@ -262,11 +263,18 @@ namespace InterRules.Starwar
                     }
                     if (str == myName && player.state == 1)
                         bIsHost = true;
-                    userNames.Add(str);//, Font font)
+                    tmpNames[i] = str;//, Font font)
 
+                    playerCount++;
 
                     //roomList.AddItem("room 1" + " ( " + room.players + " / 6 )", room.id);
 
+                }
+
+                userNames = new string[playerCount];
+                for (int i = 0; i < playerCount; i++)
+                {
+                    userNames[i] = tmpNames[i];
                 }
             }
             else if (head.iSytle == 70)
@@ -274,9 +282,9 @@ namespace InterRules.Starwar
                 //¿ªÊ¼ÓÎÏ·
                 bWaitEnter = false;
                 if (bIsHost)
-                    GameManager.AddGameScreen(new StarwarLogic(0));
+                    GameManager.AddGameScreen(new StarwarLogic(0, userNames));
                 else
-                    GameManager.AddGameScreen(new StarwarLogic(1));
+                    GameManager.AddGameScreen(new StarwarLogic(1, userNames));
             }
             else if (head.iSytle == 71)
             {
@@ -401,11 +409,7 @@ namespace InterRules.Starwar
             roomList.Update();
             rankList.Update();
 
-            if (InputHandler.IsKeyDown(Keys.F1))
-                GameManager.AddGameScreen(new StarwarLogic(0));
-            else if (InputHandler.IsKeyDown(Keys.F2))
-                GameManager.AddGameScreen(new StarwarLogic(1));
-            else if (InputHandler.IsKeyDown(Keys.PageDown))
+            if (InputHandler.IsKeyDown(Keys.PageDown))
             {
                 //SocketMgr.OnReceivePkg -= OnReceivePack;
                 GameManager.AddGameScreen(new Rank());
@@ -433,7 +437,7 @@ namespace InterRules.Starwar
             btnRefresh.Draw(BaseGame.SpriteMgr.alphaSprite, 1);
             if (bInRoom)
             {
-                for (int i = 0; i < userNames.Count; i++)
+                for (int i = 0; i < playerCount; i++)
                 {
                     BaseGame.FontMgr.DrawInScrnCoord(userNames[i], new Vector2(310, 100 + i * 30), Control.fontScale, Color.Black, 0f, Control.fontName);
                 }
@@ -447,7 +451,7 @@ namespace InterRules.Starwar
 
         public void OnClose()
         {
-
+            SocketMgr.OnReceivePkg -= OnReceivePack;
         }
 
         #endregion
