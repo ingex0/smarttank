@@ -86,9 +86,9 @@ namespace InterRules.Starwar
             
             BaseGame.ShowMouse = true;
 
-            roomList = new Listbox("roomlist", new Vector2(30, 120), new Point(200, 350), Color.White, Color.Green);
+            roomList = new Listbox2("roomlist", new Vector2(50, 120), new Point(200, 350), Color.White, Color.Green);
 
-            rankList = new Listbox("ranklist", new Vector2(300, 120), new Point(450, 350), Color.White, Color.Green);
+            rankList = new Listbox2("ranklist", new Vector2(300, 120), new Point(450, 350), Color.White, Color.Green);
 
 
             bgTexture = BaseGame.ContentMgr.Load<Texture2D>(Path.Combine(Directories.BgContent, "login"));
@@ -96,10 +96,10 @@ namespace InterRules.Starwar
             bgRect = new Rectangle(0, 0, 800, 600);
 
 
-            btnRefresh = new TextButton("RefreshBtn", new Vector2(130, 480), "Refresh", 0, Color.Gold);
+            btnRefresh = new TextButton("RefreshBtn", new Vector2(150, 480), "Refresh", 0, Color.Gold);
             btnCreate = new TextButton("CreateBtn", new Vector2(310, 480), "Create a new room", 0, Color.Gold);
             btnQuit = new TextButton("QuitBtn", new Vector2(310, 480), "Quit", 0, Color.Gold);
-            btnEnter = new TextButton("EnterBtn", new Vector2(50, 480), "Enter", 0, Color.Gold);
+            btnEnter = new TextButton("EnterBtn", new Vector2(70, 480), "Enter", 0, Color.Gold);
             btnRank = new TextButton("RankBtn", new Vector2(650, 480), "Rank List", 0, Color.Gold);
             btnStart = new TextButton("StartBtn", new Vector2(550, 410), "Start", 0, Color.Gold);
 
@@ -263,7 +263,7 @@ namespace InterRules.Starwar
                     }
                     if (str == myName && player.state == 1)
                         bIsHost = true;
-                    tmpNames[i] = str;//, Font font)
+                    tmpNames[playerCount] = str;//, Font font)
 
                     playerCount++;
 
@@ -426,8 +426,10 @@ namespace InterRules.Starwar
             BaseGame.Device.Clear(Color.LightSkyBlue);
             spriteBatch = (SpriteBatch)BaseGame.SpriteMgr.alphaSprite;
             spriteBatch.Draw(bgTexture, Vector2.Zero, bgRect, Color.White, 0, Vector2.Zero, 1, SpriteEffects.None, LayerDepth.BackGround);
+            //roomList.Clear();
             roomList.Draw(BaseGame.SpriteMgr.alphaSprite, 1);
             rankList.Draw(BaseGame.SpriteMgr.alphaSprite, 1);
+
             btnEnter.Draw(BaseGame.SpriteMgr.alphaSprite, 1);
             if (bInRoom)
                 btnQuit.Draw(BaseGame.SpriteMgr.alphaSprite, 1);
