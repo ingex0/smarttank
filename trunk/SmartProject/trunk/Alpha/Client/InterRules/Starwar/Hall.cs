@@ -285,12 +285,10 @@ namespace InterRules.Starwar
                     GameManager.AddGameScreen(new StarwarLogic(0, userNames));
                 else
                 {
-                    int tmp = 0;
                     for (int i = 0; i < playerCount; i++)
                     {
-                        tmp++;
                         if (userNames[i] == myName)
-                            GameManager.AddGameScreen(new StarwarLogic(tmp, userNames));
+                            GameManager.AddGameScreen(new StarwarLogic( i, userNames));
                     }
                 }
             }
