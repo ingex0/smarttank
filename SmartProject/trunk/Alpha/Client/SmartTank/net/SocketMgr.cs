@@ -502,7 +502,7 @@ namespace SmartTank.net
 
         static public bool Close()
         {
-            if (client.Connected)
+            if (client != null && client.Connected)
             {
                 stPkgHead pkg = new stPkgHead();
                 pkg.iSytle = (int)PACKAGE_SYTLE.EXIT;

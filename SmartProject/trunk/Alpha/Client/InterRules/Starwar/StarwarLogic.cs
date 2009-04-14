@@ -23,6 +23,7 @@ using SmartTank.Effects.SceneEffects;
 using SmartTank.Effects;
 using SmartTank.Sounds;
 using System.Runtime.InteropServices;
+using SmartTank.Draw.UI.Controls;
 
 namespace InterRules.Starwar
 {
@@ -31,10 +32,13 @@ namespace InterRules.Starwar
         [StructLayoutAttribute(LayoutKind.Sequential, Size = 29, CharSet = CharSet.Ansi, Pack = 1)]
         struct RankInfo
         {
-            int Rank;
-            int Score;
+            public int Rank;
+            public int Score;
             [MarshalAs(UnmanagedType.ByValArray, SizeConst = 21)]
-            char[] Name;
+            public char[] Name;
+
+            public const int TotolLength = 29;
+            public const int NameLength = 21;
         };
 
 
@@ -67,6 +71,8 @@ namespace InterRules.Starwar
         {
             get { return new Vector2(mapRect.X + mapRect.Width / 2, mapRect.Y + mapRect.Height / 2); }
         }
+
+        bool isGameOver = false;
 
         string[] playerNames;
 
@@ -270,6 +276,10 @@ namespace InterRules.Starwar
                     (args[0] as Gold).Born((Vector2)args[1]);
                 }
             }
+            else if (infoName == "Over")
+            {
+                GameOver();
+            }
         }
 
         void SyncCasheReader_onCreateObj(IGameObj obj)
@@ -401,6 +411,7 @@ namespace InterRules.Starwar
 
             SyncCasheReader.onCreateObj += new SyncCasheReader.CreateObjInfoHandler(SyncCasheReader_onCreateObj);
             SyncCasheReader.onUserDefineInfo += new SyncCasheReader.UserDefineInfoHandler(SyncCasheReader_onUserDefineInfo);
+
         }
 
         private void StartTimer()
@@ -514,7 +525,8 @@ namespace InterRules.Starwar
             backGround.Draw();
             GameManager.DrawManager.Draw();
             BaseGame.BasicGraphics.DrawRectangle(mapRect, 3, Color.White, LayerDepth.TankBase);
-
+            BaseGame.RenderEngine.FontMgr.DrawInScrnCoord("Time: " + ((int)gameTotolTime).ToString(),
+                new Vector2(700, 50), 1.0f, Color.Red, LayerDepth.UI, GameFonts.Lucida);
 
             DrawScore();
         }
@@ -534,6 +546,11 @@ namespace InterRules.Starwar
 
         bool IGameScreen.Update(float second)
         {
+            if (isGameOver)
+            {
+                return true;
+            }
+
             base.Update(second);
 
             UpdateCamera(second);
@@ -560,22 +577,58 @@ namespace InterRules.Starwar
                 return false;
         }
 
-        private bool UpdateTimer(float second)
+        private void UpdateTimer(float second)
         {
-            gameTotolTime -= second;
-            if (gameTotolTime < 0)
+            if (gameTotolTime > 0)
+                gameTotolTime -= second;
+            if (gameTotolTime <= 0 && PurviewMgr.IsMainHost)
             {
+                SendOverRankInfo();
+                SyncCasheWriter.SubmitUserDefineInfo("Over", "");
                 GameOver();
             }
-            return false;
         }
 
         private void GameOver()
         {
+            isGameOver = true;
+            int[] scores = new int[ships.Length];
+            for (int i = 0; i < ships.Length; i++)
+            {
+                scores[i] = ships[i].Score;
+            }
+
+            GameManager.AddGameScreen(new ScoreScreen(playerNames, scores));
+        }
+
+        private void SendOverRankInfo()
+        {
             stPkgHead head = new stPkgHead();
             head.iSytle = 80;
+            RankInfo[] info = new RankInfo[ships.Length];
+            byte[] buffer = new byte[ships.Length * RankInfo.TotolLength];
 
-            //for(int i = 0; i < )
+            for (int i = 0; i < ships.Length; i++)
+            {
+                info[i].Score = ships[i].Score;
+                info[i].Rank = 0;
+                info[i].Name = new char[RankInfo.NameLength];
+
+                for (int j = 0; j < ships[i].PlayerName.Length; j++)
+                {
+                    info[i].Name[j] = ships[i].PlayerName[j];
+                }
+
+                byte[] temp = SocketMgr.StructToBytes(info[i]);
+                temp.CopyTo(buffer, i * RankInfo.TotolLength);
+            }
+
+            MemoryStream stream = new MemoryStream();
+            stream.Write(buffer, 0, buffer.Length);
+            head.dataSize = buffer.Length;
+
+            SocketMgr.SendCommonPackge(head, stream);
+            stream.Close();
         }
 
 
@@ -707,12 +760,65 @@ namespace InterRules.Starwar
                 camera.Zoom(0.2f);
             if (InputHandler.IsKeyDown(Keys.T))
                 camera.Rota(0.1f);
-            if (InputHandler.IsKeyDown(Keys.R))
-                camera.Rota(-0.1f);
+            if ( InputHandler.IsKeyDown(Keys.R) )
+                camera.Rota (-0.1f);
             camera.Update(second);
         }
 
         #endregion
     }
 
+
+    class ScoreScreen : IGameScreen
+    {
+        Listbox nameList = new Listbox("listboxName", new Vector2 (100, 100 ), new Point(200, 500), Color.White, Color .Green);
+        Listbox scoreList = new Listbox("listboxName", new Vector2(500, 100), new Point(200, 500), Color.White, Color.Green);
+        Button btn = new Button("btnExit", "Exit", new Vector2(700, 550), Color.Gold);
+
+        bool close = false;
+
+        public ScoreScreen(string[] names, int[] scores)
+        {
+            foreach (string name in names)
+            {
+                nameList.AddItem(name);
+            }
+            foreach (int score in scores)
+            {
+                scoreList.AddItem(score.ToString());
+            }
+
+            btn.OnMouseRelease += new EventHandler(btn_OnMouseRelease);
+        }
+
+        void btn_OnMouseRelease(object sender, EventArgs e)
+        {
+            close = true;
+        }
+
+        #region IGameScreen ³ÉÔ±
+
+        public void OnClose()
+        {
+        }
+
+        public void Render()
+        {
+            nameList.Draw(BaseGame.SpriteMgr.alphaSprite, 1.0f);
+            scoreList.Draw(BaseGame.SpriteMgr.alphaSprite, 1.0f);
+            btn.Draw(BaseGame.SpriteMgr.alphaSprite, 1.0f);
+        }
+
+        public bool Update(float second)
+        {
+            if (close)
+                return true;
+
+            btn.Update();
+
+            return false;
+        }
+
+        #endregion
+    }
 }
