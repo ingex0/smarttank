@@ -55,7 +55,6 @@ namespace SmartTank.net
         static Thread thread;
         static SyncCashe sInputCashe;
 
-        static bool ReadOver = false;
 
         /// <summary>
         /// 初始化，读配置文件
@@ -263,217 +262,219 @@ namespace SmartTank.net
             
             try
             {
-                while (!ReadOver)
+                while (true)
                 {
                     if (client.Connected)
                     {
                         byte[] buffer = new byte[stPkgHead.Size];
                         Stream netStream = client.GetStream();
 
-                        // 这里要确保每次读一个整包
-                        netStream.Read(buffer, 0, stPkgHead.Size);
-                        stPkgHead pkg = (stPkgHead)BytesToStuct(buffer, typeof(stPkgHead));
-
-                        Console.WriteLine("ReceiveDataPkg:");
-                        Console.WriteLine("Sytle : " + pkg.iSytle);
-                        Console.WriteLine("Size : " + pkg.dataSize);
-
-                        int recvLength = 0;
-                        byte[] readData = new byte[pkg.dataSize];
-                        while (recvLength < pkg.dataSize)
+                        if (netStream.CanRead)
                         {
-                            recvLength += netStream.Read(readData, recvLength, pkg.dataSize - recvLength);
-                        }
-                        if (recvLength != pkg.dataSize)
-                        {
-                            throw new Exception("危险：收到包的长度不等于实际包长");
-                        }
+                            // 这里要确保每次读一个整包
+                            netStream.Read(buffer, 0, stPkgHead.Size);
+                            stPkgHead pkg = (stPkgHead)BytesToStuct(buffer, typeof(stPkgHead));
 
-                        // 退出信号
-                        if (pkg.iSytle == (int)PACKAGE_SYTLE.EXIT)
-                        {
-                            Console.WriteLine("read close info");
-                            break;
-                        }
+                            Console.WriteLine("ReceiveDataPkg:");
+                            Console.WriteLine("Sytle : " + pkg.iSytle);
+                            Console.WriteLine("Size : " + pkg.dataSize);
 
-                        // 数据
-                        else if (pkg.iSytle == (int)PACKAGE_SYTLE.DATA)
-                        {
-
-                            //byte[] readData = new byte[pkg.dataSize];
-                            //netStream.Read(readData, 0, pkg.dataSize);
-                            SyncCashe cashe = sInputCashe;
-
-                            MemoryStream memStream = new MemoryStream(readData);
-
-                            //StreamReader SR = new StreamReader(memStream);
-                            BinaryReader BR = new BinaryReader(memStream);
-                            try
+                            int recvLength = 0;
+                            byte[] readData = new byte[pkg.dataSize];
+                            while (recvLength < pkg.dataSize)
                             {
-                                //string temp = ""; 
-
-                                // 物体状态同步数据
-                                //temp = SR.ReadLine();
-                                int StaCount = BR.ReadInt32();//int.Parse(temp);
-
-
-                                for (int i = 0; i < StaCount; i++)
-                                {
-                                    ObjStatusSyncInfo info = new ObjStatusSyncInfo();
-
-                                    //temp = SR.ReadLine();
-                                    //Console.WriteLine("ObjName:" + temp);
-                                    info.objMgPath = BR.ReadString();//temp;
-
-
-                                    //temp = SR.ReadLine();
-                                    //Console.WriteLine("StatusName: " + temp);
-                                    info.statusName = BR.ReadString();//temp;
-
-
-                                    //temp = SR.ReadLine();
-                                    //Console.WriteLine("ValueCount: " + temp);
-                                    int valueCount = BR.ReadInt32(); //int.Parse(temp);
-
-
-                                    info.values = new object[valueCount];
-                                    for (int j = 0; j < valueCount; j++)
-                                    {
-                                        info.values[j] = ReadObjFromStream(BR);
-                                    }
-
-                                    // 添加Info到缓冲区
-                                    Monitor.Enter(cashe);
-                                    cashe.ObjStaInfoList.Add(info);
-                                    Monitor.Exit(cashe);
-
-                                    //Console.WriteLine("Read Pkg Success!");
-                                }
-
-                                // 事件同步数据
-                                //temp = SR.ReadLine();
-                                int EventCount = BR.ReadInt32(); //int.Parse(temp);
-                                for (int i = 0; i < EventCount; i++)
-                                {
-                                    ObjEventSyncInfo info = new ObjEventSyncInfo();
-
-                                    //temp = SR.ReadLine();
-                                    info.objMgPath = BR.ReadString();//temp;
-
-
-                                    //temp = SR.ReadLine();
-                                    info.EventName = BR.ReadString();// temp;
-
-
-                                    //temp = SR.ReadLine();
-                                    int valueCount = BR.ReadInt32();// int.Parse(temp);
-
-                                    info.values = new object[valueCount];
-                                    for (int j = 0; j < valueCount; j++)
-                                    {
-                                        info.values[j] = ReadObjFromStream(BR);
-                                    }
-
-                                    // 添加Info到缓冲区
-                                    Monitor.Enter(cashe);
-                                    cashe.ObjEventInfoList.Add(info);
-                                    Monitor.Exit(cashe);
-
-                                }
-
-                                // 物体管理同步数据
-
-                                //temp = SR.ReadLine();
-                                int ObjMgCount = BR.ReadInt32(); //int.Parse(temp);
-                                for (int i = 0; i < ObjMgCount; i++)
-                                {
-                                    ObjMgSyncInfo info = new ObjMgSyncInfo();
-
-                                    //temp = SR.ReadLine();
-                                    info.objPath = BR.ReadString();//temp;
-
-
-                                    //temp = SR.ReadLine();
-                                    info.objMgKind = BR.ReadInt32(); //int.Parse(temp);
-
-
-                                    //temp = SR.ReadLine();
-                                    info.objType = BR.ReadString();//temp;
-
-                                    //temp = SR.ReadLine();
-                                    int valueCount = BR.ReadInt32();// int.Parse(temp);
-
-                                    info.args = new object[valueCount];
-                                    for (int j = 0; j < valueCount; j++)
-                                    {
-                                        info.args[j] = ReadObjFromStream(BR);
-                                    }
-
-                                    // 添加Info到缓冲区
-                                    Monitor.Enter(cashe);
-                                    cashe.ObjMgInfoList.Add(info);
-                                    Monitor.Exit(cashe);
-
-                                }
-
-                                // 用户自定义数据
-                                //temp = BR.ReadLine();
-                                int UserDefinCount = BR.ReadInt32();// int.Parse(temp);
-                                for (int i = 0; i < UserDefinCount; i++)
-                                {
-                                    UserDefineInfo info = new UserDefineInfo();
-
-                                    //temp = SR.ReadLine();
-                                    info.infoName = BR.ReadString();// temp;
-                                    //temp = SR.ReadLine();
-                                    info.infoID = BR.ReadString();//temp;
-
-                                    //temp = SR.ReadLine();
-                                    int valueCount = BR.ReadInt32();//int.Parse(temp);
-
-                                    info.args = new object[valueCount];
-                                    for (int j = 0; j < valueCount; j++)
-                                    {
-                                        info.args[j] = ReadObjFromStream(BR);
-                                    }
-                                    Monitor.Enter(cashe);
-                                    cashe.UserDefineInfoList.Add(info);
-                                    Monitor.Exit(cashe);
-                                }
-
+                                recvLength += netStream.Read(readData, recvLength, pkg.dataSize - recvLength);
                             }
-                            catch (Exception ex)
+                            if (recvLength != pkg.dataSize)
                             {
-                                Console.WriteLine(ex);
+                                throw new Exception("危险：收到包的长度不等于实际包长");
                             }
-                            finally
-                            {
-                                memStream.Close();
-                                ////需要清空当前包中剩余内容
-                                //int left = stPakage.TotolSize / sizeof(char) - (int)SR.BaseStream.Position;
-                                //char[] temp = new char[left];
-                                //SR.Read(temp, 0, left);
-                            }
-                        }
-                        else
-                        {
-                            if (pkg.dataSize < 1024 * 10 && pkg.dataSize >= 0)
-                            {
-                                byte[] temp = new byte[pkg.dataSize];
-                                readData.CopyTo(temp, 0);
-                                if (OnReceivePkg != null)
-                                    OnReceivePkg(pkg, temp);
 
+                            // 退出信号
+                            if (pkg.iSytle == (int)PACKAGE_SYTLE.EXIT)
+                            {
+                                Console.WriteLine("read close info");
+                                break;
+                            }
+
+                            // 数据
+                            else if (pkg.iSytle == (int)PACKAGE_SYTLE.DATA)
+                            {
+
+                                //byte[] readData = new byte[pkg.dataSize];
+                                //netStream.Read(readData, 0, pkg.dataSize);
+                                SyncCashe cashe = sInputCashe;
+
+                                MemoryStream memStream = new MemoryStream(readData);
+
+                                //StreamReader SR = new StreamReader(memStream);
+                                BinaryReader BR = new BinaryReader(memStream);
+                                try
+                                {
+                                    //string temp = ""; 
+
+                                    // 物体状态同步数据
+                                    //temp = SR.ReadLine();
+                                    int StaCount = BR.ReadInt32();//int.Parse(temp);
+
+
+                                    for (int i = 0; i < StaCount; i++)
+                                    {
+                                        ObjStatusSyncInfo info = new ObjStatusSyncInfo();
+
+                                        //temp = SR.ReadLine();
+                                        //Console.WriteLine("ObjName:" + temp);
+                                        info.objMgPath = BR.ReadString();//temp;
+
+
+                                        //temp = SR.ReadLine();
+                                        //Console.WriteLine("StatusName: " + temp);
+                                        info.statusName = BR.ReadString();//temp;
+
+
+                                        //temp = SR.ReadLine();
+                                        //Console.WriteLine("ValueCount: " + temp);
+                                        int valueCount = BR.ReadInt32(); //int.Parse(temp);
+
+
+                                        info.values = new object[valueCount];
+                                        for (int j = 0; j < valueCount; j++)
+                                        {
+                                            info.values[j] = ReadObjFromStream(BR);
+                                        }
+
+                                        // 添加Info到缓冲区
+                                        Monitor.Enter(cashe);
+                                        cashe.ObjStaInfoList.Add(info);
+                                        Monitor.Exit(cashe);
+
+                                        //Console.WriteLine("Read Pkg Success!");
+                                    }
+
+                                    // 事件同步数据
+                                    //temp = SR.ReadLine();
+                                    int EventCount = BR.ReadInt32(); //int.Parse(temp);
+                                    for (int i = 0; i < EventCount; i++)
+                                    {
+                                        ObjEventSyncInfo info = new ObjEventSyncInfo();
+
+                                        //temp = SR.ReadLine();
+                                        info.objMgPath = BR.ReadString();//temp;
+
+
+                                        //temp = SR.ReadLine();
+                                        info.EventName = BR.ReadString();// temp;
+
+
+                                        //temp = SR.ReadLine();
+                                        int valueCount = BR.ReadInt32();// int.Parse(temp);
+
+                                        info.values = new object[valueCount];
+                                        for (int j = 0; j < valueCount; j++)
+                                        {
+                                            info.values[j] = ReadObjFromStream(BR);
+                                        }
+
+                                        // 添加Info到缓冲区
+                                        Monitor.Enter(cashe);
+                                        cashe.ObjEventInfoList.Add(info);
+                                        Monitor.Exit(cashe);
+
+                                    }
+
+                                    // 物体管理同步数据
+
+                                    //temp = SR.ReadLine();
+                                    int ObjMgCount = BR.ReadInt32(); //int.Parse(temp);
+                                    for (int i = 0; i < ObjMgCount; i++)
+                                    {
+                                        ObjMgSyncInfo info = new ObjMgSyncInfo();
+
+                                        //temp = SR.ReadLine();
+                                        info.objPath = BR.ReadString();//temp;
+
+
+                                        //temp = SR.ReadLine();
+                                        info.objMgKind = BR.ReadInt32(); //int.Parse(temp);
+
+
+                                        //temp = SR.ReadLine();
+                                        info.objType = BR.ReadString();//temp;
+
+                                        //temp = SR.ReadLine();
+                                        int valueCount = BR.ReadInt32();// int.Parse(temp);
+
+                                        info.args = new object[valueCount];
+                                        for (int j = 0; j < valueCount; j++)
+                                        {
+                                            info.args[j] = ReadObjFromStream(BR);
+                                        }
+
+                                        // 添加Info到缓冲区
+                                        Monitor.Enter(cashe);
+                                        cashe.ObjMgInfoList.Add(info);
+                                        Monitor.Exit(cashe);
+
+                                    }
+
+                                    // 用户自定义数据
+                                    //temp = BR.ReadLine();
+                                    int UserDefinCount = BR.ReadInt32();// int.Parse(temp);
+                                    for (int i = 0; i < UserDefinCount; i++)
+                                    {
+                                        UserDefineInfo info = new UserDefineInfo();
+
+                                        //temp = SR.ReadLine();
+                                        info.infoName = BR.ReadString();// temp;
+                                        //temp = SR.ReadLine();
+                                        info.infoID = BR.ReadString();//temp;
+
+                                        //temp = SR.ReadLine();
+                                        int valueCount = BR.ReadInt32();//int.Parse(temp);
+
+                                        info.args = new object[valueCount];
+                                        for (int j = 0; j < valueCount; j++)
+                                        {
+                                            info.args[j] = ReadObjFromStream(BR);
+                                        }
+                                        Monitor.Enter(cashe);
+                                        cashe.UserDefineInfoList.Add(info);
+                                        Monitor.Exit(cashe);
+                                    }
+
+                                }
+                                catch (Exception ex)
+                                {
+                                    Console.WriteLine(ex);
+                                }
+                                finally
+                                {
+                                    memStream.Close();
+                                    ////需要清空当前包中剩余内容
+                                    //int left = stPakage.TotolSize / sizeof(char) - (int)SR.BaseStream.Position;
+                                    //char[] temp = new char[left];
+                                    //SR.Read(temp, 0, left);
+                                }
                             }
                             else
                             {
-                                Log.Write("包头有问题: type: " + pkg.iSytle + " , size: " + pkg.dataSize);
-                                Console.WriteLine("包头有问题: type: " + pkg.iSytle + " , size: " + pkg.dataSize);
-                                //throw new Exception("包头有问题啊，我日");
-                                // 包头很可能有问题
+                                if (pkg.dataSize < 1024 * 10 && pkg.dataSize >= 0)
+                                {
+                                    byte[] temp = new byte[pkg.dataSize];
+                                    readData.CopyTo(temp, 0);
+                                    if (OnReceivePkg != null)
+                                        OnReceivePkg(pkg, temp);
+
+                                }
+                                else
+                                {
+                                    Log.Write("包头有问题: type: " + pkg.iSytle + " , size: " + pkg.dataSize);
+                                    Console.WriteLine("包头有问题: type: " + pkg.iSytle + " , size: " + pkg.dataSize);
+                                    //throw new Exception("包头有问题啊，我日");
+                                    // 包头很可能有问题
+                                }
                             }
                         }
-
                     }
                 }
             }
@@ -484,6 +485,7 @@ namespace SmartTank.net
             finally
             {
                 client.Close();
+                client = null;
             }
         }
 
@@ -508,19 +510,6 @@ namespace SmartTank.net
                 thread = null;
             }
             return true;
-        }
-
-        static public void CloseThread()
-        {
-            ReadOver = true;
-            //thread.Abort();
-
-            //if (sckt.Connected)
-            //{
-            //    sckt.Shutdown(SocketShutdown.Both);
-            //    sckt.Disconnect(false);
-            //    sckt.Close();
-            //}
         }
 
         static Dictionary<string,UInt16> TypeIndexTable = new Dictionary<string,ushort>();
