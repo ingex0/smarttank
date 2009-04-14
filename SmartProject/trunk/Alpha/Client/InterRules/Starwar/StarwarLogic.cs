@@ -22,11 +22,23 @@ using TankEngine2D.DataStructure;
 using SmartTank.Effects.SceneEffects;
 using SmartTank.Effects;
 using SmartTank.Sounds;
+using System.Runtime.InteropServices;
 
 namespace InterRules.Starwar
 {
     class StarwarLogic : RuleSupNet, IGameScreen
     {
+        [StructLayoutAttribute(LayoutKind.Sequential, Size = 29, CharSet = CharSet.Ansi, Pack = 1)]
+        struct RankInfo
+        {
+            int Rank;
+            int Score;
+            [MarshalAs(UnmanagedType.ByValArray, SizeConst = 21)]
+            char[] Name;
+        };
+
+
+
         #region Variables
 
         const float AddObjSpace = 250;
@@ -49,10 +61,13 @@ namespace InterRules.Starwar
 
         int controlIndex = -1;
 
+        float gameTotolTime = -1;
+
         public Vector2 MapCenterPos
         {
             get { return new Vector2(mapRect.X + mapRect.Width / 2, mapRect.Y + mapRect.Height / 2); }
         }
+
 
         #endregion
 
@@ -368,11 +383,13 @@ namespace InterRules.Starwar
 
         #region Initailize
 
-        public StarwarLogic(int controlIndex)
+        public StarwarLogic(int controlIndex, string[] playerNames)
         {
             this.controlIndex = controlIndex;
 
             LoadConfig();
+
+            StartTimer();
 
             InitialCamera();
             InitializeScene();
@@ -382,6 +399,11 @@ namespace InterRules.Starwar
 
             SyncCasheReader.onCreateObj += new SyncCasheReader.CreateObjInfoHandler(SyncCasheReader_onCreateObj);
             SyncCasheReader.onUserDefineInfo += new SyncCasheReader.UserDefineInfoHandler(SyncCasheReader_onUserDefineInfo);
+        }
+
+        private void StartTimer()
+        {
+            gameTotolTime = SpaceWarConfig.GameTotolTime;
         }
 
         private void InitailizePurview(int controlIndex)
@@ -516,6 +538,8 @@ namespace InterRules.Starwar
 
             CreateDelRock(second);
 
+            UpdateTimer(second);
+
             //SyncWarShip();
             //if (InputHandler.IsKeyDown(Keys.U))
             //{
@@ -530,6 +554,24 @@ namespace InterRules.Starwar
             }
             else
                 return false;
+        }
+
+        private bool UpdateTimer(float second)
+        {
+            gameTotolTime -= second;
+            if (gameTotolTime < 0)
+            {
+                GameOver();
+            }
+            return false;
+        }
+
+        private void GameOver()
+        {
+            stPkgHead head = new stPkgHead();
+            head.iSytle = 80;
+            
+            //for(int i = 0; i < )
         }
 
 
