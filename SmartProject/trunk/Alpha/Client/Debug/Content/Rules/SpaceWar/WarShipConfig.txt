@@ -30,4 +30,4 @@ RockMaxSpeed=200
 RockMaxAziSpeed=3.14
 
 //
-GameTotolTime=5
+GameTotolTime=60
