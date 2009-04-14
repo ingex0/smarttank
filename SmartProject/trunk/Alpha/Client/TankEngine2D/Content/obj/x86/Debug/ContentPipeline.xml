@@ -5,15 +5,15 @@
     <Settings>
       <TargetPlatform>Windows</TargetPlatform>
       <BuildConfiguration>Debug</BuildConfiguration>
-      <RootDirectory>D:\SmartTankSource080307\svn\truck\SmartProject\trunk\Alpha\Client\TankEngine2D\Content\</RootDirectory>
-      <LoggerRootDirectory>D:\SmartTankSource080307\svn\truck\SmartProject\trunk\Alpha\Client\TankEngine2D\</LoggerRootDirectory>
-      <IntermediateDirectory>D:\SmartTankSource080307\svn\truck\SmartProject\trunk\Alpha\Client\TankEngine2D\Content\obj\x86\Debug\</IntermediateDirectory>
-      <OutputDirectory>D:\SmartTankSource080307\svn\truck\SmartProject\trunk\Alpha\Client\TankEngine2D\bin\x86\Debug\Content\</OutputDirectory>
+      <RootDirectory>F:\Documents and Settings\seekyao\My Documents\SVN\trunk\Alpha\Client\TankEngine2D\Content\</RootDirectory>
+      <LoggerRootDirectory>F:\Documents and Settings\seekyao\My Documents\SVN\trunk\Alpha\Client\TankEngine2D\</LoggerRootDirectory>
+      <IntermediateDirectory>F:\Documents and Settings\seekyao\My Documents\SVN\trunk\Alpha\Client\TankEngine2D\Content\obj\x86\Debug\</IntermediateDirectory>
+      <OutputDirectory>F:\Documents and Settings\seekyao\My Documents\SVN\trunk\Alpha\Client\TankEngine2D\bin\x86\Debug\Content\</OutputDirectory>
     </Settings>
     <Assemblies>
       <Assembly>
         <Key>C:\WINDOWS\assembly\GAC_32\Microsoft.Xna.Framework.Content.Pipeline\2.0.0.0__6d5c3888ef60e27d\Microsoft.Xna.Framework.Content.Pipeline.dll</Key>
-        <Value>2009-03-26T13:48:25.40625+08:00</Value>
+        <Value>2009-03-26T20:43:29.4375+08:00</Value>
       </Assembly>
     </Assemblies>
   </Asset>
