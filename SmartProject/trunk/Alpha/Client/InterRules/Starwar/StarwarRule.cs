@@ -187,11 +187,7 @@ namespace InterRules.Starwar
             btnClear.Update();
 
 
-            if (InputHandler.IsKeyDown(Keys.F1))
-                GameManager.AddGameScreen(new StarwarLogic(0));
-            else if (InputHandler.IsKeyDown(Keys.F2))
-                GameManager.AddGameScreen(new StarwarLogic(1));
-            else if (InputHandler.IsKeyDown(Keys.PageDown))
+            if (InputHandler.IsKeyDown(Keys.PageDown))
             {
                 GameManager.AddGameScreen(new Hall(namebox.text));
             }
@@ -220,12 +216,7 @@ namespace InterRules.Starwar
         public void OnClose()
         {
             //heartTimer.Stop();
-            //stPkgHead head = new stPkgHead();
-            //MemoryStream Stream = new MemoryStream();
-            //head.dataSize = 0;
-            //head.iSytle = 21;
-            //SocketMgr.SendCommonPackge(head, Stream);
-            //Stream.Close();
+            SocketMgr.OnReceivePkg -= OnReceivePack;
             SocketMgr.Close();
         }
 

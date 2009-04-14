@@ -183,11 +183,6 @@ namespace InterRules.Starwar
             roomList.Update();
             rankList.Update();
 
-            if (InputHandler.IsKeyDown(Keys.F1))
-                GameManager.AddGameScreen(new StarwarLogic(0));
-            else if (InputHandler.IsKeyDown(Keys.F2))
-                GameManager.AddGameScreen(new StarwarLogic(1));
-
             if (InputHandler.IsKeyDown(Keys.Escape))
                 return true;
 
@@ -207,7 +202,7 @@ namespace InterRules.Starwar
 
         public void OnClose()
         {
-
+            SocketMgr.OnReceivePkg -= OnReceivePack;
         }
 
         #endregion
