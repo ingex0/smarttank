@@ -28,4 +28,6 @@ RockCreateTime=2
 RockMinSpeed=50
 RockMaxSpeed=200
 RockMaxAziSpeed=3.14
-GameTotolTime=60
+
+//
+GameTotolTime=5
