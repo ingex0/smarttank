@@ -1,0 +1,2289 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>TankEngine2D</name>
+    </assembly>
+    <members>
+        <member name="T:TankEngine2D.Helpers.ConvertHelper">
+            <summary>
+            类型转换辅助类
+            </summary>
+        </member>
+        <member name="M:TankEngine2D.Helpers.ConvertHelper.PointToVector2(Microsoft.Xna.Framework.Point)">
+            <summary>
+            将Point类型转换为Vector2类型
+            </summary>
+            <param name="p"></param>
+            <returns></returns>
+        </member>
+        <member name="M:TankEngine2D.Helpers.ConvertHelper.Vector2ToPoint(Microsoft.Xna.Framework.Vector2)">
+            <summary>
+            将Vector2类型转换为Point类型，进行四舍五入操作
+            </summary>
+            <param name="v"></param>
+            <returns></returns>
+        </member>
+        <member name="M:TankEngine2D.Helpers.ConvertHelper.RectangleToRectanglef(Microsoft.Xna.Framework.Rectangle)">
+            <summary>
+            将Rectangle类型转换为Rectanglef类型
+            </summary>
+            <param name="rect"></param>
+            <returns></returns>
+        </member>
+        <member name="M:TankEngine2D.Helpers.ConvertHelper.RectanglefToRectangle(TankEngine2D.DataStructure.Rectanglef)">
+            <summary>
+            将Rectanglef类型转换为Rectangle类型，进行取整操作
+            </summary>
+            <param name="rect"></param>
+            <returns></returns>
+        </member>
+        <member name="M:TankEngine2D.Helpers.ConvertHelper.SysColorToXNAColor(System.Drawing.Color)">
+            <summary>
+            将C#标准库中的Color类型转换为XNA的Color类型
+            </summary>
+            <param name="sysColor"></param>
+            <returns></returns>
+        </member>
+        <member name="M:TankEngine2D.Graphics.ChineseWriter.Intitial(TankEngine2D.Graphics.FontMgr.FontLoadInfo)">
+            <summary>
+            初始化
+            </summary>
+        </member>
+        <member name="M:TankEngine2D.Graphics.ChineseWriter.WriteText(System.String,Microsoft.Xna.Framework.Vector2,System.Single,System.Single,Microsoft.Xna.Framework.Graphics.Color,System.Single,System.String)">
+            <summary>
+            绘制包含中文字的文字
+            </summary>
+            <param name="text">要绘制的文字</param>
+            <param name="scrnPos">绘制的屏幕位置</param>
+            <param name="rota">旋转角</param>
+            <param name="scale">缩放比</param>
+            <param name="color">颜色</param>
+            <param name="layerDepth">绘制深度</param>
+            <param name="fontName">字体名称</param>
+        </member>
+        <member name="M:TankEngine2D.Graphics.ChineseWriter.BuildTexture(System.String,System.String)">
+            <summary>
+            建立贴图并添加到缓冲中。
+            尽量在第一次绘制之前调用该函数，这样可以避免建立贴图的过程造成游戏的停滞
+            </summary>
+            <param name="text">要创建的字符串</param>
+            <param name="fontName">字体</param>
+            <returns></returns>
+        </member>
+        <member name="M:TankEngine2D.Graphics.ChineseWriter.MeasureString(System.String,System.Single,System.String)">
+            <summary>
+            返回字符串的长度
+            </summary>
+            <param name="text">要测量的字符串</param>
+            <param name="scale">字符串的缩放率</param>
+            <param name="fontName">字体</param>
+            <returns></returns>
+        </member>
+        <member name="M:TankEngine2D.Graphics.ChineseWriter.ClearCache">
+            <summary>
+            清除缓冲
+            </summary>
+        </member>
+        <member name="T:TankEngine2D.Helpers.Log">
+            <summary>
+            Log will create automatically a log file and write
+            log/error/debug info for simple runtime error checking, very useful
+            for minor errors, such as finding not files.
+            The application can still continue working, but this log provides
+            an easy support to find out what files are missing (in this example).
+            </summary>
+        </member>
+        <member name="F:TankEngine2D.Helpers.Log.LogFilename">
+            <summary>
+            Log filename
+            </summary>
+        </member>
+        <member name="F:TankEngine2D.Helpers.Log.writer">
+            <summary>
+            Writer
+            </summary>
+        </member>
+        <member name="M:TankEngine2D.Helpers.Log.Initialize">
+            <summary>
+            Static constructor
+            </summary>
+        </member>
+        <member name="M:TankEngine2D.Helpers.Log.Write(System.String)">
+            <summary>
+            Writes a LogType and info/error message string to the Log file
+            </summary>
+        </member>
+        <member name="T:TankEngine2D.Graphics.IAnimated">
+            <summary>
+            定义可切帧对象
+            </summary>
+        </member>
+        <member name="M:TankEngine2D.Graphics.IAnimated.DrawCurFrame">
+            <summary>
+            绘制当前帧，并准备下一帧
+            </summary>
+        </member>
+        <member name="P:TankEngine2D.Graphics.IAnimated.IsStart">
+            <summary>
+            获取是否已经开始显示
+            </summary>
+        </member>
+        <member name="P:TankEngine2D.Graphics.IAnimated.IsEnd">
+            <summary>
+            获取动画是否已经结束
+            </summary>
+        </member>
+        <member name="T:TankEngine2D.DataStructure.GraphPath`1">
+            <summary>
+            表示有权无向图的路径
+            </summary>
+            <typeparam name="T"></typeparam>
+        </member>
+        <member name="F:TankEngine2D.DataStructure.GraphPath`1.neighbor">
+            <summary>
+            与当前节点通过该路径相连的节点
+            </summary>
+        </member>
+        <member name="F:TankEngine2D.DataStructure.GraphPath`1.weight">
+            <summary>
+            路径上的权值
+            </summary>
+        </member>
+        <member name="M:TankEngine2D.DataStructure.GraphPath`1.#ctor(TankEngine2D.DataStructure.GraphPoint{`0},System.Single)">
+             <summary>
+            
+             </summary>
+             <param name="neighbor">与当前节点通过该路径相连的节点</param>
+             <param name="weight">路径上的权值</param>
+        </member>
+        <member name="T:TankEngine2D.DataStructure.GraphPoint`1">
+            <summary>
+            有权无向图中的节点
+            </summary>
+            <typeparam name="T"></typeparam>
+        </member>
+        <member name="M:TankEngine2D.DataStructure.GraphPoint`1.DepthCopy(TankEngine2D.DataStructure.GraphPoint{`0}[])">
+            <summary>
+            复制一幅图。复制图的节点，但不复制节点中的值。
+            </summary>
+            <param name="graph"></param>
+            <returns></returns>
+        </member>
+        <member name="F:TankEngine2D.DataStructure.GraphPoint`1.value">
+            <summary>
+            节点中的值
+            </summary>
+        </member>
+        <member name="F:TankEngine2D.DataStructure.GraphPoint`1.neighbors">
+            <summary>
+            通向相连节点的路径的列表
+            </summary>
+        </member>
+        <member name="M:TankEngine2D.DataStructure.GraphPoint`1.#ctor">
+            <summary>
+            空构造函数
+            </summary>
+        </member>
+        <member name="M:TankEngine2D.DataStructure.GraphPoint`1.#ctor(`0,System.Collections.Generic.List{TankEngine2D.DataStructure.GraphPath{`0}})">
+            <summary>
+            
+            </summary>
+            <param name="value">节点中的值</param>
+            <param name="neighbors">通向相连节点的路径的列表</param>
+        </member>
+        <member name="M:TankEngine2D.DataStructure.GraphPoint`1.Link(TankEngine2D.DataStructure.GraphPoint{`0},TankEngine2D.DataStructure.GraphPoint{`0},System.Single)">
+            <summary>
+            连接两个有权无向图节的节点
+            </summary>
+            <param name="p1">节点1</param>
+            <param name="p2">节点2</param>
+            <param name="weight">路径上的权重值</param>
+        </member>
+        <member name="T:TankEngine2D.Graphics.AnimatedSpriteSingle">
+            <summary>
+            从一副包含多个子图的图片中建立动画
+            </summary>
+        </member>
+        <member name="T:TankEngine2D.Graphics.AnimatedSprite">
+            <summary>
+            可切帧对象的基类
+            </summary>
+        </member>
+        <member name="F:TankEngine2D.Graphics.AnimatedSprite.Interval">
+            <summary>
+            两次切帧之间相隔游戏绘制循环的个数
+            </summary>
+        </member>
+        <member name="F:TankEngine2D.Graphics.AnimatedSprite.mSumFrame">
+            <summary>
+            动画的帧总数
+            </summary>
+        </member>
+        <member name="F:TankEngine2D.Graphics.AnimatedSprite.mCurFrameIndex">
+            <summary>
+            当前的帧索引，从0开始
+            </summary>
+        </member>
+        <member name="M:TankEngine2D.Graphics.AnimatedSprite.Start">
+            <summary>
+            从索引0开始连续播放动画。
+            </summary>
+        </member>
+        <member name="M:TankEngine2D.Graphics.AnimatedSprite.Start(System.Int32)">
+            <summary>
+            开始连续播放动画，制定开始的帧索引
+            </summary>
+            <param name="startFrame">开始处的帧索引</param>
+        </member>
+        <member name="M:TankEngine2D.Graphics.AnimatedSprite.Start(System.Int32,System.Int32,System.Boolean)">
+            <summary>
+            Start to Show the Cartoon on Screen,
+            it will start at the startFrame index,
+            and after passing sumShowFrame's number of frames, it will a stop automatically, and call OnStop Event.
+            开始播放动画，制定播放开始的索引和一共显示多少帧，并制定是否只播放一次
+            </summary>
+            <param name="startFrame">开始处的帧索引</param>
+            <param name="sumShowFrame">总共显示的帧数</param>
+            <param name="showOnce">是否只显示一次</param>
+        </member>
+        <member name="M:TankEngine2D.Graphics.AnimatedSprite.NextFrame">
+            <summary>
+            切换到下一帧
+            </summary>
+        </member>
+        <member name="M:TankEngine2D.Graphics.AnimatedSprite.DrawCurFrame">
+            <summary>
+            绘制当前帧
+            </summary>
+        </member>
+        <member name="M:TankEngine2D.Graphics.AnimatedSprite.Draw">
+            <summary>
+            绘制当前帧，由继承类重载后实现
+            </summary>
+        </member>
+        <member name="M:TankEngine2D.Graphics.AnimatedSprite.Stop">
+            <summary>
+            停止播放，并从管理器中删除
+            </summary>
+        </member>
+        <member name="E:TankEngine2D.Graphics.AnimatedSprite.OnStop">
+            <summary>
+            当动画结束时引发这个事件
+            </summary>
+        </member>
+        <member name="P:TankEngine2D.Graphics.AnimatedSprite.IsStart">
+            <summary>
+            动画是否已经开始显示
+            </summary>
+        </member>
+        <member name="P:TankEngine2D.Graphics.AnimatedSprite.IsEnd">
+            <summary>
+            动画是否已经结束
+            </summary>
+        </member>
+        <member name="M:TankEngine2D.Graphics.AnimatedSpriteSingle.LoadResources(Microsoft.Xna.Framework.Content.ContentManager,System.String)">
+            <summary>
+             提前将贴图文件导入到Content当中，以避免读取造成游戏的停滞。
+            </summary>
+            <param name="contentMgr">资源管理者</param>
+            <param name="assetName">资源的名称</param>
+        </member>
+        <member name="F:TankEngine2D.Graphics.AnimatedSpriteSingle.Origin">
+            <summary>
+            贴图的中心，以贴图坐标表示
+            </summary>
+        </member>
+        <member name="F:TankEngine2D.Graphics.AnimatedSpriteSingle.Pos">
+            <summary>
+            逻辑位置
+            </summary>
+        </member>
+        <member name="F:TankEngine2D.Graphics.AnimatedSpriteSingle.Width">
+            <summary>
+            逻辑宽度
+            </summary>
+        </member>
+        <member name="F:TankEngine2D.Graphics.AnimatedSpriteSingle.Height">
+            <summary>
+            逻辑高度
+            </summary>
+        </member>
+        <member name="F:TankEngine2D.Graphics.AnimatedSpriteSingle.Rata">
+            <summary>
+            方位角
+            </summary>
+        </member>
+        <member name="F:TankEngine2D.Graphics.AnimatedSpriteSingle.Color">
+            <summary>
+            颜色
+            </summary>
+        </member>
+        <member name="F:TankEngine2D.Graphics.AnimatedSpriteSingle.LayerDepth">
+            <summary>
+            绘制深度
+            </summary>
+        </member>
+        <member name="F:TankEngine2D.Graphics.AnimatedSpriteSingle.BlendMode">
+            <summary>
+            混合模式
+            </summary>
+        </member>
+        <member name="M:TankEngine2D.Graphics.AnimatedSpriteSingle.#ctor(TankEngine2D.RenderEngine)">
+            <summary>
+            从一副包含多个子图的图片中建立动画
+            </summary>
+            <param name="engine">渲染组件</param>
+        </member>
+        <member name="M:TankEngine2D.Graphics.AnimatedSpriteSingle.LoadFromContent(Microsoft.Xna.Framework.Content.ContentManager,System.String,System.Int32,System.Int32,System.Int32)">
+            <summary>
+            通过素材管道导入图片资源
+            </summary>
+            <param name="contentMgr">素材管理者</param>
+            <param name="assetName">素材名称</param>
+            <param name="cellWidth">一个子图的宽度</param>
+            <param name="cellHeight">一个子图的高度</param>
+            <param name="cellInterval">表示相邻帧之间子图的间隔，只使用能被cellInterval整除的索引的子图</param>
+        </member>
+        <member name="M:TankEngine2D.Graphics.AnimatedSpriteSingle.LoadFromFile(System.String,System.Int32,System.Int32,System.Int32)">
+            <summary>
+            从文件中导入贴图
+            </summary>
+            <param name="filePath">贴图文件路径</param>
+            <param name="cellWidth">子图宽度</param>
+            <param name="cellHeight">子图高度</param>
+            <param name="cellInterval">表示相邻帧之间子图的间隔，只使用能被cellInterval整除的索引的子图</param>
+        </member>
+        <member name="M:TankEngine2D.Graphics.AnimatedSpriteSingle.SetParameters(Microsoft.Xna.Framework.Vector2,Microsoft.Xna.Framework.Vector2,System.Single,System.Single,System.Single,Microsoft.Xna.Framework.Graphics.Color,System.Single,Microsoft.Xna.Framework.Graphics.SpriteBlendMode)">
+            <summary>
+            设置绘制参数
+            </summary>
+            <param name="origin">贴图的中心，以贴图坐标表示</param>
+            <param name="pos">逻辑位置</param>
+            <param name="width">逻辑宽度</param>
+            <param name="height">逻辑高度</param>
+            <param name="rata">方位角</param>
+            <param name="color">绘制颜色</param>
+            <param name="layerDepth">绘制深度</param>
+            <param name="blendMode">混合模式</param>
+        </member>
+        <member name="M:TankEngine2D.Graphics.AnimatedSpriteSingle.SetParameters(Microsoft.Xna.Framework.Vector2,Microsoft.Xna.Framework.Vector2,System.Single,System.Single,Microsoft.Xna.Framework.Graphics.Color,System.Single,Microsoft.Xna.Framework.Graphics.SpriteBlendMode)">
+            <summary>
+            设置绘制参数
+            </summary>
+            <param name="origin">贴图的中心，以贴图坐标表示</param>
+            <param name="pos">逻辑位置</param>
+            <param name="scale">逻辑大小/原图大小</param>
+            <param name="rata">方位角</param>
+            <param name="color">绘制颜色</param>
+            <param name="layerDepth">绘制深度</param>
+            <param name="blendMode">混合模式</param>
+        </member>
+        <member name="M:TankEngine2D.Graphics.AnimatedSpriteSingle.Draw">
+            <summary>
+            绘制当前帧
+            </summary>
+        </member>
+        <member name="M:TankEngine2D.Graphics.AnimatedSpriteSingle.Dispose">
+            <summary>
+            释放图片资源
+            </summary>
+        </member>
+        <member name="T:TankEngine2D.Helpers.ColorHelper">
+            <summary>
+            Color helper, just to convert colors to different formats and providing
+            more helper methods missing in the Color class.
+            </summary>
+        </member>
+        <member name="F:TankEngine2D.Helpers.ColorHelper.Empty">
+            <summary>
+            Empty color, used to mark unused color values.
+            </summary>
+        </member>
+        <member name="F:TankEngine2D.Helpers.ColorHelper.HalfAlpha">
+            <summary>
+            Half alpha color helper. Just white with 50% alpha.
+            </summary>
+        </member>
+        <member name="M:TankEngine2D.Helpers.ColorHelper.StayInRange(System.Single,System.Single,System.Single)">
+            <summary>
+            Stay in range, val will be set to min if less or to max when bigger.
+            </summary>
+        </member>
+        <member name="M:TankEngine2D.Helpers.ColorHelper.MultiplyColors(Microsoft.Xna.Framework.Graphics.Color,Microsoft.Xna.Framework.Graphics.Color)">
+            <summary>
+            Multiply colors
+            </summary>
+            <param name="color1">Color 1</param>
+            <param name="color2">Color 2</param>
+            <returns>Return color</returns>
+        </member>
+        <member name="M:TankEngine2D.Helpers.ColorHelper.SameColor(Microsoft.Xna.Framework.Graphics.Color,Microsoft.Xna.Framework.Graphics.Color)">
+            <summary>
+            Same color. Helper method for LoadLevel because for some reason
+            the color compare does not work and causes a lot of errors.
+            </summary>
+            <param name="color">Color</param>
+            <param name="checkColor">Check color</param>
+            <returns>Bool</returns>
+        </member>
+        <member name="M:TankEngine2D.Helpers.ColorHelper.InterpolateColor(Microsoft.Xna.Framework.Graphics.Color,Microsoft.Xna.Framework.Graphics.Color,System.Single)">
+            <summary>
+            Interpolate color. Used to fade the hud colors from green to red.
+            </summary>
+        </member>
+        <member name="M:TankEngine2D.Helpers.ColorHelper.ApplyAlphaToColor(Microsoft.Xna.Framework.Graphics.Color,System.Single)">
+            <summary>
+            Apply alpha to color
+            </summary>
+            <param name="col">Color</param>
+            <param name="newAlpha">New alpha</param>
+            <returns>Color</returns>
+        </member>
+        <member name="M:TankEngine2D.Helpers.ColorHelper.MixAlphaToColor(Microsoft.Xna.Framework.Graphics.Color,System.Single)">
+            <summary>
+            Mix alpha to color
+            </summary>
+            <param name="col">Color</param>
+            <param name="newAlpha">New alpha</param>
+            <returns>Color</returns>
+        </member>
+        <member name="M:TankEngine2D.Helpers.ColorHelper.ToFloat4(Microsoft.Xna.Framework.Graphics.Color)">
+            <summary>
+            将颜色值转换为由4个0到1的浮点数表示的形式。
+            </summary>
+            <param name="color"></param>
+            <returns></returns>
+        </member>
+        <member name="T:TankEngine2D.Graphics.AnimatedMgr">
+            <summary>
+            所有的动画的管理类
+            </summary>
+        </member>
+        <member name="M:TankEngine2D.Graphics.AnimatedMgr.Draw">
+            <summary>
+            绘制当前活动的所有动画。
+            会更新所有的动画。但某动画结束时，会自动从保存的列表中删除。
+            </summary>
+        </member>
+        <member name="M:TankEngine2D.Graphics.AnimatedMgr.Clear">
+            <summary>
+            清空保存的所有动画
+            </summary>
+        </member>
+        <member name="T:TankEngine2D.DataStructure.MultiList`1">
+            <summary>
+            一个用Hash实现的容器。
+            
+            如果其中的元素类型继承于某个接口（或父类），就能获取该容器的一个可以以该接口（或父类）进行迭代的副本。
+            当原容器中元素有所改动时，副本和原容器始终保持一致。
+            
+            容器对其中的每一个元素使用一个string类型的名称作为Hash表的主键，通过该主键达到快速的查找。
+            </summary>
+            <typeparam name="T"></typeparam>
+        </member>
+        <member name="M:TankEngine2D.DataStructure.MultiList`1.#ctor">
+            <summary>
+            默认构造函数
+            </summary>
+        </member>
+        <member name="M:TankEngine2D.DataStructure.MultiList`1.Add(System.String,`0)">
+            <summary>
+            添加元素
+            </summary>
+            <param name="name"></param>
+            <param name="value"></param>
+            <returns></returns>
+        </member>
+        <member name="M:TankEngine2D.DataStructure.MultiList`1.Remove(System.String)">
+            <summary>
+            删除元素
+            </summary>
+            <param name="name"></param>
+            <returns></returns>
+        </member>
+        <member name="M:TankEngine2D.DataStructure.MultiList`1.GetEnumerator">
+            <summary>
+            获得枚举器
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:TankEngine2D.DataStructure.MultiList`1.GetCopy``1">
+            <summary>
+            获得副本
+            </summary>
+            <typeparam name="CopyType"></typeparam>
+            <returns></returns>
+        </member>
+        <member name="P:TankEngine2D.DataStructure.MultiList`1.Item(System.String)">
+            <summary>
+            获得元素的值
+            </summary>
+            <param name="name"></param>
+            <returns></returns>
+        </member>
+        <member name="T:TankEngine2D.DataStructure.MultiCopy`2">
+            <summary>
+            MultiList的副本
+            </summary>
+            <typeparam name="CopyType"></typeparam>
+            <typeparam name="T"></typeparam>
+        </member>
+        <member name="M:TankEngine2D.DataStructure.MultiCopy`2.#ctor(TankEngine2D.DataStructure.MultiList{`1})">
+            <summary>
+            MultiList的副本
+            </summary>
+            <param name="mother">原容器</param>
+        </member>
+        <member name="M:TankEngine2D.DataStructure.MultiCopy`2.GetEnumerator">
+            <summary>
+            获得枚举器
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="T:TankEngine2D.Graphics.BorderBulidException">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:TankEngine2D.Graphics.BorderBulidException.curPoint">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:TankEngine2D.Graphics.BorderBulidException.prePoint">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:TankEngine2D.Graphics.BorderBulidException.borderMap">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:TankEngine2D.Graphics.BorderBulidException.#ctor(Microsoft.Xna.Framework.Point,Microsoft.Xna.Framework.Point,TankEngine2D.Graphics.SpriteBorder.BorderMap)">
+            <summary>
+            
+            </summary>
+            <param name="curPoint"></param>
+            <param name="prePoint"></param>
+            <param name="borderMap"></param>
+        </member>
+        <member name="T:TankEngine2D.Graphics.BorderPoint">
+            <summary>
+            表示精灵边界上的点
+            </summary>
+        </member>
+        <member name="M:TankEngine2D.Graphics.BorderPoint.#ctor(Microsoft.Xna.Framework.Point)">
+            <summary>
+            设置该点的贴图坐标
+            </summary>
+            <param name="setp"></param>
+        </member>
+        <member name="F:TankEngine2D.Graphics.BorderPoint.p">
+            <summary>
+            该点的贴图坐标
+            </summary>
+        </member>
+        <member name="P:TankEngine2D.Graphics.BorderPoint.Point">
+            <summary>
+            获得该点的贴图坐标
+            </summary>
+        </member>
+        <member name="P:TankEngine2D.Graphics.BorderPoint.NeiborNodes">
+            <summary>
+            获得该点的相邻点
+            </summary>
+        </member>
+        <member name="T:TankEngine2D.Graphics.SpriteBorder">
+            <summary>
+            表示精灵的边界
+            </summary>
+        </member>
+        <member name="F:TankEngine2D.Graphics.SpriteBorder.minBlockAlpha">
+            <summary>
+            确定原图中一个像素处是否是物体部分的Alpha通道阀值
+            </summary>
+        </member>
+        <member name="F:TankEngine2D.Graphics.SpriteBorder.SurroundPoint">
+            <summary>
+            用于获得边界的辅助对象，参见InitialSurroundPoint函数、
+            SetPrePointFirstTime函数、SurroundQueue函数以及BuildCircle函数。
+            </summary>
+        </member>
+        <member name="M:TankEngine2D.Graphics.SpriteBorder.#ctor(Microsoft.Xna.Framework.Graphics.Texture2D)">
+            <summary>
+            构造制定贴图的边界。
+            </summary>
+            <param name="tex"></param>
+        </member>
+        <member name="M:TankEngine2D.Graphics.SpriteBorder.#ctor(Microsoft.Xna.Framework.Graphics.Texture2D,TankEngine2D.Graphics.SpriteBorder.BorderMap@)">
+            <summary>
+            构造指定贴图的边界，为了测试，返回borderMap
+            </summary>
+            <param name="tex"></param>
+            <param name="borderMap"></param>
+        </member>
+        <member name="M:TankEngine2D.Graphics.SpriteBorder.BuildCircle(TankEngine2D.Graphics.BorderPoint)">
+            <summary>
+            按逆时针方向获得边界圈
+            </summary>
+            <param name="first"></param>
+            <returns></returns>
+        </member>
+        <member name="M:TankEngine2D.Graphics.SpriteBorder.GetNormalVector(TankEngine2D.DataStructure.CircleListNode{TankEngine2D.Graphics.BorderPoint},System.Int32)">
+            <summary>
+            获得一个边界点处的法向量
+            </summary>
+            <param name="node"></param>
+            <param name="sumAverage"></param>
+            <returns></returns>
+        </member>
+        <member name="M:TankEngine2D.Graphics.SpriteBorder.ShowDataToConsole">
+            <summary>
+            将当前的链表信息输出到控制台中。
+            </summary>
+        </member>
+        <member name="P:TankEngine2D.Graphics.SpriteBorder.BorderCircle">
+            <summary>
+            获得边界环链表
+            </summary>
+        </member>
+        <member name="T:TankEngine2D.Graphics.SpriteBorder.BorderMap">
+            <summary>
+            边界图。
+            生成物体边界中间步骤的数据，表示贴图中的Alpha值变化边界点
+            </summary>
+        </member>
+        <member name="M:TankEngine2D.Graphics.SpriteBorder.BorderMap.ShowDataToConsole">
+            <summary>
+            将边界图的信息显示到控制台上
+            </summary>
+        </member>
+        <member name="P:TankEngine2D.Graphics.SpriteBorder.BorderMap.Item(System.Int32,System.Int32)">
+            <summary>
+            检索当前某坐标上是否为一个Alpha值变化的边界点
+            </summary>
+            <param name="x"></param>
+            <param name="y"></param>
+            <returns></returns>
+        </member>
+        <member name="P:TankEngine2D.Graphics.SpriteBorder.BorderMap.Width">
+            <summary>
+            获得边界图的宽度
+            </summary>
+        </member>
+        <member name="P:TankEngine2D.Graphics.SpriteBorder.BorderMap.Height">
+            <summary>
+            获得边界图的高度
+            </summary>
+        </member>
+        <member name="T:TankEngine2D.Graphics.FontMgr">
+            <summary>
+            提供字符的绘制功能。
+            </summary>
+        </member>
+        <member name="M:TankEngine2D.Graphics.FontMgr.#ctor(TankEngine2D.RenderEngine,Microsoft.Xna.Framework.Content.ContentManager)">
+            <summary>
+            提供字符的绘制功能
+            </summary>
+            <param name="engine">渲染组件</param>
+            <param name="contentMgr">素材管理者</param>
+        </member>
+        <member name="M:TankEngine2D.Graphics.FontMgr.BuildTexture(System.String,System.String)">
+            <summary>
+            建立贴图并添加到缓冲中。
+            请在第一次绘制之前调用该函数，这样可以避免建立贴图的过程造成游戏的停滞
+            </summary>
+            <param name="text">要创建的字符串</param>
+            <param name="fontName">字体</param>
+        </member>
+        <member name="M:TankEngine2D.Graphics.FontMgr.Draw(System.String,Microsoft.Xna.Framework.Vector2,System.Single,System.Single,Microsoft.Xna.Framework.Graphics.Color,System.Single,System.String)">
+            <summary>
+            在逻辑坐标中绘制一段文字。
+            注意，如果文字内容中包含中文，必须选用中文字体
+            </summary>
+            <param name="text">文字内容</param>
+            <param name="pos">文字起始处在逻辑坐标中的位置</param>
+            <param name="scale">文字的大小</param>
+            <param name="color">颜色</param>
+            <param name="rota">顺时针旋转弧度</param>
+            <param name="layerDepth">深度，0为最表层，1为最深层</param>
+            <param name="fontName">字体</param>
+        </member>
+        <member name="M:TankEngine2D.Graphics.FontMgr.Draw(System.String,Microsoft.Xna.Framework.Vector2,System.Single,Microsoft.Xna.Framework.Graphics.Color,System.Single,System.String)">
+            <summary>
+            在逻辑坐标中绘制一段文字。
+            注意，如果文字内容中包含中文，必须选用中文字体
+            </summary>
+            <param name="text">文字内容</param>
+            <param name="pos">文字起始处在逻辑坐标中的位置</param>
+            <param name="scale">文字的大小</param>
+            <param name="color">颜色</param>
+            <param name="layerDepth">深度，0为最表层，1为最深层</param>
+            <param name="fontName">字体</param>
+        </member>
+        <member name="M:TankEngine2D.Graphics.FontMgr.DrawInScrnCoord(System.String,Microsoft.Xna.Framework.Vector2,System.Single,System.Single,Microsoft.Xna.Framework.Graphics.Color,System.Single,System.String)">
+            <summary>
+            在屏幕坐标中绘制一段文字
+            注意，如果文字内容中包含中文，必须选用中文字体
+            </summary>
+            <param name="text">文字内容</param>
+            <param name="pos">文字起始处在屏幕坐标中的位置</param>
+            <param name="scale">文字的大小</param>
+            <param name="rota">旋转角</param>
+            <param name="color">颜色</param>
+            <param name="layerDepth">深度，0为最表层，1为最深层</param>
+            <param name="fontName">字体</param>
+        </member>
+        <member name="M:TankEngine2D.Graphics.FontMgr.DrawInScrnCoord(System.String,Microsoft.Xna.Framework.Vector2,System.Single,Microsoft.Xna.Framework.Graphics.Color,System.Single,System.String)">
+            <summary>
+            在屏幕坐标中绘制一段文字
+            注意，如果文字内容中包含中文，必须选用中文字体
+            </summary>
+            <param name="text">文字内容</param>
+            <param name="pos">文字起始处在屏幕坐标中的位置</param>
+            <param name="scale">文字的大小</param>
+            <param name="color">颜色</param>
+            <param name="layerDepth">深度，0为最表层，1为最深层</param>
+            <param name="fontName">字体</param>
+        </member>
+        <member name="M:TankEngine2D.Graphics.FontMgr.LengthOfString(System.String,System.Single,System.String)">
+            <summary>
+            获取一段文字在屏幕坐标上的长度
+            注意，如果文字内容中包含中文，必须选用中文字体
+            </summary>
+            <param name="text">文字的内容</param>
+            <param name="scale">文字的大小</param>
+            <param name="fontName">字体</param>
+            <returns></returns>
+        </member>
+        <member name="T:TankEngine2D.Graphics.FontMgr.FontInfo">
+            <summary>
+            表示字体的名称与导入路径
+            </summary>
+        </member>
+        <member name="F:TankEngine2D.Graphics.FontMgr.FontInfo.name">
+            <summary>
+            字体的名称
+            </summary>
+        </member>
+        <member name="F:TankEngine2D.Graphics.FontMgr.FontInfo.path">
+            <summary>
+            导入路径
+            </summary>
+        </member>
+        <member name="M:TankEngine2D.Graphics.FontMgr.FontInfo.#ctor(System.String,System.String)">
+            <summary>
+            表示字体的名称与导入路径
+            </summary>
+            <param name="name">字体的名称</param>
+            <param name="path">导入路径</param>
+        </member>
+        <member name="T:TankEngine2D.Graphics.FontMgr.FontLoadInfo">
+            <summary>
+            表示字体的导入信息
+            </summary>
+        </member>
+        <member name="M:TankEngine2D.Graphics.FontMgr.FontLoadInfo.Load(System.String)">
+            <summary>
+            从文件中读取字体的导入信息
+            </summary>
+            <param name="filePath"></param>
+            <returns></returns>
+        </member>
+        <member name="M:TankEngine2D.Graphics.FontMgr.FontLoadInfo.Save(System.String,TankEngine2D.Graphics.FontMgr.FontLoadInfo)">
+            <summary>
+            将字体的导入信息储存到文件中
+            </summary>
+            <param name="filePath"></param>
+            <param name="info"></param>
+        </member>
+        <member name="F:TankEngine2D.Graphics.FontMgr.FontLoadInfo.DefualtEmSize">
+            <summary>
+            字体默认大小（Scale = 1)时的磅值
+            </summary>
+        </member>
+        <member name="F:TankEngine2D.Graphics.FontMgr.FontLoadInfo.UnitCodeFontInfos">
+            <summary>
+            TrueType字体文件的导入信息
+            </summary>
+        </member>
+        <member name="F:TankEngine2D.Graphics.FontMgr.FontLoadInfo.ASCIIFontInfos">
+            <summary>
+            XNA素材管道专用字体文件的导入信息
+            </summary>
+        </member>
+        <member name="M:TankEngine2D.Graphics.FontMgr.FontLoadInfo.#ctor">
+            <summary>
+            表示字体的导入信息
+            </summary>
+        </member>
+        <member name="T:TankEngine2D.Graphics.CoordinMgr">
+            <summary>
+            逻辑坐标与屏幕坐标之间转换的管理类
+            </summary>
+        </member>
+        <member name="M:TankEngine2D.Graphics.CoordinMgr.SetScreenViewRect(Microsoft.Xna.Framework.Rectangle)">
+            <summary>
+            设置绘制区域
+            </summary>
+            <param name="rect"></param>
+        </member>
+        <member name="M:TankEngine2D.Graphics.CoordinMgr.SetCamera(System.Single,Microsoft.Xna.Framework.Vector2,System.Single)">
+            <summary>
+            设置摄像机
+            </summary>
+            <param name="setScale">缩放率(屏幕坐标/逻辑坐标)</param>
+            <param name="centerLogicPos">摄像机焦点所在逻辑位置</param>
+            <param name="setRota">设置摄像机的旋转角</param>
+        </member>
+        <member name="M:TankEngine2D.Graphics.CoordinMgr.LogicLength(System.Int32)">
+            <summary>
+            将屏幕长度转换到逻辑长度
+            </summary>
+            <param name="scrnLength"></param>
+            <returns></returns>
+        </member>
+        <member name="M:TankEngine2D.Graphics.CoordinMgr.LogicLength(System.Single)">
+            <summary>
+            将屏幕长度转换到逻辑长度
+            </summary>
+            <param name="scrnLength"></param>
+            <returns></returns>
+        </member>
+        <member name="M:TankEngine2D.Graphics.CoordinMgr.ScrnLength(System.Single)">
+            <summary>
+            将逻辑长度转换到屏幕长度
+            </summary>
+            <param name="logicLength"></param>
+            <returns></returns>
+        </member>
+        <member name="M:TankEngine2D.Graphics.CoordinMgr.ScrnLengthf(System.Single)">
+            <summary>
+            将逻辑长度转换到屏幕长度
+            </summary>
+            <param name="logicLength"></param>
+            <returns></returns>
+        </member>
+        <member name="M:TankEngine2D.Graphics.CoordinMgr.LogicPos(Microsoft.Xna.Framework.Vector2)">
+            <summary>
+            将屏幕位置转换到逻辑位置
+            </summary>
+            <param name="screenPos"></param>
+            <returns></returns>
+        </member>
+        <member name="M:TankEngine2D.Graphics.CoordinMgr.ScreenPos(Microsoft.Xna.Framework.Vector2)">
+            <summary>
+            将逻辑位置转换到屏幕位置
+            </summary>
+            <param name="logicPos"></param>
+            <returns></returns>
+        </member>
+        <member name="M:TankEngine2D.Graphics.CoordinMgr.LogicVector(Microsoft.Xna.Framework.Vector2)">
+            <summary>
+            将屏幕向量转换到逻辑向量
+            </summary>
+            <param name="screenVector"></param>
+            <returns></returns>
+        </member>
+        <member name="M:TankEngine2D.Graphics.CoordinMgr.MoveCamera(Microsoft.Xna.Framework.Vector2)">
+            <summary>
+            在逻辑坐标中平移摄像机
+            </summary>
+            <param name="delta"></param>
+        </member>
+        <member name="P:TankEngine2D.Graphics.CoordinMgr.ScrnViewRect">
+            <summary>
+            获得绘制区在视口中的区域
+            </summary>
+        </member>
+        <member name="P:TankEngine2D.Graphics.CoordinMgr.ViewWidth">
+            <summary>
+            获得绘制区的宽度
+            </summary>
+        </member>
+        <member name="P:TankEngine2D.Graphics.CoordinMgr.ViewHeight">
+            <summary>
+            获得绘制区的高度
+            </summary>
+        </member>
+        <member name="P:TankEngine2D.Graphics.CoordinMgr.TexelSize">
+            <summary>
+            获得一个屏幕像素的逻辑大小
+            </summary>
+        </member>
+        <member name="P:TankEngine2D.Graphics.CoordinMgr.Rota">
+            <summary>
+            获得或设置摄像机的方位角
+            </summary>
+        </member>
+        <member name="P:TankEngine2D.Graphics.CoordinMgr.Scale">
+            <summary>
+            获得或设置摄像机的缩放率（屏幕坐标/逻辑坐标）
+            </summary>
+        </member>
+        <member name="P:TankEngine2D.Graphics.CoordinMgr.LogicCenter">
+            <summary>
+            获得或设置摄像机焦点的逻辑位置
+            </summary>
+        </member>
+        <member name="P:TankEngine2D.Graphics.CoordinMgr.RotaMatrixFromLogicToScrn">
+            <summary>
+            获得从逻辑坐标到屏幕坐标的旋转转换矩阵
+            </summary>
+        </member>
+        <member name="P:TankEngine2D.Graphics.CoordinMgr.RotaMatrixFromScrnToLogic">
+            <summary>
+            获得从屏幕坐标到逻辑坐标的旋转转换矩阵
+            </summary>
+        </member>
+        <member name="T:TankEngine2D.DataStructure.Rectanglef">
+            <summary>
+            以浮点格式表示一个矩形
+            </summary>
+        </member>
+        <member name="F:TankEngine2D.DataStructure.Rectanglef.X">
+            <summary>
+            矩形的左上角坐标
+            </summary>
+        </member>
+        <member name="F:TankEngine2D.DataStructure.Rectanglef.Y">
+            <summary>
+            矩形的左上角坐标
+            </summary>
+        </member>
+        <member name="F:TankEngine2D.DataStructure.Rectanglef.Width">
+            <summary>
+            矩形的宽度和高度
+            </summary>
+        </member>
+        <member name="F:TankEngine2D.DataStructure.Rectanglef.Height">
+            <summary>
+            矩形的宽度和高度
+            </summary>
+        </member>
+        <member name="M:TankEngine2D.DataStructure.Rectanglef.#ctor(System.Single,System.Single,System.Single,System.Single)">
+            <summary>
+            
+            </summary>
+            <param name="x">矩形左上角顶点的X坐标</param>
+            <param name="y">矩形左上角顶点的Y坐标</param>
+            <param name="width">矩形的宽度</param>
+            <param name="height">矩形的高度</param>
+        </member>
+        <member name="M:TankEngine2D.DataStructure.Rectanglef.#ctor(Microsoft.Xna.Framework.Vector2,Microsoft.Xna.Framework.Vector2)">
+            <summary>
+            
+            </summary>
+            <param name="min">矩形的左上角顶点</param>
+            <param name="max">矩形的右下角顶点</param>
+        </member>
+        <member name="M:TankEngine2D.DataStructure.Rectanglef.Intersects(TankEngine2D.DataStructure.Rectanglef)">
+            <summary>
+            判断两个矩形是否有重叠部分
+            </summary>
+            <param name="rectB"></param>
+            <returns></returns>
+        </member>
+        <member name="M:TankEngine2D.DataStructure.Rectanglef.Contains(Microsoft.Xna.Framework.Vector2)">
+            <summary>
+            判断一个点是否在矩形之中
+            </summary>
+            <param name="point"></param>
+            <returns></returns>
+        </member>
+        <member name="M:TankEngine2D.DataStructure.Rectanglef.Equals(System.Object)">
+            <summary>
+            判断两个Rectanglef实例是否相等
+            </summary>
+            <param name="obj"></param>
+            <returns></returns>
+        </member>
+        <member name="M:TankEngine2D.DataStructure.Rectanglef.GetHashCode">
+            <summary>
+            获得Hash码
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:TankEngine2D.DataStructure.Rectanglef.ToString">
+            <summary>
+            将信息转换为字符串
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="P:TankEngine2D.DataStructure.Rectanglef.Top">
+            <summary>
+            获得矩形的上边沿的Y坐标
+            </summary>
+        </member>
+        <member name="P:TankEngine2D.DataStructure.Rectanglef.Left">
+            <summary>
+            获得矩形左边沿的X坐标
+            </summary>
+        </member>
+        <member name="P:TankEngine2D.DataStructure.Rectanglef.Bottom">
+            <summary>
+            获得矩形下边沿的Y坐标
+            </summary>
+        </member>
+        <member name="P:TankEngine2D.DataStructure.Rectanglef.Right">
+            <summary>
+            获得矩形右边沿的X坐标
+            </summary>
+        </member>
+        <member name="P:TankEngine2D.DataStructure.Rectanglef.UpLeft">
+            <summary>
+            获得矩形的左上角顶点
+            </summary>
+        </member>
+        <member name="P:TankEngine2D.DataStructure.Rectanglef.UpRight">
+            <summary>
+            获得矩形的右上角顶点
+            </summary>
+        </member>
+        <member name="P:TankEngine2D.DataStructure.Rectanglef.DownLeft">
+            <summary>
+            获得矩形的左下角顶点
+            </summary>
+        </member>
+        <member name="P:TankEngine2D.DataStructure.Rectanglef.DownRight">
+            <summary>
+            获得矩形的右下角顶点
+            </summary>
+        </member>
+        <member name="T:TankEngine2D.Graphics.CollisionResult">
+            <summary>
+            表示碰撞检测的结果
+            </summary>
+        </member>
+        <member name="F:TankEngine2D.Graphics.CollisionResult.IsCollided">
+            <summary>
+            是否存在碰撞
+            </summary>
+        </member>
+        <member name="F:TankEngine2D.Graphics.CollisionResult.InterPos">
+            <summary>
+            碰撞位置，逻辑坐标
+            </summary>
+        </member>
+        <member name="F:TankEngine2D.Graphics.CollisionResult.NormalVector">
+            <summary>
+            碰撞单位法向量，指向自身
+            </summary>
+        </member>
+        <member name="M:TankEngine2D.Graphics.CollisionResult.#ctor">
+            <summary>
+            空构造函数
+            </summary>
+        </member>
+        <member name="M:TankEngine2D.Graphics.CollisionResult.#ctor(System.Boolean)">
+            <summary>
+            
+            </summary>
+            <param name="isCollided">是否发生碰撞</param>
+        </member>
+        <member name="M:TankEngine2D.Graphics.CollisionResult.#ctor(Microsoft.Xna.Framework.Vector2,Microsoft.Xna.Framework.Vector2)">
+            <summary>
+            发生了碰撞情况下的构造函数
+            </summary>
+            <param name="interPos">碰撞位置，逻辑坐标</param>
+            <param name="normalVector">碰撞单位法向量，指向自身</param>
+        </member>
+        <member name="M:TankEngine2D.Graphics.CollisionResult.#ctor(System.Boolean,Microsoft.Xna.Framework.Vector2,Microsoft.Xna.Framework.Vector2)">
+            <summary>
+            
+            </summary>
+            <param name="isCollided">是否发生碰撞</param>
+            <param name="interPos">碰撞位置，逻辑坐标</param>
+            <param name="nornalVector">碰撞单位法向量，指向自身</param>
+        </member>
+        <member name="T:TankEngine2D.Graphics.BasicGraphics">
+            <summary>
+            提供点，线，矩形的绘制功能
+            </summary>
+        </member>
+        <member name="M:TankEngine2D.Graphics.BasicGraphics.#ctor(TankEngine2D.RenderEngine)">
+            <summary>
+            
+            </summary>
+            <param name="engine">渲染组件</param>
+        </member>
+        <member name="M:TankEngine2D.Graphics.BasicGraphics.DrawPoint(Microsoft.Xna.Framework.Vector2,System.Single,Microsoft.Xna.Framework.Graphics.Color,System.Single)">
+            <summary>
+            绘制一个标注点
+            </summary>
+            <param name="pos">逻辑坐标</param>
+            <param name="scale">大小</param>
+            <param name="color">颜色</param>
+            <param name="layerDepth">深度，0表示最表层，1表示最深层</param>
+        </member>
+        <member name="M:TankEngine2D.Graphics.BasicGraphics.DrawPoint(Microsoft.Xna.Framework.Vector2,System.Single,Microsoft.Xna.Framework.Graphics.Color,System.Single,Microsoft.Xna.Framework.Graphics.SpriteBlendMode)">
+            <summary>
+            绘制一个标注点
+            </summary>
+            <param name="pos">逻辑坐标</param>
+            <param name="scale">大小</param>
+            <param name="color">颜色</param>
+            <param name="layerDepth">深度，0表示最表层，1表示最深层</param>
+            <param name="blendMode">混合模式</param>
+        </member>
+        <member name="M:TankEngine2D.Graphics.BasicGraphics.DrawLine(Microsoft.Xna.Framework.Vector2,Microsoft.Xna.Framework.Vector2,System.Single,Microsoft.Xna.Framework.Graphics.Color,System.Single)">
+            <summary>
+            在逻辑坐标中绘制一条直线
+            </summary>
+            <param name="startPoint">直线的起始点</param>
+            <param name="endPoint">直线的终点</param>
+            <param name="width">直线的宽度，以像素为单位</param>
+            <param name="color">颜色</param>
+            <param name="layerDepth">深度，0表示最表层，1表示最深层</param>
+        </member>
+        <member name="M:TankEngine2D.Graphics.BasicGraphics.DrawLine(Microsoft.Xna.Framework.Vector2,Microsoft.Xna.Framework.Vector2,System.Single,Microsoft.Xna.Framework.Graphics.Color,System.Single,Microsoft.Xna.Framework.Graphics.SpriteBlendMode)">
+            <summary>
+            在逻辑坐标中绘制一条直线
+            </summary>
+            <param name="startPoint">直线的起始点</param>
+            <param name="endPoint">直线的终点</param>
+            <param name="width">直线的宽度，以像素为单位</param>
+            <param name="color">颜色</param>
+            <param name="layerDepth">深度，0表示最表层，1表示最深层</param>
+            <param name="blendMode">混合模式</param>
+        </member>
+        <member name="M:TankEngine2D.Graphics.BasicGraphics.DrawLineInScrn(Microsoft.Xna.Framework.Vector2,Microsoft.Xna.Framework.Vector2,System.Single,Microsoft.Xna.Framework.Graphics.Color,System.Single)">
+            <summary>
+            在屏幕坐标中绘制一条直线
+            </summary>
+            <param name="startPoint">直线的起始点</param>
+            <param name="endPoint">直线的终点</param>
+            <param name="width">直线的宽度，以像素为单位</param>
+            <param name="color">颜色</param>
+            <param name="layerDepth">深度，0表示最表层，1表示最深层</param>
+        </member>
+        <member name="M:TankEngine2D.Graphics.BasicGraphics.DrawLineInScrn(Microsoft.Xna.Framework.Vector2,Microsoft.Xna.Framework.Vector2,System.Single,Microsoft.Xna.Framework.Graphics.Color,System.Single,Microsoft.Xna.Framework.Graphics.SpriteBlendMode)">
+            <summary>
+            在屏幕坐标中绘制一条直线
+            </summary>
+            <param name="startPoint">直线的起始点</param>
+            <param name="endPoint">直线的终点</param>
+            <param name="width">直线的宽度，以像素为单位</param>
+            <param name="color">颜色</param>
+            <param name="layerDepth">深度，0表示最表层，1表示最深层</param>
+            <param name="blendMode">混合模式</param>
+        </member>
+        <member name="M:TankEngine2D.Graphics.BasicGraphics.DrawRectangle(Microsoft.Xna.Framework.Rectangle,System.Single,Microsoft.Xna.Framework.Graphics.Color,System.Single)">
+            <summary>
+            在逻辑坐标中绘制矩形
+            </summary>
+            <param name="rect">要绘制的矩形</param>
+            <param name="borderWidth">矩形的边线的宽度，以像素为单位</param>
+            <param name="color">颜色</param>
+            <param name="layerDepth">深度，0表示最表层，1表示最深层</param>
+        </member>
+        <member name="M:TankEngine2D.Graphics.BasicGraphics.DrawRectangle(Microsoft.Xna.Framework.Rectangle,System.Single,Microsoft.Xna.Framework.Graphics.Color,System.Single,Microsoft.Xna.Framework.Graphics.SpriteBlendMode)">
+            <summary>
+            在逻辑坐标中绘制矩形
+            </summary>
+            <param name="rect">要绘制的矩形</param>
+            <param name="borderWidth">矩形的边线的宽度，以像素为单位</param>
+            <param name="color">颜色</param>
+            <param name="layerDepth">深度，0表示最表层，1表示最深层</param>
+            <param name="blendMode">混合模式</param>
+        </member>
+        <member name="M:TankEngine2D.Graphics.BasicGraphics.DrawRectangle(TankEngine2D.DataStructure.Rectanglef,System.Single,Microsoft.Xna.Framework.Graphics.Color,System.Single)">
+            <summary>
+            在逻辑坐标中绘制矩形
+            </summary>
+            <param name="rect">要绘制的矩形</param>
+            <param name="borderWidth">矩形的边线的宽度，以像素为单位</param>
+            <param name="color">颜色</param>
+            <param name="layerDepth">深度，0表示最表层，1表示最深层</param>
+        </member>
+        <member name="M:TankEngine2D.Graphics.BasicGraphics.DrawRectangle(TankEngine2D.DataStructure.Rectanglef,System.Single,Microsoft.Xna.Framework.Graphics.Color,System.Single,Microsoft.Xna.Framework.Graphics.SpriteBlendMode)">
+            <summary>
+            在逻辑坐标中绘制矩形
+            </summary>
+            <param name="rect">要绘制的矩形</param>
+            <param name="borderWidth">矩形的边线的宽度，以像素为单位</param>
+            <param name="color">颜色</param>
+            <param name="layerDepth">深度，0表示最表层，1表示最深层</param>
+            <param name="blendMode">混合模式</param>
+        </member>
+        <member name="M:TankEngine2D.Graphics.BasicGraphics.DrawRectangleInScrn(Microsoft.Xna.Framework.Rectangle,System.Single,Microsoft.Xna.Framework.Graphics.Color,System.Single,Microsoft.Xna.Framework.Graphics.SpriteBlendMode)">
+            <summary>
+            在屏幕坐标中绘制矩形
+            </summary>
+            <param name="rect">要绘制的矩形</param>
+            <param name="borderWidth">矩形的边线的宽度，以像素为单位</param>
+            <param name="color">颜色</param>
+            <param name="layerDepth">深度，0表示最表层，1表示最深层</param>
+            <param name="blendMode">混合模式</param>
+        </member>
+        <member name="M:TankEngine2D.Graphics.BasicGraphics.DrawRectangleInScrn(Microsoft.Xna.Framework.Rectangle,System.Single,Microsoft.Xna.Framework.Graphics.Color,System.Single)">
+            <summary>
+            在屏幕坐标中绘制矩形
+            </summary>
+            <param name="rect">要绘制的矩形</param>
+            <param name="borderWidth">矩形的边线的宽度，以像素为单位</param>
+            <param name="color">颜色</param>
+            <param name="layerDepth">深度，0表示最表层，1表示最深层</param>
+        </member>
+        <member name="M:TankEngine2D.Graphics.BasicGraphics.FillRectangle(Microsoft.Xna.Framework.Rectangle,Microsoft.Xna.Framework.Graphics.Color,System.Single)">
+            <summary>
+            在逻辑坐标中绘制一个填充的矩形
+            </summary>
+            <param name="rect">要填充的矩形</param>
+            <param name="color">颜色</param>
+            <param name="layerDepth">深度，0表示最表层，1表示最深层</param>
+        </member>
+        <member name="M:TankEngine2D.Graphics.BasicGraphics.FillRectangle(Microsoft.Xna.Framework.Rectangle,Microsoft.Xna.Framework.Graphics.Color,System.Single,Microsoft.Xna.Framework.Graphics.SpriteBlendMode)">
+            <summary>
+            在逻辑坐标中绘制一个填充的矩形
+            </summary>
+            <param name="rect">要填充的矩形</param>
+            <param name="color">颜色</param>
+            <param name="layerDepth">深度，0表示最表层，1表示最深层</param>
+            <param name="blenMode">混合模式</param>
+        </member>
+        <member name="M:TankEngine2D.Graphics.BasicGraphics.FillRectangleInScrn(Microsoft.Xna.Framework.Rectangle,Microsoft.Xna.Framework.Graphics.Color,System.Single,Microsoft.Xna.Framework.Graphics.SpriteBlendMode)">
+            <summary>
+            在屏幕坐标中绘制一个填充的矩形
+            </summary>
+            <param name="rect">要填充的矩形</param>
+            <param name="color">颜色</param>
+            <param name="layerDepth">深度，0表示最表层，1表示最深层</param>
+            <param name="blenMode">混合模式</param>
+        </member>
+        <member name="T:TankEngine2D.Helpers.MathTools">
+            <summary>
+            提供数学上的计算辅助
+            </summary>
+        </member>
+        <member name="M:TankEngine2D.Helpers.MathTools.AngTransInPI(System.Single)">
+            <summary>
+            将弧度值换算到PI和-PI之间
+            </summary>
+            <param name="ang"></param>
+            <returns></returns>
+        </member>
+        <member name="M:TankEngine2D.Helpers.MathTools.NormalVectorFromAzi(System.Single)">
+            <summary>
+            由方向角计算出该方向的单位向量，包含三角函数。
+            </summary>
+            <param name="azi"></param>
+            <returns></returns>
+        </member>
+        <member name="M:TankEngine2D.Helpers.MathTools.Round(System.Single)">
+            <summary>
+            转化为最靠近的整数
+            </summary>
+            <param name="f"></param>
+            <returns></returns>
+        </member>
+        <member name="M:TankEngine2D.Helpers.MathTools.FloatEqual(System.Single,System.Single,System.Single)">
+            <summary>
+            比较两浮点值是否相等
+            </summary>
+            <param name="a"></param>
+            <param name="b"></param>
+            <param name="error">允许的误差</param>
+            <returns></returns>
+        </member>
+        <member name="M:TankEngine2D.Helpers.MathTools.FloatEqualZero(System.Single,System.Single)">
+            <summary>
+            检查浮点值是否为零
+            </summary>
+            <param name="a"></param>
+            <param name="error">允许的误差</param>
+            <returns></returns>
+        </member>
+        <member name="M:TankEngine2D.Helpers.MathTools.AziFromRefPos(Microsoft.Xna.Framework.Vector2)">
+            <summary>
+            计算相对向量的方位
+            </summary>
+            <param name="refPos"></param>
+            <returns></returns>
+        </member>
+        <member name="M:TankEngine2D.Helpers.MathTools.MidVerLine(Microsoft.Xna.Framework.Vector2,Microsoft.Xna.Framework.Vector2)">
+            <summary>
+            计算两点的中垂线
+            </summary>
+            <param name="point1"></param>
+            <param name="point2"></param>
+            <returns></returns>
+        </member>
+        <member name="M:TankEngine2D.Helpers.MathTools.VerticeLine(TankEngine2D.DataStructure.Line,Microsoft.Xna.Framework.Vector2)">
+            <summary>
+            计算通过定点并与指定直线垂直的直线
+            </summary>
+            <param name="line"></param>
+            <param name="point"></param>
+            <returns></returns>
+        </member>
+        <member name="M:TankEngine2D.Helpers.MathTools.InterPoint(TankEngine2D.DataStructure.Line,TankEngine2D.DataStructure.Line,Microsoft.Xna.Framework.Vector2@)">
+            <summary>
+            计算两直线的交点，当两直线存在交点时返回true
+            </summary>
+            <param name="line1"></param>
+            <param name="line2"></param>
+            <param name="result"></param>
+            <returns>当两直线存在交点时返回true</returns>
+        </member>
+        <member name="M:TankEngine2D.Helpers.MathTools.AngBetweenVectors(Microsoft.Xna.Framework.Vector2,Microsoft.Xna.Framework.Vector2)">
+            <summary>
+            计算两向量间的夹角，以弧度为单位
+            </summary>
+            <param name="vec1"></param>
+            <param name="vec2"></param>
+            <returns></returns>
+        </member>
+        <member name="M:TankEngine2D.Helpers.MathTools.Vector2Cross(Microsoft.Xna.Framework.Vector2,Microsoft.Xna.Framework.Vector2)">
+            <summary>
+            两二维向量的叉积，大于零表示两向量呈顺时针弯折
+            </summary>
+            <param name="vec1"></param>
+            <param name="vec2"></param>
+            <returns></returns>
+        </member>
+        <member name="M:TankEngine2D.Helpers.MathTools.ReflectVector(Microsoft.Xna.Framework.Vector2,Microsoft.Xna.Framework.Vector2)">
+            <summary>
+            获得入射向量经镜面反射后的反射向量
+            </summary>
+            <param name="incident">入射向量</param>
+            <param name="mirrorNormal">镜面法向量</param>
+            <returns></returns>
+        </member>
+        <member name="M:TankEngine2D.Helpers.MathTools.BoundBox(Microsoft.Xna.Framework.Vector2[])">
+            <summary>
+            从多个点中获得最小包围矩形
+            </summary>
+            <param name="containPoints"></param>
+            <returns></returns>
+        </member>
+        <member name="T:TankEngine2D.Graphics.AnimatedSpriteSeries">
+            <summary>
+            从多幅图中建立动画的动画类
+            </summary>
+        </member>
+        <member name="M:TankEngine2D.Graphics.AnimatedSpriteSeries.LoadResource(Microsoft.Xna.Framework.Content.ContentManager,System.String,System.Int32,System.Int32)">
+            <summary>
+            提前将贴图文件导入到Content当中，以避免读取造成游戏的停滞。
+            资源名由固定的头名字和名字后的阿拉伯数字索引组成
+            </summary>
+            <param name="contentMgr">资源管理者</param>
+            <param name="assetHead">资源的路径以及头名字</param>
+            <param name="firstNo">索引开始的数字</param>
+            <param name="sumFrame">系列贴图文件的数量</param>
+        </member>
+        <member name="M:TankEngine2D.Graphics.AnimatedSpriteSeries.#ctor(TankEngine2D.RenderEngine)">
+            <summary>
+            从多幅图中建立动画的动画类
+            </summary>
+            <param name="engine">渲染组件</param>
+        </member>
+        <member name="M:TankEngine2D.Graphics.AnimatedSpriteSeries.LoadSeriesFromFiles(TankEngine2D.RenderEngine,System.String,System.String,System.String,System.Int32,System.Int32,System.Boolean)">
+            <summary>
+            从文件中导入系列贴图资源。
+            资源名由固定的头名字和名字后的阿拉伯数字索引组成。
+            </summary>
+            <param name="engine">渲染组件</param>
+            <param name="path">贴图资源的路径</param>
+            <param name="fileHeadName">头名字</param>
+            <param name="extension">扩展名</param>
+            <param name="firstNo">第一个数字索引</param>
+            <param name="sumFrame">索引总数</param>
+            <param name="supportInterDect">是否添加冲突检测的支持</param>
+        </member>
+        <member name="M:TankEngine2D.Graphics.AnimatedSpriteSeries.LoadSeriesFormContent(TankEngine2D.RenderEngine,Microsoft.Xna.Framework.Content.ContentManager,System.String,System.Int32,System.Int32,System.Boolean)">
+            <summary>
+            使用素材管道导入贴图文件。
+            资源名由固定的头名字和名字后的阿拉伯数字索引组成
+            </summary>
+            <param name="engine">渲染组件</param>
+            <param name="contentMgr">素材管理者</param>
+            <param name="assetHead">资源的路径以及头名字</param>
+            <param name="firstNo">索引开始的数字</param>
+            <param name="sumFrame">系列贴图文件的数量</param>
+            <param name="supportInterDect">是否提供冲突检测的支持</param>
+        </member>
+        <member name="M:TankEngine2D.Graphics.AnimatedSpriteSeries.Dispose">
+            <summary>
+            释放资源
+            </summary>
+        </member>
+        <member name="M:TankEngine2D.Graphics.AnimatedSpriteSeries.SetSpritesParameters(Microsoft.Xna.Framework.Vector2,Microsoft.Xna.Framework.Vector2,System.Single,System.Single,System.Single,Microsoft.Xna.Framework.Graphics.Color,System.Single,Microsoft.Xna.Framework.Graphics.SpriteBlendMode)">
+            <summary>
+            
+            </summary>
+            <param name="origin"></param>
+            <param name="pos"></param>
+            <param name="width"></param>
+            <param name="height"></param>
+            <param name="rata"></param>
+            <param name="color"></param>
+            <param name="layerDepth"></param>
+            <param name="blendMode"></param>
+        </member>
+        <member name="M:TankEngine2D.Graphics.AnimatedSpriteSeries.SetSpritesParameters(Microsoft.Xna.Framework.Vector2,Microsoft.Xna.Framework.Vector2,System.Single,System.Single,Microsoft.Xna.Framework.Graphics.Color,System.Single,Microsoft.Xna.Framework.Graphics.SpriteBlendMode)">
+            <summary>
+            设置所有Sprite的参数
+            </summary>
+            <param name="origin">贴图的中心，以贴图坐标表示</param>
+            <param name="pos">逻辑位置</param>
+            <param name="scale">贴图的缩放比（= 逻辑长度/贴图长度）</param>
+            <param name="rata">逻辑方位角</param>
+            <param name="color">绘制颜色</param>
+            <param name="layerDepth">深度，1为最低层，0为最表层</param>
+            <param name="blendMode">采用的混合模式</param>
+        </member>
+        <member name="M:TankEngine2D.Graphics.AnimatedSpriteSeries.Draw">
+            <summary>
+            绘制当前的贴图
+            </summary>
+        </member>
+        <member name="P:TankEngine2D.Graphics.AnimatedSpriteSeries.CurSprite">
+            <summary>
+            获取当前帧的Sprite对象
+            </summary>
+        </member>
+        <member name="P:TankEngine2D.Graphics.AnimatedSpriteSeries.Sprites">
+            <summary>
+            获取动画每一帧的Sprite对象
+            </summary>
+        </member>
+        <member name="T:TankEngine2D.DataStructure.Line">
+            <summary>
+            表示一条直线
+            </summary>
+        </member>
+        <member name="F:TankEngine2D.DataStructure.Line.pos">
+            <summary>
+            一个经过该直线的顶点
+            </summary>
+        </member>
+        <member name="F:TankEngine2D.DataStructure.Line.direction">
+            <summary>
+            表示该直线的方向
+            </summary>
+        </member>
+        <member name="M:TankEngine2D.DataStructure.Line.#ctor(Microsoft.Xna.Framework.Vector2,Microsoft.Xna.Framework.Vector2)">
+            <summary>
+            
+            </summary>
+            <param name="pos">一个经过该直线的顶点</param>
+            <param name="direction">表示该直线的方向</param>
+        </member>
+        <member name="M:TankEngine2D.DataStructure.Line.MidVerLine(Microsoft.Xna.Framework.Vector2,Microsoft.Xna.Framework.Vector2)">
+            <summary>
+            计算两点的中垂线
+            </summary>
+            <param name="point1"></param>
+            <param name="point2"></param>
+            <returns></returns>
+        </member>
+        <member name="M:TankEngine2D.DataStructure.Line.VerticeLine(TankEngine2D.DataStructure.Line,Microsoft.Xna.Framework.Vector2)">
+            <summary>
+            计算通过定点并与指定直线垂直的直线
+            </summary>
+            <param name="line"></param>
+            <param name="point"></param>
+            <returns></returns>
+        </member>
+        <member name="M:TankEngine2D.DataStructure.Line.InterPoint(TankEngine2D.DataStructure.Line,TankEngine2D.DataStructure.Line,Microsoft.Xna.Framework.Vector2@)">
+            <summary>
+            计算两直线的交点，当两直线存在交点时返回true
+            </summary>
+            <param name="line1"></param>
+            <param name="line2"></param>
+            <param name="result"></param>
+            <returns>当两直线存在交点时返回true</returns>
+        </member>
+        <member name="M:TankEngine2D.DataStructure.Line.Equals(System.Object)">
+            <summary>
+            判断两个Line对象是否相等
+            </summary>
+            <param name="obj"></param>
+            <returns></returns>
+        </member>
+        <member name="M:TankEngine2D.DataStructure.Line.GetHashCode">
+            <summary>
+            获得对象的Hash码。
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:TankEngine2D.DataStructure.Line.ToString">
+            <summary>
+            将Line的信息转换为字符串
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="T:TankEngine2D.DataStructure.ForEachFunc`1">
+            <summary>
+            对数据容器中的每个对象进行一次处理。
+            </summary>
+            <typeparam name="T"></typeparam>
+            <param name="type"></param>
+        </member>
+        <member name="T:TankEngine2D.DataStructure.FindFunc`1">
+            <summary>
+            在容器中寻找想要找的对象。
+            当该对象是你需要的对象时，代理函数应返回true
+            </summary>
+            <typeparam name="T"></typeparam>
+            <param name="type"></param>
+            <returns></returns>
+        </member>
+        <member name="T:TankEngine2D.DataStructure.CircleListNode`1">
+            <summary>
+            环链表节点
+            </summary>
+            <typeparam name="T"></typeparam>
+        </member>
+        <member name="F:TankEngine2D.DataStructure.CircleListNode`1.empty">
+            <summary>
+            表示一个值为空的节点
+            </summary>
+        </member>
+        <member name="M:TankEngine2D.DataStructure.CircleListNode`1.#ctor">
+            <summary>
+            空构造函数
+            </summary>
+        </member>
+        <member name="M:TankEngine2D.DataStructure.CircleListNode`1.#ctor(`0)">
+            <summary>
+            将value作为该节点中储存的值
+            </summary>
+            <param name="value"></param>
+        </member>
+        <member name="F:TankEngine2D.DataStructure.CircleListNode`1.value">
+            <summary>
+            节点中储存的值
+            </summary>
+        </member>
+        <member name="F:TankEngine2D.DataStructure.CircleListNode`1.pre">
+            <summary>
+            该节点的前一个节点
+            </summary>
+        </member>
+        <member name="F:TankEngine2D.DataStructure.CircleListNode`1.next">
+            <summary>
+            该节点的后一个节点
+            </summary>
+        </member>
+        <member name="M:TankEngine2D.DataStructure.CircleListNode`1.Clone">
+            <summary>
+            对节点进行深度复制。
+            节点中储存的值必须是ICloneable或是ValueType才可调用该函数，否则会出现异常。
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="T:TankEngine2D.DataStructure.CircleList`1">
+            <summary>
+            环形链表。
+            </summary>
+            <typeparam name="T"></typeparam>
+        </member>
+        <member name="M:TankEngine2D.DataStructure.CircleList`1.AddFirst(TankEngine2D.DataStructure.CircleListNode{`0})">
+            <summary>
+            在链表的第一个元素前插入一个元素。
+            </summary>
+            <param name="node"></param>
+            <returns></returns>
+        </member>
+        <member name="M:TankEngine2D.DataStructure.CircleList`1.AddFirst(`0)">
+            <summary>
+            在链表的第一个元素前插入一个元素。
+            </summary>
+            <param name="value"></param>
+            <returns></returns>
+        </member>
+        <member name="M:TankEngine2D.DataStructure.CircleList`1.AddLast(TankEngine2D.DataStructure.CircleListNode{`0})">
+            <summary>
+            在未首尾相连的条件下在链表的末尾加入一个元素。
+            </summary>
+            <param name="node"></param>
+            <returns></returns>
+        </member>
+        <member name="M:TankEngine2D.DataStructure.CircleList`1.AddLast(`0)">
+            <summary>
+            在未首尾相连的条件下在链表的末尾加入一个元素。
+            </summary>
+            <param name="value"></param>
+            <returns></returns>
+        </member>
+        <member name="M:TankEngine2D.DataStructure.CircleList`1.InsertAfter(`0,TankEngine2D.DataStructure.CircleListNode{`0})">
+            <summary>
+            在链表中某一节点后插入一个新的节点。
+            </summary>
+            <param name="value"></param>
+            <param name="node">必须是该链表中包含的节点</param>
+            <returns></returns>
+        </member>
+        <member name="M:TankEngine2D.DataStructure.CircleList`1.LinkLastAndFirst">
+            <summary>
+            链接第一个和最后一个节点，使链表成为一个环链表。
+            </summary>
+        </member>
+        <member name="M:TankEngine2D.DataStructure.CircleList`1.ForEach(TankEngine2D.DataStructure.ForEachFunc{`0})">
+            <summary>
+            对链表中的每个元素执行一次操作
+            </summary>
+            <param name="func"></param>
+        </member>
+        <member name="M:TankEngine2D.DataStructure.CircleList`1.FindFirst(TankEngine2D.DataStructure.FindFunc{`0})">
+            <summary>
+            用遍历的方式查找链表，返回符合要求的第一个节点
+            </summary>
+            <param name="func"></param>
+            <returns></returns>
+        </member>
+        <member name="M:TankEngine2D.DataStructure.CircleList`1.FindAll(TankEngine2D.DataStructure.FindFunc{`0})">
+            <summary>
+            用遍历的方式查找链表，返回所以符合要求的节点
+            </summary>
+            <param name="func"></param>
+            <returns></returns>
+        </member>
+        <member name="M:TankEngine2D.DataStructure.CircleList`1.IndexOf(TankEngine2D.DataStructure.CircleListNode{`0})">
+            <summary>
+            用遍历的方式获得该节点在链表中的位置。
+            如果节点不在链表中，返回-1
+            </summary>
+            <param name="node"></param>
+            <returns></returns>
+        </member>
+        <member name="M:TankEngine2D.DataStructure.CircleList`1.ToArray(TankEngine2D.DataStructure.CircleListNode{`0},System.Boolean)">
+            <summary>
+            将链表从起始节点开始，向前或向后的顺序转换到一个数组中。
+            </summary>
+            <param name="startNode">起始节点，必须是链表中的节点</param>
+            <param name="forward"></param>
+            <returns></returns>
+        </member>
+        <member name="M:TankEngine2D.DataStructure.CircleList`1.Clone">
+            <summary>
+            
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:TankEngine2D.DataStructure.CircleList`1.GetEnumerator">
+            <summary>
+            获得该链表的迭代器
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="P:TankEngine2D.DataStructure.CircleList`1.First">
+            <summary>
+            获取链表中的第一个元素，当链表为空时返回null
+            </summary>
+        </member>
+        <member name="P:TankEngine2D.DataStructure.CircleList`1.Last">
+            <summary>
+            获取链表中的最后一个元素，当链表为空时返回null
+            </summary>
+        </member>
+        <member name="P:TankEngine2D.DataStructure.CircleList`1.isLinked">
+            <summary>
+            获取一个值，表示该链表是否已经首尾相连。
+            </summary>
+        </member>
+        <member name="P:TankEngine2D.DataStructure.CircleList`1.Length">
+            <summary>
+            链表中元素的数量
+            </summary>
+        </member>
+        <member name="T:TankEngine2D.Graphics.SpriteMgr">
+            <summary>
+            精灵绘制的管理者
+            </summary>
+        </member>
+        <member name="F:TankEngine2D.Graphics.SpriteMgr.alphaSprite">
+            <summary>
+            AlphaSprite
+            </summary>
+        </member>
+        <member name="F:TankEngine2D.Graphics.SpriteMgr.additiveSprite">
+            <summary>
+            AdditiveSprite
+            </summary>
+        </member>
+        <member name="M:TankEngine2D.Graphics.SpriteMgr.SpriteBatchBegin">
+            <summary>
+            alphaSprite.Begin( SpriteBlendMode.AlphaBlend, SpriteSortMode.BackToFront, SaveStateMode.None );
+            additiveSprite.Begin( SpriteBlendMode.Additive, SpriteSortMode.BackToFront, SaveStateMode.None );
+            </summary>
+        </member>
+        <member name="M:TankEngine2D.Graphics.SpriteMgr.SpriteBatchEnd">
+            <summary>
+            Sprite.alphaSprite.End();
+            Sprite.additiveSprite.End();
+            </summary>
+        </member>
+        <member name="T:TankEngine2D.Graphics.Sprite">
+            <summary>
+            this is the class which manages all the sprite items in the gameScene.
+            it can draw itself according to the position, rotation, scale, ect as you like.
+            it's also able to detect collision between two sprite using pix-detection method.
+            Notice: sourceRectangle is't supported, so you cann't load a picture with several items in it.
+            这个类管理游戏画面中的所有精灵。
+            它保存绘制的地点，旋转角，缩放比等参数，并能够按照这些参数绘制自身。
+            并且它具有判断两精灵是否重叠，以及该精灵是否出界的方法。使用的是像素检测的方法。
+            注意，该类并不支持sourceRectangle。所以不能用它导入一个拥有多个子图的图片。
+            </summary>
+        </member>
+        <member name="F:TankEngine2D.Graphics.Sprite.DefaultAverageSum">
+            <summary>
+            一个计算冲突法向量时用到的参数，表示计算法向量时将取冲突处附近的多少点进行效果的平均
+            </summary>
+        </member>
+        <member name="F:TankEngine2D.Graphics.Sprite.Origin">
+            <summary>
+            贴图的中心，以贴图坐标表示
+            </summary>
+        </member>
+        <member name="F:TankEngine2D.Graphics.Sprite.Pos">
+            <summary>
+            逻辑位置
+            </summary>
+        </member>
+        <member name="F:TankEngine2D.Graphics.Sprite.Width">
+            <summary>
+            逻辑宽度
+            </summary>
+        </member>
+        <member name="F:TankEngine2D.Graphics.Sprite.Height">
+            <summary>
+            逻辑高度
+            </summary>
+        </member>
+        <member name="F:TankEngine2D.Graphics.Sprite.Rata">
+            <summary>
+            逻辑方位角
+            </summary>
+        </member>
+        <member name="F:TankEngine2D.Graphics.Sprite.Color">
+            <summary>
+            绘制颜色
+            </summary>
+        </member>
+        <member name="F:TankEngine2D.Graphics.Sprite.LayerDepth">
+            <summary>
+            深度，1为最低层，0为最表层。
+            </summary>
+        </member>
+        <member name="F:TankEngine2D.Graphics.Sprite.BlendMode">
+            <summary>
+            采用的混合模式
+            </summary>
+        </member>
+        <member name="M:TankEngine2D.Graphics.Sprite.#ctor(TankEngine2D.RenderEngine)">
+            <summary>
+            构造未导入贴图的Sprite对象
+            </summary>
+        </member>
+        <member name="M:TankEngine2D.Graphics.Sprite.#ctor(TankEngine2D.RenderEngine,System.String,System.Boolean)">
+            <summary>
+            构造Sprite对象并导入贴图
+            </summary>
+            <param name="engine">渲染组件</param>
+            <param name="texturePath">贴图路径</param>
+            <param name="SupportIntersectDect"></param>
+        </member>
+        <member name="M:TankEngine2D.Graphics.Sprite.#ctor(TankEngine2D.RenderEngine,Microsoft.Xna.Framework.Content.ContentManager,System.String,System.Boolean)">
+            <summary>
+            构造Sprite对象并导入贴图
+            </summary>
+            <param name="engine">渲染组件</param>
+            <param name="contentMgr">素材管理者</param>
+            <param name="assetPath">素材路径</param>
+            <param name="SupportIntersectDect">是否添加冲突检测支持</param>
+        </member>
+        <member name="M:TankEngine2D.Graphics.Sprite.CheckBorder(Microsoft.Xna.Framework.Graphics.Texture2D,TankEngine2D.Graphics.SpriteBorder.BorderMap@)">
+            <summary>
+            检查贴图的是否能建立边界，如果建立边界失败，将抛出异常。成功时则返回所建的边界。
+            在检测贴图是否能被正常的建立边界的情况下使用。
+            </summary>
+            <param name="tex"></param>
+            <param name="borderMap">建立边界成功时返回结果</param>
+        </member>
+        <member name="M:TankEngine2D.Graphics.Sprite.LoadTextureFromFile(System.String,System.Boolean)">
+            <summary>
+            Load Texture From File
+            从文件中导入贴图。
+            </summary>
+            <param name="texturePath">the texture Directory and File Name, without GameBaseDirectory Path.
+            贴图文件的相对于游戏运行文件的路径</param>
+            <param name="SupportIntersectDect">true to add intersect dectection support.
+            为true时，为贴图添加冲突检测的支持</param>
+        </member>
+        <member name="M:TankEngine2D.Graphics.Sprite.LoadTextureFromContent(Microsoft.Xna.Framework.Content.ContentManager,System.String,System.Boolean)">
+            <summary>
+            Load Texture From Content
+            从素材管道中导入贴图
+            </summary>
+            <param name="contentMgr">素材管理者</param>
+            <param name="assetName">the assetName.素材路径</param>
+            <param name="SupportIntersectDect">true to add intersect Dectection support.
+            为true时为贴图添加冲突检测的支持</param>
+        </member>
+        <member name="M:TankEngine2D.Graphics.Sprite.LoadTextureFromFile(System.String,System.Int32)">
+            <summary>
+            Load Texture From File, support Intersect dectect,
+            the AverageSum is use to modify the default averageSum,
+            which is used in calulate the Normal vector,
+            biger the number is, more border points will be added to the result of Normal Vector. 
+            从文件中导入贴图，并添加冲突检测的支持
+            </summary>
+            <param name="texturePath">贴图文件的相对于游戏运行文件的路径</param>
+            <param name="AverageSum">使用该传入值作为AverageSum。
+            这是一个计算碰撞法向量时用到的参数，表示计算法向量时将取碰撞处附近的多少点进行效果的平均</param>
+        </member>
+        <member name="M:TankEngine2D.Graphics.Sprite.LoadTextureFromContent(Microsoft.Xna.Framework.Content.ContentManager,System.String,System.Int32)">
+            <summary>
+            Load Texture From Content, support Intersect dectect,
+            the AverageSum is use to modify the default averageSum,
+            which is used in calulate the Normal vector,
+            biger the number is, more border points will be added to the result of Normal Vector. 
+            从素材管道中导入贴图，并添加冲突检测的支持
+            </summary>
+            <param name="contentMgr">素材管理者</param>
+            <param name="assetName">素材路径</param>
+            <param name="AverageSum">使用该传入值作为AverageSum。
+            这是一个计算碰撞法向量时用到的参数，表示计算法向量时将取碰撞处附近的多少点进行效果的平均</param>
+        </member>
+        <member name="M:TankEngine2D.Graphics.Sprite.AddIntersectSupport">
+            <summary>
+            为Sprite对象添加冲突检测的支持
+            </summary>
+        </member>
+        <member name="M:TankEngine2D.Graphics.Sprite.SetParameters(Microsoft.Xna.Framework.Vector2,Microsoft.Xna.Framework.Vector2,System.Single,System.Single,System.Single,Microsoft.Xna.Framework.Graphics.Color,System.Single,Microsoft.Xna.Framework.Graphics.SpriteBlendMode)">
+            <summary>
+            设置该精灵的绘制参数
+            </summary>
+            <param name="origin">贴图的中心，以贴图坐标表示</param>
+            <param name="pos">逻辑位置</param>
+            <param name="width">逻辑宽度</param>
+            <param name="height">逻辑高度</param>
+            <param name="rata">逻辑方位角</param>
+            <param name="color">绘制颜色</param>
+            <param name="layerDepth">深度，1为最低层，0为最表层</param>
+            <param name="blendMode">采用的混合模式</param>
+        </member>
+        <member name="M:TankEngine2D.Graphics.Sprite.SetParameters(Microsoft.Xna.Framework.Vector2,Microsoft.Xna.Framework.Vector2,System.Single,System.Single,Microsoft.Xna.Framework.Graphics.Color,System.Single,Microsoft.Xna.Framework.Graphics.SpriteBlendMode)">
+            <summary>
+            设置该精灵的绘制参数
+            </summary>
+            <param name="origin">贴图的中心，以贴图坐标表示</param>
+            <param name="pos">逻辑位置</param>
+            <param name="scale">贴图的缩放比（= 逻辑长度/贴图长度）</param>
+            <param name="rata">逻辑方位角</param>
+            <param name="color">绘制颜色</param>
+            <param name="layerDepth">深度，1为最低层，0为最表层</param>
+            <param name="blendMode">采用的混合模式</param>
+        </member>
+        <member name="M:TankEngine2D.Graphics.Sprite.UpdateTransformBounding">
+            <summary>
+            更新精灵的转换矩阵和包围盒
+            </summary>
+        </member>
+        <member name="M:TankEngine2D.Graphics.Sprite.Draw">
+            <summary>
+            绘制该精灵
+            </summary>
+        </member>
+        <member name="M:TankEngine2D.Graphics.Sprite.IntersectPixels(TankEngine2D.Graphics.Sprite,TankEngine2D.Graphics.Sprite)">
+            <summary>
+            Determines if there is overlap of the non-transparent pixels between two
+            sprites.
+            检查两个精灵是否发生碰撞
+            </summary>
+            <returns>True if non-transparent pixels overlap; false otherwise</returns>
+        </member>
+        <member name="M:TankEngine2D.Graphics.Sprite.CheckOutBorder(TankEngine2D.DataStructure.Rectanglef)">
+            <summary>
+            检测是否在边界矩形外
+            </summary>
+            <param name="BorderRect"></param>
+            <returns></returns>
+        </member>
+        <member name="M:TankEngine2D.Graphics.Sprite.CalculateBoundingRectangle(Microsoft.Xna.Framework.Rectangle,Microsoft.Xna.Framework.Matrix)">
+            <summary>
+            Calculates an axis aligned rectangle which fully contains an arbitrarily
+            transformed axis aligned rectangle.
+            </summary>
+            <param name="rectangle">Original bounding rectangle.</param>
+            <param name="transform">World transform of the rectangle.</param>
+            <returns>A new rectangle which contains the trasnformed rectangle.</returns>
+        </member>
+        <member name="M:TankEngine2D.Graphics.Sprite.Dispose">
+            <summary>
+            清理资源
+            </summary>
+        </member>
+        <member name="P:TankEngine2D.Graphics.Sprite.BoundRect">
+            <summary>
+            获得包围盒，以逻辑坐标。
+            该属性中进行了除法运算。
+            </summary>
+        </member>
+        <member name="P:TankEngine2D.Graphics.Sprite.Transform">
+            <summary>
+            世界转换矩阵
+            每一帧需要先调用UpdateTransformBounding函数。
+            </summary>
+        </member>
+        <member name="P:TankEngine2D.Graphics.Sprite.BorderData">
+            <summary>
+            计算遮挡所需原数据
+            </summary>
+        </member>
+        <member name="P:TankEngine2D.Graphics.Sprite.Scale">
+            <summary>
+            获得或设置贴图的缩放比（= 逻辑长度/贴图长度）
+            </summary>
+        </member>
+        <member name="T:TankEngine2D.DataStructure.Segment">
+            <summary>
+            表示一条线段
+            </summary>
+        </member>
+        <member name="F:TankEngine2D.DataStructure.Segment.startPoint">
+            <summary>
+            线段的起始端点
+            </summary>
+        </member>
+        <member name="F:TankEngine2D.DataStructure.Segment.endPoint">
+            <summary>
+            线段的终止端点
+            </summary>
+        </member>
+        <member name="M:TankEngine2D.DataStructure.Segment.#ctor(Microsoft.Xna.Framework.Vector2,Microsoft.Xna.Framework.Vector2)">
+            <summary>
+            
+            </summary>
+            <param name="startPoint">线段的起始端点</param>
+            <param name="endPoint">线段的终止端点</param>
+        </member>
+        <member name="M:TankEngine2D.DataStructure.Segment.Equals(System.Object)">
+            <summary>
+            判断两Segmet实例是否相等，以重载
+            </summary>
+            <param name="obj"></param>
+            <returns></returns>
+        </member>
+        <member name="M:TankEngine2D.DataStructure.Segment.GetHashCode">
+            <summary>
+            获得Hash值
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:TankEngine2D.DataStructure.Segment.ToString">
+            <summary>
+            将信息转换为字符串
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:TankEngine2D.DataStructure.Segment.IsCross(TankEngine2D.DataStructure.Segment,TankEngine2D.DataStructure.Segment)">
+            <summary>
+            判断两条线段是否相交
+            </summary>
+            <param name="a"></param>
+            <param name="b"></param>
+            <returns></returns>
+        </member>
+        <member name="T:TankEngine2D.Helpers.RandomHelper">
+            <summary>
+            Random helper
+            </summary>
+        </member>
+        <member name="F:TankEngine2D.Helpers.RandomHelper.globalRandomGenerator">
+            <summary>
+            Global random generator
+            </summary>
+        </member>
+        <member name="M:TankEngine2D.Helpers.RandomHelper.GenerateNewRandomGenerator">
+            <summary>
+            Generate a new random generator with help of
+            WindowsHelper.GetPerformanceCounter.
+            Also used for all GetRandom methods here.
+            </summary>
+            <returns>Random</returns>
+        </member>
+        <member name="M:TankEngine2D.Helpers.RandomHelper.GetRandomInt(System.Int32)">
+            <summary>
+            Get random int
+            </summary>
+            <param name="max">Maximum</param>
+            <returns>Int</returns>
+        </member>
+        <member name="M:TankEngine2D.Helpers.RandomHelper.GetRandomInt(System.Int32,System.Int32)">
+            <summary>
+            Get random int
+            </summary>
+            <param name="min"></param>
+            <param name="max"></param>
+            <returns></returns>
+        </member>
+        <member name="M:TankEngine2D.Helpers.RandomHelper.GetRandomFloat(System.Single,System.Single)">
+            <summary>
+            Get random float between min and max
+            </summary>
+            <param name="min">Min</param>
+            <param name="max">Max</param>
+            <returns>Float</returns>
+        </member>
+        <member name="M:TankEngine2D.Helpers.RandomHelper.GetRandomByte(System.Byte,System.Byte)">
+            <summary>
+            Get random byte between min and max
+            </summary>
+            <param name="min">Min</param>
+            <param name="max">Max</param>
+            <returns>Byte</returns>
+        </member>
+        <member name="M:TankEngine2D.Helpers.RandomHelper.GetRandomVector2(System.Single,System.Single)">
+            <summary>
+            Get random Vector2
+            </summary>
+            <param name="min">Minimum for each component</param>
+            <param name="max">Maximum for each component</param>
+            <returns>Vector2</returns>
+        </member>
+        <member name="M:TankEngine2D.Helpers.RandomHelper.GetRandomVector3(System.Single,System.Single)">
+            <summary>
+            Get random Vector3
+            </summary>
+            <param name="min">Minimum for each component</param>
+            <param name="max">Maximum for each component</param>
+            <returns>Vector3</returns>
+        </member>
+        <member name="M:TankEngine2D.Helpers.RandomHelper.GetRandomColor">
+            <summary>
+            Get random color
+            </summary>
+            <returns>Color</returns>
+        </member>
+        <member name="M:TankEngine2D.Helpers.RandomHelper.GetRandomNormalVector3">
+            <summary>
+            Get random normal Vector3
+            </summary>
+            <returns>Vector3</returns>
+        </member>
+        <member name="T:TankEngine2D.RenderEngine">
+            <summary>
+            绘制模块，支持以下功能：
+                多视口的绘制；
+                自由平移缩放旋转的摄像机；
+                像素级的精灵冲突检测；
+                精灵动画绘制与切帧方案；
+                中文字体绘制。
+            </summary>
+        </member>
+        <member name="M:TankEngine2D.RenderEngine.#ctor(Microsoft.Xna.Framework.Graphics.GraphicsDevice,Microsoft.Xna.Framework.Content.ContentManager,System.String)">
+            <summary>
+            
+            </summary>
+            <param name="device">图形设备</param>
+            <param name="contentMgr">素材管理者</param>
+            <param name="contentPath">引擎所需资源路径</param>
+        </member>
+        <member name="M:TankEngine2D.RenderEngine.#ctor(Microsoft.Xna.Framework.Graphics.GraphicsDevice,System.String)">
+            <summary>
+            
+            </summary>
+            <param name="device">图形设备</param>
+            <param name="contentPath">引擎所需资源路径</param>
+        </member>
+        <member name="M:TankEngine2D.RenderEngine.BeginRender">
+            <summary>
+            开始绘制
+            </summary>
+        </member>
+        <member name="M:TankEngine2D.RenderEngine.EndRender">
+            <summary>
+            结束绘制
+            </summary>
+        </member>
+        <member name="P:TankEngine2D.RenderEngine.Device">
+            <summary>
+            获得图形设备
+            </summary>
+        </member>
+        <member name="P:TankEngine2D.RenderEngine.CoordinMgr">
+            <summary>
+            获得坐标管理者
+            </summary>
+        </member>
+        <member name="P:TankEngine2D.RenderEngine.BasicGrahpics">
+            <summary>
+            获得基础图形绘制者
+            </summary>
+        </member>
+        <member name="P:TankEngine2D.RenderEngine.SpriteMgr">
+            <summary>
+            获得贴图管理者
+            </summary>
+        </member>
+        <member name="P:TankEngine2D.RenderEngine.FontMgr">
+            <summary>
+            获得文字管理者
+            </summary>
+        </member>
+        <member name="P:TankEngine2D.RenderEngine.AnimatedMgr">
+            <summary>
+            获得动画管理者
+            </summary>
+        </member>
+        <member name="T:TankEngine2D.Input.InputHandler">
+            <summary>
+            XNA环境下的输入处理类
+            </summary>
+            test comment
+        </member>
+        <member name="M:TankEngine2D.Input.InputHandler.GetCurMousePosInLogic(TankEngine2D.RenderEngine)">
+            <summary>
+            获得当前帧鼠标的逻辑位置
+            </summary>
+        </member>
+        <member name="M:TankEngine2D.Input.InputHandler.MouseInRect(Microsoft.Xna.Framework.Rectangle)">
+            <summary>
+            判断鼠标是否在矩形中
+            </summary>
+            <param name="rect"></param>
+            <returns></returns>
+        </member>
+        <member name="M:TankEngine2D.Input.InputHandler.IsKeyDown(Microsoft.Xna.Framework.Input.Keys)">
+            <summary>
+            判断某按键当前是否处于按下状态
+            </summary>
+            <param name="key"></param>
+            <returns></returns>
+        </member>
+        <member name="M:TankEngine2D.Input.InputHandler.JustPressKey(Microsoft.Xna.Framework.Input.Keys)">
+            <summary>
+            判断某按键是否在当前帧被按下
+            </summary>
+            <param name="key"></param>
+            <returns></returns>
+        </member>
+        <member name="M:TankEngine2D.Input.InputHandler.JustReleaseKey(Microsoft.Xna.Framework.Input.Keys)">
+            <summary>
+            判断某按键是否在当前帧被释放
+            </summary>
+            <param name="key"></param>
+            <returns></returns>
+        </member>
+        <member name="M:TankEngine2D.Input.InputHandler.Update">
+            <summary>
+            更新输入处理类
+            </summary>
+        </member>
+        <member name="P:TankEngine2D.Input.InputHandler.LastMouseX">
+            <summary>
+            上一帧鼠标的视口X坐标
+            </summary>
+        </member>
+        <member name="P:TankEngine2D.Input.InputHandler.LastMouseY">
+            <summary>
+            上一帧鼠标的视口Y坐标
+            </summary>
+        </member>
+        <member name="P:TankEngine2D.Input.InputHandler.LastMousePos">
+            <summary>
+            上一帧鼠标的视口位置
+            </summary>
+        </member>
+        <member name="P:TankEngine2D.Input.InputHandler.CurMouseX">
+            <summary>
+            当前帧鼠标的视口X坐标
+            </summary>
+        </member>
+        <member name="P:TankEngine2D.Input.InputHandler.CurMouseY">
+            <summary>
+            当前帧鼠标的视口Y坐标
+            </summary>
+        </member>
+        <member name="P:TankEngine2D.Input.InputHandler.CurMousePos">
+            <summary>
+            当前帧的鼠标视口位置
+            </summary>
+        </member>
+        <member name="P:TankEngine2D.Input.InputHandler.MouseMoved">
+            <summary>
+            当前帧与上一帧之间鼠标是否移动
+            </summary>
+        </member>
+        <member name="P:TankEngine2D.Input.InputHandler.MouseXDelta">
+            <summary>
+            当前帧与上一帧之间鼠标视口位置的X增量
+            </summary>
+        </member>
+        <member name="P:TankEngine2D.Input.InputHandler.MouseYDelta">
+            <summary>
+            当前帧与上一帧之间鼠标视口位置的Y增量
+            </summary>
+        </member>
+        <member name="P:TankEngine2D.Input.InputHandler.MouseWheelDelta">
+            <summary>
+            当前帧与上一帧之间鼠标滚轮的增量
+            </summary>
+        </member>
+        <member name="P:TankEngine2D.Input.InputHandler.CurMouseLeftDown">
+            <summary>
+            当前帧鼠标左键是否按下
+            </summary>
+        </member>
+        <member name="P:TankEngine2D.Input.InputHandler.CurMouseRightDown">
+            <summary>
+            当前帧鼠标右键是否按下
+            </summary>
+        </member>
+        <member name="P:TankEngine2D.Input.InputHandler.CurMouseMidDown">
+            <summary>
+            当前帧鼠标中键是否按下
+            </summary>
+        </member>
+        <member name="P:TankEngine2D.Input.InputHandler.LastMouseLeftDown">
+            <summary>
+            上一帧鼠标左键是否按下
+            </summary>
+        </member>
+        <member name="P:TankEngine2D.Input.InputHandler.LastMouseRightDown">
+            <summary>
+            上一帧鼠标右键是否按下
+            </summary>
+        </member>
+        <member name="P:TankEngine2D.Input.InputHandler.LastMouseMidDown">
+            <summary>
+            上一帧鼠标中键是否按下
+            </summary>
+        </member>
+        <member name="P:TankEngine2D.Input.InputHandler.MouseJustReleaseLeft">
+            <summary>
+            鼠标是否在当前帧释放了左键
+            </summary>
+        </member>
+        <member name="P:TankEngine2D.Input.InputHandler.MouseJustReleaseRight">
+            <summary>
+            鼠标是否在当前帧释放了右键
+            </summary>
+        </member>
+        <member name="P:TankEngine2D.Input.InputHandler.MouseJustReleaseMid">
+            <summary>
+            鼠标是否在当前帧释放了中键
+            </summary>
+        </member>
+        <member name="P:TankEngine2D.Input.InputHandler.MouseJustPressLeft">
+            <summary>
+            鼠标是否在当前帧按下了左键
+            </summary>
+        </member>
+        <member name="P:TankEngine2D.Input.InputHandler.MouseJustPressRight">
+            <summary>
+            鼠标是否在当前帧按下了右键
+            </summary>
+        </member>
+        <member name="P:TankEngine2D.Input.InputHandler.MouseJusePressMid">
+            <summary>
+            鼠标是否在当前帧按下了中键
+            </summary>
+        </member>
+    </members>
+</doc>

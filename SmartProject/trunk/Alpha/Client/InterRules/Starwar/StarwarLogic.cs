@@ -479,7 +479,7 @@ namespace InterRules.Starwar
                 if (i == controlIndex)
                     openControl = true;
 
-                ships[i] = new WarShip("ship" + i, new Vector2(200 + i * 100, 500), 0, openControl);
+                ships[i] = new WarShip("ship" + i, new Vector2(400 + i * 800, 600), 0, openControl);
                 ships[i].OnCollied += new OnCollidedEventHandler(WarShip_OnCollied);
                 ships[i].OnOverLap += new OnCollidedEventHandler(Warship_OnOverLap);
                 ships[i].OnShoot += new WarShip.WarShipShootEventHandler(WarShip_OnShoot);
