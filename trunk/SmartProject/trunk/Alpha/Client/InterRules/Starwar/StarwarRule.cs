@@ -186,16 +186,6 @@ namespace InterRules.Starwar
             passbox.Update();
             btnLogin.Update();
             btnClear.Update();
-
-
-            if (InputHandler.IsKeyDown(Keys.PageDown))
-            {
-                GameManager.AddGameScreen(new Hall2(namebox.text));
-            }
-            else if (InputHandler.IsKeyDown(Keys.PageUp))
-            {
-                GameManager.AddGameScreen(new Rank());
-            }
             
             if (InputHandler.IsKeyDown(Keys.Escape))
                 return true;

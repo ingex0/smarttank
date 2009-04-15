@@ -73,6 +73,7 @@ namespace InterRules.Starwar
         MemoryStream Stream;
 
         string[] userNames;
+        List<string> devHeads;
 
         int selectIndexRank = -1;
         int selectIndexRoom = -1;
@@ -85,6 +86,15 @@ namespace InterRules.Starwar
 
         public Hall(string tmpName)
         {
+
+            devHeads = new List<string>();
+            devHeads.Add("asokawu");
+            devHeads.Add("ddli");
+            devHeads.Add("jehutyhu");
+            devHeads.Add("zashchen");
+            devHeads.Add("orrischen");
+            devHeads.Add("johntan");
+            devHeads.Add("seekyao");
             myName = tmpName;
 
             heads = new List<Texture2D>();
@@ -107,7 +117,7 @@ namespace InterRules.Starwar
 
             btnRefresh = new TextButton("RefreshBtn", new Vector2(150, 480), "Refresh", 0, Color.Gold);
             btnCreate = new TextButton("CreateBtn", new Vector2(310, 480), "Create a new room", 0, Color.Gold);
-            btnQuit = new TextButton("QuitBtn", new Vector2(310, 480), "Quit", 0, Color.Gold);
+            btnQuit = new TextButton("QuitBtn", new Vector2(450, 410), "Quit", 0, Color.Gold);
             btnEnter = new TextButton("EnterBtn", new Vector2(70, 480), "Enter", 0, Color.Gold);
             btnRank = new TextButton("RankBtn", new Vector2(650, 480), "Rank List", 0, Color.Gold);
             btnStart = new TextButton("StartBtn", new Vector2(550, 410), "Start", 0, Color.Gold);
@@ -279,8 +289,11 @@ namespace InterRules.Starwar
                     tmpNames[playerCount] = str;//, Font font)
                     ranks.Add(player.rank);
                     scores.Add(player.score);
-                    heads.Add(BaseGame.ContentMgr.Load<Texture2D>(Path.Combine(Directories.UIContent, "head")));
-                    playerCount++;
+                    if (devHeads.Contains(str))
+                        heads.Add(BaseGame.ContentMgr.Load<Texture2D>(Path.Combine(Directories.UIContent, str)));
+                    else
+                        heads.Add(BaseGame.ContentMgr.Load<Texture2D>(Path.Combine(Directories.UIContent, "head")));
+                        playerCount++;
 
                     //roomList.AddItem("room 1" + " ( " + room.players + " / 6 )", room.id);
 
@@ -332,8 +345,21 @@ namespace InterRules.Starwar
 
         void btnCreate_OnPress(object sender, EventArgs e)
         {
-            if (bInRoom || bWaitEnter)
+            if (bWaitEnter)
                 return;
+
+            if (bInRoom)
+            {
+                headSend = new stPkgHead();
+                Stream = new MemoryStream();
+                headSend.dataSize = 0;
+                headSend.iSytle = 39;
+                SocketMgr.SendCommonPackge(headSend, Stream);
+                Stream.Close();
+
+                bIsHost = false;
+                bInRoom = false;
+            }
 
             headSend = new stPkgHead();
             //head.iSytle = //包头类型还没初始化
@@ -426,8 +452,8 @@ namespace InterRules.Starwar
             btnRefresh.Update();
             if (bInRoom)
                 btnQuit.Update();
-            else
-                btnCreate.Update();
+
+            btnCreate.Update();
             btnEnter.Update();
             btnRank.Update();
             if (bInRoom && bIsHost)
@@ -436,12 +462,6 @@ namespace InterRules.Starwar
             
             roomList.Update();
             rankList.Update();
-
-            if (InputHandler.IsKeyDown(Keys.PageDown))
-            {
-                //SocketMgr.OnReceivePkg -= OnReceivePack;
-                GameManager.AddGameScreen(new Rank());
-            }
 
             if (InputHandler.IsKeyDown(Keys.Escape))
                 return true;
@@ -462,10 +482,7 @@ namespace InterRules.Starwar
             rankList.Draw(BaseGame.SpriteMgr.alphaSprite, 1);
 
             btnEnter.Draw(BaseGame.SpriteMgr.alphaSprite, 1);
-            if (bInRoom)
-                btnQuit.Draw(BaseGame.SpriteMgr.alphaSprite, 1);
-            else
-                btnCreate.Draw(BaseGame.SpriteMgr.alphaSprite, 1);
+            btnCreate.Draw(BaseGame.SpriteMgr.alphaSprite, 1);
             btnRank.Draw(BaseGame.SpriteMgr.alphaSprite, 1);
             btnRefresh.Draw(BaseGame.SpriteMgr.alphaSprite, 1);
             if (bInRoom)
@@ -473,16 +490,18 @@ namespace InterRules.Starwar
                 
                 for (int i = 0; i < playerCount; i++)
                 {
-                    spriteBatch.Draw(heads[i], new Vector2(334, 167 + i * 160), new Rectangle(0, 0, 70, 70), Color.White, 0, Vector2.Zero, 1, SpriteEffects.None, LayerDepth.UI - 0.1f);
-                    BaseGame.FontMgr.DrawInScrnCoord("Name: " + userNames[i], new Vector2(335, 240 + i * 160), Control.fontScale, Color.Black, 0f, Control.fontName);
-                    BaseGame.FontMgr.DrawInScrnCoord("Score: " + scores[i], new Vector2(335, 255 + i * 160), Control.fontScale, Color.Black, 0f, Control.fontName);
-                    BaseGame.FontMgr.DrawInScrnCoord("Rank: " + ranks[i], new Vector2(335, 270 + i * 160), Control.fontScale, Color.Black, 0f, Control.fontName);
+                    spriteBatch.Draw(heads[i], new Vector2(334, 157 + i * 140), new Rectangle(0, 0, 70, 70), Color.White, 0, Vector2.Zero, 1, SpriteEffects.None, LayerDepth.UI - 0.1f);
+                    BaseGame.FontMgr.DrawInScrnCoord("Name: " + userNames[i], new Vector2(335, 230 + i * 140), Control.fontScale, Color.Black, 0f, Control.fontName);
+                    BaseGame.FontMgr.DrawInScrnCoord("Score: " + scores[i], new Vector2(335, 245 + i * 140), Control.fontScale, Color.Black, 0f, Control.fontName);
+                    BaseGame.FontMgr.DrawInScrnCoord("Rank:  " + ranks[i], new Vector2(335, 260 + i * 140), Control.fontScale, Color.Black, 0f, Control.fontName);
                 }
             }
 
-            if (bInRoom && bIsHost)
+            if (bInRoom)
             {
-                btnStart.Draw(BaseGame.SpriteMgr.alphaSprite, 1);
+                if  (bIsHost)
+                    btnStart.Draw(BaseGame.SpriteMgr.alphaSprite, 1);
+                btnQuit.Draw(BaseGame.SpriteMgr.alphaSprite, 1);
             }
         }
 

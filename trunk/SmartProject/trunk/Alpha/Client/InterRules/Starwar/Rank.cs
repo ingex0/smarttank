@@ -62,6 +62,7 @@ namespace InterRules.Starwar
         }
         RankIF myInfo;
         Texture2D bgTexture, rkTexture, piTexture, hdTexture;
+        List<string> devHeads;
 
         Rectangle bgRect;
 
@@ -77,15 +78,24 @@ namespace InterRules.Starwar
         List<RankIF> rankItems;
         Vector2 rankPos;
 
-        bool bOK;
+        bool bOK, bLoaded;
 
         int selectIndexRank = -1;
         int selectIndexRoom = -1;
 
+
         public Rank()
         {
+            devHeads = new List<string>();
+            devHeads.Add("asokawu");
+            devHeads.Add("ddli");
+            devHeads.Add("jehutyhu");
+            devHeads.Add("zashchen");
+            devHeads.Add("orrischen");
+            devHeads.Add("johntan");
+            devHeads.Add("seekyao");
+            
             BaseGame.ShowMouse = true;
-            hdTexture = BaseGame.ContentMgr.Load<Texture2D>(Path.Combine(Directories.UIContent, "head"));
 
 
             rankPos = new Vector2(50, 120);
@@ -144,6 +154,7 @@ namespace InterRules.Starwar
 
             bOK = false;
             rankItems = new List<RankIF>();
+            bLoaded = false;
             // 连接到服务器
             //SocketMgr.ConnectToServer();
         }
@@ -200,6 +211,12 @@ namespace InterRules.Starwar
                 myInfo.name = str;
                 myInfo.rank = player.rank;
                 myInfo.score = player.score;
+
+                if (devHeads.Contains(myInfo.name))
+                    hdTexture = BaseGame.ContentMgr.Load<Texture2D>(Path.Combine(Directories.UIContent, myInfo.name));
+                else
+                    hdTexture = BaseGame.ContentMgr.Load<Texture2D>(Path.Combine(Directories.UIContent, "head"));
+                bLoaded = true;
             }
         }
         
@@ -237,6 +254,7 @@ namespace InterRules.Starwar
 
         public void Render()
         {
+
             BaseGame.Device.Clear(Color.LightSkyBlue);
             spriteBatch = (SpriteBatch)BaseGame.SpriteMgr.alphaSprite;
             spriteBatch.Draw(bgTexture, Vector2.Zero, bgRect, Color.White, 0, Vector2.Zero, 1, SpriteEffects.None, LayerDepth.BackGround);
@@ -253,12 +271,19 @@ namespace InterRules.Starwar
                 BaseGame.FontMgr.DrawInScrnCoord(rankItems[i].rank.ToString(), rankPos + new Vector2(10f, 20f + 15 * i), Control.fontScale, Color.Green, 0f, Control.fontName);
                 BaseGame.FontMgr.DrawInScrnCoord(rankItems[i].name, rankPos + new Vector2(102f, 20f + 15 * i), Control.fontScale, Color.Green, 0f, Control.fontName);
                 BaseGame.FontMgr.DrawInScrnCoord(rankItems[i].score.ToString(), rankPos + new Vector2(252f, 20f + 15 * i), Control.fontScale, Color.Green, 0f, Control.fontName);
-           }
-            spriteBatch.Draw(hdTexture, new Vector2(560, 128), new Rectangle(0, 0, 70, 70), Color.White, 0, Vector2.Zero, 1, SpriteEffects.None, LayerDepth.UI - 0.1f);
-            BaseGame.FontMgr.DrawInScrnCoord("Name: " + myInfo.name, new Vector2(560, 200), Control.fontScale, Color.Black, 0f, Control.fontName);
-            BaseGame.FontMgr.DrawInScrnCoord("Score: " + myInfo.score, new Vector2(560, 215), Control.fontScale, Color.Black, 0f, Control.fontName);
-            BaseGame.FontMgr.DrawInScrnCoord("Rank: " + myInfo.rank, new Vector2(560, 230), Control.fontScale, Color.Black, 0f, Control.fontName);
+            }
+            if (bLoaded)
+            {
+                spriteBatch.Draw(hdTexture, new Vector2(560, 128), new Rectangle(0, 0, 70, 70), Color.White, 0, Vector2.Zero, 1, SpriteEffects.None, LayerDepth.UI - 0.1f);
+                BaseGame.FontMgr.DrawInScrnCoord("Name: " + myInfo.name, new Vector2(560, 200), Control.fontScale, Color.Black, 0f, Control.fontName);
+                BaseGame.FontMgr.DrawInScrnCoord("Score: " + myInfo.score, new Vector2(560, 215), Control.fontScale, Color.Black, 0f, Control.fontName);
+                BaseGame.FontMgr.DrawInScrnCoord("Rank:  " + myInfo.rank, new Vector2(560, 230), Control.fontScale, Color.Black, 0f, Control.fontName);
+            }
             btnOK.Draw(BaseGame.SpriteMgr.alphaSprite, 1);
+
+
+
+
         }
 
         public void OnClose()

@@ -57,7 +57,6 @@
     <Compile Include="ShootTheBall\AutoShootAI.cs" />
     <Compile Include="ShootTheBall\ShootTheBallRule.cs" />
     <Compile Include="Starwar\Gold.cs" />
-    <Compile Include="Starwar\Hall2.cs" />
     <Compile Include="Starwar\Rock.cs" />
     <Compile Include="Starwar\SpaceWarConfig.cs" />
     <Compile Include="Starwar\StarwarLogic.cs" />
@@ -67,6 +66,7 @@
     <Compile Include="Starwar\Rank.cs" />
     <Compile Include="Starwar\Hall.cs" />
     <Compile Include="Starwar\StarwarRule2.cs" />
+    <Compile Include="Starwar\Hall2.cs" />
     <Compile Include="Starwar\Rank2.cs" />
   </ItemGroup>
   <ItemGroup>
