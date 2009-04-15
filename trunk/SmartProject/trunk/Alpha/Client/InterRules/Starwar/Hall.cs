@@ -490,7 +490,8 @@ namespace InterRules.Starwar
                 
                 for (int i = 0; i < playerCount; i++)
                 {
-                    spriteBatch.Draw(heads[i], new Vector2(334, 157 + i * 140), new Rectangle(0, 0, 70, 70), Color.White, 0, Vector2.Zero, 1, SpriteEffects.None, LayerDepth.UI - 0.1f);
+                    if (heads[i] != null)
+                        spriteBatch.Draw(heads[i], new Vector2(334, 157 + i * 140), new Rectangle(0, 0, 70, 70), Color.White, 0, Vector2.Zero, 1, SpriteEffects.None, LayerDepth.UI - 0.1f);
                     BaseGame.FontMgr.DrawInScrnCoord("Name: " + userNames[i], new Vector2(335, 230 + i * 140), Control.fontScale, Color.Black, 0f, Control.fontName);
                     BaseGame.FontMgr.DrawInScrnCoord("Score: " + scores[i], new Vector2(335, 245 + i * 140), Control.fontScale, Color.Black, 0f, Control.fontName);
                     BaseGame.FontMgr.DrawInScrnCoord("Rank:  " + ranks[i], new Vector2(335, 260 + i * 140), Control.fontScale, Color.Black, 0f, Control.fontName);

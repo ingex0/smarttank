@@ -493,7 +493,7 @@ namespace SmartTank.net
 
         static public void StartReceiveThread()
         {
-            if (client.Connected && thread == null)
+            if (client != null && client.Connected && thread == null)
             {
                 thread = new Thread(ReceivePackge);
                 thread.Start();
