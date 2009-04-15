@@ -1,6 +1,5 @@
 #include "mysocket.h"
 
-
 #ifdef WIN32
     extern CRITICAL_SECTION DD_ClientMgr_Mutex[MAXCLIENT];  
 #else
@@ -8,11 +7,19 @@
     extern pthread_mutex_t DD_ClientMgr_Mutex[MAXCLIENT];  
 #endif
 int MySocket::m_sinSize = sizeof(struct sockaddr_in);
-
+extern MySocket sockSrv;
+extern int g_MyPort;
+extern int g_MaxRoommate;
+extern char g_mySqlUserlName[21];
+extern char g_mySqlUserlPass[21];
+//////////////////////////////////////////////////////////////////////////
 MySocket::MySocket()
 {
     m_socket = SOCKET_ERROR;
     memset(&m_addr, 0, m_sinSize);
+    m_ID = -1;
+    m_bHost = false;
+    m_bInRoom = false;
 }
 
 //////////////////////////////////////////////////////////////////////////
@@ -53,6 +60,13 @@ void MySocket::Bind(int port)
 void MySocket::Listen()
 {
     // listen
+    linger ling;
+    ling.l_onoff=0;   ling.l_linger=1;
+    ///*******************Xiangbin Modified this**************************/
+    if(0 != setsockopt(m_socket, SOL_SOCKET, SO_LINGER, (char *)&ling, sizeof(ling)))
+    {
+        return ;
+    }
     if ( listen( m_socket, MAXCLIENT ) == -1)
     {
         perror("listen");
@@ -124,9 +138,9 @@ bool MySocket::SendPacket( Packet& pack, int realSize)
     int nID = m_ID;
     LockThreadBegin
     if ( -1 == send( m_socket, (char*)&pack, realSize, MSG_NOSIGNAL) )
-    {
-        cout << errno << ":SendPacket." << endl;
+    {   
         LockThreadEnd
+        cout << errno << ":SendPacket." << endl;
         return false;
     }
     LockThreadEnd
@@ -135,7 +149,7 @@ bool MySocket::SendPacket( Packet& pack, int realSize)
 /************************************************************************/
 /* 发送数据包头                           
 /************************************************************************/
-bool  MySocket::SendPacketHead( PacketHead& packHead) 
+bool MySocket::SendPacketHead( PacketHead& packHead) 
 {
     /* 加锁转发 */
     int nID = m_ID;
@@ -151,6 +165,15 @@ bool  MySocket::SendPacketHead( PacketHead& packHead)
 }
 bool MySocket::SendPacketChat( char *msg, long leng)
 {
+    //char sChatHead[300];
+    //char sIP[16];
+    //char sPort[8]; 
+    //pSockClient->GetIP(sIP);
+    //pSockClient->GetPort(sPort);
+    //sprintf(sChatHead, "%s:%s 说:%s ", sIP, sPort, pack.data);
+    //strcpy( pack.data, sChatHead);
+    //cout << sChatHead << endl;
+
    /* Packet packOut;
     packOut.iStyle = CHAT;
     packOut.length = sizeof(Packet);
@@ -168,15 +191,24 @@ bool MySocket::SendPacketChat( char *msg, long leng)
 /************************************************************************/
 /* 接收数据包                           
 /************************************************************************/
-long MySocket::RecvPacket( Packet& pack )
+bool MySocket::RecvPacket( PacketHead& packHead, Packet& pack )
 {
-    long ret = 0;
-    // 收包
-    if ( -1 == ( ret = recv(m_socket, (char*)&pack, sizeof(Packet), MSG_NOSIGNAL) ) )
+    if ( packHead.length == 0)
+        return true;
+
+    int nRecvBytes = 0;
+    int ret;
+    memcpy(&pack, &packHead, HEADSIZE);
+    while ( nRecvBytes < packHead.length)
     {
-        cout << errno << " Receive: 哪个禽兽掉线了." << endl;
+        if ( -1 == ( ret = recv(m_socket, (char*)(&pack)+HEADSIZE+nRecvBytes,
+            packHead.length-nRecvBytes, MSG_NOSIGNAL) ) ) 
+        {   // 失败，删除该客户
+            return false;
+        }
+        nRecvBytes += ret;
     }
-    return ret;
+    return ( nRecvBytes == packHead.length );
 }
 
 //////////////////////////////////////////////////////////////////////////
@@ -203,6 +235,15 @@ long MySocket::GetPort()
 {
     return (long)m_addr.sin_port;
 }
+bool MySocket::GetUserInfo(UserInfo &ui)
+{
+    ui.ID = m_bHost;
+    strcpy(ui.Name, m_name);
+    ui.Score = m_score;
+    ui.Rank  = m_rank;
+    memset(ui.Password, 0, 21);
+    return true;
+}
 // 返回端口号(字符串形式)
 char* MySocket::GetPort(char *outPort)
 {
@@ -218,20 +259,6 @@ char* MySocket::GetPort(char *outPort)
 
 
 //////////////////////////////////////////////////////////////////////////
-#ifndef WIN32
-void signalProc(int sig)
-{
-    switch(sig)
-    {
-    case SIGPIPE:
-       cout << "SIGPIPE";
-        break;
-    default:
-        cout << "Unknow signal!";
-        break;
-    }
-}
-#endif
 //////////////////////////////////////////////////////////////////////////
 // 初始化套接字
 void StartSocket()
@@ -255,64 +282,62 @@ void StartSocket()
         pthread_mutex_init(&DD_ClientMgr_Mutex[i], NULL);
     }
     {
+        // 断开的管道和非正常关闭socket有关 不进行信号处理
+        signal(SIGHUP     ,SIG_IGN   );       /*   hangup,   generated   when   terminal   disconnects   */   
+        signal(SIGINT     ,SIG_IGN   );       /*   interrupt,   generated   from   terminal   special   char   */   
+        signal(SIGQUIT   ,SIG_IGN   );       /*   (*)   quit,   generated   from   terminal   special   char   */   
+        signal(SIGILL     ,SIG_IGN   );       /*   (*)   illegal   instruction   (not   reset   when   caught)*/   
+        signal(SIGTRAP   ,SIG_IGN   );       /*   (*)   trace   trap   (not   reset   when   caught)   */   
+        signal(SIGABRT   ,SIG_IGN   );       /*   (*)   abort   process   */   
+#ifdef   D_AIX   
+        signal(SIGEMT     ,SIG_IGN   );       /*   EMT   intruction   */   
+#endif   
+        signal(SIGFPE     ,SIG_IGN   );       /*   (*)   floating   point   exception   */   
+        signal(SIGKILL   ,SIG_IGN   );       /*   kill   (cannot   be   caught   or   ignored)   */   
+        signal(SIGBUS     ,SIG_IGN   );       /*   (*)   bus   error   (specification   exception)   */   
+        signal(SIGSEGV   ,SIG_IGN   );       /*   (*)   segmentation   violation   */   
+        signal(SIGSYS     ,SIG_IGN   );       /*   (*)   bad   argument   to   system   call   */   
+        signal(SIGPIPE   ,SIG_IGN   );       /*   write   on   a   pipe   with   no   one   to   read   it   */   
+        //signal(SIGALRM   ,HeartBeatFun );       /*   alarm   clock   timeout   */   
+        //signal(SIGTERM   ,stopproc   );     /*   software   termination   signal   */   
+        signal(SIGURG     ,SIG_IGN   );       /*   (+)   urgent   contition   on   I/O   channel   */   
+        signal(SIGSTOP   ,SIG_IGN   );       /*   (@)   stop   (cannot   be   caught   or   ignored)   */   
+        signal(SIGTSTP   ,SIG_IGN   );       /*   (@)   interactive   stop   */   
+        signal(SIGCONT   ,SIG_IGN   );       /*   (!)   continue   (cannot   be   caught   or   ignored)   */   
+        signal(SIGCHLD   ,SIG_IGN);         /*   (+)   sent   to   parent   on   child   stop   or   exit   */   
+        signal(SIGTTIN   ,SIG_IGN);         /*   (@)   background   read   attempted   from   control   terminal*/   
+        signal(SIGTTOU   ,SIG_IGN);         /*   (@)   background   write   attempted   to   control   terminal   */   
+        signal(SIGIO       ,SIG_IGN);         /*   (+)   I/O   possible,   or   completed   */   
+        signal(SIGXCPU   ,SIG_IGN);         /*   cpu   time   limit   exceeded   (see   setrlimit())   */   
+        signal(SIGXFSZ   ,SIG_IGN);         /*   file   size   limit   exceeded   (see   setrlimit())   */   
 
-    
-    // 断开的管道和非正常关闭socket有关 不进行信号处理
-    signal(SIGHUP     ,SIG_IGN   );       /*   hangup,   generated   when   terminal   disconnects   */   
-    signal(SIGINT     ,SIG_IGN   );       /*   interrupt,   generated   from   terminal   special   char   */   
-    signal(SIGQUIT   ,SIG_IGN   );       /*   (*)   quit,   generated   from   terminal   special   char   */   
-    signal(SIGILL     ,SIG_IGN   );       /*   (*)   illegal   instruction   (not   reset   when   caught)*/   
-    signal(SIGTRAP   ,SIG_IGN   );       /*   (*)   trace   trap   (not   reset   when   caught)   */   
-    signal(SIGABRT   ,SIG_IGN   );       /*   (*)   abort   process   */   
 #ifdef   D_AIX   
-    signal(SIGEMT     ,SIG_IGN   );       /*   EMT   intruction   */   
+        signal(SIGMSG     ,SIG_IGN);         /*   input   data   is   in   the   ring   buffer   */   
 #endif   
-    signal(SIGFPE     ,SIG_IGN   );       /*   (*)   floating   point   exception   */   
-    signal(SIGKILL   ,SIG_IGN   );       /*   kill   (cannot   be   caught   or   ignored)   */   
-    signal(SIGBUS     ,SIG_IGN   );       /*   (*)   bus   error   (specification   exception)   */   
-    signal(SIGSEGV   ,SIG_IGN   );       /*   (*)   segmentation   violation   */   
-    signal(SIGSYS     ,SIG_IGN   );       /*   (*)   bad   argument   to   system   call   */   
-    signal(SIGPIPE   ,SIG_IGN   );       /*   write   on   a   pipe   with   no   one   to   read   it   */   
-    signal(SIGALRM   ,SIG_IGN   );       /*   alarm   clock   timeout   */   
-    //signal(SIGTERM   ,stopproc   );     /*   software   termination   signal   */   
-    signal(SIGURG     ,SIG_IGN   );       /*   (+)   urgent   contition   on   I/O   channel   */   
-    signal(SIGSTOP   ,SIG_IGN   );       /*   (@)   stop   (cannot   be   caught   or   ignored)   */   
-    signal(SIGTSTP   ,SIG_IGN   );       /*   (@)   interactive   stop   */   
-    signal(SIGCONT   ,SIG_IGN   );       /*   (!)   continue   (cannot   be   caught   or   ignored)   */   
-    signal(SIGCHLD   ,SIG_IGN);         /*   (+)   sent   to   parent   on   child   stop   or   exit   */   
-    signal(SIGTTIN   ,SIG_IGN);         /*   (@)   background   read   attempted   from   control   terminal*/   
-    signal(SIGTTOU   ,SIG_IGN);         /*   (@)   background   write   attempted   to   control   terminal   */   
-    signal(SIGIO       ,SIG_IGN);         /*   (+)   I/O   possible,   or   completed   */   
-    signal(SIGXCPU   ,SIG_IGN);         /*   cpu   time   limit   exceeded   (see   setrlimit())   */   
-    signal(SIGXFSZ   ,SIG_IGN);         /*   file   size   limit   exceeded   (see   setrlimit())   */   
-    
+
+        signal(SIGWINCH,SIG_IGN);         /*   (+)   window   size   changed   */   
+        signal(SIGPWR     ,SIG_IGN);         /*   (+)   power-fail   restart   */   
+        //signal(SIGUSR1   ,stopproc);       /*   user   defined   signal   1   */   
+        //signal(SIGUSR2   ,stopproc);       /*   user   defined   signal   2   */   
+        signal(SIGPROF   ,SIG_IGN);         /*   profiling   time   alarm   (see   setitimer)   */   
+
 #ifdef   D_AIX   
-    signal(SIGMSG     ,SIG_IGN);         /*   input   data   is   in   the   ring   buffer   */   
+        signal(SIGDANGER,SIG_IGN);       /*   system   crash   imminent;   free   up   some   page   space   */   
 #endif   
-    
-    signal(SIGWINCH,SIG_IGN);         /*   (+)   window   size   changed   */   
-    signal(SIGPWR     ,SIG_IGN);         /*   (+)   power-fail   restart   */   
-    //signal(SIGUSR1   ,stopproc);       /*   user   defined   signal   1   */   
-    //signal(SIGUSR2   ,stopproc);       /*   user   defined   signal   2   */   
-    signal(SIGPROF   ,SIG_IGN);         /*   profiling   time   alarm   (see   setitimer)   */   
-    
+
+        signal(SIGVTALRM,SIG_IGN);       /*   virtual   time   alarm   (see   setitimer)   */   
+
 #ifdef   D_AIX   
-    signal(SIGDANGER,SIG_IGN);       /*   system   crash   imminent;   free   up   some   page   space   */   
-#endif   
-    
-    signal(SIGVTALRM,SIG_IGN);       /*   virtual   time   alarm   (see   setitimer)   */   
-    
-#ifdef   D_AIX   
-    signal(SIGMIGRATE,SIG_IGN);     /*   migrate   process   */   
-    signal(SIGPRE     ,SIG_IGN);         /*   programming   exception   */   
-    signal(SIGVIRT   ,SIG_IGN);         /*   AIX   virtual   time   alarm   */     
-    signal(SIGALRM1,SIG_IGN);         /*   m:n   condition   variables   -   RESERVED   -   DON'T   USE   */   
-    signal(SIGWAITING,SIG_IGN);     /*   m:n   scheduling   -   RESERVED   -   DON'T   USE   */   
-    signal(SIGCPUFAIL   ,SIG_IGN);   /*   Predictive   De-configuration   of   Processors   -   */   
-    signal(SIGKAP,SIG_IGN);             /*   keep   alive   poll   from   native   keyboard   */   
-    signal(SIGRETRACT,SIG_IGN);     /*   monitor   mode   should   be   relinguished   */   
-    signal(SIGSOUND     ,SIG_IGN);     /*   sound   control   has   completed   */   
-    signal(SIGSAK         ,SIG_IGN);     /*   secure   attention   key   */   
+        signal(SIGMIGRATE,SIG_IGN);     /*   migrate   process   */   
+        signal(SIGPRE     ,SIG_IGN);         /*   programming   exception   */   
+        signal(SIGVIRT   ,SIG_IGN);         /*   AIX   virtual   time   alarm   */     
+        signal(SIGALRM1,SIG_IGN);         /*   m:n   condition   variables   -   RESERVED   -   DON'T   USE   */   
+        signal(SIGWAITING,SIG_IGN);     /*   m:n   scheduling   -   RESERVED   -   DON'T   USE   */   
+        signal(SIGCPUFAIL   ,SIG_IGN);   /*   Predictive   De-configuration   of   Processors   -   */   
+        signal(SIGKAP,SIG_IGN);             /*   keep   alive   poll   from   native   keyboard   */   
+        signal(SIGRETRACT,SIG_IGN);     /*   monitor   mode   should   be   relinguished   */   
+        signal(SIGSOUND     ,SIG_IGN);     /*   sound   control   has   completed   */   
+        signal(SIGSAK         ,SIG_IGN);     /*   secure   attention   key   */   
 #endif   
     }
 #endif

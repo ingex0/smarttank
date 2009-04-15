@@ -10,10 +10,12 @@ Description:     // 管理，维护用户套接字
 #include "mysocket.h"
 #include "GameProtocol.h"
 #include "ClientManager.h"
+#include "MyRoom.h"
 #include <vector>
 using namespace std;
 
-class GameProtocal;
+class MyRoom;
+
 class ClientManager
 {
 public:
@@ -23,7 +25,10 @@ public:
     MySocket *AddServer( MySocket *psock);  // 记录服务器.返回socket指针
     MySocket *AddClient( MySocket *psock);  // 新用户加入.返回socket指针
     MySocket *GetClient( int iID);          // 得到某用户.返回socket指针
+    MySocket *GetSafeClient(int iID);       // garbage
+    void SetTimer(int nID);                 // 设置定时器
     bool DelClient( MySocket *psock);       // 删除用户
+    bool DelClientAll();                    // 删除all
 
 	GameProtocal* GetProtocal(){				 // 取得协议分析器
 		return m_protocol;
@@ -34,12 +39,21 @@ public:
     int GetNum(){       //  返回客户总数
         return (int)m_pClient.size();
     }
-	GameProtocal *m_protocol;		// 协议分析器
+    void HeartBeatFun(MySocket *psock);
 
+	GameProtocal *m_protocol;		// 协议分析器
+    MyRoom *m_room;                 // Rooms
+    int m_numOfRoom;                // number of Rooms
+    MyTimer myTimer[MAXCLIENT];    //定义Timer类型的数组，用来保存所有的定时器
 protected:
-    vector<MySocket*> m_pClient;    // 服务器
-    MySocket *m_pServer;            // 客户池
+    vector<MySocket*> m_pClient;   // 客户池<已有>
+    vector<MySocket*> m_pEmpty;    // 客户池<可用>
+    MySocket *m_pServer;           // 服务器
 };
+
+
+
+
 
 
 #endif

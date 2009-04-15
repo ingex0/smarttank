@@ -5,7 +5,9 @@ Description:     // 管理MySql
 ***********************************************************/
 #ifndef _MYDATABASE_H_
 #define _MYDATABASE_H_
-
+#pragma warning( disable:  4996)
+#pragma warning( disable:  4267)
+#pragma warning( disable:  4244)
 #ifdef WIN32
     #include <windows.h>
     #pragma comment(lib, "D:\\Program Files\\MySQL\\MySQL Server 5.1\\lib\\opt\\libmysql.lib")
@@ -16,6 +18,9 @@ Description:     // 管理MySql
     #pragma comment(lib, "D:\\Program Files\\MySQL\\MySQL Server 5.1\\lib\\opt\\zlib.lib")
 #endif
 
+#include <iostream>
+#include <fstream>
+using namespace std;
 #include <mysql.h>
 #include <stdio.h>
 #include <stdlib.h>

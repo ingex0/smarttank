@@ -7,18 +7,24 @@
 using namespace std;
 
 pthread_mutex_t DD_ClientMgr_Mutex[MAXCLIENT];
-
+MySocket SockConn;
+MySocket sockSrv;
+int  g_MyPort;
+int  g_MaxRoommate;
+char g_mySqlUserlName[21];
+char g_mySqlUserlPass[21];
+char g_mySqlDatabase[128];
+bool g_isConnect[MAXCLIENT]; // 心跳检测
+ClientManager clientMgr;
+void HeartBeatFun(int id);
 int main()
 {
-  
 	/* 初始化协议 */ 
     StartSocket();
-    ClientManager clientMgr;
     GameProtocal gameProtocal;
 	clientMgr.AttachProtocal(&gameProtocal);
     gameProtocal.AttachManager(&clientMgr);
     /* 开启监听 */ 
-    MySocket sockSrv;
     sockSrv.Bind(MYPORT);
     sockSrv.Listen(); 
     clientMgr.AddServer(&sockSrv);
@@ -29,63 +35,65 @@ int main()
     PThreadParam pp = &para;
     pp->mgr = &clientMgr;
 
-    MySocket *pSockConn = &sockSrv;
 #ifdef WIN32    
     DWORD  threadID;
     CreateThread(0, 0, LPTHREAD_START_ROUTINE(ThreadSend), pp,NULL, &threadID);
 #else 
-
     pthread_t threadID;
     pthread_create(&threadID, NULL, ThreadSend, (void*)pp);
+    //signal(SIGALRM   ,HeartBeatFun );       /*   alarm   clock   timeout   */  
 #endif
 	
 	// 主循环
-	while (1)
+	while ( true )
     {  
         int len = sizeof(sockaddr);
-        char buff[255];
-
         int sockConn; 
-        MySocket *pSockConn = new MySocket();
         /*  测试accept返回的socket  */
-        if ( -1 == (sockConn = sockSrv.Accept(pSockConn)) ){
+        if ( -1 == (sockConn = sockSrv.Accept(&SockConn)) ){
             exit(1);
         }
 
         /* 连接成功，创建新的客户socket以及线程,传送数据到thread */
     	ThreadParam para;
 		PThreadParam pp = &para; 
-		para.sock = pSockConn;
+		para.sock = &SockConn;
         para.mgr  = &clientMgr;
-
-        pSockConn->m_ID = clientMgr.GetNum();
-        clientMgr.AddClient(pSockConn);
-        sprintf(buff, "欢迎加入SmartTand聊天室!总用户:%d个,你的IP是%s\n",clientMgr.GetNum(),inet_ntoa(pSockConn->m_addr.sin_addr));
-        //pSockConn->SendPacket(buff, long(strlen(buff)));
-
-        cout << buff << endl;   
-        linger ling;
-        ling.l_onoff=0;
-        ling.l_linger=1;
-        ///*******************Xiangbin Modified this**************************/
-        //if(0 != setsockopt(pSockConn->m_socket, SOL_SOCKET, SO_LINGER, (char *)&ling, sizeof(ling)))
-        //{
-        //    return 1;
-        //}
 
         /* 开启客户线程 */
 #ifdef WIN32
-		CreateThread(0, 0, LPTHREAD_START_ROUTINE(ThreadClient),pp,NULL, &threadID);
+		CloseHandle(CreateThread(0, 0, LPTHREAD_START_ROUTINE(ThreadClient),
+            pp,NULL, &threadID) );
 #else
         pthread_t threadID;
         pthread_create(&threadID, NULL, ThreadClient, (void*)pp);
 #endif
-	}//while
+	}
 
     /* 清场 */
 	sockSrv.Close();
 	DestroySocket();
     return 0;
 }
+
+
+void HeartBeatFun(int id)
+{
+    for (int i = 0; i < clientMgr.GetNum(); i++)
+    {
+        MySocket *pSock = clientMgr.GetClient(i);
+        if (pSock->IsLiving())
+        {  
+            pSock->m_isLiving = false;
+        }
+        else
+        {
+            clientMgr.GetProtocal()->UserExit(pSock);
+        }
+    }
+    cout << "HeartBeat!" << endl;
+}
+
+
 
 
