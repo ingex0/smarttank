@@ -1,22 +1,78 @@
 #include "MyDataBase.h"
-
+extern int g_MyPort;
+extern int g_MaxRoommate;
+extern char g_mySqlUserlName[21];
+extern char g_mySqlUserlPass[21];
+extern char g_mySqlDatabase[128];
 Team5_DB::Team5_DB()
 {
+    cout << "读取配置文件..." << endl;
+    ifstream inFile;
+    inFile.open("config.txt");
+    char buff[255];
+    char seps[] = "=";
+    char *token;
+
+    inFile.getline(buff, 255);
+    token = strtok( buff, seps );
+    token = strtok( NULL, seps );
+    g_MyPort = atoi(token); 
+    cout << "服务器端口号为:" << g_MyPort << endl;
+
+    inFile.getline(buff, 255);
+    token = strtok( buff, seps );
+    token = strtok( NULL, seps );
+    strcpy(g_mySqlUserlName, token); 
+    cout << "MySql服务器用户名为:" << g_mySqlUserlName << endl;
+
+    inFile.getline(buff, 255);
+    token = strtok( buff, seps );
+    token = strtok( NULL, seps );
+    strcpy(g_mySqlUserlPass, token); 
+    cout << "MySql服务器密码为:" << g_mySqlUserlPass << endl;
+
+    inFile.getline(buff, 255);
+    token = strtok( buff, seps );
+    token = strtok( NULL, seps );
+    strcpy(g_mySqlDatabase, token); 
+    cout << "MySql数据库为:" << g_mySqlDatabase << endl;
+
+    inFile.getline(buff, 255);
+    token = strtok( buff, seps );
+    token = strtok( NULL, seps );
+    g_MaxRoommate = atoi(token); 
+    cout << "房间人数上限:" << g_MaxRoommate << endl;
+    inFile.close();
     Connect();
 }
 int Team5_DB::Connect()
 {
     mysql = mysql_init(NULL);
-#ifdef WIN32
-    if (!mysql_real_connect(mysql, NULL, "root", "123456", NULL, 0, NULL, 0))
-#else
-    if (!mysql_real_connect(mysql, NULL, "root", NULL, NULL, 0, NULL, 0))
+#ifndef WIN32
+    g_mySqlUserlName[strlen(g_mySqlUserlName)-1] = '\0';
+    g_mySqlUserlPass[strlen(g_mySqlUserlPass)-1] = '\0';
+    g_mySqlDatabase[strlen(g_mySqlDatabase)-1] = '\0';
 #endif
+    if ( 0 == strcmp(g_mySqlUserlPass, "NULL") )
     {
-        printf(mysql_error(mysql));
-        return -1;	
+        if (!mysql_real_connect(mysql, NULL, "root", 0,  NULL, 0, NULL, 0))
+        {
+            printf(mysql_error(mysql));
+            cout << "连接数据库失败." << endl;
+            return -1;	
+        }
     }
-    if (mysql_select_db(mysql, "mmogfps_5"))
+    else
+    {
+        if (!mysql_real_connect(mysql, NULL, g_mySqlUserlName, g_mySqlUserlPass, NULL, 0, NULL, 0))
+        {
+            cout << "连接数据库失败." << endl;
+            printf(mysql_error(mysql));
+            return -1;	
+        }
+    }
+    
+    if (mysql_select_db(mysql, g_mySqlDatabase))
     {
         perror("connect sql");
         return -1;

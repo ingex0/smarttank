@@ -63,6 +63,8 @@
 				AdditionalDependencies="odbc32.lib odbccp32.lib ws2_32.lib"
 				LinkIncremental="2"
 				GenerateDebugInformation="true"
+				GenerateMapFile="true"
+				MapExports="true"
 				SubSystem="1"
 				TargetMachine="1"
 			/>
@@ -192,6 +194,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\MyRoom.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\mysocket.cpp"
 				>
 			</File>
@@ -227,6 +233,10 @@
 			</File>
 			<File
 				RelativePath=".\myerror.h"
+				>
+			</File>
+			<File
+				RelativePath=".\MyRoom.h"
 				>
 			</File>
 			<File
