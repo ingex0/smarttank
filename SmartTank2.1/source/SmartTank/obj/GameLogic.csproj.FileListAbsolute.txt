@@ -1,0 +1,5 @@
+D:\myProgram\SmartTank2.1\source\SmartTank\obj\x86\Debug\ResolveAssemblyReference.cache
+D:\myProgram\SmartTank2.1\source\SmartTank\obj\x86\Debug\Microsoft.Xna.Framework.RuntimeProfile.txt
+D:\myProgram\SmartTank2.1\source\SmartTank\obj\x86\Debug\SmartTank.obj.x86.Debug.Microsoft.Xna.Framework.RuntimeProfile.txt
+D:\myProgram\SmartTank2.1\source\SmartTank\obj\x86\Debug\SmartTank.exe
+D:\myProgram\SmartTank2.1\source\SmartTank\obj\x86\Debug\SmartTank.pdb

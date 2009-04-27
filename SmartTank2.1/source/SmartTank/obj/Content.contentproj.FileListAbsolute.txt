@@ -1,0 +1,4 @@
+D:\myProgram\AI_Tank\AI_Tank2.0\SmartTank2.0\svn\Version2.0\SmartTank\SmartTank\obj\x86\Debug\ResolveAssemblyReference.cache
+D:\myProgram\AI_Tank\AI_Tank2.0\SmartTank2.0\svn\Version2.0\SmartTank\SmartTank\obj\x86\Debug\Content\Sounds\SmartTank1.xml
+D:\myProgram\AI_Tank\AI_Tank2.0\SmartTank2.0\svn\Version2.0\SmartTank\SmartTank\obj\x86\Debug\SmartTank.pdb
+D:\myProgram\SmartTank2.1\source\SmartTank\obj\x86\Debug\ResolveAssemblyReference.cache

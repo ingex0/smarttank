@@ -1,0 +1,5 @@
+D:\myProgram\AI_Tank\AI_Tank2.0\SmartTank2.0\svn\Version2.0\SmartTank\InterRules\obj\Debug\ResolveAssemblyReference.cache
+D:\myProgram\AI_Tank\AI_Tank2.0\SmartTank2.0\svn\Version2.0\SmartTank\InterRules\obj\Debug\InterRules.dll
+D:\myProgram\AI_Tank\AI_Tank2.0\SmartTank2.0\svn\Version2.0\SmartTank\Debug\Rule\InterRules.dll
+D:\myProgram\AI_Tank\AI_Tank2.0\SmartTank2.0\svn\Version2.0\SmartTank\Debug\Rule\InterRules.pdb
+D:\myProgram\AI_Tank\AI_Tank2.0\SmartTank2.0\svn\Version2.0\SmartTank\InterRules\obj\Debug\InterRules.pdb
