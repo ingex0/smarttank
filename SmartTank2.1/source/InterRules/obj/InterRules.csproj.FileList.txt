@@ -1,7 +1,0 @@
-..\Debug\InterRules.dll
-..\Debug\InterRules.pdb
-obj\Debug\ResolveAssemblyReference.cache
-obj\Debug\InterRules.dll
-obj\Debug\InterRules.pdb
-..\Debug\Rule\InterRules.dll
-..\Debug\Rule\InterRules.pdb
