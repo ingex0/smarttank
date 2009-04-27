@@ -1,0 +1,746 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Font Name="Tahoma" Size="8.25" />
+  <Class Name="SmartTank.AI.AIAttribute" Collapsed="true">
+    <Position X="28.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <FileName>AI\AIAttribute.cs</FileName>
+      <HashCode>AAAAAAAAAAAAAACAAAAAAAQAAAAAAAAAAAAAAAAgAQA=</HashCode>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SmartTank.AI.AICommonServer" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="30.25" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <FileName>AI\AICommonServer.cs</FileName>
+      <HashCode>AAAAAAAAAAAAAAAAAAAQAAAAEAAAAAAAAAAAAAAAAAA=</HashCode>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="SmartTank.AI.IAIAttribute" Collapsed="true">
+    <Position X="32" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <FileName>AI\IAIAttribute.cs</FileName>
+      <HashCode>AAAAAAAAAIAAAAAAAAAgAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SmartTank.AI.ManualControl" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="37.25" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <FileName>AI\ManualControl.cs</FileName>
+      <HashCode>AAQABAAAAAAAAgAAAAEAAAABAAAAAAAAAAAAAAAAAAI=</HashCode>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="SmartTank.AI.AIHelper.AIActionHelper" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="26.75" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <FileName>AI\AIHelper\AIActionHelper.cs</FileName>
+      <HashCode>EAQAAAIgAAAAAAAAAAAAAAADABEQAAgAAAAAABAASAA=</HashCode>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="SmartTank.AI.AIHelper.OrderRotaToAzi" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="28.5" Y="5.5" Width="1.5" />
+    <TypeIdentifier>
+      <FileName>AI\AIHelper\AIActionHelper.cs</FileName>
+      <HashCode>AAQAAAAAAAAAAAAAAAEAEAgxABAAYAAAIAAAAAAAAAA=</HashCode>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="SmartTank.AI.AIHelper.OrderRotaTurretToAzi" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="30.25" Y="5.5" Width="1.5" />
+    <TypeIdentifier>
+      <FileName>AI\AIHelper\AIActionHelper.cs</FileName>
+      <HashCode>AAQAAAAAAAAAAAAAAAEAEAgxABAAYAAAIAAAAAAAAAA=</HashCode>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="SmartTank.AI.AIHelper.OrderRotaTurretToPos" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="32" Y="5.5" Width="1.5" />
+    <TypeIdentifier>
+      <FileName>AI\AIHelper\AIActionHelper.cs</FileName>
+      <HashCode>AAQAIAAAAAAAAAAAAAEAEAgxABAAQAAAIAAAAAAAAAA=</HashCode>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="SmartTank.AI.AIHelper.OrderRotaRaderToAng" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="39" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <FileName>AI\AIHelper\AIActionHelper.cs</FileName>
+      <HashCode>AAQAAAAAAAAAAAAAAIEAEAgxABAAQAAAIAAAAAAAAAA=</HashCode>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="SmartTank.AI.AIHelper.OrderRotaRaderToAzi" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="40.75" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <FileName>AI\AIHelper\AIActionHelper.cs</FileName>
+      <HashCode>AAQAAAAAAAAAAAAAAAEAEAgxABAAYAAAIAAAAAAAAAA=</HashCode>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="SmartTank.AI.AIHelper.OrderRotaRaderToPos" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="26.75" Y="5.5" Width="1.5" />
+    <TypeIdentifier>
+      <FileName>AI\AIHelper\AIActionHelper.cs</FileName>
+      <HashCode>AAQAIAAAAAAAAAAAAAEAEAgxABAAQAAAIAAAAAAAAAA=</HashCode>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="SmartTank.AI.AIHelper.OrderMove" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="32" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <FileName>AI\AIHelper\AIActionHelper.cs</FileName>
+      <HashCode>AAQAABAAAAAAAAAAAEEAEAgBABAAQQAAIAAAAAAAAAA=</HashCode>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="SmartTank.AI.AIHelper.OrderMoveToPosDirect" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="35.5" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <FileName>AI\AIHelper\AIActionHelper.cs</FileName>
+      <HashCode>AAQAIAAAAABAAAAAAAEAEAgBABAQQAAAICAAAAAAAAA=</HashCode>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="SmartTank.AI.AIHelper.OrderMoveToPosSmooth" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="37.25" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <FileName>AI\AIHelper\AIActionHelper.cs</FileName>
+      <HashCode>AASAIAAEAABAAAAIACEAEAgBABAAQAQAIAAAAAAAAAA=</HashCode>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="SmartTank.AI.AIHelper.OrderMoveCircle" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="33.75" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <FileName>AI\AIHelper\AIActionHelper.cs</FileName>
+      <HashCode>AAQAAAAAAABAAIAAAGEAEAgBABAAQAAAIAAAAAAAAAA=</HashCode>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="SmartTank.AI.AIHelper.OrderScanRader" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="33.75" Y="5.5" Width="1.5" />
+    <TypeIdentifier>
+      <FileName>AI\AIHelper\AIActionHelper.cs</FileName>
+      <HashCode>AAxABAAAAAACAAQAAAEAEAgBAAAAAEAAIAAAAAAAAIA=</HashCode>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="SmartTank.AI.AIHelper.OrderScanRaderAzi" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="35.5" Y="5.5" Width="1.5" />
+    <TypeIdentifier>
+      <FileName>AI\AIHelper\AIActionHelper.cs</FileName>
+      <HashCode>AAQABAAAAAACIAQBAAEAEAgBAAAAAEAAIAAAAAAAAIA=</HashCode>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="SmartTank.AI.AIHelper.ConsiderCenter" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="30.25" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <FileName>AI\AIHelper\ConsiderCenter.cs</FileName>
+      <HashCode>AAQBAAEAAAhAAAAAAAAAAAABAAAAAQAAAAAAAAAAAAA=</HashCode>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="SmartTank.AI.AIHelper.ConsiderAwayFromBorder" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="28.5" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <FileName>AI\AIHelper\ConsiderCenter.cs</FileName>
+      <HashCode>BAQgAAAAAFAAAAgAAAEAAEgBgADiGAEgAAAAAAAAEAA=</HashCode>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="SmartTank.BaseGame" Collapsed="true">
+    <Position X="0.75" Y="12.5" Width="1.5" />
+    <TypeIdentifier>
+      <FileName>BaseGame.cs</FileName>
+      <HashCode>AAQCRAABBAoAA5IAAAAQAEACiQEAIAgAAAAACAASBAA=</HashCode>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SmartTank.GameManager" Collapsed="true">
+    <Position X="0.75" Y="14" Width="1.5" />
+    <TypeIdentifier>
+      <FileName>GameManager.cs</FileName>
+      <HashCode>BAQAAAUAIAYBAQAAAAAACUQEAAQABAAQAEAgEQAAAAA=</HashCode>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SmartTank.Program" Collapsed="true">
+    <Position X="26.75" Y="6.5" Width="1.5" />
+    <TypeIdentifier>
+      <FileName>Program.cs</FileName>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABAAAAAA=</HashCode>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SmartTank.Draw.BackGround.VergeTile.VergeTileData" Collapsed="true">
+    <Position X="32" Y="8.5" Width="1.5" />
+    <TypeIdentifier>
+      <FileName>Draw\BackGround\VergeTile\VergeTileData.cs</FileName>
+      <HashCode>AAAAoIAAIAAAAAAAAAAAAAAAAABQEAgAAAAAAAgACAA=</HashCode>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SmartTank.Draw.BackGround.VergeTile.VergeTileGround" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="33.75" Y="8.5" Width="1.5" />
+    <TypeIdentifier>
+      <FileName>Draw\BackGround\VergeTile\VergeTileGround.cs</FileName>
+      <HashCode>AABQCAAAIAAAAgAAACACAAAkCgBCEAgBAAQAAAAAAAA=</HashCode>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="SmartTank.Draw.Camera" Collapsed="true">
+    <Position X="40.75" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <FileName>Draw\Camera.cs</FileName>
+      <HashCode>ADSAEACQAIAGgAgAEAOACAADgQAAQAAAAAAgghAAAAA=</HashCode>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SmartTank.Draw.DrawMgr" Collapsed="true">
+    <Position X="39" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <FileName>Draw\DrawMgr.cs</FileName>
+      <HashCode>AAAAAIAAAAAAAgABAAAAAAAAAAAgAAAAIAAAIAAAAAA=</HashCode>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SmartTank.Draw.GameFonts" Collapsed="true">
+    <Position X="35.5" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <FileName>Draw\GameFonts.cs</FileName>
+      <HashCode>AAAAAAAAABAAAAAAEBAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SmartTank.Draw.LayerDepth" Collapsed="true">
+    <Position X="35.5" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <FileName>Draw\LayerDepth.cs</FileName>
+      <HashCode>ABAAAQAAAIAAAAAAQAAgAAgAAIQAAAAAAAAACAAAEAA=</HashCode>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SmartTank.GameObjs.EditableProperty" Collapsed="true">
+    <Position X="40.75" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <FileName>GameObjs\EditableAttribute.cs</FileName>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SmartTank.GameObjs.GameObjAttribute" Collapsed="true">
+    <Position X="37.25" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <FileName>GameObjs\GameObjAttribute.cs</FileName>
+      <HashCode>AAAkAIAAJICAAACAAAAAAAAAAAQAAAAEAEAAAABAAAA=</HashCode>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SmartTank.GameObjs.GameObjDataNode" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="40.75" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <FileName>GameObjs\GameObjData.cs</FileName>
+      <HashCode>CCAAAQAAEAAAABBAAAAAAABAAABABAAAAAAAAAgAgAA=</HashCode>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="SmartTank.GameObjs.GameObjData" Collapsed="true">
+    <Position X="39" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <FileName>GameObjs\GameObjData.cs</FileName>
+      <HashCode>AAAkgIAAAAAAAAAACAAAAAAAAAQUAAAAAAAAAAAAAgA=</HashCode>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SmartTank.GameObjs.GameObjInfo" Collapsed="true">
+    <Position X="26.75" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <FileName>GameObjs\GameObjInfo.cs</FileName>
+      <HashCode>AAAAAAAAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAgAAA=</HashCode>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SmartTank.GameObjs.Item.ItemCommon" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="33.75" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <FileName>GameObjs\Item\ItemCommon.cs</FileName>
+      <HashCode>ggYBACICAAABIgAAABIACAQAADCFAAAAAASBgIAEQAA=</HashCode>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="SmartTank.GameObjs.Item.ObstacleCommon" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="30.25" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <FileName>GameObjs\Item\ObstacleCommon.cs</FileName>
+      <HashCode>igYQIAICAAAAAgAIABAAAIQAADCEAACAAISAgIAEQAA=</HashCode>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="SmartTank.GameObjs.Shell.ShellNormal" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="30.25" Y="7.5" Width="1.5" />
+    <TypeIdentifier>
+      <FileName>GameObjs\Shell\ShellNormal.cs</FileName>
+      <HashCode>gAQAACIAAAABAgAIABAAAAQAADCFAAAQAAQFgIAAgAA=</HashCode>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="SmartTank.GameObjs.Tank.Tank" Collapsed="true">
+    <Position X="11.75" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <FileName>GameObjs\Tank\Tank.cs</FileName>
+      <HashCode>ggQAAAIAgAAAAgAAABAAEAQACDCEAAAAAAQBiIAAAQA=</HashCode>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="SmartTank.GameObjs.Tank.TurretLinker" Collapsed="true">
+    <Position X="28.5" Y="8.5" Width="1.5" />
+    <TypeIdentifier>
+      <FileName>GameObjs\Tank\TurretLinker.cs</FileName>
+      <HashCode>AQAAAAAAABAAAAAAAAAAAAACEBAABAAAAAAAAAAAAAA=</HashCode>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SmartTank.GameObjs.Tank.SinTur.TankContrSinTur" Collapsed="true">
+    <Position X="8.75" Y="9.25" Width="1.5" />
+    <TypeIdentifier>
+      <FileName>GameObjs\Tank\SinTur\TankControlSinTur.cs</FileName>
+      <HashCode>AARAQAkoQACABEAYABQASEAAAAEEAAAAAKAEIAAAABA=</HashCode>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="SmartTank.GameObjs.Tank.SinTur.TankLimitSinTur" Collapsed="true">
+    <Position X="39" Y="7.5" Width="1.5" />
+    <TypeIdentifier>
+      <FileName>GameObjs\Tank\SinTur\TankLimitSinTur.cs</FileName>
+      <HashCode>EAAiAAAAAAAgAAAAAAAACAACAAAAAAAAgAAACEAAAAA=</HashCode>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SmartTank.GameObjs.Tank.SinTur.TankSinTur" Collapsed="true">
+    <Position X="11.75" Y="4.75" Width="1.5" />
+    <TypeIdentifier>
+      <FileName>GameObjs\Tank\SinTur\TankSinTur.cs</FileName>
+      <HashCode>uySAUDnCACABAkEYADAADFCMICCGBAAgBwYCiuAEYBI=</HashCode>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="SmartTank.GameObjs.Tank.SinTur.TankSkinSinTur" Collapsed="true">
+    <Position X="40.75" Y="7.5" Width="1.5" />
+    <TypeIdentifier>
+      <FileName>GameObjs\Tank\SinTur\TankSkinSinTur.cs</FileName>
+      <HashCode>gCQUAFAAAAgAAgQEgBAAhBYMKACKAAAAAIAQAgAAAAA=</HashCode>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SmartTank.PhiCol.Border" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="35.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <FileName>PhiCol\Border.cs</FileName>
+      <HashCode>ggQAAAIAAAAAAgAAAAIAAAQCAACAAAAAAAAAgIAAAAA=</HashCode>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="SmartTank.PhiCol.BorderMethod" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="39" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <FileName>PhiCol\Border.cs</FileName>
+      <HashCode>AAAAAAAAAAAAgAEAAAAAAAACAAAAAACAAAAAAAAAAAA=</HashCode>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="SmartTank.PhiCol.BorderChecker" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="37.25" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <FileName>PhiCol\Border.cs</FileName>
+      <HashCode>CAAQAAAAAAAAACAAAAAAAAQAAAAAAAAAAIAAAAAAAAA=</HashCode>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="SmartTank.PhiCol.NonInertiasColUpdater" Collapsed="true">
+    <Position X="8.75" Y="7.75" Width="1.5" />
+    <TypeIdentifier>
+      <FileName>PhiCol\NonInertiasColUpdater.cs</FileName>
+      <HashCode>CAAQIAAAAAAAAAAAAAQACAQAQAAAAAAAAIAAAAAAAAA=</HashCode>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="SmartTank.PhiCol.NonInertiasPhiUpdater" Collapsed="true">
+    <Position X="8.75" Y="6.5" Width="1.5" />
+    <TypeIdentifier>
+      <FileName>PhiCol\NonInertiasPhiUpdater.cs</FileName>
+      <HashCode>gAAAAAAAAAiAIAAAABAAAAAAAACAAAAAAAAAgJAAAAE=</HashCode>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="SmartTank.PhiCol.PhiColMgr" Collapsed="true">
+    <Position X="40.75" Y="5.5" Width="1.5" />
+    <TypeIdentifier>
+      <FileName>PhiCol\PhiColMgr.cs</FileName>
+      <HashCode>AATRAAAACCAIAAABAAAAAIIACAAAAAAAAAIAEAAABAA=</HashCode>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SmartTank.PhiCol.SpriteColMethod" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="37.25" Y="7.5" Width="1.5" />
+    <TypeIdentifier>
+      <FileName>PhiCol\SpriteColMethod.cs</FileName>
+      <HashCode>AAAAAAAAAAAAgAEAAAAAAAAAAAAACACAAAgAAAAAAAA=</HashCode>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="SmartTank.Rule.RuleAttribute" Collapsed="true">
+    <Position X="33.75" Y="6.5" Width="1.5" />
+    <TypeIdentifier>
+      <FileName>Rule\RuleAttribute.cs</FileName>
+      <HashCode>AAABAAAAAAAAAACAAAAAAAQAAAAAAAAAAAAAAAAAAEA=</HashCode>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SmartTank.Scene.Group" Collapsed="true">
+    <Position X="0.75" Y="8.5" Width="1.5" />
+    <TypeIdentifier>
+      <FileName>Scene\Group.cs</FileName>
+      <HashCode>YAAAAAAAAAAAAIIAAAAIAAQAAAAEAAEAAAABAAAAAAA=</HashCode>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SmartTank.Scene.SceneMgr" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="40.75" Y="6.5" Width="1.5" />
+    <TypeIdentifier>
+      <FileName>Scene\SceneMgr.cs</FileName>
+      <HashCode>QAAIgIAkAAQkFAoAEAAMIAASAAAgACoEBARkAAAQIQA=</HashCode>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="SmartTank.Scene.TypeGroup" Collapsed="true">
+    <Position X="0.75" Y="9.75" Width="1.5" />
+    <TypeIdentifier>
+      <FileName>Scene\TypeGroup.cs</FileName>
+      <HashCode>AAAAAEAAAAEAAIAAAAAAAAAAAAAAAAAAAAAAAAAAACA=</HashCode>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SmartTank.Scene.TypeGroup&lt;T&gt;" Collapsed="true">
+    <Position X="0.75" Y="11.25" Width="1.5" />
+    <TypeIdentifier>
+      <FileName>Scene\TypeGroup.cs</FileName>
+      <HashCode>AAAAAEAAAAEAAIAAAAAAAAAAAAQAgAAAgCAAEAAAIDA=</HashCode>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SmartTank.Screens.RuleSelectScreen" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="37.25" Y="6.5" Width="1.5" />
+    <TypeIdentifier>
+      <FileName>Screens\RuleSelectScreen.cs</FileName>
+      <HashCode>AAQIAAAAAAAAAAAAAAFAAAAAAAAACAAAEBAAAAAAAAA=</HashCode>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="SmartTank.Senses.Memory.ConvexHall" Collapsed="true">
+    <Position X="33.75" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <FileName>Senses\Memory\ConvexHall.cs</FileName>
+      <HashCode>AAAAAAAAAAAAgAAAAAAABAAAAAAAAAAAAAAAAAAABEA=</HashCode>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SmartTank.Senses.Memory.EyeableBorderObjInfo" Collapsed="true">
+    <Position X="30.25" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <FileName>Senses\Memory\EyeableBorderObjInfo.cs</FileName>
+      <HashCode>QAAIBAAAAAAAAAAAAGAEAABgAAAAAAAAAAABAEAACAQ=</HashCode>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SmartTank.Senses.Memory.GuardConvex" Collapsed="true">
+    <Position X="30.25" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <FileName>Senses\Memory\NavigateMap.cs</FileName>
+      <HashCode>AAAAAACAAAAAAAAASAAAAABAAAAAAAAAAAAAAAAAAAA=</HashCode>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SmartTank.Senses.Memory.NavigateMap" Collapsed="true">
+    <Position X="39" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <FileName>Senses\Memory\NavigateMap.cs</FileName>
+      <HashCode>ACAAAAAAABAAQQAAAEAAAAAAAEAAEAAABBAAAAAwAKg=</HashCode>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SmartTank.Senses.Memory.ObjMemoryKeeper" Collapsed="true">
+    <Position X="40.75" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <FileName>Senses\Memory\ObjMemoryKeeper.cs</FileName>
+      <HashCode>CAAAAAAAAAAAACAAAACgAAAAAAAAAAAAAAAgAAAgAAA=</HashCode>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SmartTank.Senses.Memory.ObjMemoryMgr" Collapsed="true">
+    <Position X="26.75" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <FileName>Senses\Memory\ObjMemoryMgr.cs</FileName>
+      <HashCode>QAQAAAAAAAAAAAABEAAAAAAAAAAgAAAAAAAAAAAAAAA=</HashCode>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SmartTank.Senses.Memory.ObjVisiBorder" Collapsed="true">
+    <Position X="28.5" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <FileName>Senses\Memory\ObjVisiBorder.cs</FileName>
+      <HashCode>AAAAAAAAAAAAIBAABCAQAAAAAAAAAAAAAAABAAAAAAA=</HashCode>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SmartTank.Senses.Vision.EyeableInfo" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="32" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <FileName>Senses\Vision\IEyeableObj.cs</FileName>
+      <HashCode>gAAAAAAAAAIAAAAAAAAAAIAAAAKgAAAAIAAAAIAAQAA=</HashCode>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="SmartTank.Senses.Vision.VisionMgr" Collapsed="true">
+    <Position X="35.5" Y="8.5" Width="1.5" />
+    <TypeIdentifier>
+      <FileName>Senses\Vision\VisionMgr.cs</FileName>
+      <HashCode>QAQAAAAAAAAQAAABAAAAAAAAIEAAAAAAAAAAAAAAAAA=</HashCode>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SmartTank.Sounds.Sound" Collapsed="true">
+    <Position X="35.5" Y="7.5" Width="1.5" />
+    <TypeIdentifier>
+      <FileName>Sound\Sound.cs</FileName>
+      <HashCode>AAAAAAAAAAAAAABAAAAAAEQAAAAAAAAAAAAAAiBAAAA=</HashCode>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SmartTank.Update.GameTimer" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="28.5" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <FileName>Update\GameTimer.cs</FileName>
+      <HashCode>AAQQAAgABAAAAAAAAAARAAAABBAAAAAABAAAAAAAAAA=</HashCode>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="SmartTank.Update.UpdateMgr" Collapsed="true">
+    <Position X="30.25" Y="8.5" Width="1.5" />
+    <TypeIdentifier>
+      <FileName>Update\UpdateMgr.cs</FileName>
+      <HashCode>AAQEAAAAAAAAAAABAAAAAAAAAAAgAAAAAAAAAAAAAAA=</HashCode>
+    </TypeIdentifier>
+  </Class>
+  <Struct Name="SmartTank.GameObjs.Tank.SinTur.TankSkinSinTurData" Collapsed="true">
+    <Position X="33.75" Y="9.75" Width="1.5" />
+    <TypeIdentifier>
+      <FileName>GameObjs\Tank\SinTur\TankSkinSinTurData.cs</FileName>
+      <HashCode>AACgAAAAEBAAAYBAAAQAAAAEAAAABAgAAAAAAAAAAAA=</HashCode>
+    </TypeIdentifier>
+  </Struct>
+  <Struct Name="SmartTank.Senses.Memory.NaviPoint" Collapsed="true">
+    <Position X="32" Y="9.75" Width="1.5" />
+    <TypeIdentifier>
+      <FileName>Senses\Memory\NavigateMap.cs</FileName>
+      <HashCode>gAAAAAAAAAAAAAAAAAAAAIAAAACAAAAAAAEAAIABAAA=</HashCode>
+    </TypeIdentifier>
+  </Struct>
+  <Struct Name="SmartTank.Senses.Memory.BordPoint" Collapsed="true">
+    <Position X="28.5" Y="9.75" Width="1.5" />
+    <TypeIdentifier>
+      <FileName>Senses\Memory\ObjVisiBorder.cs</FileName>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEAAAAABAAA=</HashCode>
+    </TypeIdentifier>
+  </Struct>
+  <Interface Name="SmartTank.AI.IAI" Collapsed="true">
+    <Position X="5.5" Y="4.75" Width="1.5" />
+    <TypeIdentifier>
+      <FileName>AI\IAI.cs</FileName>
+      <HashCode>AAAAAAAAAAAAAgAAAAEAAAAAAAAAAAAAAAAAAAAAAAI=</HashCode>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="SmartTank.AI.IAICommonServer" Collapsed="true">
+    <Position X="26.75" Y="11" Width="1.5" />
+    <TypeIdentifier>
+      <FileName>AI\IAICommonServer.cs</FileName>
+      <HashCode>AAAAAAAAAAAAAAAAAAAQAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="SmartTank.AI.IAIOrderServer" Collapsed="true">
+    <Position X="3.75" Y="12.5" Width="1.5" />
+    <TypeIdentifier>
+      <FileName>AI\IAIOrderServer.cs</FileName>
+      <HashCode>uAAAAACAAAAAAAAYACAAAECAAACGBAAgAAACgmAAIBA=</HashCode>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="SmartTank.AI.IAIOrderServerSinTur" Collapsed="true">
+    <Position X="3.75" Y="13.75" Width="1.5" />
+    <TypeIdentifier>
+      <FileName>AI\IAIOrderServerSinTur.cs</FileName>
+      <HashCode>ACAAQBgAAAAAAAAAAAAABBAAAAAGAAAAAgAAAAAAAAA=</HashCode>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="SmartTank.AI.IAISinTur" Collapsed="true">
+    <Position X="5.5" Y="6.25" Width="1.5" />
+    <TypeIdentifier>
+      <FileName>AI\IAISinTur.cs</FileName>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="SmartTank.AI.AIHelper.IActionOrder" Collapsed="true">
+    <Position X="3.25" Y="4.75" Width="1.5" />
+    <TypeIdentifier>
+      <FileName>AI\AIHelper\AIActionHelper.cs</FileName>
+      <HashCode>AAAAAAAAAAAAAAAAAAEAEAgAAAAAAAAAIAAAAAAAAAA=</HashCode>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="SmartTank.AI.AIHelper.IConsider" Collapsed="true">
+    <Position X="7.75" Y="4.75" Width="1.5" />
+    <TypeIdentifier>
+      <FileName>AI\AIHelper\ConsiderCenter.cs</FileName>
+      <HashCode>AAAAAAAAAEAAAAgAAAEAAEgAAAAAAAAAAAAAAAAAEAA=</HashCode>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="SmartTank.Draw.BackGround.IBackGround" Collapsed="true">
+    <Position X="28.5" Y="11" Width="1.5" />
+    <TypeIdentifier>
+      <FileName>Draw\BackGround\IBackGround.cs</FileName>
+      <HashCode>AAAAAAAAAAAAAgAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="SmartTank.Draw.IDrawableObj" Collapsed="true">
+    <Position X="0.5" Y="5.5" Width="1.5" />
+    <TypeIdentifier>
+      <FileName>Draw\IDrawableObj.cs</FileName>
+      <HashCode>AAAAAAAAAAAAAgAAAAAAAAAAAACAAAAAAAAAAAAAAAA=</HashCode>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="SmartTank.GameObjs.IGameObj" Collapsed="true">
+    <Position X="5.5" Y="7.75" Width="1.5" />
+    <TypeIdentifier>
+      <FileName>GameObjs\IGameObj.cs</FileName>
+      <HashCode>gAAAAAAAAAAAAAAAAAAAAAQAAACAAAAAAAAAgAAAAAA=</HashCode>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="SmartTank.GameObjs.Tank.ITankController" Collapsed="true">
+    <Position X="3.75" Y="10.75" Width="1.5" />
+    <TypeIdentifier>
+      <FileName>GameObjs\Tank\ITankController.cs</FileName>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="SmartTank.PhiCol.ICollideObj" Collapsed="true">
+    <Position X="30.25" Y="11" Width="1.5" />
+    <TypeIdentifier>
+      <FileName>PhiCol\ICollideObj.cs</FileName>
+      <HashCode>AAAAAAIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="SmartTank.PhiCol.IColChecker" Collapsed="true">
+    <Position X="11.75" Y="9.5" Width="1.5" />
+    <TypeIdentifier>
+      <FileName>PhiCol\ICollideObj.cs</FileName>
+      <HashCode>CAAQAAAAAAAAAAAAAAAAAAQAAAAAAAAAAIAAAAAAAAA=</HashCode>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="SmartTank.PhiCol.IColMethod" Collapsed="true">
+    <Position X="32" Y="11" Width="1.5" />
+    <TypeIdentifier>
+      <FileName>PhiCol\ICollideObj.cs</FileName>
+      <HashCode>AAAAAAAAAAAAgAEAAAAAAAAAAAAAAACAAAAAAAAAAAA=</HashCode>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="SmartTank.PhiCol.IPhisicalUpdater" Collapsed="true">
+    <Position X="3.75" Y="9.5" Width="1.5" />
+    <TypeIdentifier>
+      <FileName>PhiCol\IPhisicalObj.cs</FileName>
+      <HashCode>AAAAAAAAAACAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="SmartTank.PhiCol.IPhisicalObj" Collapsed="true">
+    <Position X="37.25" Y="11" Width="1.5" />
+    <TypeIdentifier>
+      <FileName>PhiCol\IPhisicalObj.cs</FileName>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABAAAAAAA=</HashCode>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="SmartTank.Rule.IGameRule" Collapsed="true">
+    <Position X="9.75" Y="11.75" Width="1.5" />
+    <TypeIdentifier>
+      <FileName>Rule\IGameRule.cs</FileName>
+      <HashCode>AAAABAAAAAAAACAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="SmartTank.Scene.ISceneKeeper" Collapsed="true">
+    <Position X="40.75" Y="11" Width="1.5" />
+    <TypeIdentifier>
+      <FileName>Scene\ISceneKeeper.cs</FileName>
+      <HashCode>AAAAAAAAAAQEFAAAAAAAAAAAAAAAAAIAAAAAAAAAAAA=</HashCode>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="SmartTank.Screens.IGameScreen" Collapsed="true">
+    <Position X="9.75" Y="10.5" Width="1.5" />
+    <TypeIdentifier>
+      <FileName>Screens\IGameScreen.cs</FileName>
+      <HashCode>AAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABAAAAAAAAA=</HashCode>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="SmartTank.Senses.Vision.IEyeableObj" Collapsed="true">
+    <Position X="35.5" Y="11" Width="1.5" />
+    <TypeIdentifier>
+      <FileName>Senses\Vision\IEyeableObj.cs</FileName>
+      <HashCode>ggAAAAACAAAAAAAAAAAAAAAAAACAAAAAAAAAAAAAQAA=</HashCode>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="SmartTank.Senses.Vision.IEyeableInfo" Collapsed="true">
+    <Position X="33.75" Y="11" Width="1.5" />
+    <TypeIdentifier>
+      <FileName>Senses\Vision\IEyeableObj.cs</FileName>
+      <HashCode>gAAAAAAAAAAAAAAAAAAAAAAAAAKgAAAAAAAAAAAAAAA=</HashCode>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="SmartTank.Update.IUpdater" Collapsed="true">
+    <Position X="5.5" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <FileName>Update\IUpdater.cs</FileName>
+      <HashCode>AAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+    </TypeIdentifier>
+  </Interface>
+  <Enum Name="SmartTank.AI.AIHelper.ActionRights" Collapsed="true">
+    <Position X="26.75" Y="12.75" Width="1.5" />
+    <TypeIdentifier>
+      <FileName>AI\AIHelper\AIActionHelper.cs</FileName>
+      <HashCode>AAAAAAgAAIAAAAAAAAEAAAAQAAAAAAAAAAAAAAAAAAA=</HashCode>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="SmartTank.AI.AIHelper.ConsiderPriority" Collapsed="true">
+    <Position X="28.5" Y="12.75" Width="1.5" />
+    <TypeIdentifier>
+      <FileName>AI\AIHelper\ConsiderCenter.cs</FileName>
+      <HashCode>AAAAAAAAAAAAAAAACgAAAAAAAAgAAAAAAAAQAAACAAA=</HashCode>
+    </TypeIdentifier>
+  </Enum>
+  <Delegate Name="SmartTank.AI.OnCollidedEventHandlerAI" Collapsed="true">
+    <Position X="30.25" Y="14.5" Width="1.5" />
+    <TypeIdentifier>
+      <FileName>AI\IAIOrderServer.cs</FileName>
+      <HashCode>AAAAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAACAAAAA=</HashCode>
+    </TypeIdentifier>
+  </Delegate>
+  <Delegate Name="SmartTank.AI.AIHelper.ActionFinishHandler" Collapsed="true">
+    <Position X="26.75" Y="13.75" Width="1.5" />
+    <TypeIdentifier>
+      <FileName>AI\AIHelper\AIActionHelper.cs</FileName>
+      <HashCode>AAAAAAAAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+    </TypeIdentifier>
+  </Delegate>
+  <Delegate Name="SmartTank.Draw.DrawCondition" Collapsed="true">
+    <Position X="39" Y="13.75" Width="1.5" />
+    <TypeIdentifier>
+      <FileName>Draw\DrawMgr.cs</FileName>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABA=</HashCode>
+    </TypeIdentifier>
+  </Delegate>
+  <Delegate Name="SmartTank.GameObjs.OnCollidedEventHandler" Collapsed="true">
+    <Position X="28.5" Y="14.5" Width="1.5" />
+    <TypeIdentifier>
+      <FileName>GameObjs\IGameObj.cs</FileName>
+      <HashCode>AAAAAAAAAAAABAAAAAAAAAAAAAAAAIAAAAAAAAAAAAg=</HashCode>
+    </TypeIdentifier>
+  </Delegate>
+  <Delegate Name="SmartTank.Senses.Memory.NaviMapConsiderObj" Collapsed="true">
+    <Position X="26.75" Y="14.5" Width="1.5" />
+    <TypeIdentifier>
+      <FileName>Senses\Memory\ObjMemoryKeeper.cs</FileName>
+      <HashCode>AAAAAAACAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+    </TypeIdentifier>
+  </Delegate>
+  <Delegate Name="SmartTank.Senses.Vision.GetEyeableInfoHandler" Collapsed="true">
+    <Position X="40.75" Y="13.75" Width="1.5" />
+    <TypeIdentifier>
+      <FileName>Senses\Vision\VisionMgr.cs</FileName>
+      <HashCode>AAAAAAAAAAAAAAAABAAAAABAAAAAAAAAAAAAAAAAAAA=</HashCode>
+    </TypeIdentifier>
+  </Delegate>
+  <Delegate Name="SmartTank.Update.OnTimerCallHandler" Collapsed="true">
+    <Position X="32" Y="14.5" Width="1.5" />
+    <TypeIdentifier>
+      <FileName>Update\GameTimer.cs</FileName>
+      <HashCode>AAIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+    </TypeIdentifier>
+  </Delegate>
+</ClassDiagram>

@@ -1,0 +1,129 @@
+﻿<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>8.0.50727</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{D375D61C-D46E-4EB8-8DD1-43BCAB10AD35}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>GameEngine</RootNamespace>
+    <AssemblyName>GameEngine</AssemblyName>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>..\..\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Microsoft.Xna.Framework, Version=2.0.0.0, Culture=neutral, PublicKeyToken=6d5c3888ef60e27d, processorArchitecture=x86" />
+    <Reference Include="Microsoft.Xna.Framework.Game, Version=2.0.0.0, Culture=neutral, PublicKeyToken=6d5c3888ef60e27d, processorArchitecture=MSIL" />
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="BaseGame.cs" />
+    <Compile Include="Draw\BackGround\IBackGround.cs" />
+    <Compile Include="Draw\BackGround\VergeTile\VergeTileData.cs" />
+    <Compile Include="Draw\BackGround\VergeTile\VergeTileGround.cs" />
+    <Compile Include="Draw\Camera.cs" />
+    <Compile Include="Draw\DrawMgr.cs" />
+    <Compile Include="Draw\GameFonts.cs" />
+    <Compile Include="Draw\IDrawableObj.cs" />
+    <Compile Include="Draw\LayerDepth.cs" />
+    <Compile Include="Effects\Particles\Particle.cs" />
+    <Compile Include="Effects\Particles\ParticleSystem.cs" />
+    <Compile Include="Effects\Quake.cs" />
+    <Compile Include="Effects\SceneEffects\BaseEffects\ScaleUp.cs" />
+    <Compile Include="Effects\SceneEffects\EffectsMgr.cs" />
+    <Compile Include="Effects\SceneEffects\Explode.cs" />
+    <Compile Include="Effects\SceneEffects\IManagedEffect.cs" />
+    <Compile Include="Effects\SceneEffects\ShellExplode.cs" />
+    <Compile Include="Effects\SceneEffects\ShellExplodeBeta.cs" />
+    <Compile Include="Effects\SceneEffects\SmokeGenerater.cs" />
+    <Compile Include="Effects\TextEffects\FadeUpEffect.cs" />
+    <Compile Include="Effects\TextEffects\TextEffectMgr.cs" />
+    <Compile Include="Graphics\AnimatedMgr.cs" />
+    <Compile Include="Graphics\AnimatedSprite.cs" />
+    <Compile Include="Graphics\AnimatedSpriteSeries.cs" />
+    <Compile Include="Graphics\AnimatedSpriteSingle.cs" />
+    <Compile Include="Graphics\BasicGraphics.cs" />
+    <Compile Include="Graphics\ChineseWriter.cs" />
+    <Compile Include="Graphics\CollisionResult.cs" />
+    <Compile Include="Graphics\CoordinMgr.cs" />
+    <Compile Include="Graphics\FontMgr.cs" />
+    <Compile Include="Graphics\IAnimated.cs" />
+    <Compile Include="Graphics\RenderEngine.cs" />
+    <Compile Include="Graphics\Sprite.cs" />
+    <Compile Include="Graphics\SpriteBorder.cs" />
+    <Compile Include="Graphics\SpriteMgr.cs" />
+    <Compile Include="Input\InputHandler.cs" />
+    <Compile Include="PhiCol\BorderColMethod.cs" />
+    <Compile Include="PhiCol\ICollideObj.cs" />
+    <Compile Include="PhiCol\IPhisicalObj.cs" />
+    <Compile Include="PhiCol\NonInertiasColUpdater.cs" />
+    <Compile Include="PhiCol\NonInertiasPhiUpdater.cs" />
+    <Compile Include="PhiCol\PhiColMgr.cs" />
+    <Compile Include="PhiCol\SpriteColMethod.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Senses\Memory\ConvexHall.cs" />
+    <Compile Include="Senses\Memory\EyeableBorderObjInfo.cs" />
+    <Compile Include="Senses\Memory\NavigateMap.cs" />
+    <Compile Include="Senses\Memory\ObjMemoryKeeper.cs" />
+    <Compile Include="Senses\Memory\ObjMemoryMgr.cs" />
+    <Compile Include="Senses\Memory\ObjVisiBorder.cs" />
+    <Compile Include="Senses\Vision\IEyeableObj.cs" />
+    <Compile Include="Senses\Vision\VisionMgr.cs" />
+    <Compile Include="Shelter\IHasBorderObj.cs" />
+    <Compile Include="Shelter\IRaderOwner.cs" />
+    <Compile Include="Shelter\IShelterObj.cs" />
+    <Compile Include="Shelter\Rader.cs" />
+    <Compile Include="Shelter\RaderDepthMap.cs" />
+    <Compile Include="Shelter\RaderDrawer.cs" />
+    <Compile Include="Shelter\ShelterMgr.cs" />
+    <Compile Include="UI\Button.cs" />
+    <Compile Include="UI\Checkbox.cs" />
+    <Compile Include="UI\Combo.cs" />
+    <Compile Include="UI\Control.cs" />
+    <Compile Include="UI\ControlCollection.cs" />
+    <Compile Include="UI\Label.cs" />
+    <Compile Include="UI\Listbox.cs" />
+    <Compile Include="UI\NumericUpDown.cs" />
+    <Compile Include="UI\Progressbar.cs" />
+    <Compile Include="UI\RadioButton.cs" />
+    <Compile Include="UI\Scrollbar.cs" />
+    <Compile Include="UI\Textbox.cs" />
+    <Compile Include="UI\TextButton.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Common\Common.csproj">
+      <Project>{F89C0267-5060-4FE3-AFD6-C832A9A9DD3D}</Project>
+      <Name>Common</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="ClassDiagram1.cd" />
+  </ItemGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>
