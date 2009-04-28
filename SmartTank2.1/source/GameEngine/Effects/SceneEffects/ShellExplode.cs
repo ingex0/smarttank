@@ -1,11 +1,9 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
-using GameEngine.Graphics;
-using Common.Helpers;
-using System.IO;
 using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
+using System.IO;
+using Common.Helpers;
 using GameEngine.Draw;
 
 
@@ -13,31 +11,28 @@ namespace GameEngine.Effects.SceneEffects
 {
     public class ShellExplode
     {
-        AnimatedSpriteSeries shellTexs;
+        ScaleUp scaleUp;
 
-        public static void LoadResources()
+        public static void LoadResources ()
         {
-            AnimatedSpriteSeries.LoadResource( BaseGame.ContentMgr,
-                Path.Combine( Directories.ContentDirectory, "SceneEffects\\ShellExplode\\MulEffect" ),
-                0, 32 );
+
         }
 
-        private static AnimatedSpriteSeries CreateTexs()
+        public ShellExplode ( Vector2 pos, float rota )
         {
-            AnimatedSpriteSeries result = new AnimatedSpriteSeries( BaseGame.RenderEngine );
-            result.LoadSeriesFormContent( BaseGame.RenderEngine, BaseGame.ContentMgr, Path.Combine( Directories.ContentDirectory, "SceneEffects\\ShellExplode\\MulEffect" ),
-                0, 32, false );
-
-            return result;
+            scaleUp = new ScaleUp( Path.Combine( Directories.ContentDirectory, "SceneEffects\\star2" ), new Vector2( 64, 64 ), LayerDepth.EffectLow,
+                pos,
+                delegate( float curTime,float deltaTime, float lastRadius )
+                {
+                    if (curTime == 0)
+                        return 3f;
+                    else
+                        return lastRadius + 0.3f;
+                },
+                delegate( float curTime )
+                {
+                    return 0;
+                }, 20 );
         }
-
-        public ShellExplode( Vector2 pos, float rota )
-        {
-            shellTexs = CreateTexs();
-            shellTexs.SetSpritesParameters( new Vector2( 49, 49 ), pos, 30, 30, rota + MathHelper.PiOver2, Color.White, LayerDepth.Shell, SpriteBlendMode.AlphaBlend );
-            shellTexs.Interval = 1;
-            shellTexs.Start( 0, 32, true );
-        }
-
     }
 }

@@ -33,8 +33,8 @@ namespace GameEngine.Draw
 
         bool enabled = false;
 
-        bool focusing = false;
-        bool focusAzi = false;
+        //bool focusing = false;
+        //bool focusAzi = false;
 
         public float minScale = defaultMinScale;
         public float maxScale = defaultMaxScale;
@@ -145,10 +145,10 @@ namespace GameEngine.Draw
         //    this.focusAzi = focusAzi;
         //}
 
-        public void FocusCancel ()
-        {
-            focusing = false;
-        }
+        //public void FocusCancel ()
+        //{
+        //    focusing = false;
+        //}
 
         #region IUpdater ≥…‘±
 

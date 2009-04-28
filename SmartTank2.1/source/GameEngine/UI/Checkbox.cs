@@ -20,7 +20,7 @@ namespace GameEngine.UI
         #region Variables
         Texture2D[] texture;
 
-        int charWidth = 9;
+        //int charWidth = 9;
 
         MouseState ms;
 

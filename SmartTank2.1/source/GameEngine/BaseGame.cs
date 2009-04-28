@@ -9,6 +9,7 @@ using GameEngine.Graphics;
 using Common.Helpers;
 using GameEngine.Input;
 using GameEngine.Draw;
+using GameEngine.Effects;
 
 namespace GameEngine
 {
@@ -30,6 +31,8 @@ namespace GameEngine
 
         protected static RenderEngine renderEngine;
 
+        protected static EffectsMgr effectMgr;
+
         #endregion
 
         #region Properties
@@ -48,6 +51,12 @@ namespace GameEngine
         {
             get { return renderEngine; }
             set { renderEngine = value; }
+        }
+
+        public static EffectsMgr EffectsMgr
+        {
+            get { return effectMgr; }
+            set { effectMgr = value; }
         }
 
         public static CoordinMgr CoordinMgr
@@ -76,16 +85,6 @@ namespace GameEngine
             {
                 if (renderEngine != null)
                     return renderEngine.SpriteMgr;
-                return null;
-            }
-        }
-
-        public static AnimatedMgr AnimatedMgr
-        {
-            get
-            {
-                if (renderEngine != null)
-                    return renderEngine.AnimatedMgr;
                 return null;
             }
         }
@@ -181,6 +180,7 @@ namespace GameEngine
         {
             content = new ContentManager( Services );
             renderEngine = new RenderEngine( Device, content, "Content\\EngineContent" );
+            effectMgr = new EffectsMgr();
             RandomHelper.GenerateNewRandomGenerator();
             Log.Initialize();
             base.Initialize();
