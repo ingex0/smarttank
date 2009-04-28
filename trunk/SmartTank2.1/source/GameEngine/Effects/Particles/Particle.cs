@@ -8,13 +8,13 @@ using Common.Helpers;
 
 namespace GameEngine.Effects.Particles
 {
-    public delegate Vector2 PosFunc( float curTime, Vector2 lastPos, Vector2 dir );
+    public delegate Vector2 PosFunc( float curTime, float deltaTime, Vector2 lastPos, Vector2 dir );
 
-    public delegate Vector2 DirFunc( float curTime, Vector2 lastDir );
+    public delegate Vector2 DirFunc( float curTime, float deltaTime, Vector2 lastDir );
 
-    public delegate float RadiusFunc( float curTime, float lastRadius );
+    public delegate float RadiusFunc( float curTime, float deltaTime, float lastRadius );
 
-    public delegate Color ColorSetTimeFunc( float curTime, Color lastColor );
+    public delegate Color ColorSetTimeFunc( float curTime, float deltaTime, Color lastColor );
 
     public class Particle
     {
@@ -28,7 +28,7 @@ namespace GameEngine.Effects.Particles
         protected Color curColor;
         protected float layerDepth;
 
-        float curTime = -1;
+        float curTime = 0;
         float duration;
 
         protected PosFunc posFunc;
@@ -61,22 +61,25 @@ namespace GameEngine.Effects.Particles
             this.tex = orignTex;
             this.texOrign = texOrign;
             this.sourceRect = sourceRect;
+
         }
 
-        public bool Update()
+        public bool Update( float seconds )
         {
-            curTime++;
+            curDir = dirFunc( curTime, seconds, curDir );
+            curPos = posFunc( curTime, seconds, curPos, curDir );
+            curRadius = radiusFunc( curTime, seconds, curRadius );
+            curColor = colorFunc( curTime, seconds, curColor );
+
+
+            curTime += seconds;
             if (curTime > duration)
             {
                 isEnd = true;
                 return true;
             }
 
-            curDir = dirFunc( curTime, curDir );
-            curPos = posFunc( curTime, curPos, curDir );
-            curRadius = radiusFunc( curTime, curRadius );
-            curColor = colorFunc( curTime, curColor );
-
+            
             return false;
         }
 

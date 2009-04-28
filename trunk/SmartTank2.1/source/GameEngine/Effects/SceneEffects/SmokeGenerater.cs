@@ -40,7 +40,7 @@ namespace GameEngine.Effects.SceneEffects
 
             Texture2D tex = BaseGame.ContentMgr.Load<Texture2D>( texAsset );
             particleSystem = new ParticleSystem( duaration, partiDuara, pos, tex, texOrigin, null, LayerDepth.EffectLow + 0.01f,
-                delegate( float curTime )
+                delegate( float curTime, ref float timer )
                 {
                     if (this.concen == 0)
                         return 0;
@@ -51,7 +51,7 @@ namespace GameEngine.Effects.SceneEffects
                     else
                         return 0;
                 },
-                delegate( float curTime, Vector2 lastPos, Vector2 curDir, int No )
+                delegate( float curTime,float deltaTime, Vector2 lastPos, Vector2 curDir, int No )
                 {
                     if (curTime == 0)
                         return Vector2.Zero + RandomHelper.GetRandomVector2( -1, 1 );
@@ -59,7 +59,7 @@ namespace GameEngine.Effects.SceneEffects
                     else
                         return lastPos + curDir * speed;
                 },
-                delegate( float curTime, Vector2 lastDir, int No )
+                delegate( float curTime, float deltaTime,Vector2 lastDir, int No )
                 {
                     if (curTime == 0)
                         return dir + RandomHelper.GetRandomVector2( -0.3f, 0.3f );
@@ -67,18 +67,18 @@ namespace GameEngine.Effects.SceneEffects
                     else
                         return lastDir;
                 },
-                delegate( float curTime, float lastRadius, int No )
+                delegate( float curTime, float deltaTime, float lastRadius, int No )
                 {
                     return startRadius * (1 + 0.1f * curTime);
                 },
-                delegate( float curTime, Color lastColor, int No )
+                delegate( float curTime, float deltaTime, Color lastColor, int No )
                 {
                     return new Color( 160, 160, 160, Math.Max( (byte)0, (byte)(255 * (partiDuara - curTime) / partiDuara) ) );
                 } );
 
             if (managered)
                 EffectsMgr.AddManagedEffect( this );
-        }
+        }       
 
         public SmokeGenerater( float duaration, float partiDuara, Vector2 dir, float speed, float concen, bool managered)
             : this( duaration, partiDuara, Vector2.Zero, dir, speed, concen, managered )
@@ -104,7 +104,7 @@ namespace GameEngine.Effects.SceneEffects
                 isEnd = true;
                 return;
             }
-            particleSystem.Update();
+            particleSystem.Update(seconds);
         }
 
         #endregion

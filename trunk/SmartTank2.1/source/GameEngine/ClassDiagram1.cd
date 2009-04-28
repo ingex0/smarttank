@@ -2,28 +2,28 @@
 <ClassDiagram MajorVersion="1" MinorVersion="1" MembersFormat="FullSignature">
   <Font Name="Tahoma" Size="8.25" />
   <Class Name="GameEngine.BaseGame" Collapsed="true">
-    <Position X="30.25" Y="0.5" Width="1.5" />
+    <Position X="18.5" Y="0.75" Width="1.5" />
     <TypeIdentifier>
       <FileName>BaseGame.cs</FileName>
-      <HashCode>AAQCRAABBAoAA5IAAAAQAEACiQEAIAgAAAAACAASBAA=</HashCode>
+      <HashCode>AAQCRAABBAoAA5IAAAAQCEAAqQEAIAgAAAAACAASBAA=</HashCode>
     </TypeIdentifier>
   </Class>
   <Class Name="GameEngine.RenderEngine" Collapsed="true">
     <Position X="11" Y="2.5" Width="1.5" />
     <TypeIdentifier>
       <FileName>Graphics\RenderEngine.cs</FileName>
-      <HashCode>IAAEAAACCQAABgAAAAIAAAACAQEAAAABAAIAAAACAAE=</HashCode>
+      <HashCode>IAAEAAACCQAABgAAAAAAAAAAAQEAAAABAAIAAAACAAE=</HashCode>
     </TypeIdentifier>
   </Class>
   <Class Name="GameEngine.Draw.BackGround.VergeTile.VergeTileData" Collapsed="true">
-    <Position X="29" Y="6.5" Width="1.5" />
+    <Position X="15.75" Y="7.25" Width="1.5" />
     <TypeIdentifier>
       <FileName>Draw\BackGround\VergeTile\VergeTileData.cs</FileName>
       <HashCode>AAAAoIAAIAAAAAAAAAAAAAAAAABQEAgAAAAAAAgACAA=</HashCode>
     </TypeIdentifier>
   </Class>
   <Class Name="GameEngine.Draw.BackGround.VergeTile.VergeTileGround" Collapsed="true" BaseTypeListCollapsed="true">
-    <Position X="29" Y="5.75" Width="1.5" />
+    <Position X="15.75" Y="6.5" Width="1.5" />
     <TypeIdentifier>
       <FileName>Draw\BackGround\VergeTile\VergeTileGround.cs</FileName>
       <HashCode>AABQCAAAIAAAAgAAACACAAAkCgBCEAgBAAQAAAAAAAA=</HashCode>
@@ -31,92 +31,79 @@
     <Lollipop Position="0.2" Collapsed="true" />
   </Class>
   <Class Name="GameEngine.Draw.Camera" Collapsed="true">
-    <Position X="30.25" Y="3.5" Width="1.5" />
+    <Position X="12.75" Y="3.75" Width="1.5" />
     <TypeIdentifier>
       <FileName>Draw\Camera.cs</FileName>
-      <HashCode>ABSAEACQAIAGgAAAEAOACAADgQAAQAAAAAAgghAAAAA=</HashCode>
+      <HashCode>ABSAEACQAIAGgAAAEAOACAADgQAAAAAAAAAggAAAAAA=</HashCode>
     </TypeIdentifier>
   </Class>
   <Class Name="GameEngine.Draw.DrawMgr" Collapsed="true">
-    <Position X="30.25" Y="2.5" Width="1.5" />
+    <Position X="17.5" Y="2.5" Width="1.5" />
     <TypeIdentifier>
       <FileName>Draw\DrawMgr.cs</FileName>
       <HashCode>AAAAAIAAAAAAAgABAAAAAAAAAAAgAAAAIAAAIAAAAAA=</HashCode>
     </TypeIdentifier>
   </Class>
   <Class Name="GameEngine.Draw.GameFonts" Collapsed="true">
-    <Position X="32" Y="5" Width="1.5" />
+    <Position X="19.25" Y="5.75" Width="1.5" />
     <TypeIdentifier>
       <FileName>Draw\GameFonts.cs</FileName>
       <HashCode>AAAAAAAAABAAAAAAEBAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
     </TypeIdentifier>
   </Class>
   <Class Name="GameEngine.Draw.LayerDepth" Collapsed="true">
-    <Position X="32" Y="5.75" Width="1.5" />
+    <Position X="19.25" Y="4.75" Width="1.5" />
     <TypeIdentifier>
       <FileName>Draw\LayerDepth.cs</FileName>
       <HashCode>ABAAAQAAAIAAAAAAQAAgAAgAAIQAAAAAAAAACAAAEAA=</HashCode>
     </TypeIdentifier>
   </Class>
   <Class Name="GameEngine.Effects.Particles.Particle" Collapsed="true">
-    <Position X="37" Y="3.5" Width="1.5" />
+    <Position X="25.5" Y="5.75" Width="1.5" />
     <TypeIdentifier>
       <FileName>Effects\Particles\Particle.cs</FileName>
       <HashCode>AIwAAAIEAgAAAgAIAIAwAAAAANCACACAAAAAAACAAAA=</HashCode>
     </TypeIdentifier>
   </Class>
   <Class Name="GameEngine.Effects.Particles.ParticleSystem" Collapsed="true">
-    <Position X="37" Y="2.5" Width="1.5" />
+    <Position X="25.5" Y="4.75" Width="1.5" />
     <TypeIdentifier>
       <FileName>Effects\Particles\ParticleSystem.cs</FileName>
-      <HashCode>AQQAAAIAAQAAAgAEAogQAAAMAEGAiACAAQAgAAAAAAA=</HashCode>
+      <HashCode>AQQAAAIAAQAAAgAEAogQEAAMAFGAiACAAQAgAAAAAAA=</HashCode>
     </TypeIdentifier>
+    <Lollipop Position="0.2" />
   </Class>
   <Class Name="GameEngine.Effects.Quake" Collapsed="true">
-    <Position X="39" Y="9" Width="1.5" />
+    <Position X="21.5" Y="12.5" Width="1.5" />
     <TypeIdentifier>
-      <FileName>Effects\Quake.cs</FileName>
+      <FileName>Effects\SceneEffects\Quake.cs</FileName>
       <HashCode>EkQAAAAAQACAAAAAAAAwAABAAAAAQCAAIAQiAAAAgEQ=</HashCode>
     </TypeIdentifier>
   </Class>
-  <Class Name="GameEngine.Effects.SceneEffects.BaseEffects.ScaleUp" Collapsed="true" BaseTypeListCollapsed="true">
-    <Position X="35" Y="5.25" Width="1.5" />
+  <Class Name="GameEngine.Effects.SceneEffects.ScaleUp" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="23.5" Y="11" Width="1.5" />
     <TypeIdentifier>
-      <FileName>Effects\SceneEffects\BaseEffects\ScaleUp.cs</FileName>
+      <FileName>Effects\SceneEffects\ScaleUp.cs</FileName>
       <HashCode>CIQAAAIAAAAAAgAAAIAREICAABCAAACAAAACAACAAAA=</HashCode>
     </TypeIdentifier>
     <Lollipop Position="0.2" Collapsed="true" />
   </Class>
-  <Class Name="GameEngine.Effects.SceneEffects.EffectsMgr" Collapsed="true">
-    <Position X="35" Y="2.5" Width="1.5" />
+  <Class Name="GameEngine.Effects.EffectsMgr" Collapsed="true">
+    <Position X="25.25" Y="2.5" Width="1.5" />
     <TypeIdentifier>
-      <FileName>Effects\SceneEffects\EffectsMgr.cs</FileName>
+      <FileName>Effects\EffectsMgr.cs</FileName>
       <HashCode>AAQAAAAAAAAAAgAAAAAAAAIAAAAAAAAAAAAAAADAAAA=</HashCode>
     </TypeIdentifier>
   </Class>
-  <Class Name="GameEngine.Effects.SceneEffects.Explode" Collapsed="true">
-    <Position X="39" Y="7.5" Width="1.5" />
-    <TypeIdentifier>
-      <FileName>Effects\SceneEffects\Explode.cs</FileName>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAgAIAAAAAAAAAAAABAAAAA=</HashCode>
-    </TypeIdentifier>
-  </Class>
   <Class Name="GameEngine.Effects.SceneEffects.ShellExplode" Collapsed="true">
-    <Position X="39" Y="8.25" Width="1.5" />
+    <Position X="21.5" Y="10.25" Width="1.5" />
     <TypeIdentifier>
       <FileName>Effects\SceneEffects\ShellExplode.cs</FileName>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAABgAAAAAAABAAAAAAAAAAAA=</HashCode>
-    </TypeIdentifier>
-  </Class>
-  <Class Name="GameEngine.Effects.SceneEffects.ShellExplodeBeta" Collapsed="true">
-    <Position X="39" Y="6.75" Width="1.5" />
-    <TypeIdentifier>
-      <FileName>Effects\SceneEffects\ShellExplodeBeta.cs</FileName>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAgAAAAAAAAAAAAAAgAAAAA=</HashCode>
     </TypeIdentifier>
   </Class>
   <Class Name="GameEngine.Effects.SceneEffects.SmokeGenerater" Collapsed="true" BaseTypeListCollapsed="true">
-    <Position X="35" Y="4.5" Width="1.5" />
+    <Position X="23.5" Y="10.25" Width="1.5" />
     <TypeIdentifier>
       <FileName>Effects\SceneEffects\SmokeGenerater.cs</FileName>
       <HashCode>AARAAAAAAAAAAgAAAAAAEAABARCCAgEAAQAAAAAAAAA=</HashCode>
@@ -124,7 +111,7 @@
     <Lollipop Position="0.2" Collapsed="true" />
   </Class>
   <Class Name="GameEngine.Effects.TextEffects.FadeUpEffect" Collapsed="true" BaseTypeListCollapsed="true">
-    <Position X="39" Y="4.25" Width="1.5" />
+    <Position X="28" Y="5.75" Width="1.5" />
     <TypeIdentifier>
       <FileName>Effects\TextEffects\FadeUpEffect.cs</FileName>
       <HashCode>AQAAABIAAQAAAkEAAAAAEIACAAAgAACIAEAAAAAAAAA=</HashCode>
@@ -132,80 +119,73 @@
     <Lollipop Position="0.2" Collapsed="true" />
   </Class>
   <Class Name="GameEngine.Effects.TextEffects.TextEffectMgr" Collapsed="true">
-    <Position X="39" Y="2.5" Width="1.5" />
+    <Position X="28" Y="4" Width="1.5" />
     <TypeIdentifier>
       <FileName>Effects\TextEffects\TextEffectMgr.cs</FileName>
       <HashCode>AAAAAAAAAAAAAgAAAAAEAAAAAQAAAAQAAAAAAABAAAA=</HashCode>
     </TypeIdentifier>
   </Class>
-  <Class Name="GameEngine.Graphics.AnimatedMgr" Collapsed="true">
-    <Position X="8.5" Y="4.25" Width="1.5" />
+  <Class Name="GameEngine.Effects.AnimatedSprite" Collapsed="true">
+    <Position X="22.75" Y="6.5" Width="1.5" />
     <TypeIdentifier>
-      <FileName>Graphics\AnimatedMgr.cs</FileName>
-      <HashCode>AAIAAAAAAAAAAgAAAAIAAAAAAAAAAAAAAAAAAABAAAA=</HashCode>
-    </TypeIdentifier>
-  </Class>
-  <Class Name="GameEngine.Graphics.AnimatedSprite" Collapsed="true">
-    <Position X="8.5" Y="6" Width="1.5" />
-    <TypeIdentifier>
-      <FileName>Graphics\AnimatedSprite.cs</FileName>
-      <HashCode>AAAAAAACADAAAgAAAIAQEgAIAAAAAAAAIGBAgAEIAEA=</HashCode>
+      <FileName>Effects\Animate\AnimatedSprite.cs</FileName>
+      <HashCode>AAQAAAACADAAAgAAAIAQEgAIAACAAAAAIGAAgAEIAEA=</HashCode>
     </TypeIdentifier>
     <Lollipop Position="0.2" />
   </Class>
-  <Class Name="GameEngine.Graphics.AnimatedSpriteSeries" Collapsed="true">
-    <Position X="7.25" Y="6.75" Width="1.5" />
+  <Class Name="GameEngine.Effects.AnimatedSpriteSeries" Collapsed="true">
+    <Position X="21.5" Y="7.5" Width="1.5" />
     <TypeIdentifier>
-      <FileName>Graphics\AnimatedSpriteSeries.cs</FileName>
-      <HashCode>gAABCAAQECAgAgAAAAAAAAAAAAABAAAAAIAAAAAAAAA=</HashCode>
+      <FileName>Effects\Animate\AnimatedSpriteSeries.cs</FileName>
+      <HashCode>gAABCAAQECAgAAAAAAAAAIAAAACBAAAAAIAAAAEAAAA=</HashCode>
     </TypeIdentifier>
     <Lollipop Position="0.2" />
   </Class>
-  <Class Name="GameEngine.Graphics.AnimatedSpriteSingle" Collapsed="true">
-    <Position X="9.5" Y="7" Width="1.5" />
+  <Class Name="GameEngine.Effects.AnimatedSpriteSingle" Collapsed="true">
+    <Position X="23.75" Y="7.5" Width="1.5" />
     <TypeIdentifier>
-      <FileName>Graphics\AnimatedSpriteSingle.cs</FileName>
-      <HashCode>gAQAACAABCAAAgAAAIAAIEggAICgAAgAACAAwAyAGAA=</HashCode>
+      <FileName>Effects\Animate\AnimatedSpriteSingle.cs</FileName>
+      <HashCode>gAQAACAABCAAAAAAAIAAIMggAICgAAgAACAAwA2AGAA=</HashCode>
     </TypeIdentifier>
     <Lollipop Position="0.2" />
   </Class>
   <Class Name="GameEngine.Graphics.BasicGraphics" Collapsed="true">
-    <Position X="10.25" Y="4.25" Width="1.5" />
+    <Position X="9.5" Y="4.5" Width="1.5" />
     <TypeIdentifier>
       <FileName>Graphics\BasicGraphics.cs</FileName>
       <HashCode>ABAAAAAQAAAAAAIAAKAAAAAAAAAAIAABAEAAAAQAAAA=</HashCode>
     </TypeIdentifier>
   </Class>
   <Class Name="GameEngine.Graphics.ChineseWriter" Collapsed="true">
-    <Position X="13.75" Y="5" Width="1.5" />
+    <Position X="13" Y="5.25" Width="1.5" />
     <TypeIdentifier>
       <FileName>Graphics\ChineseWriter.cs</FileName>
       <HashCode>ACAAAAAEAAAAAEKAAAAAIAAAAAAAAAAAAIgBCAQQAAA=</HashCode>
     </TypeIdentifier>
   </Class>
   <Class Name="GameEngine.Graphics.CollisionResult" Collapsed="true">
-    <Position X="12" Y="7.25" Width="1.5" />
+    <Position X="11.25" Y="7.5" Width="1.5" />
     <TypeIdentifier>
       <FileName>Graphics\CollisionResult.cs</FileName>
       <HashCode>AAAAAAAAAAAQAAAAAAAAAAAAAAAAAAAAAAGAAAAAAAA=</HashCode>
     </TypeIdentifier>
   </Class>
   <Class Name="GameEngine.Graphics.CoordinMgr" Collapsed="true">
-    <Position X="11.5" Y="3.5" Width="1.5" />
+    <Position X="10.75" Y="3.75" Width="1.5" />
     <TypeIdentifier>
       <FileName>Graphics\CoordinMgr.cs</FileName>
       <HashCode>AAQAYAAAAAACgCIAAAMCACQLAAAAAYAAAAiQMgIAAAA=</HashCode>
     </TypeIdentifier>
   </Class>
   <Class Name="GameEngine.Graphics.FontMgr" Collapsed="true">
-    <Position X="13.75" Y="4.25" Width="1.5" />
+    <Position X="13" Y="4.5" Width="1.5" />
     <TypeIdentifier>
       <FileName>Graphics\FontMgr.cs</FileName>
       <HashCode>AAAAAAAAAEAAAgIAAAAAAAAAEAAAAAoAAAAAAAUQAAg=</HashCode>
     </TypeIdentifier>
   </Class>
   <Class Name="GameEngine.Graphics.Sprite" Collapsed="true" BaseTypeListCollapsed="true">
-    <Position X="12" Y="5" Width="1.5" />
+    <Position X="11.25" Y="5.25" Width="1.5" />
     <TypeIdentifier>
       <FileName>Graphics\Sprite.cs</FileName>
       <HashCode>ACYIgABIDCCAAgBAABIAEEQgBIGAABwgAASAhAySCAA=</HashCode>
@@ -213,28 +193,28 @@
     <Lollipop Position="0.2" Collapsed="true" />
   </Class>
   <Class Name="GameEngine.Graphics.BorderBulidException" Collapsed="true">
-    <Position X="12" Y="8" Width="1.5" />
+    <Position X="11.25" Y="8.25" Width="1.5" />
     <TypeIdentifier>
       <FileName>Graphics\SpriteBorder.cs</FileName>
       <HashCode>AAAAAAAAAAAAAAAAABAAAgAAAAAAgAAAAAAAAAAAAAA=</HashCode>
     </TypeIdentifier>
   </Class>
   <Class Name="GameEngine.Graphics.BorderPoint" Collapsed="true">
-    <Position X="12" Y="6.5" Width="1.5" />
+    <Position X="11.25" Y="6.75" Width="1.5" />
     <TypeIdentifier>
       <FileName>Graphics\SpriteBorder.cs</FileName>
       <HashCode>AAAAAAAAAAAAgAAAAAAAAAIAAAAAAAAAAEAAAAAAAAA=</HashCode>
     </TypeIdentifier>
   </Class>
   <Class Name="GameEngine.Graphics.SpriteBorder" Collapsed="true">
-    <Position X="12" Y="5.75" Width="1.5" />
+    <Position X="11.25" Y="6" Width="1.5" />
     <TypeIdentifier>
       <FileName>Graphics\SpriteBorder.cs</FileName>
       <HashCode>QAAFAAgAAACAAAAgABggAAQKAAAgAIBAAACAAAAAgBA=</HashCode>
     </TypeIdentifier>
   </Class>
   <Class Name="GameEngine.Graphics.SpriteMgr" Collapsed="true">
-    <Position X="12" Y="4.25" Width="1.5" />
+    <Position X="11.25" Y="4.5" Width="1.5" />
     <TypeIdentifier>
       <FileName>Graphics\SpriteMgr.cs</FileName>
       <HashCode>AAAAAAACEAAAAgAAAAAAAAUAAAAIAAAAAAIAAAAABAA=</HashCode>
@@ -248,7 +228,7 @@
     </TypeIdentifier>
   </Class>
   <Class Name="GameEngine.PhiCol.BorderColMethod" Collapsed="true" BaseTypeListCollapsed="true">
-    <Position X="19.75" Y="6.5" Width="1.5" />
+    <Position X="11.5" Y="19.5" Width="1.5" />
     <TypeIdentifier>
       <FileName>PhiCol\BorderColMethod.cs</FileName>
       <HashCode>AAAAAAAAAAAAgAEAAAAAAAACAAAAAACAAAAAAAAAAAA=</HashCode>
@@ -256,7 +236,7 @@
     <Lollipop Position="0.2" Collapsed="true" />
   </Class>
   <Class Name="GameEngine.PhiCol.BorderColChecker" Collapsed="true" BaseTypeListCollapsed="true">
-    <Position X="19.75" Y="5.75" Width="1.5" />
+    <Position X="11.5" Y="18.75" Width="1.5" />
     <TypeIdentifier>
       <FileName>PhiCol\BorderColMethod.cs</FileName>
       <HashCode>CAAQAAAAAAAAACAAAAAAAAQAAAAAAAAAAIAAAAAAAAA=</HashCode>
@@ -264,7 +244,7 @@
     <Lollipop Position="0.2" Collapsed="true" />
   </Class>
   <Class Name="GameEngine.PhiCol.NonInertiasColUpdater" Collapsed="true">
-    <Position X="19.75" Y="8.5" Width="1.5" />
+    <Position X="11.5" Y="21.5" Width="1.5" />
     <TypeIdentifier>
       <FileName>PhiCol\NonInertiasColUpdater.cs</FileName>
       <HashCode>CAAQIAAAAAAAAAAAAAQACAQAQAAAAAAAAIAAAAAAAAA=</HashCode>
@@ -272,7 +252,7 @@
     <Lollipop Position="0.2" />
   </Class>
   <Class Name="GameEngine.PhiCol.NonInertiasPhiUpdater" Collapsed="true">
-    <Position X="16.75" Y="5" Width="1.5" />
+    <Position X="8.5" Y="18" Width="1.5" />
     <TypeIdentifier>
       <FileName>PhiCol\NonInertiasPhiUpdater.cs</FileName>
       <HashCode>AAAAAAAAAAiAIAAAABAAAAAAAACAAAAAAAAAgBAAAAE=</HashCode>
@@ -280,14 +260,14 @@
     <Lollipop Position="0.2" />
   </Class>
   <Class Name="GameEngine.PhiCol.PhiColMgr" Collapsed="true">
-    <Position X="18.25" Y="2.5" Width="1.5" />
+    <Position X="10" Y="15.5" Width="1.5" />
     <TypeIdentifier>
       <FileName>PhiCol\PhiColMgr.cs</FileName>
       <HashCode>AATRAAAACCAIAAABAAAAAIIACAAAAAAAAAIAEAAABAA=</HashCode>
     </TypeIdentifier>
   </Class>
   <Class Name="GameEngine.PhiCol.SpriteColMethod" Collapsed="true" BaseTypeListCollapsed="true">
-    <Position X="19.75" Y="7.25" Width="1.5" />
+    <Position X="11.5" Y="20.25" Width="1.5" />
     <TypeIdentifier>
       <FileName>PhiCol\SpriteColMethod.cs</FileName>
       <HashCode>AAAAAAAAAAAAgAEAAAAAAAAAAAAACACAAAgAAAAAAAA=</HashCode>
@@ -295,56 +275,56 @@
     <Lollipop Position="0.2" Collapsed="true" />
   </Class>
   <Class Name="GameEngine.Senses.Memory.ConvexHall" Collapsed="true">
-    <Position X="45.25" Y="5" Width="1.5" />
+    <Position X="24.5" Y="18" Width="1.5" />
     <TypeIdentifier>
       <FileName>Senses\Memory\ConvexHall.cs</FileName>
       <HashCode>AAAAAAAAAAAAgAAAAAAABAAAAAAAAAAAAAAAAAAABEA=</HashCode>
     </TypeIdentifier>
   </Class>
   <Class Name="GameEngine.Senses.Memory.EyeableBorderObjInfo" Collapsed="true">
-    <Position X="42.25" Y="6.5" Width="1.5" />
+    <Position X="21.5" Y="19.5" Width="1.5" />
     <TypeIdentifier>
       <FileName>Senses\Memory\EyeableBorderObjInfo.cs</FileName>
       <HashCode>QAAIBAAAAAAAAAAAAGAEAABgAAAAAAAAAAABAEAACAQ=</HashCode>
     </TypeIdentifier>
   </Class>
   <Class Name="GameEngine.Senses.Memory.GuardConvex" Collapsed="true">
-    <Position X="45.25" Y="5.75" Width="1.5" />
+    <Position X="24.5" Y="18.75" Width="1.5" />
     <TypeIdentifier>
       <FileName>Senses\Memory\NavigateMap.cs</FileName>
       <HashCode>AAAAAACAAAAAAAAASAAAAABAAAAAAAAAAAAAAAAAAAA=</HashCode>
     </TypeIdentifier>
   </Class>
   <Class Name="GameEngine.Senses.Memory.NavigateMap" Collapsed="true">
-    <Position X="45.25" Y="7.25" Width="1.5" />
+    <Position X="24.5" Y="20.25" Width="1.5" />
     <TypeIdentifier>
       <FileName>Senses\Memory\NavigateMap.cs</FileName>
       <HashCode>ACAAAAAAABAAQQAAAEAAAAAAAEAAEAAABBAAAAAwAKg=</HashCode>
     </TypeIdentifier>
   </Class>
   <Class Name="GameEngine.Senses.Memory.ObjMemoryKeeper" Collapsed="true">
-    <Position X="45.25" Y="4.25" Width="1.5" />
+    <Position X="24.5" Y="17.25" Width="1.5" />
     <TypeIdentifier>
       <FileName>Senses\Memory\ObjMemoryKeeper.cs</FileName>
       <HashCode>CAAAAAAAAAAAACAAAACgAAAAAAAAAAAAAAAgAAAgAAA=</HashCode>
     </TypeIdentifier>
   </Class>
   <Class Name="GameEngine.Senses.Memory.ObjMemoryMgr" Collapsed="true">
-    <Position X="45.25" Y="2.5" Width="1.5" />
+    <Position X="24.5" Y="15.5" Width="1.5" />
     <TypeIdentifier>
       <FileName>Senses\Memory\ObjMemoryMgr.cs</FileName>
       <HashCode>QAQAAAAAAAAAAAABEAAAAAAAAAAgAAAAAAAAAAAAAAA=</HashCode>
     </TypeIdentifier>
   </Class>
   <Class Name="GameEngine.Senses.Memory.ObjVisiBorder" Collapsed="true">
-    <Position X="43.75" Y="3.25" Width="1.5" />
+    <Position X="23" Y="16.25" Width="1.5" />
     <TypeIdentifier>
       <FileName>Senses\Memory\ObjVisiBorder.cs</FileName>
       <HashCode>AAAAAAAAAAAAIBAABCAQAAAAAAAAAAAAAAABAAAAAAA=</HashCode>
     </TypeIdentifier>
   </Class>
   <Class Name="GameEngine.Senses.Vision.EyeableInfo" Collapsed="true" BaseTypeListCollapsed="true">
-    <Position X="42.25" Y="5.75" Width="1.5" />
+    <Position X="21.5" Y="18.75" Width="1.5" />
     <TypeIdentifier>
       <FileName>Senses\Vision\IEyeableObj.cs</FileName>
       <HashCode>AAAAAAAAAAIAAAAAAAAAAIAAAAKgAAAAIAAAAAAAQAA=</HashCode>
@@ -352,28 +332,28 @@
     <Lollipop Position="0.2" Collapsed="true" />
   </Class>
   <Class Name="GameEngine.Senses.Vision.VisionMgr" Collapsed="true">
-    <Position X="42.25" Y="2.5" Width="1.5" />
+    <Position X="21.5" Y="15.5" Width="1.5" />
     <TypeIdentifier>
       <FileName>Senses\Vision\VisionMgr.cs</FileName>
       <HashCode>QAQAAAAAAAAQAAABAAAAAAAAIEAAAAAAAAAAAAAAAAA=</HashCode>
     </TypeIdentifier>
   </Class>
   <Class Name="GameEngine.Shelter.Rader" Collapsed="true">
-    <Position X="25.5" Y="4.25" Width="1.5" />
+    <Position X="17.5" Y="17.25" Width="1.5" />
     <TypeIdentifier>
       <FileName>Shelter\Rader.cs</FileName>
       <HashCode>KAQCIGiAACAFggAAIgCAAIAQGAKgkojAOCCBwBECYQA=</HashCode>
     </TypeIdentifier>
   </Class>
   <Class Name="GameEngine.Shelter.RaderDepthMap" Collapsed="true">
-    <Position X="25.5" Y="5" Width="1.5" />
+    <Position X="17.5" Y="18" Width="1.5" />
     <TypeIdentifier>
       <FileName>Shelter\RaderDepthMap.cs</FileName>
       <HashCode>AEAEgAAAAAAAgADQCAAABAISACgAEAAAAAAABAQACAA=</HashCode>
     </TypeIdentifier>
   </Class>
   <Class Name="GameEngine.Shelter.ShelterMgr" Collapsed="true">
-    <Position X="24.5" Y="2.5" Width="1.5" />
+    <Position X="16.25" Y="15.5" Width="1.5" />
     <TypeIdentifier>
       <FileName>Shelter\RaderDrawer.cs</FileName>
       <HashCode>AAQAAAAQAIAAAAABAAAIAAAAAAAAAAAAARAIAAAAAEA=</HashCode>
@@ -397,7 +377,7 @@
     <Position X="3.5" Y="8" Width="1.5" />
     <TypeIdentifier>
       <FileName>UI\Checkbox.cs</FileName>
-      <HashCode>AAQAAAAgAAAAAgAAEAQAAAAAABAAAgAAAAQBAAAAAgA=</HashCode>
+      <HashCode>AAQAAAAgAAAAAgAAEAAAAAAAABAAAgAAAAQBAAAAAgA=</HashCode>
     </TypeIdentifier>
   </Class>
   <Class Name="GameEngine.UI.Combo" Collapsed="true">
@@ -478,234 +458,227 @@
     </TypeIdentifier>
   </Class>
   <Struct Name="GameEngine.Senses.Memory.NaviPoint" Collapsed="true">
-    <Position X="45.25" Y="8" Width="1.5" />
+    <Position X="24.5" Y="21" Width="1.5" />
     <TypeIdentifier>
       <FileName>Senses\Memory\NavigateMap.cs</FileName>
       <HashCode>gAAAAAAAAAAAAAAAAAAAAIAAAACAAAAAAAEAAIABAAA=</HashCode>
     </TypeIdentifier>
   </Struct>
   <Struct Name="GameEngine.Senses.Memory.VisiBordPoint" Collapsed="true">
-    <Position X="45.25" Y="6.5" Width="1.5" />
+    <Position X="24.5" Y="19.5" Width="1.5" />
     <TypeIdentifier>
       <FileName>Senses\Memory\ObjVisiBorder.cs</FileName>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEAAAAABAAA=</HashCode>
     </TypeIdentifier>
   </Struct>
   <Interface Name="GameEngine.Draw.BackGround.IBackGround" Collapsed="true">
-    <Position X="29" Y="5" Width="1.5" />
+    <Position X="15.75" Y="5.75" Width="1.5" />
     <TypeIdentifier>
       <FileName>Draw\BackGround\IBackGround.cs</FileName>
       <HashCode>AAAAAAAAAAAAAgAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
     </TypeIdentifier>
   </Interface>
   <Interface Name="GameEngine.Draw.IDrawableObj" Collapsed="true">
-    <Position X="30.25" Y="4.25" Width="1.5" />
+    <Position X="17.5" Y="3.75" Width="1.5" />
     <TypeIdentifier>
       <FileName>Draw\IDrawableObj.cs</FileName>
       <HashCode>AAAAAAAAAAAAAgAAAAAAAAAAAACAAAAAAAAAAAAAAAA=</HashCode>
     </TypeIdentifier>
   </Interface>
-  <Interface Name="GameEngine.Effects.SceneEffects.IManagedEffect" Collapsed="true">
-    <Position X="35" Y="3.5" Width="1.5" />
+  <Interface Name="GameEngine.Effects.IManagedEffect" Collapsed="true">
+    <Position X="25.25" Y="3.5" Width="1.5" />
     <TypeIdentifier>
-      <FileName>Effects\SceneEffects\IManagedEffect.cs</FileName>
+      <FileName>Effects\IManagedEffect.cs</FileName>
       <HashCode>AAQAAAAAAAAAAAAAAAAAEAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
     </TypeIdentifier>
     <InheritanceLine Type="GameEngine.Draw.IDrawableObj" FixedToPoint="true">
       <Path>
-        <Point X="31" Y="4.25" />
-        <Point X="31" Y="4.168" />
-        <Point X="31.832" Y="4.168" />
-        <Point X="31.832" Y="4.252" />
-        <Point X="35.75" Y="4.252" />
-        <Point X="35.75" Y="4.13" />
+        <Point X="18.25" Y="3.75" />
+        <Point X="18.25" Y="3.45" />
+        <Point X="24.95" Y="3.45" />
+        <Point X="24.95" Y="4.43" />
+        <Point X="26" Y="4.43" />
+        <Point X="26" Y="4.13" />
       </Path>
     </InheritanceLine>
   </Interface>
   <Interface Name="GameEngine.Effects.TextEffects.ITextEffect" Collapsed="true">
-    <Position X="39" Y="3.5" Width="1.5" />
+    <Position X="28" Y="5" Width="1.5" />
     <TypeIdentifier>
       <FileName>Effects\TextEffects\TextEffectMgr.cs</FileName>
       <HashCode>AAAAAAAAAAAAAgEAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
     </TypeIdentifier>
   </Interface>
-  <Interface Name="GameEngine.Graphics.IAnimated" Collapsed="true">
-    <Position X="8.5" Y="5" Width="1.5" />
-    <TypeIdentifier>
-      <FileName>Graphics\IAnimated.cs</FileName>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAEAAAAAAAAAAAAAAAgAEAAAA=</HashCode>
-    </TypeIdentifier>
-  </Interface>
   <Interface Name="GameEngine.PhiCol.ICollideObj" Collapsed="true">
-    <Position X="19.75" Y="3.5" Width="1.5" />
+    <Position X="11.5" Y="16.5" Width="1.5" />
     <TypeIdentifier>
       <FileName>PhiCol\ICollideObj.cs</FileName>
       <HashCode>AAAAAAIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
     </TypeIdentifier>
   </Interface>
   <Interface Name="GameEngine.PhiCol.IColChecker" Collapsed="true">
-    <Position X="19.75" Y="4.25" Width="1.5" />
+    <Position X="11.5" Y="17.25" Width="1.5" />
     <TypeIdentifier>
       <FileName>PhiCol\ICollideObj.cs</FileName>
       <HashCode>CAAQAAAAAAAAAAAAAAAAAAQAAAAAAAAAAIAAAAAAAAA=</HashCode>
     </TypeIdentifier>
   </Interface>
   <Interface Name="GameEngine.PhiCol.IColMethod" Collapsed="true">
-    <Position X="19.75" Y="5" Width="1.5" />
+    <Position X="11.5" Y="18" Width="1.5" />
     <TypeIdentifier>
       <FileName>PhiCol\ICollideObj.cs</FileName>
       <HashCode>AAAAAAAAAAAAgAEAAAAAAAAAAAAAAACAAAAAAAAAAAA=</HashCode>
     </TypeIdentifier>
   </Interface>
   <Interface Name="GameEngine.PhiCol.IPhisicalUpdater" Collapsed="true">
-    <Position X="16.75" Y="4.25" Width="1.5" />
+    <Position X="8.5" Y="17.25" Width="1.5" />
     <TypeIdentifier>
       <FileName>PhiCol\IPhisicalObj.cs</FileName>
       <HashCode>AAAAAAAAAACAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
     </TypeIdentifier>
   </Interface>
   <Interface Name="GameEngine.PhiCol.IPhisicalObj" Collapsed="true">
-    <Position X="16.75" Y="3.5" Width="1.5" />
+    <Position X="8.5" Y="16.5" Width="1.5" />
     <TypeIdentifier>
       <FileName>PhiCol\IPhisicalObj.cs</FileName>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABAAAAAAA=</HashCode>
     </TypeIdentifier>
   </Interface>
   <Interface Name="GameEngine.Senses.Vision.IEyeableObj" Collapsed="true">
-    <Position X="42.25" Y="4.25" Width="1.5" />
+    <Position X="21.5" Y="17.25" Width="1.5" />
     <TypeIdentifier>
       <FileName>Senses\Vision\IEyeableObj.cs</FileName>
       <HashCode>AgAAAAACAAAAAAAAAAAAAAAAAACAAAAAAAAAAAAAQAA=</HashCode>
     </TypeIdentifier>
   </Interface>
   <Interface Name="GameEngine.Senses.Vision.IEyeableInfo" Collapsed="true">
-    <Position X="42.25" Y="5" Width="1.5" />
+    <Position X="21.5" Y="18" Width="1.5" />
     <TypeIdentifier>
       <FileName>Senses\Vision\IEyeableObj.cs</FileName>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAKgAAAAAAAAAAAAAAA=</HashCode>
     </TypeIdentifier>
   </Interface>
   <Interface Name="GameEngine.Shelter.IHasBorderObj" Collapsed="true">
-    <Position X="23" Y="3.5" Width="1.5" />
+    <Position X="15" Y="16.5" Width="1.5" />
     <TypeIdentifier>
       <FileName>Shelter\IHasBorderObj.cs</FileName>
       <HashCode>AAAAAAAAAAAAAAAAABAAAAAAACAAAAAAAAQAAAAAAAA=</HashCode>
     </TypeIdentifier>
   </Interface>
   <Interface Name="GameEngine.Shelter.IRaderOwner" Collapsed="true">
-    <Position X="25.5" Y="3.5" Width="1.5" />
+    <Position X="17.5" Y="16.5" Width="1.5" />
     <TypeIdentifier>
       <FileName>Shelter\IRaderOwner.cs</FileName>
       <HashCode>AQCAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
     </TypeIdentifier>
   </Interface>
   <Interface Name="GameEngine.Shelter.IShelterObj" Collapsed="true">
-    <Position X="23" Y="4.25" Width="1.5" />
+    <Position X="15" Y="17.25" Width="1.5" />
     <TypeIdentifier>
       <FileName>Shelter\IShelterObj.cs</FileName>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
     </TypeIdentifier>
   </Interface>
   <Delegate Name="GameEngine.Draw.DrawCondition" Collapsed="true">
-    <Position X="30.25" Y="7.75" Width="1.5" />
+    <Position X="17.5" Y="4.75" Width="1.5" />
     <TypeIdentifier>
       <FileName>Draw\DrawMgr.cs</FileName>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAIAA=</HashCode>
     </TypeIdentifier>
   </Delegate>
   <Delegate Name="GameEngine.Effects.Particles.PosFunc" Collapsed="true">
-    <Position X="37" Y="9.75" Width="1.5" />
+    <Position X="25.5" Y="12" Width="1.5" />
     <TypeIdentifier>
       <FileName>Effects\Particles\Particle.cs</FileName>
       <HashCode>AAAAAAAAAAAAAIAQAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
     </TypeIdentifier>
   </Delegate>
   <Delegate Name="GameEngine.Effects.Particles.DirFunc" Collapsed="true">
-    <Position X="37" Y="6.75" Width="1.5" />
+    <Position X="25.5" Y="9" Width="1.5" />
     <TypeIdentifier>
       <FileName>Effects\Particles\Particle.cs</FileName>
       <HashCode>AAAAAAAAAAAAAIAQAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
     </TypeIdentifier>
   </Delegate>
   <Delegate Name="GameEngine.Effects.Particles.RadiusFunc" Collapsed="true">
-    <Position X="37" Y="5.25" Width="1.5" />
+    <Position X="25.5" Y="7.5" Width="1.5" />
     <TypeIdentifier>
       <FileName>Effects\Particles\Particle.cs</FileName>
       <HashCode>AAAAAAAAAAAAAACQAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
     </TypeIdentifier>
   </Delegate>
   <Delegate Name="GameEngine.Effects.Particles.ColorSetTimeFunc" Collapsed="true">
-    <Position X="37" Y="8.25" Width="1.5" />
+    <Position X="25.5" Y="10.5" Width="1.5" />
     <TypeIdentifier>
       <FileName>Effects\Particles\Particle.cs</FileName>
       <HashCode>AAAAAAAAAAAAAAAQAAAAAAACAAAAAAAAAAAAAAAAAAA=</HashCode>
     </TypeIdentifier>
   </Delegate>
   <Delegate Name="GameEngine.Effects.Particles.PosGroupFunc" Collapsed="true">
-    <Position X="37" Y="10.5" Width="1.5" />
+    <Position X="25.5" Y="12.75" Width="1.5" />
     <TypeIdentifier>
       <FileName>Effects\Particles\ParticleSystem.cs</FileName>
       <HashCode>AAAAAAAAAAAAAIAQAAAAAAAAAAgAAAAAAAAAAAAAAAA=</HashCode>
     </TypeIdentifier>
   </Delegate>
   <Delegate Name="GameEngine.Effects.Particles.DirGroupFunc" Collapsed="true">
-    <Position X="37" Y="7.5" Width="1.5" />
+    <Position X="25.5" Y="9.75" Width="1.5" />
     <TypeIdentifier>
       <FileName>Effects\Particles\ParticleSystem.cs</FileName>
       <HashCode>AAAAAAABAAAAAIAQAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
     </TypeIdentifier>
   </Delegate>
   <Delegate Name="GameEngine.Effects.Particles.RadiusGroupFunc" Collapsed="true">
-    <Position X="37" Y="6" Width="1.5" />
+    <Position X="25.5" Y="8.25" Width="1.5" />
     <TypeIdentifier>
       <FileName>Effects\Particles\ParticleSystem.cs</FileName>
       <HashCode>AAAAAAABAAAAAACQAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
     </TypeIdentifier>
   </Delegate>
   <Delegate Name="GameEngine.Effects.Particles.ColorGroupFunc" Collapsed="true">
-    <Position X="37" Y="9" Width="1.5" />
+    <Position X="25.5" Y="11.25" Width="1.5" />
     <TypeIdentifier>
       <FileName>Effects\Particles\ParticleSystem.cs</FileName>
       <HashCode>AAAAAAABAAAAAAAQAAAAAAACAAAAAAAAAAAAAAAAAAA=</HashCode>
     </TypeIdentifier>
   </Delegate>
   <Delegate Name="GameEngine.Effects.Particles.CreateSumFunc" Collapsed="true">
-    <Position X="37" Y="4.5" Width="1.5" />
+    <Position X="25.5" Y="6.75" Width="1.5" />
     <TypeIdentifier>
       <FileName>Effects\Particles\ParticleSystem.cs</FileName>
       <HashCode>AAAAAAAAAAAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
     </TypeIdentifier>
   </Delegate>
-  <Delegate Name="GameEngine.Effects.SceneEffects.BaseEffects.SingleFunc" Collapsed="true">
-    <Position X="37" Y="11.25" Width="1.5" />
+  <Delegate Name="GameEngine.Effects.SceneEffects.SingleFunc" Collapsed="true">
+    <Position X="25.5" Y="13.5" Width="1.5" />
     <TypeIdentifier>
-      <FileName>Effects\SceneEffects\BaseEffects\ScaleUp.cs</FileName>
+      <FileName>Effects\SceneEffects\ScaleUp.cs</FileName>
       <HashCode>AAAAAAAAAAAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
     </TypeIdentifier>
   </Delegate>
   <Delegate Name="GameEngine.PhiCol.OnCollidedEventHandler" Collapsed="true">
-    <Position X="19.75" Y="9.5" Width="1.5" />
+    <Position X="11.5" Y="22.5" Width="1.5" />
     <TypeIdentifier>
       <FileName>PhiCol\ICollideObj.cs</FileName>
       <HashCode>AAAAAAAIAAAAAAAAAAAAAAAAAAAAAADAAAAAAAAAAAA=</HashCode>
     </TypeIdentifier>
   </Delegate>
   <Delegate Name="GameEngine.Senses.Memory.NaviMapConsiderObj" Collapsed="true">
-    <Position X="45.25" Y="8.75" Width="1.5" />
+    <Position X="24.5" Y="21.75" Width="1.5" />
     <TypeIdentifier>
       <FileName>Senses\Memory\ObjMemoryKeeper.cs</FileName>
       <HashCode>AAAAAAAAAAAAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
     </TypeIdentifier>
   </Delegate>
   <Delegate Name="GameEngine.Senses.Vision.GetEyeableInfoHandler" Collapsed="true">
-    <Position X="42.25" Y="7.25" Width="1.5" />
+    <Position X="21.5" Y="20.25" Width="1.5" />
     <TypeIdentifier>
       <FileName>Senses\Vision\VisionMgr.cs</FileName>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAABAgAAAAAAAAAAAA=</HashCode>
     </TypeIdentifier>
   </Delegate>
   <Delegate Name="GameEngine.Shelter.BorderObjUpdatedEventHandler" Collapsed="true">
-    <Position X="23" Y="5.25" Width="1.5" />
+    <Position X="15" Y="18.25" Width="1.5" />
     <TypeIdentifier>
       <FileName>Shelter\IRaderOwner.cs</FileName>
       <HashCode>AAAAAAAAAAAAAAAAAAEAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>

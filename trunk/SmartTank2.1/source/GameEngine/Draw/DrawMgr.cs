@@ -1,8 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
-using GameEngine.Effects.SceneEffects;
-//using GameEngine.GameDraw.SceneEffects;
+using GameEngine.Effects;
 
 namespace GameEngine.Draw
 {
@@ -49,8 +48,6 @@ namespace GameEngine.Draw
                         drawable.Draw();
                 }
             }
-
-            EffectsMgr.Draw(condition);
         }
     }
 }

@@ -6,17 +6,18 @@ using Microsoft.Xna.Framework;
 
 namespace GameEngine.Effects.Particles
 {
-    public delegate Vector2 PosGroupFunc( float curPartiTime, Vector2 lastPos, Vector2 dir, int No );
+    public delegate Vector2 PosGroupFunc( float curPartiTime,float deltaTime, Vector2 lastPos, Vector2 dir, int No );
 
-    public delegate Vector2 DirGroupFunc( float curPartiTime, Vector2 lastDir, int No );
+    public delegate Vector2 DirGroupFunc( float curPartiTime, float deltaTime, Vector2 lastDir, int No );
 
-    public delegate float RadiusGroupFunc( float curPartiTime, float lastRadius, int No );
+    public delegate float RadiusGroupFunc( float curPartiTime, float deltaTime, float lastRadius, int No );
 
-    public delegate Color ColorGroupFunc( float curPartiTime, Color lastColor, int No );
+    public delegate Color ColorGroupFunc( float curPartiTime, float deltaTime, Color lastColor, int No );
 
-    public delegate int CreateSumFunc( float curTime );
+    public delegate int CreateSumFunc( float curTime, ref float timer );
 
-    public class ParticleSystem
+
+    public class ParticleSystem: IManagedEffect
     {
         #region Variables
 
@@ -28,15 +29,15 @@ namespace GameEngine.Effects.Particles
 
         float layerDepth;
 
-        CreateSumFunc createSumFunc;
+        public CreateSumFunc createSumFunc;
 
-        PosGroupFunc posGroupFunc;
+        public PosGroupFunc posGroupFunc;
 
-        DirGroupFunc dirGroupFunc;
+        public DirGroupFunc dirGroupFunc;
 
-        RadiusGroupFunc radiusGroupFunc;
+        public RadiusGroupFunc radiusGroupFunc;
 
-        ColorGroupFunc colorGroupFunc;
+        public ColorGroupFunc colorGroupFunc;
 
         List<Particle> particles;
 
@@ -47,12 +48,20 @@ namespace GameEngine.Effects.Particles
 
         Vector2 basePos;
 
+        bool isEnd = false;
+
+        protected float createTimer = 0;
+
         #endregion
 
         public Vector2 BasePos
         {
             get { return basePos; }
             set { basePos = value; }
+        }
+
+        public ParticleSystem()
+        {
         }
 
         public ParticleSystem( float duration, float partiDuration, Vector2 basePos,
@@ -78,55 +87,54 @@ namespace GameEngine.Effects.Particles
 
         }
 
-        #region Updates
+        #region Update
 
-        public bool Update()
+        public void Update(float seconds)
         {
-            curTime++;
-
+            curTime += seconds;
             if (duration != 0 && curTime > duration)
-                return true;
+            {
+                isEnd = true;
+            }
 
-            CreateNewParticle();
+            CreateNewParticle(seconds);
 
-            UpdateParticles();
-
-            return false;
+            UpdateParticles(seconds);
         }
 
-        private void UpdateParticles()
+        protected virtual void UpdateParticles( float seconds )
         {
             foreach (Particle particle in particles)
             {
-                particle.Update();
+                particle.Update(seconds);
             }
         }
 
-        private void CreateNewParticle()
+        protected virtual void CreateNewParticle(float seconds)
         {
-            int createSum = createSumFunc( curTime );
-
+            createTimer += seconds;
+            int createSum = createSumFunc( curTime, ref  createTimer);
             int preCount = particles.Count;
 
             for (int i = 0; i < createSum; i++)
             {
                 particles.Add( new Particle( partiDura, basePos, layerDepth,
-                    delegate( float curParticleTime, Vector2 lastPos, Vector2 dir )
+                    delegate( float curParticleTime,float deltaTime, Vector2 lastPos, Vector2 dir )
                     {
-                        return posGroupFunc( curParticleTime, lastPos, dir, preCount + i );
+                        return posGroupFunc( curParticleTime,deltaTime, lastPos, dir, preCount + i );
                     },
-                    delegate( float curParticleTime, Vector2 lastDir )
+                    delegate( float curParticleTime, float deltaTime, Vector2 lastDir )
                     {
-                        return dirGroupFunc( curParticleTime, lastDir, preCount + i );
+                        return dirGroupFunc( curParticleTime, deltaTime, lastDir, preCount + i );
                     },
-                    delegate( float curParticleTime, float lastRadius )
+                    delegate( float curParticleTime, float deltaTime, float lastRadius )
                     {
-                        return radiusGroupFunc( curParticleTime, lastRadius, preCount + i );
+                        return radiusGroupFunc( curParticleTime, deltaTime, lastRadius, preCount + i );
                     },
                     tex, texOrigin, sourceRect,
-                    delegate( float curParticleTime, Color lastColor )
+                    delegate( float curParticleTime, float deltaTime, Color lastColor )
                     {
-                        return colorGroupFunc( curParticleTime, lastColor, preCount + i );
+                        return colorGroupFunc( curParticleTime, deltaTime, lastColor, preCount + i );
                     } ) );
             }
         }
@@ -152,6 +160,17 @@ namespace GameEngine.Effects.Particles
         {
             get { return BasePos; }
         }
+
+        #endregion
+
+        #region IManagedEffect ³ÉÔ±
+
+        public bool IsEnd
+        {
+            get { return isEnd; }
+        }
+
+       
 
         #endregion
     }

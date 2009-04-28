@@ -27,7 +27,6 @@ namespace GameEngine
         SpriteMgr spriteMgr;
         BasicGraphics basicGraphics;
         FontMgr fontMgr;
-        AnimatedMgr animatedMgr;
 
         /// <summary>
         /// 获得图形设备
@@ -64,13 +63,6 @@ namespace GameEngine
         {
             get { return fontMgr; }
         }
-        /// <summary>
-        /// 获得动画管理者
-        /// </summary>
-        public AnimatedMgr AnimatedMgr
-        {
-            get { return animatedMgr; }
-        }
 
         /// <summary>
         /// 
@@ -89,7 +81,6 @@ namespace GameEngine
             this.spriteMgr = new SpriteMgr( this );
             this.basicGraphics = new BasicGraphics( this );
             this.fontMgr = new FontMgr( this, contentMgr );
-            this.animatedMgr = new AnimatedMgr();
 
             Log.Initialize();
         }
